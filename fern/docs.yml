@@ -1,0 +1,12 @@
+instances:
+  - url: https://voximplant.docs.buildwithfern.com
+title: Voximplant | Documentation
+navigation:
+  - api: API Reference
+    paginated: true
+    specs:
+      - type: openapi
+        path: ./openapi.yml
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'

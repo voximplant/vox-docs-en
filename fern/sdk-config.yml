@@ -1,0 +1,12 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: api
+      type: openapi
+      path: ./openapi.yml
+targets:
+  - language: typescript
+    output:
+      delivery: files
+      path: ../sdks/typescript
