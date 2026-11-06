@@ -86,7 +86,7 @@ navigation:
   - tab: api-reference
     layout:
       - page: Overview
-        path: ./pages/api-reference/overview.md
+        path: ./pages/api/overview.md
         icon: fa-duotone fa-list-check
       # - section: REST API
       #   icon: fa-duotone fa-gears
