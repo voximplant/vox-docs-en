@@ -1,13 +1,7 @@
 instances:
-  - url: https://voximplant-new.docs.buildwithfern.com
+  - url: voximplant-new.docs.buildwithfern.com
 
 title: Voximplant Documentation
-
-theme:
-  tabs:
-    placement: header
-    style: bubble
-    alignment: left
 
 tabs:
   overview:
@@ -95,14 +89,14 @@ navigation:
 
 colors:
   accent-primary:
-    light: "#5c33ca"
-    dark: "#7c56e3"
+    light: "#4824a2"
+    dark: "#7c59ec"
   background:
     light: "#ffffff"
-    dark: "#0b0813"
+    dark: "#0a0714"
   sidebar-background:
     light: "#f9fafb"
-    dark: "#100d1c"
+    dark: "#100d1e"
   header-background:
     light: "#ffffff"
-    dark: "#0b0813"
+    dark: "#0a0714"
