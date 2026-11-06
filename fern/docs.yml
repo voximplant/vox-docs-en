@@ -1,6 +1,6 @@
 instances:
   - url: https://voximplant-new.docs.buildwithfern.com
-title: Voximplant | Documentation
+title: Voximplant
 navigation:
   - api: API Reference
     paginated: true
