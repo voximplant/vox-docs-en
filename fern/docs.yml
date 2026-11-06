@@ -39,13 +39,13 @@ navigation:
     layout:
       - page: Introduction
         path: ./pages/overview/introduction.md
-        icon: fa-duotone fa-book-open
+        icon: fa-duotone fa-book-open-reader
       - page: What you get with Voximplant
         path: ./pages/overview/features.md
-        icon: fa-duotone fa-rocket
+        icon: fa-duotone fa-wand-magic-sparkles
       - page: Supported platforms
         path: ./pages/overview/platforms.md
-        icon: fa-duotone fa-rocket
+        icon: fa-duotone fa-layer-group
 
   - tab: voice-ai
     layout:
