@@ -1,9 +1,13 @@
 instances:
   - url: https://voximplant-new.docs.buildwithfern.com
-    layout:
-      tabs-placement: header
 
 title: Voximplant Documentation
+
+theme:
+  tabs:
+    placement: header
+    style: bubble
+    alignment: left
 
 tabs:
   overview:
