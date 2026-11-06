@@ -3,6 +3,11 @@ instances:
 
 title: Voximplant Documentation
 
+layout:
+  tabs-placement: header
+  searchbar-placement: header
+  page-width: full
+
 tabs:
   overview:
     display-name: Overview
