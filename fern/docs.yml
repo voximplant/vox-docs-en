@@ -37,60 +37,75 @@ tabs:
 navigation:
   - tab: overview
     layout:
-      - section: Welcome
-        icon: fa-duotone fa-hand-wave
-        contents:
-          - page: Introduction
-            path: ./pages/overview/intro.md
-            icon: fa-duotone fa-book-open
-          - page: Quickstart Guide
-            path: ./pages/overview/quickstart.md
-            icon: fa-duotone fa-rocket
+      - page: Introduction
+        path: ./pages/overview/introduction.md
+        icon: fa-duotone fa-book-open
+      - page: What you get with Voximplant
+        path: ./pages/overview/features.md
+        icon: fa-duotone fa-rocket
+      - page: Supported platforms
+        path: ./pages/overview/platforms.md
+        icon: fa-duotone fa-rocket
 
   - tab: voice-ai
     layout:
-      - section: Voice AI Core
-        icon: fa-duotone fa-brain
-        contents:
-          - page: Understanding Orchestration
-            path: ./pages/voice-ai/concepts.md
-            icon: fa-duotone fa-lightbulb
+      - page: Overview
+        path: ./pages/voice-ai/overview.md
+        icon: fa-duotone fa-list-check
+      # - section: Voice AI Core
+      #   icon: fa-duotone fa-brain
+      #   contents:
+      #     - page: Understanding Orchestration
+      #       path: ./pages/voice-ai/concepts.md
+      #       icon: fa-duotone fa-lightbulb
 
   - tab: platform
     layout:
-      - section: Core Architecture
-        icon: fa-duotone fa-layer-group
-        contents:
-          - page: Infrastructure
-            path: ./pages/platform/infra.md
-            icon: fa-duotone fa-shield-halved
+      - page: Overview
+        path: ./pages/platform/overview.md
+        icon: fa-duotone fa-list-check
+      # - section: Core Architecture
+      #   icon: fa-duotone fa-layer-group
+      #   contents:
+      #     - page: Infrastructure
+      #       path: ./pages/platform/infra.md
+      #       icon: fa-duotone fa-shield-halved
 
   - tab: sdk
     layout:
-      - section: Client Libraries
-        icon: fa-duotone fa-cubes
-        contents:
-          - page: Web SDK Setup
-            path: ./pages/sdk/web.md
-            icon: fa-brands fa-js
+      - page: Overview
+        path: ./pages/sdk/overview.md
+        icon: fa-duotone fa-list-check
+      # - section: Client Libraries
+      #   icon: fa-duotone fa-cubes
+      #   contents:
+      #     - page: Web SDK Setup
+      #       path: ./pages/sdk/web.md
+      #       icon: fa-brands fa-js
 
   - tab: api-reference
     layout:
-      - section: REST API
-        icon: fa-duotone fa-gears
-        contents:
-          - page: API Overview
-            path: ./pages/api/overview.md
-            icon: fa-duotone fa-terminal
+      - page: Overview
+        path: ./pages/api-reference/overview.md
+        icon: fa-duotone fa-list-check
+      # - section: REST API
+      #   icon: fa-duotone fa-gears
+      #   contents:
+      #     - page: API Overview
+      #       path: ./pages/api/overview.md
+      #       icon: fa-duotone fa-terminal
 
   - tab: help
     layout:
-      - section: Support
-        icon: fa-duotone fa-life-ring
-        contents:
-          - page: Contact Us
-            path: ./pages/help/contact.md
-            icon: fa-duotone fa-envelope
+      - page: Overview
+        path: ./pages/help/overview.md
+        icon: fa-duotone fa-list-check
+      # - section: Support
+      #   icon: fa-duotone fa-life-ring
+      #   contents:
+      #     - page: Contact Us
+      #       path: ./pages/help/contact.md
+      #       icon: fa-duotone fa-envelope
 
 colors:
   accent-primary:
