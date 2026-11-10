@@ -1,4 +1,4 @@
-# Processing calls in scenarios
+# Calls
 
 This article will guide you through making and receiving calls in a scenario.
 
