@@ -54,32 +54,6 @@ If your application manages a dynamic user base, do not create users manually. U
 
 ---
 
-## Authenticating a user in an SDK
-
-<Aside>
-```javascript title="SDK user authentication"
-import { Core, ConnectionNode } from '@voximplant/websdk';
-
-const core = Core.init();
-const { client } = core;
-
-// 1. Connect to the Voximplant Cloud
-await client.connect({ node: ConnectionNode.Node_n });
-
-// 2. Log in with the fully qualified user credentials
-await client.login({
-  username: 'alice@customer-support.myaccount.voximplant.com',
-  password: 'user_password',
-});
-
-console.log('User authenticated successfully!');
-```
-</Aside>
-
-Once a user is created, pass their credentials to the `client.login()` method in your client application:
-
----
-
 ## Frequently asked questions
 
 **Q**: **What is the difference between an account user and an application user?**  

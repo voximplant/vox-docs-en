@@ -16,7 +16,10 @@ In addition to standard [console.log()](), Voximplant provides the [Logger.write
 
 <Aside>
 ```javascript title="Logger example"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/voxengine.logger-example.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  Logger.write(JSON.stringify(e)); // show the object value
+  Logger.write(e.callerid); // show the specified object field value
+});
 ```
 </Aside>
 
@@ -77,7 +80,14 @@ The VoxEngine runtime recognizes the standard JavaScript [debugger]() statement.
 
 <Aside>
 ```javascript title="A trace() call"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/voxengine.trace-call.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
+  const inc = e.call;
+  debugger;
+  trace('Debug Console Output');
+  const out = VoxEngine.callPSTN('+1XXXXXXXXX', '1XXXXXXXXXX');
+
+  // further logic...
+});
 ```
 </Aside>
 

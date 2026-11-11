@@ -219,7 +219,7 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/reference/react-native.md
-            icon: fa-duotone fa-atom
+            icon: fa-brands fa-react
       - section: Flutter SDK
         contents:
           - page: Overview
