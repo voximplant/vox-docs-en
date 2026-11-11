@@ -1,15 +1,11 @@
 # Calls
 
-This article will guide you through making and receiving calls in a scenario.
-
-A **scenario** is the cloud component of your Voximplant application that handles the making and receiving of calls, as well as directing calls between different endpoints. Before you start writing your scenario, [create an application]() first and [create a scenario]() itself.
+This article will guide you through making and receiving calls to/from different destinations.
 
 ## How to call a Voximplant user
 
 <Aside>
-### Call a Voximplant user
-
-```javascript
+```javascript title="Call a Voximplant user"
 // Initiate an outgoing call based on the dialed number
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   const newCall = VoxEngine.callUser({
@@ -35,9 +31,7 @@ Please note that if you are making a call via web or mobile SDK, it consists of 
 </Info>
 
 <Aside>
-### Peer-to-peer call
-
-```javascript
+```javascript title="Peer-to-peer call"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   const newCall = VoxEngine.callUserDirect(e.call, e.destination, {
     displayName: e.displayName,
@@ -54,9 +48,7 @@ You can make a **peer-to-peer call**, which connects two devices directly instea
 ## How to call a phone number
 
 <Aside>
-### Call a phone number
-
-```javascript
+```javascript title="Call a phone number"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   e.call.ring();
   const call = VoxEngine.callPSTN('numberToCall', 'confirmedCallerId');
@@ -82,9 +74,7 @@ Understand how it works by looking at the example scenario on the right.
 If you want to use the incoming caller ID for the outgoing call from the scenario, set the [followDiversion]() parameter to **true**.
 
 <Aside>
-### US to US phone call
-
-```javascript
+```javascript title="US to US phone call"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   e.call.ring();
   const call = VoxEngine.callPSTN('numberToCall', 'confirmedCallerId');
@@ -100,9 +90,7 @@ In this case, the scenario for US to US phone calls looks like this.
 ## How to call a SIP address
 
 <Aside>
-### Call SIP
-
-```javascript
+```javascript title="Call SIP"
 // Use the default (UDP) transport
 let callWithUDP = VoxEngine.callSIP('sip:alice@example.com');
 
@@ -118,9 +106,7 @@ Voximplant uses UDP as the default protocol for SIP calls. If you want to use th
 </Info>
 
 <Aside>
-### Enable TLS for SIP calls
-
-```javascript
+```javascript title="Enable TLS for SIP calls"
 // add sips at the beginning of the URI
 const call = VoxEngine.callSIP('sips:alice@example.org:5061', {
   callerid: '5510',
@@ -146,9 +132,7 @@ Refer to the [SIP calls]() article to learn more about SIP calls in Voximplant.
 ## How to process incoming calls
 
 <Aside>
-### Answer a call in a scenario
-
-```javascript
+```javascript title="Answer a call in a scenario"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   // this code is executed in the cloud on every incoming call
   e.call.startEarlyMedia(null, e.scheme);
