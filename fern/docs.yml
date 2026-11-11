@@ -46,6 +46,9 @@ navigation:
       - page: Supported platforms
         path: ./pages/overview/platforms.md
         icon: fa-duotone fa-layer-group
+      - page: How billing works
+        path: ./pages/overview/billing.md
+        icon: fa-duotone fa-credit-card
 
   - tab: voice-ai
     layout:
@@ -62,65 +65,55 @@ navigation:
         path: ./pages/voice-ai/mcp-client.md
         icon: fa-duotone fa-brackets-curly
       - section: OpenAI
-        icon: fa-duotone fa-sparkles
         contents:
           - page: Overview
             path: ./pages/voice-ai/openai/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-sparkles
       - section: Gemini Live
-        icon: fa-duotone fa-waveform-lines
         contents:
           - page: Overview
             path: ./pages/voice-ai/google/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-waveform-lines
       - section: Ultravox Realtime
-        icon: fa-duotone fa-bolt
         contents:
           - page: Overview
             path: ./pages/voice-ai/ultravox/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-bolt
       - section: ElevenLabs Agents
-        icon: fa-duotone fa-comment-earpiece
         contents:
           - page: Overview
             path: ./pages/voice-ai/elevenlabs/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-flask-vial
       - section: Cartesia Line Agents
-        icon: fa-duotone fa-chart-network
         contents:
           - page: Overview
             path: ./pages/voice-ai/cartesia/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-chart-network
       - section: Inworld Realtime
-        icon: fa-duotone fa-user-robot
         contents:
           - page: Overview
             path: ./pages/voice-ai/inworld/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-user-robot
       - section: Deepgram Agents
-        icon: fa-duotone fa-ear-listen
         contents:
           - page: Overview
             path: ./pages/voice-ai/deepgram/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-ear-listen
       - section: xAI Grok Voice Agent
-        icon: fa-duotone fa-alien-8bit
         contents:
           - page: Overview
             path: ./pages/voice-ai/xai/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-alien-8bit
       - section: Qwen Cloud
-        icon: fa-duotone fa-cloud-binary
         contents:
           - page: Overview
             path: ./pages/voice-ai/qwen/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-cloud-binary
       - section: Dialogflow
-        icon: fa-duotone fa-comments
         contents:
           - page: Overview
             path: ./pages/voice-ai/dialogflow/overview.md
-            icon: fa-duotone fa-lightbulb
+            icon: fa-duotone fa-comments
 
   - tab: platform
     layout:
@@ -128,7 +121,6 @@ navigation:
         path: ./pages/platform/overview.md
         icon: fa-duotone fa-list-check
       - section: Getting started
-        icon: fa-duotone fa-flag-checkered
         contents:
           - page: Create an application
             path: ./pages/platform/applications.md
@@ -146,7 +138,6 @@ navigation:
             path: ./pages/platform/users.md
             icon: fa-duotone fa-user-plus
       - section: Telephony
-        icon: fa-duotone fa-phone-office
         contents:
           - page: Calls
             path: ./pages/platform/calls.md
@@ -155,14 +146,13 @@ navigation:
             path: ./pages/platform/conferences.md
             icon: fa-duotone fa-users-medical
       - section: Speech processing
-        icon: fa-duotone fa-waveform
         contents:
           - page: Text-to-speech
             path: ./pages/platform/text-to-speech.md
             icon: fa-duotone fa-comment-alt-lines
           - page: Speech-to-text
             path: ./pages/platform/speech-to-text.md
-            icon: fa-duotone fa-microphone-lines-slash
+            icon: fa-duotone fa-microphone-lines
 
   - tab: sdk
     layout:
@@ -170,35 +160,30 @@ navigation:
         path: ./pages/sdk/overview.md
         icon: fa-duotone fa-list-check
       - section: Web
-        icon: fa-duotone fa-browser
         contents:
           - page: Getting started
             path: ./pages/sdk/web.md
-            icon: fa-brands fa-js
+            icon: fa-duotone fa-browser
       - section: iOS and macOS
-        icon: fa-brands fa-apple
         contents:
           - page: Getting started
             path: ./pages/sdk/ios.md
-            icon: fa-brands fa-swift
+            icon: fa-brands fa-apple
       - section: Android
-        icon: fa-brands fa-android
         contents:
           - page: Getting started
             path: ./pages/sdk/android.md
-            icon: fa-brands fa-java
+            icon: fa-brands fa-android
       - section: React Native
-        icon: fa-duotone fa-atom
         contents:
           - page: Getting started
             path: ./pages/sdk/react-native.md
-            icon: fa-brands fa-react
+            icon: fa-brands fa-atom
       - section: Flutter
-        icon: fa-duotone fa-feather-pointed
         contents:
           - page: Getting started
             path: ./pages/sdk/flutter.md
-            icon: fa-duotone fa-flutter
+            icon: fa-duotone fa-feather-pointed
 
   - tab: reference
     layout:
@@ -206,47 +191,40 @@ navigation:
         path: ./pages/reference/overview.md
         icon: fa-duotone fa-list-check
       - section: VoxEngine
-        icon: fa-duotone fa-engine-warning
         contents:
           - page: Overview
             path: ./pages/reference/voxengine.md
             icon: fa-brands fa-js
       - section: Management API
-        icon: fa-duotone fa-sliders
         contents:
           - page: Overview
             path: ./pages/reference/management-api.md
-            icon: fa-duotone fa-binary
+            icon: fa-duotone fa-rectangle-api
       - section: Web SDK
-        icon: fa-duotone fa-browser
         contents:
           - page: Overview
             path: ./pages/reference/web.md
-            icon: fa-brands fa-js
+            icon: fa-brands fa-browser
       - section: iOS and macOS SDK
-        icon: fa-brands fa-apple
         contents:
           - page: Overview
             path: ./pages/reference/ios.md
-            icon: fa-brands fa-swift
+            icon: fa-brands fa-apple
       - section: Android SDK
-        icon: fa-brands fa-android
         contents:
           - page: Overview
             path: ./pages/reference/android.md
-            icon: fa-brands fa-java
+            icon: fa-brands fa-android
       - section: React Native SDK
-        icon: fa-duotone fa-atom
         contents:
           - page: Overview
             path: ./pages/reference/react-native.md
-            icon: fa-brands fa-react
+            icon: fa-duotone fa-atom
       - section: Flutter SDK
-        icon: fa-duotone fa-feather-pointed
         contents:
           - page: Overview
             path: ./pages/reference/flutter.md
-            icon: fa-duotone fa-flutter
+            icon: fa-duotone fa-feather-pointed
 
   - tab: help
     layout:
@@ -254,16 +232,14 @@ navigation:
         path: ./pages/help/support.md
         icon: fa-duotone fa-headset
       - section: Troubleshooting
-        icon: fa-duotone fa-wrench
         contents:
           - page: VoxEngine scenarios
             path: ./pages/help/scenarios.md
             icon: fa-duotone fa-bug
           - page: SDK statistics
             path: ./pages/help/statistics.md
-            icon: fa-duotone fa-chart-trend-up
+            icon: fa-duotone fa-mobile
       - section: How it works
-        icon: fa-duotone fa-gears
         contents:
           - page: Control panel
             path: ./pages/help/control-panel.md
@@ -273,7 +249,7 @@ navigation:
             icon: fa-duotone fa-network-wired
           - page: Cloud IDE
             path: ./pages/help/ide.md
-            icon: fa-duotone fa-code-editor
+            icon: fa-duotone fa-square-code
           - page: Basic concepts
             path: ./pages/help/concepts.md
             icon: fa-duotone fa-lightbulb-on
