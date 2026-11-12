@@ -162,7 +162,7 @@ navigation:
           - page: Agentic VoiceDSP module
             path: ./pages/platform/speech/agentic-voicedsp.md
             icon: fa-duotone fa-waveform-lines
-      - section: Call center
+      - section: Contact center
         contents:
           - page: Voice
             path: ./pages/platform/contact-center/voice.md
@@ -170,6 +170,15 @@ navigation:
           - page: Video
             path: ./pages/platform/contact-center/video.md
             icon: fa-duotone fa-video
+          - page: Agent skills
+            path: ./pages/platform/contact-center/agent-skills.md
+            icon: fa-duotone fa-user-gear
+          - page: Supervisors
+            path: ./pages/platform/contact-center/supervisors.md
+            icon: fa-duotone fa-user-tie
+          - page: Reporting
+            path: ./pages/platform/contact-center/reporting.md
+            icon: fa-duotone fa-chart-mixed
             
 
   - tab: sdk
