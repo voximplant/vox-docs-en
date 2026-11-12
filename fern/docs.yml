@@ -147,10 +147,10 @@ navigation:
             icon: fa-duotone fa-users-medical
           - page: Call features
             path: ./pages/platform/telephony/features.md
-            icon: fa-duotone fa-question
+            icon: fa-duotone fa-microphone-slash
           - page: SIP calls and registrations
             path: ./pages/platform/telephony/sip.md
-            icon: fa-duotone fa-question
+            icon: fa-duotone fa-phone-office
       - section: Speech processing
         contents:
           - page: Text-to-speech
@@ -161,12 +161,12 @@ navigation:
             icon: fa-duotone fa-microphone-lines
       - section: Call center
         contents:
-          - page: Voice contact center
+          - page: Voice
             path: ./pages/platform/contact-center/voice.md
-            icon: fa-duotone fa-question
-          - page: Voice contact center
-            path: ./pages/platform/contact-center/voice.md
-            icon: fa-duotone fa-question
+            icon: fa-duotone fa-headset
+          - page: Video
+            path: ./pages/platform/contact-center/video.md
+            icon: fa-duotone fa-video
 
   - tab: sdk
     layout:
@@ -178,16 +178,37 @@ navigation:
           - page: Getting started
             path: ./pages/sdk/web.md
             icon: fa-duotone fa-browser
+          - page: Screen sharing
+            path: ./pages/sdk/web/screen-sharing.md
+            icon: fa-duotone fa-screencast
       - section: iOS and macOS
         contents:
           - page: Getting started
             path: ./pages/sdk/ios.md
             icon: fa-brands fa-apple
+          - page: Push notifications
+            path: ./pages/sdk/ios/push.md
+            icon: fa-brands fa-apple
+          - page: CallKit integration
+            path: ./pages/sdk/ios/callkit.md
+            icon: fa-duotone fa-mobile-screen-button
+          - page: Screen sharing
+            path: ./pages/sdk/ios/screen-sharing.md
+            icon: fa-duotone fa-screencast
       - section: Android
         contents:
           - page: Getting started
             path: ./pages/sdk/android.md
             icon: fa-brands fa-android
+          - page: Push notifications
+            path: ./pages/sdk/android/push.md
+            icon: fa-brands fa-apple
+          - page: ConnectionService integration
+            path: ./pages/sdk/android/connectionservice.md
+            icon: fa-duotone fa-mobile-screen-button
+          - page: Screen sharing
+            path: ./pages/sdk/android/screen-sharing.md
+            icon: fa-duotone fa-screencast
       - section: React Native
         contents:
           - page: Getting started
@@ -272,10 +293,10 @@ navigation:
             icon: fa-duotone fa-ban
           - page: Media streams
             path: ./pages/help/media-streams.md
-            icon: fa-duotone fa-question
-          - page: Media streams
+            icon: fa-duotone fa-waveform
+          - page: Media over WebSockets
             path: ./pages/help/websockets.md
-            icon: fa-duotone fa-question
+            icon: fa-duotone fa-plug
 
 colors:
   accent-primary:
