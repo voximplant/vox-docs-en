@@ -27,7 +27,7 @@ The Voximplant Control Panel allows one certificate per package name. To test pu
 To allow the Voximplant cloud to dispatch push notifications for incoming calls, include the `PushService` helper module in your scenario:
 
 ```javascript title="Add a push notification helper"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/pushservice.android-push-helper.js
+require(Modules.PushService);
 ```
 
 ---

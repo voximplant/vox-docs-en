@@ -182,6 +182,12 @@ navigation:
           - page: Getting started
             path: ./pages/sdk/web.md
             icon: fa-duotone fa-browser
+          - page: Voice and video calls
+            path: ./pages/sdk/web/calls.md
+            icon: fa-duotone fa-phone-volume
+          - page: Voice and video conferences
+            path: ./pages/sdk/web/conferences.md
+            icon: fa-duotone fa-users-medical
           - page: Screen sharing
             path: ./pages/sdk/web/screen-sharing.md
             icon: fa-duotone fa-screencast
@@ -190,6 +196,9 @@ navigation:
           - page: Getting started
             path: ./pages/sdk/ios.md
             icon: fa-brands fa-apple
+          - page: Voice and video calls
+            path: ./pages/sdk/ios/calls.md
+            icon: fa-duotone fa-phone-volume
           - page: Push notifications
             path: ./pages/sdk/ios/push.md
             icon: fa-duotone fa-bell-ring
@@ -204,6 +213,9 @@ navigation:
           - page: Getting started
             path: ./pages/sdk/android.md
             icon: fa-brands fa-android
+          - page: Voice and video calls
+            path: ./pages/sdk/android/calls.md
+            icon: fa-duotone fa-phone-volume
           - page: Push notifications
             path: ./pages/sdk/android/push.md
             icon: fa-duotone fa-bell-ring
@@ -218,11 +230,17 @@ navigation:
           - page: Getting started
             path: ./pages/sdk/react-native.md
             icon: fa-brands fa-react
+          - page: Voice and video calls
+            path: ./pages/sdk/react-native/calls.md
+            icon: fa-duotone fa-phone-volume
       - section: Flutter
         contents:
           - page: Getting started
             path: ./pages/sdk/flutter.md
             icon: fa-duotone fa-feather-pointed
+          - page: Voice and video calls
+            path: ./pages/sdk/flutter/calls.md
+            icon: fa-duotone fa-phone-volume
 
   - tab: reference
     layout:

@@ -114,5 +114,104 @@ Underlying Silero VAD and Pipecat turn-detector signals are managed internally b
 </Info>
 
 ```javascript title="Agentic VoiceDSP example"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/agentic.voice-dsp.base-scenario.js
+/**
+ * Base usage of Agentic Voice DSP (Silero VAD + Pipecat Turn + bundled Hush noise suppression).
+ * Omit noiseSuppressionParameters to leave noise suppression disabled.
+ */
+
+require(Modules.Agentic);
+
+const VAD_THRESHOLD = 0.5;
+const VAD_MIN_SILENCE_DURATION_MS = 300;
+const VAD_SPEECH_PAD_MS = 0;
+
+const TURN_THRESHOLD = 0.5;
+const TURN_PRE_SPEECH_MS = 0;
+const TURN_MAX_DURATION_SECS = 8;
+const TURN_STOP_SECS = 3.0;
+const ASR_GRACE_TIMEOUT = 0.3;
+const USER_TURN_STOP_TIMEOUT = 5.0;
+const USER_TURN_IDLE_TIMEOUT = 30;
+const NOISE_SUPPRESSION_ATTEN_LIM_DB = 0;
+
+const voiceDSPParameters = {
+  vadParameters: {
+    threshold: VAD_THRESHOLD,
+    minSilenceDurationMs: VAD_MIN_SILENCE_DURATION_MS,
+    speechPadMs: VAD_SPEECH_PAD_MS,
+  },
+  turnDetectorParameters: {
+    threshold: TURN_THRESHOLD,
+    preSpeechMs: TURN_PRE_SPEECH_MS,
+    maxDurationSecs: TURN_MAX_DURATION_SECS,
+    stopSecs: TURN_STOP_SECS,
+  },
+  noiseSuppressionParameters: {
+    attenLimDb: NOISE_SUPPRESSION_ATTEN_LIM_DB,
+  },
+  userTurnIdleTimeout: USER_TURN_IDLE_TIMEOUT,
+  userTurnStopTimeout: USER_TURN_STOP_TIMEOUT,
+  asrGraceTimeout: ASR_GRACE_TIMEOUT,
+  startStrategies: [Agentic.VoiceDSPStrategies.createVADStart()],
+  stopStrategies: [Agentic.VoiceDSPStrategies.createTurnDetectorStop()],
+};
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, async ({ call }) => {
+  let voiceDSP;
+
+  try {
+    const callBaseHandler = () => {
+      voiceDSP?.close();
+      VoxEngine.terminate();
+    };
+
+    call.addEventListener(CallEvents.Disconnected, callBaseHandler);
+    call.addEventListener(CallEvents.Failed, callBaseHandler);
+
+    voiceDSP = await Agentic.createVoiceDSP(voiceDSPParameters);
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.TurnStarted, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.TurnStarted===');
+      Logger.write(JSON.stringify(event));
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.TurnInferenceTriggered, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.TurnInferenceTriggered===');
+      Logger.write(JSON.stringify(event));
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.TurnStopped, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.TurnStopped===');
+      Logger.write(JSON.stringify(event));
+      voiceDSP?.signalAssistantTurnEnded();
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.TurnStopTimeout, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.TurnStopTimeout===');
+      Logger.write(JSON.stringify(event));
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.TurnIdle, () => {
+      Logger.write('===Agentic.VoiceDSPEvents.TurnIdle===');
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.Error, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.Error===');
+      Logger.write(JSON.stringify(event));
+    });
+
+    voiceDSP.addEventListener(Agentic.VoiceDSPEvents.ConnectorInformation, (event) => {
+      Logger.write('===Agentic.VoiceDSPEvents.ConnectorInformation===');
+      Logger.write(JSON.stringify(event));
+    });
+
+    call.answer();
+    call.sendMediaTo(voiceDSP);
+  } catch (error) {
+    Logger.write('===SOMETHING_WENT_WRONG===');
+    Logger.write(error);
+    VoxEngine.terminate();
+  }
+});
+
 ```
