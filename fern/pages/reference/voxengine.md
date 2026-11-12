@@ -8,26 +8,6 @@ This reference documents all global objects, classes, event listeners, and integ
 
 ## Core runtime building blocks
 
-<Aside>
-```javascript title="Typical VoxEngine execution flow"
-// 1. Listen for global application events
-VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
-  const call = e.call;
-  call.answer();
-
-  // 2. Subscribe to call-level events
-  call.addEventListener(CallEvents.Connected, () => {
-    // 3. Control media and synthesize speech
-    call.say("Connected to VoxEngine.", { voice: VoiceList.Amazon.en_US_Joanna });
-  });
-
-  call.addEventListener(CallEvents.PlaybackFinished, () => {
-    call.hangup();
-  });
-});
-```
-</Aside>
-
 VoxEngine scenarios are asynchronous and event-driven. Your code interacts with incoming calls, controls media pipelines, and hooks into external services:
 
 * **Global functions & namespaces**: The [VoxEngine]() root object provides primary call-control methods (`callPSTN`, `callUser`, `createConference`, `sendMediaBetween`, `terminate`), utility functions, and cryptographic primitives.

@@ -14,26 +14,6 @@ The Flutter SDK provides a centralized client factory with dedicated controllers
 * **Call controllers**: Manage individual call lifecycles, hold/mute states, DTMF tones, and quality telemetry.
 * **Video widgets**: Render camera feeds and remote participant video natively using Flutter widgets.
 
-<Aside>
-```dart title="Initialize and log in with VIClient"
-import 'package:flutter_voximplant/flutter_voximplant.dart';
-
-// 1. Obtain the client instance
-final client = Voximplant().getClient();
-
-// 2. Connect to your account's assigned node
-await client.connect(node: VINode.NodeX);
-
-// 3. Authenticate with user credentials
-final authResult = await client.login(
-  'user@app.account.voximplant.com',
-  'password',
-);
-
-print('Logged in successfully as: ${authResult.displayName}');
-```
-</Aside>
-
 Applications interact with the SDK using Dart futures, streams, and state listeners:
 
 * **Client management**: The [VIClient]() instance controls connection lifecycles, account node targets, and authentication responses.

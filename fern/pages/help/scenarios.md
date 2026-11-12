@@ -14,16 +14,14 @@ Before troubleshooting, verify that your scenario adheres to the architecture de
 
 In addition to standard [console.log()](), Voximplant provides the [Logger.write()]() method to record diagnostic messages directly to the cloud session log.
 
-<Aside>
+Session logs are saved automatically and can be inspected anytime in the [Call history]() section of the Control Panel. Like native console logging, you can pass strings or serializable objects to [Logger.write()]() to inspect session state:
+
 ```javascript title="Logger example"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   Logger.write(JSON.stringify(e)); // show the object value
   Logger.write(e.callerid); // show the specified object field value
 });
 ```
-</Aside>
-
-Session logs are saved automatically and can be inspected anytime in the [Call history]() section of the Control Panel. Like native console logging, you can pass strings or serializable objects to [Logger.write()]() to inspect session state:
 
 ---
 
@@ -78,7 +76,8 @@ The Cloud IDE includes a WebRTC softphone that allows you to place and receive l
 
 The VoxEngine runtime recognizes the standard JavaScript [debugger]() statement. Placing a `debugger;` statement in your scenario automatically pauses execution when the Cloud IDE debugger is active.
 
-<Aside>
+You can also send real-time output directly to the Cloud IDE debug console using the `trace()` function:
+
 ```javascript title="A trace() call"
 VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
   const inc = e.call;
@@ -89,6 +88,3 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
   // further logic...
 });
 ```
-</Aside>
-
-You can also send real-time output directly to the Cloud IDE debug console using the `trace()` function:

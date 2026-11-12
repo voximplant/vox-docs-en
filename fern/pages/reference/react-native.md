@@ -14,25 +14,6 @@ The SDK is divided into dedicated, modular packages:
 * **`@voximplant/react-native-calls`**: Handles WebRTC media pipelines, audio/video call management, camera controls, and multi-party conferences.
 * **`@voximplant/react-native-shared`**: Common types, error classes, and utilities shared between packages.
 
-<Aside>
-```javascript title="Connect and authenticate with Client"
-import { Client, ConnectionNode } from '@voximplant/react-native-core';
-
-// 1. Obtain the client singleton
-const client = Client.getInstance();
-
-// 2. Connect to your account's assigned node
-await client.connect({
-  node: ConnectionNode.Node_n,
-});
-
-// 3. Authenticate with user credentials
-await client.login('user@app.account.voximplant.com', 'password');
-
-console.log('Successfully connected and authenticated!');
-```
-</Aside>
-
 Applications manage sessions through centralized singleton controllers and event listeners:
 
 * **Client management**: The [Client]() singleton in `@voximplant/react-native-core` manages socket connections, credentials, and global disconnection reasons.

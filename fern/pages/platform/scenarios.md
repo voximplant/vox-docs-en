@@ -10,7 +10,19 @@ Every scenario belongs to an [application]() and executes when triggered by a [r
 
 ## How to create a scenario
 
-<Aside>
+To create your scenario in the Voximplant Control Panel:
+
+1. Open your application in the [Voximplant Control Panel]().
+2. In the application sidebar, navigate to **Scenarios**.
+3. Click **Create scenario** (or the **+** icon).
+4. Enter a name for your scenario (for example, `main-call-flow.js`).
+5. Write or paste your JavaScript code into the built-in Cloud IDE editor.
+6. Click **Save** in the upper-right corner.
+
+<Info title="Programmatic deployment">
+You can also create, update, and manage scenarios programmatically using the [Management API]() or automate your deployment pipeline directly from your local IDE with [VoxEngine CI]().
+</Info>
+
 ```javascript title="Example scenario"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   const call = e.call;
@@ -27,20 +39,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
-
-To create your scenario in the Voximplant Control Panel:
-
-1. Open your application in the [Voximplant Control Panel]().
-2. In the application sidebar, navigate to **Scenarios**.
-3. Click **Create scenario** (or the **+** icon).
-4. Enter a name for your scenario (for example, `main-call-flow.js`).
-5. Write or paste your JavaScript code into the built-in Cloud IDE editor.
-6. Click **Save** in the upper-right corner.
-
-<Info title="Programmatic deployment">
-You can also create, update, and manage scenarios programmatically using the [Management API]() or automate your deployment pipeline directly from your local IDE with [VoxEngine CI]().
-</Info>
 
 ---
 

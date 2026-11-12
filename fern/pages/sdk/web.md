@@ -18,15 +18,13 @@ For all new integrations, use Web SDK v5. Designed for modern web development, W
 
 ## Add Voximplant libraries to your project
 
-<Aside>
+Web SDK v5 is distributed as an NPM package. Add the `@voximplant/websdk` package to your project using your preferred package manager:
+
 ```bash title="Install Web SDK v5"
 npm install @voximplant/websdk --save
 # or
 yarn add @voximplant/websdk
 ```
-</Aside>
-
-Web SDK v5 is distributed as an NPM package. Add the `@voximplant/websdk` package to your project using your preferred package manager:
 
 Pin an exact SDK version in your `package.json` file. For available versions, refer to the [Web SDK v5 changelog]().
 
@@ -34,7 +32,10 @@ Specifying an exact version across development and production environments helps
 
 ## Initialize the SDK
 
-<Aside>
+Web SDK v5 uses a modular architecture built around an IoC container. To get started, initialize the Core instance via [Core.init]().
+
+The Client module is built in and accessible directly via the [core.client]() property. To extend functionality (for example, to add voice and video calls or media stream management), register optional module loaders via [Core.registerModules]():
+
 ```javascript title="Initialize and register modules"
 import { Core } from '@voximplant/websdk';
 import { CallLoader } from '@voximplant/websdk/modules/call-manager';
@@ -49,13 +50,9 @@ core.registerModules([
   CallLoader(),
 ]);
 ```
-</Aside>
 
-Web SDK v5 uses a modular architecture built around an IoC container. To get started, initialize the Core instance via [Core.init]().
+To reduce your initial bundle size, you can load Voximplant modules asynchronously on demand. Modern bundlers like Webpack or Vite will automatically split these dynamic imports into separate chunks:
 
-The Client module is built in and accessible directly via the [core.client]() property. To extend functionality (for example, to add voice and video calls or media stream management), register optional module loaders via [Core.registerModules]():
-
-<Aside>
 ```javascript title="Dynamic module loading"
 // 1. Dynamically import and register the module on demand
 const NoiseSuppressionBalancedModule = import('@voximplant/websdk/modules/noise-suppression-balanced');
@@ -68,9 +65,6 @@ NoiseSuppressionBalancedModule.then(({ NoiseSuppressionBalancedLoader }) => {
 import { noiseSuppressionBalancedToken } from '@voximplant/websdk/modules/noise-suppression-balanced';
 const noiseSuppression = await core.getModuleAsync(noiseSuppressionBalancedToken);
 ```
-</Aside>
-
-To reduce your initial bundle size, you can load Voximplant modules asynchronously on demand. Modern bundlers like Webpack or Vite will automatically split these dynamic imports into separate chunks:
 
 ## Connect and log in
 
@@ -85,7 +79,10 @@ The [Client]() interface provides API methods for connection and user authentica
 When initializing and connecting the SDK to the Voximplant Cloud, you need to specify the node to connect to. Your node is bound to your Voximplant account. To find which node your account belongs to, log in to your control panel and check the **Credentials for working with API, SDK, SIP** section on the main dashboard.
 </Info>
 
-<Aside>
+Failed [Client.connect()]() and [Client.login()]() calls reject their promises with typed error objects derived from base error classes: [ConnectionError]() and [LoginError]().
+
+You can use standard `try...catch` blocks and `instanceof` checks to handle connection and authentication failures globally:
+
 ```javascript title="Connection and authentication with error handling"
 import { 
   Core, 
@@ -119,11 +116,6 @@ try {
   }
 }
 ```
-</Aside>
-
-Failed [Client.connect()]() and [Client.login()]() calls reject their promises with typed error objects derived from base error classes: [ConnectionError]() and [LoginError]().
-
-You can use standard `try...catch` blocks and `instanceof` checks to handle connection and authentication failures globally:
 
 ### Connection events and state tracking
 
@@ -136,7 +128,8 @@ Key mechanisms:
   - [UserInitiated]() — Disconnected intentionally via a [Client.disconnect()]() call.
 - [Client.state]() — A read-only watchable that reflects the current [ClientState](): `Connecting`, `Connected`, `LoggingIn`, `LoggedIn`, `Disconnecting`, `Disconnected`, or `Reconnecting`.
 
-<Aside>
+Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
+
 ```javascript title="Listen to connection events and state"
 import {
   Core,
@@ -163,9 +156,6 @@ client.state.watch((newState) => {
   }
 });
 ```
-</Aside>
-
-Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
 
 ## Web SDK demos
 
@@ -174,14 +164,12 @@ To accelerate your integration, explore the reference applications available in 
 - **Audio Call Demo** — A complete audio calling application built with Vue.js 3 and TypeScript. It demonstrates user authentication, audio calls to Voximplant users, SIP addresses, and phone numbers, audio device management, call controls, DTMF tone sending, and incoming call handling.
 - **Push Service Demo** — Extends the Audio Call Demo with Firebase Cloud Messaging (FCM) push notifications. It shows how to register push tokens via the `PushService` module, configure service workers, and support Progressive Web App (PWA) features.
 
-<Aside>
+Each demo is self-contained. To run a demo locally, navigate to its directory and run:
+
 ```bash title="Run demo applications locally"
 yarn install
 yarn dev
 ```
-</Aside>
-
-Each demo is self-contained. To run a demo locally, navigate to its directory and run:
 
 Refer to each example's `README.md` file for detailed configuration and setup instructions.
 
@@ -197,13 +185,11 @@ Web SDK v4 is distributed via a CDN or the legacy `voximplant-websdk` NPM packag
 
 ### CDN
 
-<Aside>
+Include the following script tag in your HTML file to load the legacy SDK:
+
 ```html title="Load Web SDK v4 via CDN"
 <script type="text/javascript" src="https://unpkg.com/voximplant-websdk@VERSION"></script>
 ```
-</Aside>
-
-Include the following script tag in your HTML file to load the legacy SDK:
 
 Replace `VERSION` with an exact version from the [Web SDK v4 changelog]().
 
@@ -213,15 +199,13 @@ We recommend specifying an exact SDK version when building both development and 
 
 ### NPM
 
-<Aside>
+If you use a package manager, install the legacy `voximplant-websdk` package:
+
 ```bash title="Install Web SDK v4 via NPM"
 npm install voximplant-websdk --save
 # or
 yarn add voximplant-websdk
 ```
-</Aside>
-
-If you use a package manager, install the legacy `voximplant-websdk` package:
 
 ### Initialize the SDK
 
@@ -229,7 +213,8 @@ If you use a package manager, install the legacy `voximplant-websdk` package:
 When initializing and connecting the SDK to the Voximplant Cloud, you need to specify the node to connect to. Your node is bound to your Voximplant account. To find which node your account belongs to, log in to your control panel and check the **Credentials for working with API, SDK, SIP** section on the main dashboard.
 </Info>
 
-<Aside>
+Obtain the Voximplant client instance via [VoxImplant.getInstance]() and initialize it with [Client.init]():
+
 ```javascript title="Initialize Web SDK v4"
 const sdk = VoxImplant.getInstance();
 // Specify your account's assigned node.
@@ -244,13 +229,11 @@ try {
   console.error('SDK initialization failed:', error);
 }
 ```
-</Aside>
-
-Obtain the Voximplant client instance via [VoxImplant.getInstance]() and initialize it with [Client.init]():
 
 ### Legacy connection and authentication flow
 
-<Aside>
+To establish a connection to the Voximplant Cloud, use the [Client.connect]() method. Once connected, authenticate the user with the [Client.login]() method:
+
 ```javascript title="Web SDK v4 connection and login"
 const sdk = VoxImplant.getInstance();
 // Specify your account's assigned node.
@@ -280,8 +263,5 @@ const handleLogin = async () => {
   }
 };
 ```
-</Aside>
-
-To establish a connection to the Voximplant Cloud, use the [Client.connect]() method. Once connected, authenticate the user with the [Client.login]() method:
 
 For detailed documentation on the legacy API, see the [Web SDK v4 reference]().

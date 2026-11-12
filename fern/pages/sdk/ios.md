@@ -34,7 +34,8 @@ SDK Products:
 
 ### Integration via SPM Package Manifest
 
-<Aside>
+If you are developing inside a Swift package, declare the dependency in your `Package.swift` file and link the necessary products to your target:
+
 ```swift title="Package.swift dependency declaration"
 // Package.swift
 dependencies: [
@@ -51,9 +52,6 @@ targets: [
     )
 ]
 ```
-</Aside>
-
-If you are developing inside a Swift package, declare the dependency in your `Package.swift` file and link the necessary products to your target:
 
 <Info title="Backward compatibility">
 The Voximplant Swift Package does not strictly follow Semantic Versioning (SemVer), and backward compatibility between minor releases is not guaranteed. Always review the [SDK Changelog]() before updating versions. Use exact or `upToNextMinor` dependency requirements to prevent unexpected breaking changes.
@@ -116,7 +114,8 @@ If your macOS app uses the [App Sandbox](), configure the following capabilities
 
 ## Initialize the SDK
 
-<Aside>
+In Voximplant SDK v3, connection and user authentication are managed via the thread-safe, singleton [VIClient]() instance. Obtain the shared instance and assign a session delegate to listen for global connection and session lifecycle events:
+
 ```swift title="Initialize VIClient shared instance"
 import VoximplantCore
 
@@ -126,9 +125,6 @@ let client = VIClient.shared
 // Assign your class as the delegate to receive session events
 client.delegate = self
 ```
-</Aside>
-
-In Voximplant SDK v3, connection and user authentication are managed via the thread-safe, singleton [VIClient]() instance. Obtain the shared instance and assign a session delegate to listen for global connection and session lifecycle events:
 
 Configure the client whenever appropriate for your application's architecture. Ensure session listeners are assigned before initiating connections or authenticating users.
 
@@ -149,7 +145,8 @@ When initializing and connecting the SDK to the Voximplant Cloud, you need to sp
 
 ### Connection and authentication flow
 
-<Aside>
+Configure the session delegate, connect to the Voximplant Cloud using your account's node, and authenticate a user upon establishing a successful connection:
+
 ```swift title="Connect and log in with VIClient"
 import Foundation
 import VoximplantCore
@@ -202,9 +199,6 @@ final class VoxClientManager: NSObject, VIClientSessionDelegate {
     }
 }
 ```
-</Aside>
-
-Configure the session delegate, connect to the Voximplant Cloud using your account's node, and authenticate a user upon establishing a successful connection:
 
 ## iOS SDK demos
 
@@ -234,7 +228,12 @@ Unlike SDK v3, SDK v2 is distributed as a single, monolithic package supporting 
 
 #### Integration via CocoaPods
 
-<Aside>
+1. Install CocoaPods (refer to the [CocoaPods getting started guide]()).
+2. If your project lacks a Podfile, create one by running `pod init` in your project directory.
+3. Add the `VoxImplantSDK` pod to your Podfile.
+4. Run `pod install` in your terminal to install the dependency.
+5. Open your project via the generated `.xcworkspace` file going forward.
+
 ```ruby title="Podfile"
 platform :ios, '12.0'
 use_frameworks!
@@ -243,13 +242,6 @@ target 'MyApp' do
   pod 'VoxImplantSDK'
 end
 ```
-</Aside>
-
-1. Install CocoaPods (refer to the [CocoaPods getting started guide]()).
-2. If your project lacks a Podfile, create one by running `pod init` in your project directory.
-3. Add the `VoxImplantSDK` pod to your Podfile.
-4. Run `pod install` in your terminal to install the dependency.
-5. Open your project via the generated `.xcworkspace` file going forward.
 
 <Info title="Bitcode support">
 Bitcode support was discontinued starting with SDK version 2.48.0.
@@ -264,7 +256,8 @@ In Xcode:
 3. Enter the package repository URL: `https://github.com/voximplant/ios-sdk-releases.git`
 4. Set the dependency rule to select a 2.x version. Refer to the [iOS SDK v2 Changelog]() for release notes.
 
-<Aside>
+When declaring the dependency within a `Package.swift` file, add the repository and link the product to your target:
+
 ```swift title="Package.swift (SDK v2)"
 // Package.swift
 dependencies: [
@@ -280,13 +273,13 @@ targets: [
     )
 ]
 ```
-</Aside>
-
-When declaring the dependency within a `Package.swift` file, add the repository and link the product to your target:
 
 ### Legacy connection and authentication flow
 
-<Aside>
+In SDK v2, connection and user authentication are managed using a [VIClient]() instance and the [VIClientSessionDelegate]() protocol.
+
+Instantiate the client, configure the session delegate, handle connection lifecycle callbacks, and authenticate a user:
+
 ```swift title="Web SDK v2 connection and login"
 import Foundation
 import VoxImplantSDK
@@ -337,10 +330,5 @@ final class VoxClientManager: NSObject, VIClientSessionDelegate {
     }
 }
 ```
-</Aside>
-
-In SDK v2, connection and user authentication are managed using a [VIClient]() instance and the [VIClientSessionDelegate]() protocol.
-
-Instantiate the client, configure the session delegate, handle connection lifecycle callbacks, and authenticate a user:
 
 For detailed documentation on the legacy v2 API, refer to the [iOS SDK v2 Reference]().

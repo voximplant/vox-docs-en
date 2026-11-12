@@ -42,7 +42,8 @@ The downloaded JSON file contains your `account_id`, `service_account_id`, `key_
 
 ### Authenticating API requests
 
-<Aside>
+To authenticate a request, your server generates a short-lived JSON Web Token (JWT) signed with your RSA private key (using the RS256 algorithm) and passes it in the HTTP request:
+
 ```bash title="Example Management API request"
 curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
   -H "Authorization: Bearer YOUR_GENERATED_JWT" \
@@ -52,9 +53,6 @@ curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
     "script_custom_data": "{\"customerId\": \"user_987\"}"
   }'
 ```
-</Aside>
-
-To authenticate a request, your server generates a short-lived JSON Web Token (JWT) signed with your RSA private key (using the RS256 algorithm) and passes it in the HTTP request:
 
 For complete step-by-step instructions and code samples in Node.js, Python, and other languages, refer to the [JWT authorization guide]().
 

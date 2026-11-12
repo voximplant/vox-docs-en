@@ -24,14 +24,12 @@ Ensure your development environment meets the following minimum requirements:
 
 ## Add Voximplant libraries to your project
 
-<Aside>
+Install both packages together and keep them at the same version, since `@voximplant/react-native-calls` depends on `@voximplant/react-native-core`:
+
 ```bash title="Install React Native SDK packages"
 npm install @voximplant/react-native-core
 npm install @voximplant/react-native-calls
 ```
-</Aside>
-
-Install both packages together and keep them at the same version, since `@voximplant/react-native-calls` depends on `@voximplant/react-native-core`:
 
 Check the [Changelog]() for the latest release.
 
@@ -51,7 +49,8 @@ Match your React Native SDK version with the native iOS SDK version below:
 | :--- | :--- | :--- | :--- |
 | 2.0.0 | [3.3.0]() | [3.3.0]() | [3.3.0]() |
 
-<Aside>
+In your `Podfile`, replace `<version>` with the corresponding version string from the table above:
+
 ```ruby title="Podfile"
 target 'YourApp' do
   config = use_native_modules!
@@ -63,44 +62,35 @@ target 'YourApp' do
   # use_react_native! and the rest of the target stay as they are
 end
 ```
-</Aside>
-
-In your `Podfile`, replace `<version>` with the corresponding version string from the table above:
-
-<Aside>
-```bash title="Install CocoaPods dependencies"
-cd ios && pod install
-```
-</Aside>
 
 Then run `pod install` in the `ios` directory:
 
+```bash title="Install CocoaPods dependencies"
+cd ios && pod install
+```
+
 #### 2. Configure permissions
 
-<Aside>
+If your application uses `@voximplant/react-native-calls`, add the microphone and camera usage keys to your `ios/YourApp/Info.plist` file:
+
 ```xml title="ios/YourApp/Info.plist"
 <key>NSMicrophoneUsageDescription</key>
 <string>This app requires access to the microphone for voice calls.</string>
 <key>NSCameraUsageDescription</key>
 <string>This app requires access to the camera for video calls.</string>
 ```
-</Aside>
-
-If your application uses `@voximplant/react-native-calls`, add the microphone and camera usage keys to your `ios/YourApp/Info.plist` file:
 
 iOS requires these declarations to display a permission prompt to the user the first time your application attempts to access audio or video hardware. Failing to include these keys will cause your app to crash when initiating or answering a call.
 
 ## Initialize the SDK
 
-<Aside>
+Obtain the [Client]() singleton instance from `@voximplant/react-native-core` when your application starts. This instance provides the methods to connect and log in:
+
 ```javascript title="Obtain Client instance"
 import { Client } from '@voximplant/react-native-core';
 
 const client = Client.getInstance();
 ```
-</Aside>
-
-Obtain the [Client]() singleton instance from `@voximplant/react-native-core` when your application starts. This instance provides the methods to connect and log in:
 
 ## Connect and log in
 
@@ -115,7 +105,8 @@ When connecting the SDK to the Voximplant Cloud, you need to specify the node to
 1. [Client.connect()]() — Establishes a connection to the Voximplant Cloud using your account's assigned node.
 2. [Client.login()]() — Authenticates user credentials against the platform. Failed [Client.connect()]() and [Client.login()]() calls reject their promises with typed error objects derived from base error classes ([ConnectionError]() and [LoginError]()).
 
-<Aside>
+You can use standard `try...catch` blocks and `instanceof` checks to handle connection and authentication failures globally:
+
 ```javascript title="Connect and log in"
 import {
   Client,
@@ -148,9 +139,6 @@ try {
   }
 }
 ```
-</Aside>
-
-You can use standard `try...catch` blocks and `instanceof` checks to handle connection and authentication failures globally:
 
 ### Connection events and state tracking
 
@@ -165,7 +153,8 @@ Key mechanisms:
   * [AlreadyDisconnected]() — The client was already disconnected.
 * [Client.state]() — A read-only watchable reflecting the current [ClientState]().
 
-<Aside>
+Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
+
 ```javascript title="Listen to connection events and state"
 import {
   Client,
@@ -192,9 +181,6 @@ client.state.watch((newState) => {
   }
 });
 ```
-</Aside>
-
-Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
 
 ## React Native SDK demos
 
@@ -222,31 +208,28 @@ React Native SDK v1 is distributed as the `react-native-voximplant` npm package 
 
 ### NPM
 
-<Aside>
+If you use a package manager, install the legacy `react-native-voximplant` package:
+
 ```bash title="Install legacy SDK v1"
 npm install react-native-voximplant --save
 ```
-</Aside>
-
-If you use a package manager, install the legacy `react-native-voximplant` package:
 
 SDK v1 relies on native modules, so it does not work in a project created with `create-react-native-app`, which does not allow custom native modules.
 
 ### Initialize the SDK
 
-<Aside>
+Obtain the client instance with [Voximplant.getInstance]():
+
 ```javascript title="Initialize SDK v1"
 import { Voximplant } from 'react-native-voximplant';
 
 const client = Voximplant.getInstance();
 ```
-</Aside>
-
-Obtain the client instance with [Voximplant.getInstance]():
 
 ### Connect and log in
 
-<Aside>
+To establish a connection to the Voximplant Cloud, use the [Client.connect]() method. Once connected, authenticate the user with the [Client.login]() method:
+
 ```javascript title="Legacy connect and log in"
 import { Voximplant } from 'react-native-voximplant';
 
@@ -274,9 +257,6 @@ const login = async () => {
   }
 };
 ```
-</Aside>
-
-To establish a connection to the Voximplant Cloud, use the [Client.connect]() method. Once connected, authenticate the user with the [Client.login]() method:
 
 For detailed documentation on the legacy API, see the [React Native SDK v1 reference]().
 

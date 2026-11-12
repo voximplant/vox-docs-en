@@ -12,7 +12,8 @@ We recommend using [VoxEngine CI]() to automate scenario deployment when develop
 
 VoxEngine scenarios follow an event-driven architecture, enabling developers to structure application logic by subscribing to and handling platform events.
 
-<Aside>
+Some events are **nested**, meaning you must **first subscribe to a parent event** before accessing child events. For example, to handle [CallEvents](), such as [Connected]() or [ToneReceived](), you must first subscribe to the parent [CallAlerting]() event. Handling [CallAlerting]() provides the [Call]() object, which emits its own events:
+
 ```javascript title="Handle nested call events"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   // The incoming call object is available in e.call
@@ -27,11 +28,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   e.call.addEventListener(CallEvents.Disconnected, () => VoxEngine.terminate());
 });
 ```
-</Aside>
 
-Some events are **nested**, meaning you must **first subscribe to a parent event** before accessing child events. For example, to handle [CallEvents](), such as [Connected]() or [ToneReceived](), you must first subscribe to the parent [CallAlerting]() event. Handling [CallAlerting]() provides the [Call]() object, which emits its own events:
+Without subscribing to the parent event, an **incoming** call object and its child events are not accessible. For **outgoing** calls initiated by the scenario, create the call object directly via call methods:
 
-<Aside>
 ```javascript title="Create and handle an outgoing call"
 VoxEngine.addEventListener(AppEvents.Started, () => {
   // Create an outbound call when the scenario starts
@@ -43,9 +42,6 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
   });
 });
 ```
-</Aside>
-
-Without subscribing to the parent event, an **incoming** call object and its child events are not accessible. For **outgoing** calls initiated by the scenario, create the call object directly via call methods:
 
 <Info title="What is considered an incoming call?">
 When placing a call from a web or mobile SDK, the session consists of two call legs: **SDK → scenario** and **scenario → destination**. The SDK → scenario leg is treated as an incoming call inside the scenario and must be handled using the [CallAlerting]() event. Read [How to process calls in a scenario]() to learn more.

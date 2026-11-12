@@ -12,7 +12,14 @@ Learn more about MCP on the [official website]().
 
 ## Usage
 
-<Aside>
+To connect to an MCP server and interact with its tools:
+
+1. Require the `Modules.MCP` module in your VoxEngine [scenario]().
+2. Create an `MCP.Client` instance using `MCP.createClient()` and configure your connection parameters.
+3. Call `mcpClient.listTools()` to retrieve the list of available tools exposed by the MCP server.
+4. Call `mcpClient.callTool()` to execute a specified tool and receive results back into your scenario.
+5. Listen to `MCP.Client` events (via `MCP.ServerEvents`) to handle responses, errors, and tool outputs within your application logic.
+
 ```javascript title="Working with MCP servers"
 require(Modules.MCP);
 
@@ -91,12 +98,3 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, async ({ call }) => {
 });
 
 ```
-</Aside>
-
-To connect to an MCP server and interact with its tools:
-
-1. Require the `Modules.MCP` module in your VoxEngine [scenario]().
-2. Create an `MCP.Client` instance using `MCP.createClient()` and configure your connection parameters.
-3. Call `mcpClient.listTools()` to retrieve the list of available tools exposed by the MCP server.
-4. Call `mcpClient.callTool()` to execute a specified tool and receive results back into your scenario.
-5. Listen to `MCP.Client` events (via `MCP.ServerEvents`) to handle responses, errors, and tool outputs within your application logic.

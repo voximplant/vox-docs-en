@@ -6,7 +6,10 @@ This section guides you through building an application using the Flutter SDK an
 
 To begin, add the Flutter package to your project as a library dependency.
 
-<Aside>
+**1. Depend on it**
+
+Run the following command to add the Flutter package to your project:
+
 ```bash title="Add dependency"
 flutter pub add flutter_voximplant
 ```
@@ -14,42 +17,34 @@ flutter pub add flutter_voximplant
 dependencies:
   flutter_voximplant: ^3.12.0
 ```
-</Aside>
-
-**1. Depend on it**
-
-Run the following command to add the Flutter package to your project:
 
 This command adds the dependency to your project's `pubspec.yaml` file and executes an implicit `flutter pub get`. Alternatively, your editor might support running `flutter pub get` directly.
-
-<Aside>
-```dart title="Import package"
-import 'package:flutter_voximplant/flutter_voximplant.dart';
-```
-</Aside>
 
 **2. Import it**
 
 In your Dart code, import the package:
 
+```dart title="Import package"
+import 'package:flutter_voximplant/flutter_voximplant.dart';
+```
+
 ## Get started with Flutter SDK for iOS
 
-<Aside>
+To use the Flutter SDK for iOS, add the required microphone and camera usage keys to your `Info.plist` file located in `<project root>/ios/Runner/Info.plist`:
+
 ```xml title="ios/Runner/Info.plist"
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone is required to make voice calls</string>
 <key>NSCameraUsageDescription</key>
 <string>Camera is required to make video calls</string>
 ```
-</Aside>
-
-To use the Flutter SDK for iOS, add the required microphone and camera usage keys to your `Info.plist` file located in `<project root>/ios/Runner/Info.plist`:
 
 These declarations allow your app to access audio and video hardware on Apple devices.
 
 ## Get started with Flutter SDK for Android
 
-<Aside>
+To use the Flutter SDK for Android, ensure Java 8 support is enabled. Open `<project root>/android/app/build.gradle` and add the `compileOptions` block inside the `android` section:
+
 ```groovy title="android/app/build.gradle"
 android {
     // ...
@@ -59,21 +54,16 @@ android {
     }
 }
 ```
-</Aside>
-
-To use the Flutter SDK for Android, ensure Java 8 support is enabled. Open `<project root>/android/app/build.gradle` and add the `compileOptions` block inside the `android` section:
 
 ## Initialize the SDK
 
-<Aside>
+`Client` is the main class of the SDK that provides access to Voximplant functions. To obtain an instance, use the `Voximplant().getClient()` method:
+
 ```dart title="Initialize VIClient"
 import 'package:flutter_voximplant/flutter_voximplant.dart';
 
 VIClient client = Voximplant().getClient();
 ```
-</Aside>
-
-`Client` is the main class of the SDK that provides access to Voximplant functions. To obtain an instance, use the `Voximplant().getClient()` method:
 
 ## Connect to the Voximplant Cloud and log in
 
@@ -81,7 +71,8 @@ VIClient client = Voximplant().getClient();
 When connecting the SDK to the Voximplant Cloud, you need to specify the node to connect to. Your node is bound to your Voximplant account. To find which node your account belongs to, log in to your control panel and check the **Credentials for working with API, SDK, SIP** section on the main dashboard.
 </Info>
 
-<Aside>
+To connect to the Voximplant Cloud and log in, use the `VIClient.getClientState()` method. This method returns the current state of the connection to the platform, allowing you to react accordingly:
+
 ```dart title="Connect and log in"
 Future<String> loginWithPassword(String username, String password) async {
   VIClientState clientState = await _client.getClientState();
@@ -97,9 +88,6 @@ Future<String> loginWithPassword(String username, String password) async {
   return _displayName;
 }
 ```
-</Aside>
-
-To connect to the Voximplant Cloud and log in, use the `VIClient.getClientState()` method. This method returns the current state of the connection to the platform, allowing you to react accordingly:
 
 ## Start implementing functionality
 

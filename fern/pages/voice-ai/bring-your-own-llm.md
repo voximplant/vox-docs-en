@@ -35,7 +35,10 @@ As with STT, you can swap TTS providers dynamically to find the ideal balance of
 
 ## Usage example
 
-<Aside>
+The example below demonstrates how to integrate an external text-based LLM using the [OpenAI Responses API client](). 
+
+You can connect any OpenAI-compatible API endpoint—including self-hosted open-source models (such as vLLM or Ollama) or third-party inference providers—by setting the [baseUrl]() parameter in [OpenAI.ChatCompletionsAPIClientParameters]():
+
 ```javascript title="OpenAI Responses API example"
 require(Modules.OpenAI); // AI responses
 require(Modules.Inworld); // Real-time TTS
@@ -234,8 +237,3 @@ function stopTTS() {
   }
 }
 ```
-</Aside>
-
-The example below demonstrates how to integrate an external text-based LLM using the [OpenAI Responses API client](). 
-
-You can connect any OpenAI-compatible API endpoint—including self-hosted open-source models (such as vLLM or Ollama) or third-party inference providers—by setting the [baseUrl]() parameter in [OpenAI.ChatCompletionsAPIClientParameters]():

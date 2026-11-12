@@ -14,18 +14,6 @@ All Management API requests are sent via HTTPS to our centralized API endpoint:
 https://api.voximplant.com/platform_api/
 ```
 
-<Aside>
-```bash title="Example authenticated API request"
-curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
-  -H "Authorization: Bearer YOUR_GENERATED_JWT" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "rule_id": 12345,
-    "script_custom_data": "{\"orderId\": \"ABC-99\"}"
-  }'
-```
-</Aside>
-
 Authentication uses server-to-server **Service Accounts**. Requests must include a signed JSON Web Token (JWT) in the `Authorization` header:
 
 Refer to the [JWT authorization guide]() for instructions on generating service account private keys and signing tokens in Node.js, Python, or curl.

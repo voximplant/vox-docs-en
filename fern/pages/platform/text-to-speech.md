@@ -24,15 +24,13 @@ You can synthesize speech and send it to your interlocutor before and during an 
 
 To synthesize speech during an incoming call, first [answer a call](). You can also use the [startEarlyMedia]() method to broadcast speech before answering the call to play a greeting or a voicemail prompt.
 
-<Aside>
+To synthesize speech, use the [VoxEngine.createTTSPlayer]() method in your scenario. Pass the text string to synthesize as the first parameter and the options as the second parameter:
+
 ```javascript title="Synthesize speech"
 VoxEngine.createTTSPlayer('Hello, you have created a TTSPlayer, have fun!', {
   voice: VoiceList.Google.en_US_Standard_C
 });
 ```
-</Aside>
-
-To synthesize speech, use the [VoxEngine.createTTSPlayer]() method in your scenario. Pass the text string to synthesize as the first parameter and the options as the second parameter:
 
 ### Configuring the voice
 
@@ -40,7 +38,8 @@ You can choose a text-to-speech voice from the [VoiceList](). The default voice 
 
 If you use a custom voice with one of the providers from the [VoiceList](), please contact support to activate this feature for your account and receive setup instructions. For example, for [VoiceList.Yandex]() you must specify the voice folder ID using the [yandexCustomModelName]() property.
 
-<Aside>
+You can also configure other text-to-speech options such as **pitch**, **rate**, and **volume**. To specify them, use the [CallSayParameters.ttsOptions]() parameter with the [Call.say]() method, or the [TTSPlayerParameters.ttsOptions]() parameter with the [VoxEngine.createTTSPlayer]() method:
+
 ```javascript title="Configure the voice options"
 VoxEngine.createTTSPlayer('Hello from the cloud', {
   voice: VoiceList.Amazon.en_US_Joanna,
@@ -51,9 +50,6 @@ VoxEngine.createTTSPlayer('Hello from the cloud', {
   }
 });
 ```
-</Aside>
-
-You can also configure other text-to-speech options such as **pitch**, **rate**, and **volume**. To specify them, use the [CallSayParameters.ttsOptions]() parameter with the [Call.say]() method, or the [TTSPlayerParameters.ttsOptions]() parameter with the [VoxEngine.createTTSPlayer]() method:
 
 These options accept the following values:
 
@@ -67,27 +63,23 @@ If you want to apply these settings to the entire text, you do not need to use t
 The supported tag list depends on the speech provider. You can find these lists in the provider's official documentation. If you use an unsupported tag, the [PlaybackFinished]() event is triggered with a **400** error.
 </Warning>
 
-<Aside>
+For example, when using [VoiceList.Amazon](), use the `prosody` tag to control the **volume**, **rate**, or **pitch** of a selected text fragment. Here is how to make a fragment sound higher in pitch:
+
 ```javascript title="Amazon's prosody tag"
 VoxEngine.createTTSPlayer(
   "<speak>Do you like synthesized speech <prosody pitch='high'>with a pitch that is higher than normal?></prosody></speak>",
   { voice: VoiceList.Amazon.en_US_Joanna }
 );
 ```
-</Aside>
 
-For example, when using [VoiceList.Amazon](), use the `prosody` tag to control the **volume**, **rate**, or **pitch** of a selected text fragment. Here is how to make a fragment sound higher in pitch:
+Here is another example using Amazon's `say-as` tag:
 
-<Aside>
 ```javascript title="Amazon's say-as tag"
 VoxEngine.createTTSPlayer(
   "<speak>I was born on <say-as interpret-as='date' format='mdy'>12-31-1990</say-as></speak>",
   { voice: VoiceList.Amazon.en_US_Joanna }
 );
 ```
-</Aside>
-
-Here is another example using Amazon's `say-as` tag:
 
 ### Passing parameters directly to the provider
 
@@ -100,7 +92,8 @@ There are two ways to pass text-to-speech parameters to your provider:
 You must specify parameters in the specific format required by your provider. Refer to your provider's API reference for format specifications.
 </Warning>
 
-<Aside>
+Here is a complete scenario example showing how to use the request parameter with [VoiceList.Google]():
+
 ```javascript title="Request parameter for Google TTS"
 let call;
 
@@ -132,11 +125,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
 
-Here is a complete scenario example showing how to use the request parameter with [VoiceList.Google]():
+Here are examples of the request parameter for common providers:
 
-<Aside>
 ```javascript title="Request parameter examples"
 // This is not a full scenario
 // This is a list of examples for different providers
@@ -185,9 +176,6 @@ request: { // 'UtteranceSynthesisRequest' parameter in the YandexV3 documentatio
     ],
 }
 ```
-</Aside>
-
-Here are examples of the request parameter for common providers:
 
 <Warning title="Please note">
 Different providers require different parameters. In some cases, omitting a parameter causes an error; in others, default values are applied. For example, the `model_id` parameter for [ElevenLabs]() specifies the [selected model](). If omitted, `eleven_multilingual_v2` is used by default. Check your chosen provider's documentation for detailed parameter requirements.
@@ -215,7 +203,8 @@ Unlike standard text-to-speech, where you submit a complete text string upfront,
 
 Voximplant offers an in-house realtime text-to-speech service called VoxTTS (*currently available in Russian only*).
 
-<Aside>
+To use VoxTTS in your application:
+
 ```javascript title="VoxTTS scenario example"
 require(Modules.VoxTTS);
 
@@ -260,9 +249,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 });
 
 ```
-</Aside>
-
-To use VoxTTS in your application:
 
 1. Require the `Modules.VoxTTS` module in your [scenario]().
 2. Create a `VoxTTS.RealtimeTTSPlayer` instance using the `VoxTTS.createRealtimeTTSPlayer` method and provide your parameters.
@@ -271,7 +257,8 @@ To use VoxTTS in your application:
 
 #### Stressed syllables
 
-<Aside>
+You can manually specify which vowel to stress by adding an [acute accent]() to the vowel in the text:
+
 ```javascript title="Stressed syllables example"
 const sendParameters = {
   'send_text': {
@@ -281,13 +268,11 @@ const sendParameters = {
   'contextId': 'ctx-1',
 };
 ```
-</Aside>
-
-You can manually specify which vowel to stress by adding an [acute accent]() to the vowel in the text:
 
 ### Google
 
-<Aside>
+To use realtime text-to-speech from Google:
+
 ```javascript title="Google Realtime TTS"
 require(Modules.Google);
 
@@ -323,9 +308,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 });
 
 ```
-</Aside>
-
-To use realtime text-to-speech from Google:
 
 1. Require the `Modules.Google` module in your [scenario]().
 2. Create a `Google.RealtimeTTSPlayer` instance using the `Google.createRealtimeTTSPlayer` method and provide your parameters.
@@ -336,7 +318,12 @@ Learn more about Google Cloud Text-to-Speech V1 in the [official documentation](
 
 ### ElevenLabs
 
-<Aside>
+To use ElevenLabs realtime text-to-speech, require the [Modules.ElevenLabs]() module in your [scenario]().
+
+Use the [ElevenLabs.createRealtimeTTSPlayer]() method to create a realtime TTS player with the desired parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `ElevenLabs.RealtimeTTSPlayer`.
+
+Listen to [ElevenLabs.RealtimeTTSPlayer]() events to implement your application logic.
+
 ```javascript title="ElevenLabs Realtime TTS"
 require(Modules.ElevenLabs);
 
@@ -377,17 +364,11 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
   call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
 });
 ```
-</Aside>
-
-To use ElevenLabs realtime text-to-speech, require the [Modules.ElevenLabs]() module in your [scenario]().
-
-Use the [ElevenLabs.createRealtimeTTSPlayer]() method to create a realtime TTS player with the desired parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `ElevenLabs.RealtimeTTSPlayer`.
-
-Listen to [ElevenLabs.RealtimeTTSPlayer]() events to implement your application logic.
 
 #### Custom API keys
 
-<Aside>
+If you have a personal API key for ElevenLabs, specify it in your scenario to personalize your setup (for example, to use custom voices). For ElevenLabs, pass the custom API key in the `headers` parameter:
+
 ```javascript title="Custom API key for ElevenLabs"
 require(Modules.ElevenLabs);
 
@@ -439,13 +420,15 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
   call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
 });
 ```
-</Aside>
-
-If you have a personal API key for ElevenLabs, specify it in your scenario to personalize your setup (for example, to use custom voices). For ElevenLabs, pass the custom API key in the `headers` parameter:
 
 ### Cartesia
 
-<Aside>
+To use Cartesia, require the [Modules.Cartesia]() module in your [scenario]().
+
+Use the [Cartesia.createRealtimeTTSPlayer]() method to create a realtime TTS player with your desired parameters.
+
+Listen to [Cartesia.RealtimeTTSPlayer]() events to implement your application logic.
+
 ```javascript title="Cartesia Realtime TTS"
 require(Modules.Cartesia);
 
@@ -509,13 +492,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
   call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
 });
 ```
-</Aside>
-
-To use Cartesia, require the [Modules.Cartesia]() module in your [scenario]().
-
-Use the [Cartesia.createRealtimeTTSPlayer]() method to create a realtime TTS player with your desired parameters.
-
-Listen to [Cartesia.RealtimeTTSPlayer]() events to implement your application logic.
 
 #### Flush request
 
@@ -527,7 +503,8 @@ When all generated audio chunks finish playing, the `AudioChunksPlaybackFinished
 
 #### Custom API keys
 
-<Aside>
+If you have a personal API key for Cartesia, specify it in the `cartesiaRealtimeTTSPlayerParameters` object to use your custom voices and settings:
+
 ```javascript title="Custom API key for Cartesia"
 require(Modules.Cartesia);
 
@@ -591,13 +568,15 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
   call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
 });
 ```
-</Aside>
-
-If you have a personal API key for Cartesia, specify it in the `cartesiaRealtimeTTSPlayerParameters` object to use your custom voices and settings:
 
 ### Inworld
 
-<Aside>
+To use Inworld realtime text-to-speech, require the `Modules.Inworld` module in your [scenario]().
+
+Use the `Inworld.createRealtimeTTSPlayer` method to create a realtime TTS player and configure your parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `Inworld.RealtimeTTSPlayer`.
+
+Listen to `Inworld.RealtimeTTSPlayer` events to implement your application logic. When all generated audio chunks finish playing, the `AudioChunksPlaybackFinished` event is triggered.
+
 ```javascript title="Inworld Realtime TTS"
 require(Modules.Inworld);
 
@@ -646,13 +625,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
 });
 
 ```
-</Aside>
-
-To use Inworld realtime text-to-speech, require the `Modules.Inworld` module in your [scenario]().
-
-Use the `Inworld.createRealtimeTTSPlayer` method to create a realtime TTS player and configure your parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `Inworld.RealtimeTTSPlayer`.
-
-Listen to `Inworld.RealtimeTTSPlayer` events to implement your application logic. When all generated audio chunks finish playing, the `AudioChunksPlaybackFinished` event is triggered.
 
 <Info title="Inworld API reference">
 You can find more information about this API on the Inworld [documentation website]().
@@ -660,7 +632,8 @@ You can find more information about this API on the Inworld [documentation websi
 
 #### Custom API keys
 
-<Aside>
+If you have a personal API key for Inworld, specify it in the `inworldRealtimeTTSPlayerParameters` object using the Basic (Base64) key from the Inworld developer portal. Refer to the [Inworld documentation]() for more details.
+
 ```javascript title="Custom API key for Inworld"
 require(Modules.Inworld);
 
@@ -703,15 +676,22 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
   call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
 });
 ```
-</Aside>
-
-If you have a personal API key for Inworld, specify it in the `inworldRealtimeTTSPlayerParameters` object using the Basic (Base64) key from the Inworld developer portal. Refer to the [Inworld documentation]() for more details.
 
 ### xAI
 
 xAI provides a realtime text-to-speech service over WebSockets. Learn more about the streaming TTS API [in their documentation]().
 
-<Aside>
+To use xAI realtime speech synthesis:
+
+- Require `Modules.XAI` in your scenario.
+- Create an `XAI.RealtimeTTSPlayer` instance using the `XAI.createRealtimeTTSPlayer` method and provide your parameters.
+- Send media between `Call` and `XAI.RealtimeTTSPlayer` using `*.sendMedia` or `VoxEngine.sendMediaBetween`.
+- Listen to `XAI.RealtimeTTSPlayer` events (via the `PlayerEvents` event list) and implement your application logic.
+
+Connection parameters (such as `voice` and `language`) are passed in `connectionParameters` when creating the player. Voximplant maps them to xAI WebSocket query parameters and applies telephony audio settings (`codec=pcm`, `sample_rate=16000`).
+
+Utterances are sent as native xAI WebSocket messages using `player.send()`.
+
 ```javascript title="xAI scenario example"
 require(Modules.XAI);
 
@@ -744,15 +724,3 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 });
 
 ```
-</Aside>
-
-To use xAI realtime speech synthesis:
-
-- Require `Modules.XAI` in your scenario.
-- Create an `XAI.RealtimeTTSPlayer` instance using the `XAI.createRealtimeTTSPlayer` method and provide your parameters.
-- Send media between `Call` and `XAI.RealtimeTTSPlayer` using `*.sendMedia` or `VoxEngine.sendMediaBetween`.
-- Listen to `XAI.RealtimeTTSPlayer` events (via the `PlayerEvents` event list) and implement your application logic.
-
-Connection parameters (such as `voice` and `language`) are passed in `connectionParameters` when creating the player. Voximplant maps them to xAI WebSocket query parameters and applies telephony audio settings (`codec=pcm`, `sample_rate=16000`).
-
-Utterances are sent as native xAI WebSocket messages using `player.send()`.

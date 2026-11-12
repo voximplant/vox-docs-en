@@ -13,30 +13,6 @@ The SDK is split into two specialized products:
 * **`VoximplantCore`**: Manages cloud connectivity, socket lifecycles, and user authentication with the Voximplant platform.
 * **`VoximplantCalls`**: Handles WebRTC media pipelines, audio/video call controls, camera inputs, and multi-party conferencing.
 
-<Aside>
-```swift title="Initialize and authenticate with VIClient"
-import VoximplantCore
-import VoximplantCalls
-
-// 1. Obtain the shared client singleton
-let client = VIClient.shared
-client.delegate = self
-
-// 2. Connect to the assigned cloud node
-client.connect(to: VINode.nodeN) { error in
-    guard error == nil else { return }
-
-    // 3. Authenticate with user credentials
-    client.login(
-        withPassword: "password",
-        user: "user@app.account.voximplant.com"
-    ) { loginResult, error in
-        print("Logged in as \(loginResult?.displayName ?? "User")")
-    }
-}
-```
-</Aside>
-
 Applications interact with the SDK through centralized singleton managers and delegate callbacks:
 
 * **Client management**: The [VIClient]() singleton is your primary interface for connecting to your account's node and authenticating users.

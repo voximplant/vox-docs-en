@@ -2,9 +2,10 @@
 
 Voximplant supports audio and video conferences with up to 100 participants.
 
-## Scenario setup
+Include the [Conference module]() in your scenario. Then use the [createConference]() method to create a conference call.
 
-<Aside>
+For a **voice conference**, when an incoming call arrives, first, answer it, then add it to the conference via the [sendMediaBetween]() method. See the code example to understand how it works.
+
 ```javascript title="Voice conference scenario"
 require(Modules.Conference);
 
@@ -40,13 +41,9 @@ function handleCallDisconnected(e) {
   player.sendMediaTo(conf);
 }
 ```
-</Aside>
 
-Include the [Conference module]() in your scenario. Then use the [createConference]() method to create a conference call.
+For a **video conference**, answer the incoming call and use the [Conference.add]() method instead. Here is a typical video conference scenario with some extra tools for your convenience. Take a closer look to understand how it works.
 
-For a **voice conference**, when an incoming call arrives, first, answer it, then add it to the conference via the [sendMediaBetween]() method. See the code example on the right to understand how it works.
-
-<Aside>
 ```javascript title="Video conference scenario"
 require(Modules.Conference);
 
@@ -97,11 +94,11 @@ function checkForTermination() {
   }
 }
 ```
-</Aside>
 
-For a **video conference**, answer the incoming call and use the [Conference.add]() method instead. Here is a typical video conference scenario with some extra tools for your convenience. Take a closer look to understand how it works.
+This scenario allows Voximplant SDK users to join the conference call. If you want to have incoming SIP/phone calls into your conference, you need to create another **gateway scenario**.
 
-<Aside>
+The gateway scenario accepts incoming calls from SIP PBX and phone numbers and uses the [callConference]() method to call the conference scenario.
+
 ```javascript title="Gateway scenario"
 // Handle incoming call from PSTN/SIP/SDK
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -117,11 +114,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   VoxEngine.easyProcess(e.call, conf_call);
 });
 ```
-</Aside>
-
-This scenario allows Voximplant SDK users to join the conference call. If you want to have incoming SIP/phone calls into your conference, you need to create another **gateway scenario**.
-
-The gateway scenario accepts incoming calls from SIP PBX and phone numbers and uses the [callConference]() method to call the conference scenario.
 
 Create [routing rules]() for the conference and gateway scenarios. The rule pattern for the conference scenario should be the same string you pass to the [callConference]() method. In our example, it is the **conferenceId** string.
 
@@ -133,13 +125,11 @@ After you create routing rules, you can [call the application]() to join the con
 
 ## How to join as a viewer
 
-<Aside>
+You can join an audio or a video conference only as a viewer. Viewers do not send audio and video to the conference, and can only receive audio and video, depending on the conference.
+
 ```javascript title="joinAsViewer() method example"
 const viewerCall = client.joinAsViewer('my_conf');
 ```
-</Aside>
-
-You can join an audio or a video conference only as a viewer. Viewers do not send audio and video to the conference, and can only receive audio and video, depending on the conference.
 
 To join a conference as a viewer, use the [joinAsViewer]() method. It accepts two parameters:
 
@@ -150,7 +140,8 @@ To stop a viewer call, use the [ViewerCall.hangup()]() method.
 
 ## How to make a call from a conference
 
-<Aside>
+To make a call from a conference, simply call a Voximplant user/a phone number/a sip address as explained in the [voice calls]() article, then handle the [Connected]() event. When the event is triggered, use the [sendMediaBetween]() method for a voice conference and the [Conference.add]() method for a video conference to unite the call with the conference.
+
 ```javascript title="Call from a conference"
 const call = VoxEngine.callPSTN('first phone number to call', 'rented or verified phone number');
 
@@ -158,9 +149,6 @@ call.addEventListener(CallEvents.Connected, (e) => {
   VoxEngine.sendMediaBetween(conf, e.call);
 });
 ```
-</Aside>
-
-To make a call from a conference, simply call a Voximplant user/a phone number/a sip address as explained in the [voice calls]() article, then handle the [Connected]() event. When the event is triggered, use the [sendMediaBetween]() method for a voice conference and the [Conference.add]() method for a video conference to unite the call with the conference.
 
 ## Frequently asked questions
 

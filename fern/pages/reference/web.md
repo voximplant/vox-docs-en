@@ -13,26 +13,6 @@ The SDK is organized around a centralized Core container with modular extensions
 * **Core runtime**: The base `@voximplant/websdk` package provides container initialization ([Core]()) and the built-in [Client]() for connection and authentication.
 * **Module loaders**: Optional capabilities are registered through loaders, such as `CallLoader` for voice/video calls, `StreamLoader` for media devices, and `NoiseSuppressionBalancedLoader` for AI audio filtering.
 
-<Aside>
-```javascript title="Initialize Web SDK v5 and register modules"
-import { Core } from '@voximplant/websdk';
-import { CallLoader } from '@voximplant/websdk/modules/call-manager';
-import { StreamLoader } from '@voximplant/websdk/modules/stream';
-
-// 1. Initialize the Core IoC container
-const core = Core.init();
-
-// 2. Register required feature modules
-core.registerModules([
-  StreamLoader(),
-  CallLoader(),
-]);
-
-// 3. Access the built-in client for connection and login
-const { client } = core;
-```
-</Aside>
-
 Applications initialize the Core container, register necessary modules, and interact with the platform through watchables and event emitters:
 
 * **Connection & authentication**: The [Client]() interface handles socket connectivity to your account's assigned node and manages login credentials.

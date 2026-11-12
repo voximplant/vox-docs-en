@@ -29,7 +29,8 @@ In the Web SDK, during a peer-to-peer call with two participants, `CallStats` an
 
 ### Receiving statistics
 
-<Aside>
+On iOS, subscribe to `VICallDelegate` and implement the `didReceiveStatistics` method to receive `VICallStats`:
+
 ```swift title="iOS (Swift)"
 // 1. Conform to VICallDelegate
 class CallManager: NSObject, VICallDelegate {
@@ -71,11 +72,9 @@ class CallManager: NSObject, VICallDelegate {
 
 @end
 ```
-</Aside>
 
-On iOS, subscribe to `VICallDelegate` and implement the `didReceiveStatistics` method to receive `VICallStats`:
+On Android, implement `ICallListener` and process incoming telemetry in the `onCallStatsReceived` callback:
 
-<Aside>
 ```kotlin title="Android (Kotlin)"
 // 1. Implement ICallListener
 class CallManager : ICallListener {
@@ -107,26 +106,22 @@ class CallManager implements ICallListener {
     }
 }
 ```
-</Aside>
-
-On Android, implement `ICallListener` and process incoming telemetry in the `onCallStatsReceived` callback:
 
 ### Adjusting collection intervals
 
-By default, telemetry events arrive every 5 seconds on iOS and Android. You can customize the reporting frequency by modifying the `statsCollectionInterval` property (in milliseconds):
+By default, telemetry events arrive every 5 seconds on iOS and Android. You can customize the reporting frequency by modifying the `statsCollectionInterval` property (in milliseconds).
 
-<Aside>
+On iOS, configure `statsCollectionInterval` on your `VICallSettings` object before initiating or answering a call:
+
 ```swift title="Set collection interval (iOS)"
 let settings = VICallSettings()
 settings.statsCollectionInterval = 1000 // Report stats every 1 second
 
 self.call = self.client?.call(numberField.text!, settings: settings)
 ```
-</Aside>
 
-On iOS, configure `statsCollectionInterval` on your `VICallSettings` object before initiating or answering a call:
+On Android, configure `statsCollectionInterval` on your `ClientConfig` instance during client initialization:
 
-<Aside>
 ```kotlin title="Set collection interval (Android Kotlin)"
 val config = ClientConfig()
 config.statsCollectionInterval = 1000 // Report stats every 1 second
@@ -147,9 +142,6 @@ IClient client = Voximplant.getClientInstance(
     config
 );
 ```
-</Aside>
-
-On Android, configure `statsCollectionInterval` on your `ClientConfig` instance during client initialization:
 
 <Info title="RAM utilization">
 Telemetry is buffered in memory during the interval specified by `statsCollectionInterval`. Shorter intervals deliver faster updates, while longer intervals accumulate larger data batches in memory before dispatching.

@@ -20,7 +20,12 @@ For all new integrations, we recommend using Android SDK v3, which features a mo
 
 The Voximplant Android SDK is modular and uses a Bill of Materials (BOM) to simplify dependency management. By using the BOM, you only specify the SDK version once, and all other modules automatically resolve to compatible versions.
 
-<Aside>
+Add the BOM and the required modules to your module-level build file (`build.gradle.kts` or `build.gradle`). You can find the latest version and library sizes in the [changelog]().
+
+- `android-sdk-core` — Required for initialization, connection, and user authentication.
+- `android-sdk-calls` — Required to support audio and video calling features.
+- `android-sdk-renderer-compose` — Provides Jetpack Compose components and utilities to render video streams (such as local or remote camera feeds) in a declarative Compose-based user interface.
+
 ```kotlin title="build.gradle.kts dependencies"
 dependencies {
     // ...
@@ -31,15 +36,9 @@ dependencies {
     implementation("com.voximplant:android-sdk-renderer-compose")
 }
 ```
-</Aside>
 
-Add the BOM and the required modules to your module-level build file (`build.gradle.kts` or `build.gradle`). You can find the latest version and library sizes in the [changelog]():
+The SDK requires Java 17 support. Configure it in your `build.gradle.kts` file:
 
-- `android-sdk-core` — Required for initialization, connection, and user authentication.
-- `android-sdk-calls` — Required to support audio and video calling features.
-- `android-sdk-renderer-compose` — Provides Jetpack Compose components and utilities to render video streams (such as local or remote camera feeds) in a declarative Compose-based user interface.
-
-<Aside>
 ```kotlin title="Java 17 compatibility"
 android {
     // ...
@@ -52,9 +51,6 @@ android {
     }
 }
 ```
-</Aside>
-
-The SDK requires Java 17 support. Configure it in your `build.gradle.kts` file:
 
 ## Permissions
 
@@ -83,7 +79,10 @@ You can request these permissions in your Activity or Fragment using standard An
 
 ## Initialize the SDK
 
-<Aside>
+Before using any Voximplant features, initialize the SDK core system by calling [VICore.initialize(context)]().
+
+While you can initialize the SDK anywhere in your application (for example, in your `MainActivity` or a custom manager class) as long as you pass a valid [Context](), we recommend doing it once in a custom [Application]() class. This ensures the SDK is fully initialized and globally available as soon as your application starts:
+
 ```kotlin title="Initialize VICore in Application class"
 import android.app.Application
 import com.voximplant.android.sdk.core.VICore
@@ -96,22 +95,15 @@ class MyApplication : Application() {
     }
 }
 ```
-</Aside>
 
-Before using any Voximplant features, initialize the SDK core system by calling [VICore.initialize(context)]().
+After the core is initialized, connection and user authentication are managed via the singleton [Client]() instance. You can obtain this thread-safe client anywhere in your codebase:
 
-While you can initialize the SDK anywhere in your application (for example, in your `MainActivity` or a custom manager class) as long as you pass a valid [Context](), we recommend doing it once in a custom [Application]() class. This ensures the SDK is fully initialized and globally available as soon as your application starts:
-
-<Aside>
 ```kotlin title="Obtain Client singleton"
 import com.voximplant.android.sdk.core.Client
 
 // Obtain the client singleton
 val client = Client
 ```
-</Aside>
-
-After the core is initialized, connection and user authentication are managed via the singleton [Client]() instance. You can obtain this thread-safe client anywhere in your codebase:
 
 ## Connect and log in
 
@@ -129,7 +121,8 @@ When initializing and connecting the SDK to the Voximplant Cloud, you need to sp
 
 ### Connection and authentication flow
 
-<Aside>
+Configure global session listeners, connect to your specified Voximplant node, and authenticate a user upon establishing a successful connection:
+
 ```kotlin title="Connect and log in"
 import com.voximplant.android.sdk.core.AuthParams
 import com.voximplant.android.sdk.core.ClientSessionListener
@@ -179,9 +172,6 @@ client.connect(
     },
 )
 ```
-</Aside>
-
-Configure global session listeners, connect to your specified Voximplant node, and authenticate a user upon establishing a successful connection:
 
 ## Android SDK demos
 
@@ -208,7 +198,8 @@ To upgrade an existing project, refer to the [Android Migration Guide]().
 
 ### Monolithic dependency configuration
 
-<Aside>
+Unlike SDK v3, SDK v2 is distributed as a monolithic package. Add it to your build configuration along with Java 11 compatibility options:
+
 ```kotlin title="build.gradle (SDK v2)"
 dependencies {
     // ...
@@ -224,13 +215,11 @@ android {
     }
 }
 ```
-</Aside>
-
-Unlike SDK v3, SDK v2 is distributed as a monolithic package. Add it to your build configuration along with Java 11 compatibility options:
 
 ### Legacy connection and authentication flow
 
-<Aside>
+In SDK v2, connection and login are handled through `IClient` instance listeners. Instantiate the client, configure session listeners, and authenticate a user:
+
 ```kotlin title="Legacy connect and log in"
 // 1. Create client configuration and instantiate the client
 val clientConfig = ClientConfig()
@@ -270,8 +259,5 @@ client.addClientLoginListener(object : IClientLoginListener {
 // 4. Initiate the connection sequence
 client.connect()
 ```
-</Aside>
-
-In SDK v2, connection and login are handled through `IClient` instance listeners. Instantiate the client, configure session listeners, and authenticate a user:
 
 For detailed documentation on the legacy API, see the [Android SDK v2 reference]().

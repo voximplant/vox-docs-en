@@ -42,7 +42,8 @@ require(Modules.ASR);
 4. Send media from a **call object** to the **STT object** via the [sendMediaTo]() method.
 5. Receive the transcription results via events.
 
-<Aside>
+To use **Phrase hint** mode, specify the `phraseHints` parameter after the speech-to-text profile:
+
 ```javascript title="STT with hints"
 require(Modules.ASR);
 
@@ -77,15 +78,13 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
-
-To use **Phrase hint** mode, specify the `phraseHints` parameter after the speech-to-text profile:
 
 <Warning title="Please note">
 The **Phrase hint** mode is supported by the Google profile only.
 </Warning>
 
-<Aside>
+If you use **Freeform** mode, the [Result]() event is triggered every time speech is recognized. Because there is always a delay between capturing audio and recognizing it, plan user interactions accordingly:
+
 ```javascript title="STT without hints"
 require(Modules.ASR);
 
@@ -114,13 +113,11 @@ asr.addEventListener(ASREvents.CaptureStarted, () => {
 });
 // ...
 ```
-</Aside>
-
-If you use **Freeform** mode, the [Result]() event is triggered every time speech is recognized. Because there is always a delay between capturing audio and recognizing it, plan user interactions accordingly:
 
 ### Transcribing a call
 
-<Aside>
+Use the [record]() method to transcribe a call or conference into a text file. Set the `transcribe` parameter to `true` and the `language` parameter to one of the supported languages:
+
 ```javascript title="Transcribe a call"
 require(Modules.ASR);
 
@@ -134,9 +131,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
-
-Use the [record]() method to transcribe a call or conference into a text file. Set the `transcribe` parameter to `true` and the `language` parameter to one of the supported languages:
 
 <Info title="Please note">
 You can find the complete [list of supported transcription providers]() and the [list of available languages]() in the API reference.
@@ -144,7 +138,8 @@ You can find the complete [list of supported transcription providers]() and the 
 
 Unlike audio and video recordings, transcription results are not available immediately after a call ends. Retrieve them using the [GetCallHistory]() method of the HTTP API with the `with_records=true` parameter.
 
-<Aside>
+The response JSON contains a [records]() array with a [transcription_url]() field that points to the transcription as plain text:
+
 ```bash title="GetCallHistory request"
 curl "https://api.voximplant.com/platform_api/GetCallHistory/?api_key=API_KEY&account_id=1&from_date=2019-08-01%2000%3A00%3A00&to_date=2019-08-07%2000%3A00%3A00&with_records=true"
 ```
@@ -152,9 +147,6 @@ curl "https://api.voximplant.com/platform_api/GetCallHistory/?api_key=API_KEY&ac
 Left 00:00:03 - 00:00:05 : Hello, this is a transcription test.
 Right 00:00:15 - 00:00:23 : Hello.. The test is. Successful. Bye.
 ```
-</Aside>
-
-The response JSON contains a [records]() array with a [transcription_url]() field that points to the transcription as plain text:
 
 Each line in the transcription file is prefixed with "Left" to indicate an audio stream originating from a call endpoint and directed to the Voximplant cloud. Conversely, "Right" denotes an audio stream originating from the Voximplant cloud directed to a call endpoint. This naming convention follows the same logic used for left and right audio channels in stereo recording.
 
@@ -174,7 +166,8 @@ Currently, Voximplant speech-to-text supports the following beta features:
 * `diarizationConfig`
 * `metadata`
 
-<Aside>
+To use these features, set the `beta` parameter to `true` when creating an STT instance. Refer to the [API reference]() to learn about the parameters:
+
 ```javascript title="STT instance with v1p1beta1"
 const myasr = VoxEngine.createASR({
   profile: ASRProfileList.Google.en_US,
@@ -195,11 +188,9 @@ const myasr = VoxEngine.createASR({
   }
 });
 ```
-</Aside>
 
-To use these features, set the `beta` parameter to `true` when creating an STT instance. Refer to the [API reference]() to learn about the parameters:
+With Google beta features enabled, the [ASREvents.Result]() event includes the **resultEndTime**, **channelTag**, and **languageCode** properties, visible in the session logs:
 
-<Aside>
 ```javascript title="STT result"
 2020-08-12 08:16:55 Sent event to JS onPhoneEvent with params[{
   id = fidawBgKTWujC7UbO2RqNB9Jsbx36k8DmPoXGzxu7wM;
@@ -247,9 +238,6 @@ To use these features, set the `beta` parameter to `true` when creating an STT i
   source = KdlKuFjhRUCr4F4Js7sTBU8Ysw1bmEMUib79EzYuKd0;
 };]
 ```
-</Aside>
-
-With Google beta features enabled, the [ASREvents.Result]() event includes the **resultEndTime**, **channelTag**, and **languageCode** properties, visible in the session logs:
 
 ### Passing parameters directly to the provider
 
@@ -262,7 +250,8 @@ There are two ways to pass speech-to-text parameters to your provider:
 Ensure that you specify parameters in the exact format your provider accepts. Formats vary across providers; refer to your provider’s API reference for details.
 </Warning>
 
-<Aside>
+To pass parameters directly, select the provider in the [profile]() parameter of [createASR]() and supply the [request]() parameter in the provider's format:
+
 ```javascript title="Request parameter for Google STT"
 require(Modules.ASR);
 
@@ -347,11 +336,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
 
-To pass parameters directly, select the provider in the [profile]() parameter of [createASR]() and supply the [request]() parameter in the provider's format:
+Here are examples of the request parameter for common providers:
 
-<Aside>
 ```javascript title="Request parameter examples"
 // This is not a full scenario
 // This is a list of examples for different providers
@@ -409,9 +396,6 @@ request: {
   },
 },
 ```
-</Aside>
-
-Here are examples of the request parameter for common providers:
 
 ### Emotion and gender recognition
 
@@ -421,7 +405,8 @@ For example, [T-bank STT]() supports gender identification, and [SaluteSpeech ST
 
 To request this information, send the parameters in the [request]() field as described in [Passing parameters directly to the provider](#passing-parameters-directly-to-the-provider).
 
-<Aside>
+To request emotion recognition from SaluteSpeech, pass `emotions_result` in the [request]() parameter. SaluteSpeech returns the emotion breakdown along with the speech-to-text result:
+
 ```javascript title="Request emotion recognition from SaluteSpeech"
 require(Modules.ASR);
 
@@ -460,11 +445,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   "text": "check one two three"
 }
 ```
-</Aside>
 
-To request emotion recognition from SaluteSpeech, pass `emotions_result` in the [request]() parameter. SaluteSpeech returns the emotion breakdown along with the speech-to-text result:
+Similarly, to request gender recognition from T-bank, pass `enable_gender_identification` in the [request]() parameter. T-bank returns gender identification probabilities alongside the speech-to-text results:
 
-<Aside>
 ```javascript title="Request gender recognition from T-bank"
 require(Modules.ASR);
 
@@ -511,9 +494,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   "text": "check one two three"
 }
 ```
-</Aside>
-
-Similarly, to request gender recognition from T-bank, pass `enable_gender_identification` in the [request]() parameter. T-bank returns gender identification probabilities alongside the speech-to-text results:
 
 ### Receiving intermediate results
 
@@ -525,7 +505,8 @@ When this feature is enabled, recognized text is sent to the scenario via events
 Refer to the [API reference]() to learn which providers support this feature. The list of supported providers may change over time.
 </Info>
 
-<Aside>
+To enable this feature, set the [interimResults]() parameter in `ASRParameters` to `true`, then listen for the [ASREvents.InterimResult]() event to receive the intermediate text:
+
 ```javascript title="InterimResults parameter example"
 require(Modules.ASR);
 
@@ -552,9 +533,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   });
 });
 ```
-</Aside>
-
-To enable this feature, set the [interimResults]() parameter in `ASRParameters` to `true`, then listen for the [ASREvents.InterimResult]() event to receive the intermediate text:
 
 ---
 
@@ -589,7 +567,8 @@ For stereo or other multi-track input, set [multichannel]() to **true** and [cha
 
 When multichannel recognition is enabled, each [ASREvents.Result]() event includes a **channelTag** indicating the channel index for that transcript. Use **channelTag** in your scenario to route or display text per channel.
 
-<Aside>
+Here is a complete scenario without a [request]() parameter:
+
 ```javascript title="xAI realtime STT scenario example"
 /*
  * Description:
@@ -636,11 +615,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 
 ```
-</Aside>
 
-Here is a complete scenario without a [request]() parameter:
+To pass xAI-specific options in the provider’s native format, use the [request]() parameter on [createASR]():
 
-<Aside>
 ```javascript title="Request parameter usage"
 /*
  * Description:
@@ -684,9 +661,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 
 ```
-</Aside>
-
-To pass xAI-specific options in the provider’s native format, use the [request]() parameter on [createASR]():
 
 ---
 
