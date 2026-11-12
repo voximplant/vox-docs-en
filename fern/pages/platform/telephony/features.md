@@ -176,19 +176,44 @@ To process incoming DTMF tones in your scenario, subscribe to the [ToneReceived]
 You can send custom SIP X-headers when initiating or answering a call. To send extra headers when calling a user, pass them in the [extraHeaders]() parameter of the [callUser]() method:
 
 ```javascript title="Send X-headers while calling"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.send-x-headers-while-calling.js
+// X-header to hang up if there is no answer after the timeout
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const out = VoxEngine.callUser({
+    username: 'username',
+    displayName: 'String-to-display-on-called-user-device-as-a-caller-name',
+    callerid: e.callerid,
+    extraHeaders: { 'VI-CallTimeout': '5' }
+  });
+});
 ```
 
 To send extra headers when answering an incoming call, pass them via the `extraHeaders` parameter of the [Call.answer]() method:
 
 ```javascript title="Send X-headers while answering a call"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.send-x-headers-while-answering.js
+//JS scenario receives a call from a Web/Mobile SDK
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const call = e.call;
+  call.answer({ 'X-header': 'value' }, { scheme: e.scheme });
+  // after that the Connected call event is triggered on the SDK's side and
+  // the optional parameters are passed within this event
+});
 ```
 
 To retrieve extra headers after a call is disconnected, read them from the `headers` property on the call object:
 
 ```javascript title="Get X-headers after the call"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.get-x-headers-after-call.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
+  const inc = e.call;
+  //
+  // call processing logic ...
+  //
+  // When an incoming call is disconnected, we can retrieve
+  // X-headers from it
+  inc.addEventListener(CallEvents.Disconnected, function (e) {
+    Logger.write(`X-headers are: ${e.headers}`);
+    VoxEngine.terminate(); // terminates the JavaScript session right after disconnection
+  });
+});
 ```
 
 ### Send a message
@@ -196,19 +221,52 @@ To retrieve extra headers after a call is disconnected, read them from the `head
 You can send data messages during an active call using the [sendMessage]() method on the `Call` class:
 
 ```javascript title="Send a message to the call"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.send-message.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const incCall = e.call;
+
+  incCall.sendMessage(
+    JSON.stringify({
+      type: 'confirmation',
+      text: "We've received your call"
+    })
+  );
+
+  //
+  // call processing logic ...
+  //
+});
 ```
 
 To receive a message sent to the call, subscribe to the [MessageReceived]() event on the call object. This event payload also includes any attached extra headers:
 
 ```javascript title="The MessageReceived event"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.message-received-event.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const incCall = e.call;
+
+  incCall.sendMessage(
+    JSON.stringify({
+      type: 'confirmation',
+      text: "We've received your call"
+    })
+  );
+
+  //
+  // call processing logic ...
+  //
+});
 ```
 
 You can also use the [sendInfo()]() method to pass SIP INFO messages to the call. It accepts three parameters: MIME type, message body, and extra headers:
 
 ```javascript title="sendInfo() method usage"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.send-info.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const incCall = e.call;
+
+  incCall.sendInfo('text/html', 'The INFO message body', {
+    type: 'confirmation',
+    text: "We've received your call"
+  });
+});
 ```
 
 ### Custom data
@@ -219,7 +277,18 @@ Custom data allows you to store and access arbitrary string payloads (up to 2,00
 * On the **Call object** itself (`call.customData()`)
 
 ```javascript title="Custom data property usage"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.custom-data-property.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const inc = e.call;
+  const a = inc.customData();
+
+  VoxEngine.customData('VoxEngine customData');
+
+  inc.answer();
+  inc.addEventListener(CallEvents.Connected, (e) => {
+    Logger.write('Call object customdata : ' + a); // undefined or value received from WEB SDK
+    Logger.write('VoxEngine.customData() : ' + VoxEngine.customData()); // value specified on line 5
+  });
+});
 ```
 
 ## How to toggle video sending

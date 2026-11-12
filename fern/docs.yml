@@ -123,39 +123,50 @@ navigation:
       - section: Getting started
         contents:
           - page: Create an application
-            path: ./pages/platform/applications.md
+            path: ./pages/platform/getting-started/applications.md
             icon: fa-duotone fa-grid-2-plus
           - page: Create an scenario
-            path: ./pages/platform/scenarios.md
+            path: ./pages/platform/getting-started/scenarios.md
             icon: fa-duotone fa-diagram-sankey
           - page: Create a routing rule
-            path: ./pages/platform/routing-rules.md
+            path: ./pages/platform/getting-started/routing-rules.md
             icon: fa-duotone fa-route
           - page: Buy a phone number
-            path: ./pages/platform/phone-numbers.md
+            path: ./pages/platform/getting-started/phone-numbers.md
             icon: fa-duotone fa-phone-plus
           - page: Create users
-            path: ./pages/platform/users.md
+            path: ./pages/platform/getting-started/users.md
             icon: fa-duotone fa-user-plus
       - section: Telephony
         contents:
           - page: Calls
-            path: ./pages/platform/calls.md
+            path: ./pages/platform/telephony/calls.md
             icon: fa-duotone fa-phone-volume
           - page: Conferences
-            path: ./pages/platform/conferences.md
+            path: ./pages/platform/telephony/conferences.md
             icon: fa-duotone fa-users-medical
           - page: Call features
-            path: ./pages/platform/features.md
+            path: ./pages/platform/telephony/features.md
+            icon: fa-duotone fa-question
+          - page: SIP calls and registrations
+            path: ./pages/platform/telephony/sip.md
             icon: fa-duotone fa-question
       - section: Speech processing
         contents:
           - page: Text-to-speech
-            path: ./pages/platform/text-to-speech.md
+            path: ./pages/platform/speech/text-to-speech.md
             icon: fa-duotone fa-comment-alt-lines
           - page: Speech-to-text
-            path: ./pages/platform/speech-to-text.md
+            path: ./pages/platform/speech/speech-to-text.md
             icon: fa-duotone fa-microphone-lines
+      - section: Call center
+        contents:
+          - page: Voice contact center
+            path: ./pages/platform/contact-center/voice.md
+            icon: fa-duotone fa-question
+          - page: Voice contact center
+            path: ./pages/platform/contact-center/voice.md
+            icon: fa-duotone fa-question
 
   - tab: sdk
     layout:
@@ -259,6 +270,12 @@ navigation:
           - page: Limits and restrictions
             path: ./pages/help/limits.md
             icon: fa-duotone fa-ban
+          - page: Media streams
+            path: ./pages/help/media-streams.md
+            icon: fa-duotone fa-question
+          - page: Media streams
+            path: ./pages/help/websockets.md
+            icon: fa-duotone fa-question
 
 colors:
   accent-primary:

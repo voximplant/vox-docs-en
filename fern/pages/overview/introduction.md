@@ -12,7 +12,7 @@ Choose your path to get started:
     Build cloud apps with telephony and SIP, IVRs, speech recognition and synthesis — all powered by simple JavaScript.
   </Card>
   <Card title="Web/mobile SDKs" icon="fa-duotone fa-code" href="/sdk">
-    Embed crystal-clear voice and video calling directly into Web, iOS, Android, React Native, and Flutter applications.
+    Embed crystal-clear voice and video functionality directly into your Web, iOS, Android, React Native, and Flutter applications.
   </Card>
 </CardGroup>
 
