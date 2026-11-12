@@ -145,6 +145,9 @@ navigation:
           - page: Conferences
             path: ./pages/platform/conferences.md
             icon: fa-duotone fa-users-medical
+          - page: Call features
+            path: ./pages/platform/features.md
+            icon: fa-duotone fa-question
       - section: Speech processing
         contents:
           - page: Text-to-speech
@@ -178,7 +181,7 @@ navigation:
         contents:
           - page: Getting started
             path: ./pages/sdk/react-native.md
-            icon: fa-brands fa-atom
+            icon: fa-brands fa-react
       - section: Flutter
         contents:
           - page: Getting started
@@ -204,7 +207,7 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/reference/web.md
-            icon: fa-brands fa-browser
+            icon: fa-duotone fa-browser
       - section: iOS and macOS SDK
         contents:
           - page: Overview
