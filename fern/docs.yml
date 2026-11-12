@@ -159,6 +159,9 @@ navigation:
           - page: Speech-to-text
             path: ./pages/platform/speech/speech-to-text.md
             icon: fa-duotone fa-microphone-lines
+          - page: Agentic VoiceDSP module
+            path: ./pages/platform/speech/agentic-voicedsp.md
+            icon: fa-duotone fa-waveform-lines
       - section: Call center
         contents:
           - page: Voice
@@ -167,6 +170,7 @@ navigation:
           - page: Video
             path: ./pages/platform/contact-center/video.md
             icon: fa-duotone fa-video
+            
 
   - tab: sdk
     layout:
@@ -188,7 +192,7 @@ navigation:
             icon: fa-brands fa-apple
           - page: Push notifications
             path: ./pages/sdk/ios/push.md
-            icon: fa-brands fa-apple
+            icon: fa-duotone fa-bell-ring
           - page: CallKit integration
             path: ./pages/sdk/ios/callkit.md
             icon: fa-duotone fa-mobile-screen-button
@@ -202,7 +206,7 @@ navigation:
             icon: fa-brands fa-android
           - page: Push notifications
             path: ./pages/sdk/android/push.md
-            icon: fa-brands fa-apple
+            icon: fa-duotone fa-bell-ring
           - page: ConnectionService integration
             path: ./pages/sdk/android/connectionservice.md
             icon: fa-duotone fa-mobile-screen-button
