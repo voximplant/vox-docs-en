@@ -162,6 +162,12 @@ navigation:
           - page: Agentic VoiceDSP module
             path: ./pages/platform/speech/agentic-voicedsp.md
             icon: fa-duotone fa-waveform-lines
+          - page: Media player
+            path: ./pages/platform/speech/player.md
+            icon: fa-duotone fa-circle-play
+          - page: Building an IVR
+            path: ./pages/platform/speech/ivr.md
+            icon: fa-duotone fa-grid
       - section: Contact center
         contents:
           - page: Voice
@@ -179,6 +185,12 @@ navigation:
           - page: Reporting
             path: ./pages/platform/contact-center/reporting.md
             icon: fa-duotone fa-chart-mixed
+          - page: Live dashboard
+            path: ./pages/platform/contact-center/dashboard.md
+            icon: fa-duotone fa-gauge-high
+          - page: Predictive dialing system
+            path: ./pages/platform/contact-center/pds.md
+            icon: fa-duotone fa-phone-arrow-up-right
             
 
   - tab: sdk
@@ -200,6 +212,9 @@ navigation:
           - page: Screen sharing
             path: ./pages/sdk/web/screen-sharing.md
             icon: fa-duotone fa-screencast
+          - page: Screen sharing
+            path: ./pages/sdk/web/autoplay.md
+            icon: fa-duotone fa-window-restore
       - section: iOS and macOS
         contents:
           - page: Getting started
