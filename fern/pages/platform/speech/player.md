@@ -21,7 +21,50 @@ To play audio during an incoming call, first [answer a call](). You can also bro
 After creating a TTS or URL player instance, stream its audio to the call using [sendMediaTo]():
 
 ```javascript title="Player usage sample"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/player.usage-sample.js
+let call;
+let player;
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  call = e.call;
+  call.answer();
+
+  call.addEventListener(CallEvents.Connected, (callEvent) => {
+    // Play intro speech
+    player = VoxEngine.createTTSPlayer('Hello, you have called Voximplant Player demo', {
+      voice: VoiceList.Amazon.en_US_Joanna
+    });
+    player.sendMediaTo(call);
+
+    // When TTS playback is finished
+    player.addEventListener(PlayerEvents.PlaybackFinished, (playerEvent) => {
+      // Prepare the request parameters for a GET request
+      const urlPlayerRequest = {
+        url: 'https://your_secret_url.com/12345'
+      };
+
+      // In case of a POST request, the request parameters are different
+      // const urlPlayerRequest = {
+      //   method: URLPlayerRequestMethod.POST,
+      //   url: 'https://your_secret_url.com/12345',
+      //   headers: [
+      //     { name: 'accept', value: 'audio/mpeg' },
+      //     { name: 'content-type', value: 'application/json' },
+      //     { name: 'xi-api-key', value: VoxEngine.getSecretValue('elevenlabs_api_key') },
+      //   ],
+      //     body: {
+      //     text: JSON.stringify({ firstParameter: 'first', secondParameter: 2 })
+      //   }
+      // };
+
+      player = VoxEngine.createURLPlayer(urlPlayerRequest);
+      // Play mp3 file
+      player.sendMediaTo(call);
+      // end session in 10 sec
+      setTimeout(VoxEngine.terminate, 10000);
+    });
+  });
+  call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
+});
 ```
 
 You can also use URL players to stream audio from third-party speech providers, such as [OpenAI TTS]().
@@ -59,7 +102,32 @@ firstPlayer.addEventListener(PlayerEvents.PlaybackFinished, () => {
 When you need to play several tracks in sequence, managing nested event handlers becomes cumbersome. The [SequencePlayer]() solves this by accepting an array of "segments" (audio URLs or TTS strings with individual voice settings) and automatically handling sequential playback and event transitions:
 
 ```javascript title="Sequence player approach"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/player.sequence-player-approach.js
+// define all the SequencePlayer segments
+const firstSegment = {
+  text: 'Hello from the first player!'
+};
+
+const secondSegment = {
+  url: 'https://your_domain_address.com/your_media.mp3'
+};
+
+const thirdSegment = {
+  text: 'Hello from the third player!',
+  parameters: {
+    voice: VoiceList.Microsoft.Neural.en_GB_MaisieNeural
+  }
+};
+
+const fourthSegment = {
+  url: 'https://your_domain_address.com/another_media.mp3'
+};
+
+const parameters = {
+  segments: [firstSegment, secondSegment, thirdSegment, fourthSegment]
+};
+
+// create SequencePlayer with with all defined segments
+const sequencePlayer = VoxEngine.createSequencePlayer(parameters);
 ```
 
 For detailed configuration options and event lifecycle details, refer to the [SequencePlayer reference]().

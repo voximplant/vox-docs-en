@@ -9,6 +9,7 @@ Manage incoming and outgoing SIP traffic between Voximplant and external PBXs, s
 * [How to use third-party SIP software with Voximplant](#how-to-use-third-party-sip-software-with-voximplant)
 * [How to work with SIP registrations](#how-to-work-with-sip-registrations)
 * [Supported codecs and ciphers](#supported-codecs-and-ciphers)
+* [Call transferring](#call-transferring)
 * [Frequently asked questions](#frequently-asked-questions)
 
 ---
@@ -164,6 +165,111 @@ Voximplant supports the following media codecs across SIP connections:
 The platform supports the following OpenSSL cipher suites for TLS encryption:
 
 `ECDHE-RSA-AES256-GCM-SHA384`, `ECDHE-ECDSA-AES256-GCM-SHA384`, `ECDHE-RSA-AES256-SHA384`, `ECDHE-ECDSA-AES256-SHA384`, `ECDHE-RSA-AES256-SHA`, `ECDHE-ECDSA-AES256-SHA`, `SRP-DSS-AES-256-CBC-SHA`, `SRP-RSA-AES-256-CBC-SHA`, `SRP-AES-256-CBC-SHA`, `DH-DSS-AES256-GCM-SHA384`, `DHE-DSS-AES256-GCM-SHA384`, `DH-RSA-AES256-GCM-SHA384`, `DHE-RSA-AES256-GCM-SHA384`, `DHE-RSA-AES256-SHA256`, `DHE-DSS-AES256-SHA256`, `DH-RSA-AES256-SHA256`, `DH-DSS-AES256-SHA256`, `DHE-RSA-AES256-SHA`, `DHE-DSS-AES256-SHA`, `DH-RSA-AES256-SHA`, `DH-DSS-AES256-SHA`, `DHE-RSA-CAMELLIA256-SHA`, `DHE-DSS-CAMELLIA256-SHA`, `DH-RSA-CAMELLIA256-SHA`, `DH-DSS-CAMELLIA256-SHA`, `GOST2001-GOST89-GOST89`, `GOST94-GOST89-GOST89`, `ECDH-RSA-AES256-GCM-SHA384`, `ECDH-ECDSA-AES256-GCM-SHA384`, `ECDH-RSA-AES256-SHA384`, `ECDH-ECDSA-AES256-SHA384`, `ECDH-RSA-AES256-SHA`, `ECDH-ECDSA-AES256-SHA`, `AES256-GCM-SHA384`, `AES256-SHA256`, `AES256-SHA`, `CAMELLIA256-SHA`, `PSK-AES256-CBC-SHA`, `ECDHE-RSA-AES128-GCM-SHA256`, `ECDHE-ECDSA-AES128-GCM-SHA256`, `ECDHE-RSA-AES128-SHA256`, `ECDHE-ECDSA-AES128-SHA256`, `ECDHE-RSA-AES128-SHA`, `ECDHE-ECDSA-AES128-SHA`, `SRP-DSS-AES-128-CBC-SHA`, `SRP-RSA-AES-128-CBC-SHA`, `SRP-AES-128-CBC-SHA`, `DH-DSS-AES128-GCM-SHA256`, `DHE-DSS-AES128-GCM-SHA256`, `DH-RSA-AES128-GCM-SHA256`, `DHE-RSA-AES128-GCM-SHA256`, `DHE-RSA-AES128-SHA256`, `DHE-DSS-AES128-SHA256`, `DH-RSA-AES128-SHA256`, `DH-DSS-AES128-SHA256`, `DHE-RSA-AES128-SHA`, `DHE-DSS-AES128-SHA`, `DH-RSA-AES128-SHA`, `DH-DSS-AES128-SHA`, `DHE-RSA-SEED-SHA`, `DHE-DSS-SEED-SHA`, `DH-RSA-SEED-SHA`, `DH-DSS-SEED-SHA`, `DHE-RSA-CAMELLIA128-SHA`, `DHE-DSS-CAMELLIA128-SHA`, `DH-RSA-CAMELLIA128-SHA`, `DH-DSS-CAMELLIA128-SHA`, `ECDH-RSA-AES128-GCM-SHA256`, `ECDH-ECDSA-AES128-GCM-SHA256`, `ECDH-RSA-AES128-SHA256`, `ECDH-ECDSA-AES128-SHA256`, `ECDH-RSA-AES128-SHA`, `ECDH-ECDSA-AES128-SHA`, `AES128-GCM-SHA256`, `AES128-SHA256`, `AES128-SHA`, `SEED-SHA`, `CAMELLIA128-SHA`, `IDEA-CBC-SHA`, `PSK-AES128-CBC-SHA`, `ECDHE-RSA-RC4-SHA`, `ECDHE-ECDSA-RC4-SHA`, `ECDH-RSA-RC4-SHA`, `ECDH-ECDSA-RC4-SHA`, `RC4-SHA`, `RC4-MD5`, `PSK-RC4-SHA`, `ECDHE-RSA-DES-CBC3-SHA`, `ECDHE-ECDSA-DES-CBC3-SHA`, `SRP-DSS-3DES-EDE-CBC-SHA`, `SRP-RSA-3DES-EDE-CBC-SHA`, `SRP-3DES-EDE-CBC-SHA`, `EDH-RSA-DES-CBC3-SHA`, `EDH-DSS-DES-CBC3-SHA`, `DH-RSA-DES-CBC3-SHA`, `DH-DSS-DES-CBC3-SHA`, `ECDH-RSA-DES-CBC3-SHA`, `ECDH-ECDSA-DES-CBC3-SHA`, `DES-CBC3-SHA`, `PSK-3DES-EDE-CBC-SHA`.
+
+---
+
+## Call transferring
+
+Blind transfers allow a callee to transfer an active call to another party without speaking to the transfer target first (typically by pressing a transfer button on a SIP phone and dialing an extension).
+
+In traditional telephony setups, a blind transfer (SIP `REFER`) requested by a third-party SIP endpoint initiated a separate call in a new session, where the transfer target always saw the transferor's number as the caller ID.
+
+With Voximplant's [handleBlindTransfer()]() mode, you can control the third call leg directly within your existing cloud scenario session. This provides complete programmatic control over the transfer: you can customize the caller ID displayed to the transfer target (for example, setting [displayName]()), pass custom SIP headers, and handle failure fallbacks.
+
+---
+
+### How blind transfer handling works
+
+When `handleBlindTransfer(true)` is enabled on a call object, incoming SIP `REFER` requests trigger the [CallEvents.BlindTransferRequested]() event within the active session rather than spawning an unmanaged new session.
+
+The [CallEvents.BlindTransferRequested]() event provides the following parameters:
+
+* **`call`**: The active call leg receiving the transfer request.
+* **`transferTo`**: The destination username, extension, or phone number parsed from the `Refer-To` header.
+* **`headers`**: Optional SIP headers received with the `REFER` message.
+* **`name`**: The name of the event.
+
+To inform the transferor of the transfer status, invoke one of the following methods on the transferor's call object:
+
+* [notifyBlindTransferSuccess()](): Signals that the transfer target has answered.
+* [notifyBlindTransferFailed()](): Signals that the transfer failed, passing a status code and reason description.
+
+```javascript title="Handle blind transfer in existing session"
+VoxEngine.addEventListener(AppEvents.CallAlerting, (inc) => {
+  setTimeout(() => VoxEngine.terminate(), 100000);
+  const outCall = VoxEngine.callUser({
+    username: inc.destination,
+    callerid: inc.callerid,
+    displayName: inc.displayName,
+    scheme: inc.scheme,
+  });
+  outCall.addEventListener(CallEvents.Connected, (out) => {
+    inc.call.answer(undefined, { scheme: out.scheme });
+    VoxEngine.sendMediaBetween(inc.call, out.call);
+    out.call.handleBlindTransfer(true);
+    out.call.addEventListener(CallEvents.BlindTransferRequested, (out) => {
+      const outCall2 = VoxEngine.callUser({
+        username: out.transferTo,
+        callerid: inc.callerid,
+        displayName: inc.displayName,
+        scheme: inc.scheme,
+      });
+      outCall2.addEventListener(CallEvents.Connected, (out2) => {
+        out.call.notifyBlindTransferSuccess();
+        VoxEngine.sendMediaBetween(out2.call, inc.call);
+      });
+      outCall2.addEventListener(CallEvents.Failed, (out2) => {
+        out.call.notifyBlindTransferFailed(out2.code, out2.reason);
+      });
+    });
+  });
+});
+
+```
+
+### Transferring to a SIP address
+
+If you need to bridge the transfer to an external SIP URI using [callSIP]() instead of routing to an application user with [callUser](), extract the target destination from the incoming SIP headers:
+
+```javascript title="Transfer call to a SIP endpoint"
+VoxEngine.addEventListener(AppEvents.CallAlerting, (inc) => {
+  setTimeout(() => VoxEngine.terminate(), 100000);
+  const outCall = VoxEngine.callUser({
+    username: inc.destination,
+    callerid: inc.callerid,
+    displayName: inc.displayName,
+    scheme: inc.scheme,
+  });
+  outCall.addEventListener(CallEvents.Connected, (out) => {
+    inc.call.answer(undefined, { scheme: out.scheme });
+    VoxEngine.sendMediaBetween(inc.call, out.call);
+    out.call.handleBlindTransfer(true);
+    out.call.addEventListener(CallEvents.BlindTransferRequested, (out) => {
+      const referTo = out.headers?.['Refer-To'];
+      const referedBy = out.headers?.['Referred-By'];
+      if (referTo && referedBy) {
+        const outCall2 = VoxEngine.callSIP(referTo, {
+          displayName: referedBy,
+          callerid: referedBy,
+          scheme: inc.scheme,
+        });
+        outCall2.addEventListener(CallEvents.Connected, (out2) => {
+          out.call.notifyBlindTransferSuccess();
+          VoxEngine.sendMediaBetween(out2.call, inc.call);
+        });
+        outCall2.addEventListener(CallEvents.Failed, (out2) => {
+          out.call.notifyBlindTransferFailed(out2.code, out2.reason);
+        });
+      }
+    });
+  });
+});
+
+```
+
+### Legacy transfer behavior
+
+If `handleBlindTransfer` is set to `false` (default), Voximplant uses the legacy transfer workflow. The platform handles the SIP `REFER` automatically by spawning an independent session for the transfer target, while the original session tracks status via the [CallEvents.TransferComplete]() and [CallEvents.TransferFailed]() events.
 
 ---
 

@@ -63,7 +63,68 @@ Configure your agents and queues as described in the [voice contact center]() gu
 Unlike inbound queue scenarios, PDS scenarios handle outbound dialing and bridge answered calls into SmartQueue:
 
 ```javascript title="PDS VoxEngine scenario"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/acd.pds.js
+require(Modules.SmartQueue);
+
+let pdsData;
+let resultSent = false;
+
+async function sendResult(status) {
+  if (resultSent) return false;
+
+  Logger.write('SEND RESULT ' + status);
+
+  let pd = {
+    agent: pdsData.agent_uuid,
+    task_uuid: pdsData.task_uuid,
+    type: status
+  };
+
+  await Net.httpRequestAsync(pdsData.callback_url, {
+    rawOutput: true,
+    method: 'POST',
+    postData: JSON.stringify(pd)
+  }).then((result) => {
+    if (result.code === 200) {
+      Logger.write('PDS result sent');
+      resultSent = true;
+    } else {
+      Logger.write('Unable to send PDS result ' + result.code);
+    }
+  });
+}
+
+VoxEngine.addEventListener(AppEvents.Started, (e) => {
+  pdsData = JSON.parse(VoxEngine.customData());
+  Logger.write(JSON.stringify(pdsData.users_data)); // custom data with customers information
+
+  let call = VoxEngine.callPSTN('', "'"); // call the number received from the PDS module
+  call.addEventListener(CallEvents.Failed, async () => {
+    await sendResult('FAIL');
+    VoxEngine.terminate();
+  });
+  call.addEventListener(CallEvents.Connected, () => {
+    sendResult('DIAL_COMPLETE');
+    const task = VoxEngine.enqueueTask({
+      call: call,
+      queue: {
+        id: 1 // specify the queue ID here
+      }
+    });
+
+    task.addEventListener(SmartQueueEvents.OperatorReached, function (e) {
+      Logger.write('The call is connected to an agent!');
+      // You can implement additional logic when the agent is connected to the call here
+    });
+
+    task.addEventListener(SmartQueueEvents.TaskCanceled, () => {
+      call.say('Sorry, all the agents are busy.');
+      call.addEventListener(CallEvents.PlaybackFinished, function PlaybackFinished() {
+        call.removeEventListener(CallEvents.PlaybackFinished, PlaybackFinished);
+        VoxEngine.terminate();
+      });
+    });
+  });
+});
 ```
 
 ### 3. Set up the agent workspace

@@ -15,7 +15,9 @@ Three supervision modes are available:
 To enable supervisor audio mixing, require the [conference module]() in your VoxEngine scenario:
 
 ```javascript title="Require the conference module"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/conference.supervisors-require-module.js
+require(Modules.Conference);
+
+let conf;
 ```
 
 Next, initiate the supervisor's call and set up disconnect and failure handlers. If the supervisor disconnects or fails to connect, the agent and the client should continue their conversation without interruption:

@@ -148,6 +148,9 @@ navigation:
           - page: Call features
             path: ./pages/platform/telephony/features.md
             icon: fa-duotone fa-microphone-slash
+          - page: Recording and streaming
+            path: ./pages/platform/telephony/recording.md
+            icon: fa-duotone fa-circle-dot
           - page: SIP calls and registrations
             path: ./pages/platform/telephony/sip.md
             icon: fa-duotone fa-phone-office
