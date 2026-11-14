@@ -28,7 +28,13 @@ You can also manage secrets programmatically via the Management API using [AddSe
 To retrieve a saved secret within your cloud scenario, call the [VoxEngine.getSecretValue()]() method:
 
 ```javascript title="Retrieve a secret in a scenario"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/voxengine.get-secret-value.js
+VoxEngine.addEventListener(AppEvents.Started, () => {
+  const secretKey = 'a2';
+  const secret = VoxEngine.getSecretValue(secretKey);
+  const message = typeof secret === 'undefined' ? 'The secret value is undefined!' : secret;
+  Logger.write(`===> ${message}`);
+  VoxEngine.terminate();
+});
 ```
 
 ---

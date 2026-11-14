@@ -32,7 +32,35 @@ Refer to the [ApplicationStorage API reference]() for complete parameter specifi
 Here is the complete scenario for tracking and announcing call counts:
 
 ```javascript title="Key-Value Storage call counter scenario"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/voxengine.key-value-storage.js
+require(Modules.ApplicationStorage);
+
+const storageTTL = { day: 86400, week: 604800 };
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, async (e) => {
+  let current = 0;
+  try {
+    const res = await ApplicationStorage.get('totalCalls');
+    if (!res || res.value === null) {
+      await ApplicationStorage.put('totalCalls', '0', storageTTL.week);
+      current = 0;
+    } else {
+      current = Number(res.value) || 0;
+    }
+  } catch (err) {
+    Logger.write('Failure while getting totalCalls value: ' + err);
+  }
+
+  // increase counter
+  const next = current + 1;
+  try {
+    await ApplicationStorage.put('totalCalls', String(next), storageTTL.week);
+  } catch (err) {
+    Logger.write('Failure while updating totalCalls value: ' + err);
+  }
+  e.call.answer();
+  e.call.say(`Hello. You have called ${next} times`, { voice: VoiceList.Amazon.en_US_Joanna });
+  e.call.addEventListener(CallEvents.PlaybackFinished, VoxEngine.terminate);
+});
 ```
 
 ### Implementation breakdown

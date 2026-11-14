@@ -234,10 +234,18 @@ navigation:
             icon: fa-duotone fa-gauge-high
           - page: Secret storage
             path: ./pages/platform/storage/secret-storage.md
-            icon: fa-duotone fa-phone-arrow-up-right
+            icon: fa-duotone fa-brackets-curly
           - page: S3-compatible storage
             path: ./pages/platform/storage/s3.md
             icon: fa-duotone fa-bucket
+      - section: Solutions
+        contents:
+          - page: Click-to-call widget
+            path: ./pages/platform/solutions/click-to-call.md
+            icon: fa-duotone fa-hand-pointer
+          - page: Automated call lists
+            path: ./pages/platform/solutions/call-lists.md
+            icon: fa-duotone fa-address-book
 
   - tab: sdk
     layout:
@@ -369,6 +377,15 @@ navigation:
           - page: SDK statistics
             path: ./pages/help/statistics.md
             icon: fa-duotone fa-mobile
+          - page: Call quality detection
+            path: ./pages/help/quality.md
+            icon: fa-duotone fa-waveform-lines
+          - page: Microphone troubleshooting
+            path: ./pages/help/microphone.md
+            icon: fa-duotone fa-microphone-lines
+          - page: Push troubleshooting
+            path: ./pages/help/push.md
+            icon: fa-duotone fa-bell-slash
 
 colors:
   accent-primary:

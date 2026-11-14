@@ -115,7 +115,23 @@ When a customer calls your WhatsApp Business account from their WhatsApp applica
 1. Create a [scenario]() that answers the call and executes your media or IVR logic:
 
 ```javascript title="Inbound WhatsApp call scenario"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.whatsapp-inbound.js
+let call;
+let player;
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  call = e.call;
+  call.answer();
+
+  call.addEventListener(CallEvents.Connected, (callEvent) => {
+    player = VoxEngine.createTTSPlayer(
+      'Hello, you have made the call using WhatsApp Business Calling API integration from Voximplant',
+      { voice: VoiceList.ElevenLabs.Jessica }
+    );
+    player.sendMediaTo(call);
+  });
+
+  call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
+});
 ```
 
 2. Create a [routing rule]() with the pattern `.*` and bind it to your inbound scenario.
@@ -138,7 +154,25 @@ Users can also manage call permissions directly from your business profile in th
 To place an outbound call to a customer's WhatsApp application, use the `VoxEngine.callWhatsappUser()` method. Pass the destination number in `number` and your registered WhatsApp Business number in `callerid`:
 
 ```javascript title="Outbound WhatsApp call scenario"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/call.whatsapp-outgoing.js
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const number = '19999999999'; // customer's whatsapp phone number
+  const callerid = '442039665862'; // whatsapp business account
+
+  let callParameters = {
+    number,
+    callerid
+  };
+
+  const call = VoxEngine.callWhatsappUser(callParameters);
+  VoxEngine.easyProcess(e.call, call, () => {});
+
+  e.call.addEventListener(CallEvents.Failed, (e2) => {
+    Logger.write('Call failed: ' + e2.reason);
+    VoxEngine.terminate();
+  });
+
+  e.call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
+});
 ```
 
 ---

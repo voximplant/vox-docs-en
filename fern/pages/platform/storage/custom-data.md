@@ -14,7 +14,11 @@ The [customData()]() method on the root `VoxEngine` object allows you to store a
 To set a value, pass the string as an argument. To retrieve the stored value, call the method without arguments:
 
 ```javascript title="Session custom data usage"
-// https://git.zingaya.com/voxengine/libs/-/blob/master/scenarios/client-voxengine/voxengine.custom-data.js
+// set value
+VoxEngine.customData('Hello world!');
+
+// get value and write it to a log
+Logger.write(VoxEngine.customData());
 ```
 
 ### Passing custom data at session start
