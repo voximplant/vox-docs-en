@@ -231,10 +231,10 @@ navigation:
             icon: fa-duotone fa-brackets-curly
           - page: Key-value storage
             path: ./pages/platform/storage/key-value-storage.md
-            icon: fa-duotone fa-gauge-high
+            icon: fa-duotone fa-database
           - page: Secret storage
             path: ./pages/platform/storage/secret-storage.md
-            icon: fa-duotone fa-brackets-curly
+            icon: fa-duotone fa-vault
           - page: S3-compatible storage
             path: ./pages/platform/storage/s3.md
             icon: fa-duotone fa-bucket
