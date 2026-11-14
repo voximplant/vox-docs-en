@@ -1,4 +1,4 @@
-# Media Streams
+# Media Stream format
 
 Applications can use `Voximplant.WebSocketFormat` to stream real-time audio over the WebSocket protocol using JSON serialization.
 

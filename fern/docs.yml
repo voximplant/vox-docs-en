@@ -49,6 +49,20 @@ navigation:
       - page: How billing works
         path: ./pages/overview/billing.md
         icon: fa-duotone fa-credit-card
+      - section: How Voximplant works
+        contents:
+          - page: Control panel
+            path: ./pages/overview/how-it-works/control-panel.md
+            icon: fa-duotone fa-window-maximize
+          - page: Management API
+            path: ./pages/overview/how-it-works/management-api.md
+            icon: fa-duotone fa-network-wired
+          - page: Cloud IDE
+            path: ./pages/overview/how-it-works/ide.md
+            icon: fa-duotone fa-square-code
+          - page: Basic concepts
+            path: ./pages/overview/how-it-works/concepts.md
+            icon: fa-duotone fa-lightbulb-on
 
   - tab: voice-ai
     layout:
@@ -125,7 +139,7 @@ navigation:
           - page: Create an application
             path: ./pages/platform/getting-started/applications.md
             icon: fa-duotone fa-grid-2-plus
-          - page: Create an scenario
+          - page: Create a scenario
             path: ./pages/platform/getting-started/scenarios.md
             icon: fa-duotone fa-diagram-sankey
           - page: Create a routing rule
@@ -171,6 +185,14 @@ navigation:
           - page: Building an IVR
             path: ./pages/platform/speech/ivr.md
             icon: fa-duotone fa-grid
+      - section: Media streams
+        contents:
+          - page: Media Streams format
+            path: ./pages/platform/media-streams/format.md
+            icon: fa-duotone fa-waveform
+          - page: Media over WebSockets
+            path: ./pages/platform/media-streams/websockets.md
+            icon: fa-duotone fa-plug
       - section: Contact center
         contents:
           - page: Voice
@@ -194,7 +216,28 @@ navigation:
           - page: Predictive dialing system
             path: ./pages/platform/contact-center/pds.md
             icon: fa-duotone fa-phone-arrow-up-right
-            
+      - section: Messaging
+        contents:
+          - page: SMS
+            path: ./pages/platform/messaging/sms.md
+            icon: fa-duotone fa-comment-sms
+          - page: WhatsApp Business
+            path: ./pages/platform/messaging/whatsapp.md
+            icon: fa-brands fa-whatsapp
+      - section: Storage
+        contents:
+          - page: Custom data
+            path: ./pages/platform/storage/custom-data.md
+            icon: fa-duotone fa-brackets-curly
+          - page: Key-value storage
+            path: ./pages/platform/storage/key-value-storage.md
+            icon: fa-duotone fa-gauge-high
+          - page: Secret storage
+            path: ./pages/platform/storage/secret-storage.md
+            icon: fa-duotone fa-phone-arrow-up-right
+          - page: S3-compatible storage
+            path: ./pages/platform/storage/s3.md
+            icon: fa-duotone fa-bucket
 
   - tab: sdk
     layout:
@@ -215,7 +258,7 @@ navigation:
           - page: Screen sharing
             path: ./pages/sdk/web/screen-sharing.md
             icon: fa-duotone fa-screencast
-          - page: Screen sharing
+          - page: Autoplay and device access
             path: ./pages/sdk/web/autoplay.md
             icon: fa-duotone fa-window-restore
       - section: iOS and macOS
@@ -317,35 +360,15 @@ navigation:
         icon: fa-duotone fa-headset
       - section: Troubleshooting
         contents:
+          - page: Limits and restrictions
+            path: ./pages/help/limits.md
+            icon: fa-duotone fa-ban
           - page: VoxEngine scenarios
             path: ./pages/help/scenarios.md
             icon: fa-duotone fa-bug
           - page: SDK statistics
             path: ./pages/help/statistics.md
             icon: fa-duotone fa-mobile
-      - section: How it works
-        contents:
-          - page: Control panel
-            path: ./pages/help/control-panel.md
-            icon: fa-duotone fa-window-maximize
-          - page: Management API
-            path: ./pages/help/management-api.md
-            icon: fa-duotone fa-network-wired
-          - page: Cloud IDE
-            path: ./pages/help/ide.md
-            icon: fa-duotone fa-square-code
-          - page: Basic concepts
-            path: ./pages/help/concepts.md
-            icon: fa-duotone fa-lightbulb-on
-          - page: Limits and restrictions
-            path: ./pages/help/limits.md
-            icon: fa-duotone fa-ban
-          - page: Media streams
-            path: ./pages/help/media-streams.md
-            icon: fa-duotone fa-waveform
-          - page: Media over WebSockets
-            path: ./pages/help/websockets.md
-            icon: fa-duotone fa-plug
 
 colors:
   accent-primary:
