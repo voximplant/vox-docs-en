@@ -174,6 +174,9 @@ navigation:
           - page: SIP calls and registrations
             path: ./pages/platform/telephony/sip.md
             icon: fa-duotone fa-phone-office
+          - page: Voicemail detection
+            path: ./pages/platform/telephony/voicemail-detection.md
+            icon: fa-duotone fa-voicemail
       - section: Speech processing
         contents:
           - page: Text-to-speech
@@ -252,6 +255,15 @@ navigation:
           - page: Automated call lists
             path: ./pages/platform/solutions/call-lists.md
             icon: fa-duotone fa-address-book
+          - page: Phone number masking
+            path: ./pages/platform/solutions/phone-number-masking.md
+            icon: fa-duotone fa-user-shield
+          - page: Cloud PBX
+            path: ./pages/platform/solutions/cloud-pbx.md
+            icon: fa-duotone fa-phone-intercom
+          - page: Two-factor authorization
+            path: ./pages/platform/solutions/2fa.md
+            icon: fa-duotone fa-mobile-screen-button
 
   - tab: sdk
     layout:
@@ -269,6 +281,9 @@ navigation:
           - page: Voice and video conferences
             path: ./pages/sdk/web/conferences.md
             icon: fa-duotone fa-users-medical
+          - page: Video conference optimization
+            path: ./pages/sdk/web/simulcast.md
+            icon: fa-duotone fa-users-viewfinder
           - page: Screen sharing
             path: ./pages/sdk/web/screen-sharing.md
             icon: fa-duotone fa-screencast
