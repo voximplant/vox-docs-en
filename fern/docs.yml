@@ -57,12 +57,18 @@ navigation:
           - page: Management API
             path: ./pages/overview/how-it-works/management-api.md
             icon: fa-duotone fa-network-wired
-          - page: Cloud IDE
-            path: ./pages/overview/how-it-works/ide.md
-            icon: fa-duotone fa-square-code
           - page: Basic concepts
             path: ./pages/overview/how-it-works/concepts.md
             icon: fa-duotone fa-lightbulb-on
+          - page: Cloud IDE
+            path: ./pages/overview/how-it-works/ide.md
+            icon: fa-duotone fa-square-code
+          - page: Type declarations
+            path: ./pages/overview/how-it-works/type-declarations.md
+            icon: fa-duotone fa-file-code
+          - page: VoxEngine CI
+            path: ./pages/overview/how-it-works/ci.md
+            icon: fa-duotone fa-gears
 
   - tab: voice-ai
     layout:
