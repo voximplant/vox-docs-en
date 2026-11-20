@@ -78,25 +78,9 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
-      - section: Voice AI on Voximplant
-        slug: voice-ai-on-voximplant
-        contents:
-          - page: Getting started
-            slug: overview
-            path: ./pages/voice-ai/voice-ai-on-voximplant/overview.mdx
-            icon: fa-duotone fa-star
-          - link: VoxEngine Overview
-            href: /voice-ai/voice-ai-on-voximplant/overview#voxengine-overview
-            icon: fa-duotone fa-microchip-ai
-          - link: LLM & Speech Engines
-            href: /voice-ai/voice-ai-on-voximplant/overview#what-llm-and-speech-engine-do-you-want-to-use
-            icon: fa-duotone fa-waveform-lines
-          - link: Telephony Networks
-            href: /voice-ai/voice-ai-on-voximplant/overview#what-telephony-networks-are-you-using
-            icon: fa-duotone fa-phone-volume
-          - link: Guide Usage
-            href: /voice-ai/voice-ai-on-voximplant/overview#using-these-guides
-            icon: fa-duotone fa-book-open
+      - page: Voice AI on Voximplant
+        path: ./pages/voice-ai/voice-ai-on-voximplant/overview.mdx
+        icon: fa-duotone fa-star
       - section: Build with AI coding agents
         slug: vibe-coding
         contents:
@@ -158,23 +142,9 @@ navigation:
             slug: build-and-deploy
             path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
             icon: fa-duotone fa-rocket-launch
-      - section: Pipeline Options
-        slug: pipeline-options
-        skip-slug: true
-        contents:
-          - page: Overview
-            slug: pipeline-options
-            path: ./pages/voice-ai/pipeline-options.mdx
-            icon: fa-duotone fa-circle-info
-          - link: Speech-to-Speech
-            href: /voice-ai/pipeline-options#speech-to-speech
-            icon: fa-duotone fa-waveform-lines
-          - link: Hybrid-cascade (LLM↔TTS)
-            href: /voice-ai/pipeline-options#hybrid-cascade-1
-            icon: fa-duotone fa-arrows-split-up-and-left
-          - link: Cascaded (STT↔LLM↔TTS)
-            href: /voice-ai/pipeline-options#full-cascade
-            icon: fa-duotone fa-diagram-project
+      - page: Overview
+        path: ./pages/voice-ai/pipeline-options.mdx
+        icon: fa-duotone fa-circle-info
       - section: Voice AI Clients
         slug: connectors
         skip-slug: true
