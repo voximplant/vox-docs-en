@@ -78,10 +78,6 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
-      - page: Capabilities
-        path: ./pages/voice-ai/capabilities.mdx
-        slug: capabilities
-        icon: fa-duotone fa-list-check
       - section: Voice AI on Voximplant
         slug: voice-ai-on-voximplant
         contents:
@@ -1163,7 +1159,6 @@ navigation:
               - page: Working with API requests
                 path: ./pages/reference/voxengine/api-requests.mdx
                 slug: api-requests
-                icon: fa-duotone fa-arrow-right-arrow-left
             skip-slug: true
           - section: Queues and routing
             slug: queues-and-routing

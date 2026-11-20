@@ -15,10 +15,3 @@ Choose your path to get started:
     Embed crystal-clear voice and video functionality directly into your Web, iOS, Android, React Native, and Flutter applications.
   </Card>
 </CardGroup>
-
----
-
-### Need something else?
-
-- **[API Reference](/reference/overview)** — Explore the VoxEngine runtime, Management REST API, and client SDK references.
-- **[Create a free account]()** — Sign up to get your testing credentials and starting balance.
