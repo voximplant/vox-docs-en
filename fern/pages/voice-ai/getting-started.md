@@ -1,95 +1,172 @@
-# Getting started
+VoxEngine setup is centered on three components:
 
-Most Voice AI orchestration guides assume you already have a functional telephony backend running in Voximplant. If you are starting from scratch, this step-by-step guide walks you through setting up the foundation: creating an account, launching your first application, configuring low-latency scenarios, and attaching a phone number so your AI voice agent can make and receive live phone calls.
+- `Applications`: top-level containers for each environment
+- `Scenarios`: JavaScript programs that control calls
+- `Routing rules`: destination patterns that trigger scenarios
 
----
+![Basic inbound routing model](../../../assets/getting-started/voxengine-structure.png)
 
-## 1. Create a Voximplant account
+For your first project, we recommend configuring one application first, adding one scenario, and attaching a single routing rule that can receive test traffic.
+you can start by doing this via Voximplant's Control Panel (`manage.voximplant.com`) and later use the management API to do this programmatically.
 
-If you haven't registered yet:
+## Setup order
 
-1. Sign up for an account in the [Voximplant Control Panel](https://manage.voximplant.com).
-2. Choose a unique **Account name** (this acts as your global namespace across the platform).
-3. Confirm your email address and log in to the dashboard to claim your initial testing balance.
+<Steps>
+  <Step title="[Create an account](#create-an-account)" />
+  <Step title="[Create an application](#create-an-application)" />
+  <Step title="[Create a scenario](#create-a-scenario)" />
+  <Step title="[Setup routing](#setup-routing)" />
+  <Step title="[Application Storage](#application-storage)" />
+</Steps>
 
----
 
-## 2. Create an application
+<a id="create-an-account"></a>
+## <Icon icon="fa-duotone fa-user-plus" /> Create an account
 
-In Voximplant, an **Application** is the central container that isolates your code, routing rules, phone numbers, and API credentials:
+Use `manage.voximplant.com` to configure applications, scenarios, routing, channels, and storage.
 
-1. In the left navigation menu, click **Applications**.
-2. Click **Create application** (or the **+** icon).
-3. Name your application (for example, `voice-ai-assistant`).
-4. Click **Create**.
+<Steps>
+  <Step title="Open manage.voximplant.com">
+    Go to [manage.voximplant.com](https://manage.voximplant.com).
+  </Step>
+  <Step title="Sign in or create an account">
+    Sign in with your existing account, or create a new one at [Sign up](https://manage.voximplant.com/auth/sign_up).
+  </Step>
+  <Step title="Verify access">
+    After login, confirm you can access the application list and project navigation.
+  </Step>
+</Steps>
 
-Click on your newly created application to open its workspace.
+<Button href="https://manage.voximplant.com/auth/sign_up" intent="success" large full >
+    <strong>Sign up for a Voximplant account</strong>
+</Button>
 
----
+<a id="create-an-application"></a>
+## <Icon icon="../../../assets/getting-started/icon-application-grid.svg" /> Create an application
 
-## 3. Create a Voice AI scenario
+A Voximplant application is the top-level container for a task or environment. It holds scenarios, users, routing rules, and attached numbers.
 
-Scenarios are serverless JavaScript files executed inside Voximplant's real-time media engine (VoxEngine). This is where your telephony call legs connect to voice AI streams.
+<Steps>
+  <Step title="Open Applications">
+    In Control Panel, open **Applications**.
+  </Step>
+  <Step title="Create a new application">
+    Click **New application** (or **Create** from the empty state).
+    ![Create an application](../../../assets/getting-started/manage-create-application.png)
+  </Step>
+  <Step title="Name and save the application">
+    Set the application name (for example `voice-ai-staging`) and create it.
+  </Step>
+</Steps>
 
-To create your initial  scenario:
 
-1. Inside your application, navigate to the **Scenarios** tab.
-2. Click **Create scenario** (or **+**).
-3. Create a name for the scenario.
-4. Paste the starter code into the Cloud IDE editor.
-5. Click **Save** in the top-right corner.
+Use different applications for projects that do not share the same Voximplant resources - `prod-agent-global` vs. `new-agent-prototype` -
+or for intentional isolation - such as `voice-ai-staging` vs. `voice-ai-production`.
 
-<Warning title="Crucial: Disable DTX for Voice AI">
-Discontinuous Transmission (DTX) pauses audio transmission during silence. While useful for saving bandwidth in standard phone calls, DTX introduces clipping, latency, and false turn-detection interrupts in conversational voice AI. Always set `disableDtxForAudio: true` when answering or initiating calls for Voice AI workflows.
-</Warning>
+#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Applications setup guide](/platform/getting-started/create-an-application)
+- [Applications HTTP API reference](/reference/management-api/reference/applications)
 
----
+<a id="create-a-scenario"></a>
+## <Icon icon="fa-duotone fa-code" /> Create a scenario
 
-## 4. Create a routing rule
+Scenarios are JavaScript documents inside an application. VoxEngine executes them when a routing rule matches.
 
-A scenario does not run until it is triggered. A **Routing rule** acts as the switchboard that listens for incoming calls or API requests and runs your scenario:
+<Steps>
+  <Step title="Open your application" />
+  <Step title="Go to Scenarios">
+    Select **Scenarios**.
+  </Step>
+  <Step title="Create a scenario">
+    Click the plus button to create a scenario.
+    ![Create a scenario](../../../assets/getting-started/manage-create-scenario.png)
+  </Step>
+  <Step title="Name and paste code">
+    Name the scenario and paste your example code.
+  </Step>
+</Steps>
 
-1. In your application, navigate to the **Routing** tab.
-2. Click **New rule**.
-3. Name your rule (for example, `ai-agent-routing`).
-4. Set the **Pattern** field to `.*` (this regex matches all incoming calls).
-5. Under **Assigned scenarios**, drag or select your scenario.
-6. Click **Save**.
+We recommend that you keep scenario names short and specific since there are situations where you may use this channel
+name elsewhere (like with SIP routing).
 
----
+#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Scenarios setup guide](/platform/getting-started/create-a-scenario)
+- [Scenarios HTTP API reference](/reference/management-api/reference/scenarios)
 
-## 5. Get a phone number (optional)
+<a id="setup-routing"></a>
+## <Icon icon="../../../assets/getting-started/icon-routing-split.svg" /> Setup routing
 
-If you want callers to reach your AI agent by dialing a real mobile or landline phone, attach a phone number to your application:
+Routing rules decide which scenario starts for an incoming destination or a manually triggered outbound flow. For example,
+`^(\+91)\d{10}$` could go to an India-specific voice AI scenario, while `^(\+1)\d{10}$` could go to a US-specific one.
 
-1. In the main menu, go to **Numbers** → **Buy phone number**.
-2. Select **Real** or **Test** numbers, choose your target country and city, and complete the purchase.
-3. Open your application, go to the **Numbers** tab, and click **Attach number**.
-4. Select your purchased number, choose your `ai-agent-routing` rule, and click **Attach**.
+<Steps>
+  <Step title="Open Routing">
+    Open your application and go to **Routing**.
+    ![Create a routing rule](../../../assets/getting-started/manage-routing-create-rule.png)
+  </Step>
+  <Step title="Create a rule">
+    Click **Create** / **New rule**.
+    ![Attach scenarios to a routing rule](../../../assets/getting-started/manage-routing-attach-scenario.png)
+  </Step>
+  <Step title="Set rule and pattern">
+    Set a rule name and a destination pattern.
+  </Step>
+  <Step title="Attach scenarios">
+    Attach one or more scenarios in priority order.
+  </Step>
+  <Step title="Save">
+    Save the rule.
+  </Step>
+</Steps>
 
-<Info title="Testing without a phone number">
-If you are developing in-app voice agents using our Web, iOS, or Android SDKs, or testing via the Control Panel's built-in **Web softphone** (located under **Testing tools** in the top navigation bar), you do not need to buy a phone number.
-</Info>
 
----
+<Note>
+    For your first rule, we recommend a using `.*` to matches all destinations. You can create more specific rules later as needed.
+</Note>
 
-## 6. Store provider API keys in Secrets
+Regular Expression pattern basics:
 
-When integrating third-party AI providers (such as OpenAI, ElevenLabs, Cartesia, Deepgram, or Google), avoid hardcoding API keys directly into your JavaScript scenario files. Instead, use the built-in Secrets vault:
+- `.*` matches any destination (good as a starting point & fallback)
+- `+?[1-9]\d{1,14}` matches E.164-style numbers
+- `123.+` matches destinations starting with `123`
 
-1. Inside your application, navigate to the **Secrets** tab.
-2. Click **Add secret**.
-3. Enter a key name (e.g., `OPENAI_API_KEY` or `ELEVENLABS_API_KEY`) and paste your provider token.
-4. Access the stored secret safely in your scenarios using `VoxEngine.getSecret()`.
+Routing evaluation is top-to-bottom. The first matching rule is used.
 
----
+As you get more advanced with more unique situations, you can consider patterns such as:
 
-## Next steps: Connect your AI provider
+- One explicit test rule with a unique alias/pattern
+- One fallback global rule (`.*`) below it
 
-Now that your application workspace, scenario engine, and routing switchboard are configured, you are ready to implement conversational intelligence.
+Voximplant also includes a rule check that will help verify  your patterns.
+![Validate routing with rule checker](../../../assets/getting-started/manage-routing-rule-checker.png)
 
-Choose the architecture that fits your use case:
+#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Routing rules setup guide](/platform/getting-started/create-a-routing-rule)
+- [Routing rules HTTP API reference](/reference/management-api/reference/rules)
 
-* **Speech-to-Speech & Realtime APIs** — Connect low-latency streaming agents with [OpenAI Realtime](/voice-ai/openai/overview), [Google Gemini Live](/voice-ai/google/overview), or [Ultravox](/voice-ai/ultravox/overview).
-* **Cascade Pipelines** — Build modular architectures by combining [Deepgram](/voice-ai/deepgram/overview) (STT), your own self-hosted or cloud LLM, and [Cartesia](/voice-ai/cartesia/overview) or [ElevenLabs](/voice-ai/elevenlabs/overview) (TTS).
-* **Tool Calling with MCP** — Connect your live voice bot to CRMs, ticketing systems, and databases using the native VoxEngine [Model Context Protocol (MCP)](/voice-ai/mcp-client) client.
+<a id="application-storage"></a>
+## <Icon icon="../../../assets/getting-started/icon-application-storage.svg" /> Application Storage and Secrets
+
+Voximplant provides two separate stores for every application:
+
+- **Secrets** — for sensitive values such as API keys, tokens, and passwords. Use `VoxEngine.getSecretValue('<name>')` to read them.
+- **Application Storage** (`ApplicationStorage`) — a key-value store for small non-sensitive config values like destination numbers, feature flags, and shared counters across scenario instances.
+
+The examples in this guide use **Secrets** to hold API keys for external services (for example `OPENAI_API_KEY`) and `ApplicationStorage` for non-sensitive config.
+
+![Application Storage and Secrets in manage.voximplant.com](../../../assets/getting-started/manage-app-storage-and-secrets.png)
+
+
+Example:
+
+```js title="Read a secret and a config value"
+require(Modules.ApplicationStorage);
+const apiKey = VoxEngine.getSecretValue('OPENAI_API_KEY');
+const calleeDestination = (await ApplicationStorage.get("CALLEE_DESTINATION")).value;
+```
+
+
+#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Secrets guide](/platform/storage/secret-storage)
+- [ApplicationStorage VoxEngine API reference](/reference/voxengine/application-storage)
+- [Voximplant key-value storage announcement blog](https://voximplant.com/blog/voximplant_key_value_storage)

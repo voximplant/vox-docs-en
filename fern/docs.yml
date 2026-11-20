@@ -108,28 +108,6 @@ navigation:
             slug: claude
             path: ./pages/voice-ai/vibe-coding/claude.mdx
             icon: fa-brands fa-claude
-      - section: Configure Voximplant
-        slug: configure-voximplant
-        contents:
-          - page: Configure Voximplant
-            slug: overview
-            path: ./pages/voice-ai/configure-voximplant/overview.mdx
-            icon: fa-duotone fa-sliders
-          - link: Create an account
-            href: /voice-ai/configure-voximplant/overview#create-an-account
-            icon: fa-duotone fa-user-plus
-          - link: Create an application
-            href: /voice-ai/configure-voximplant/overview#create-an-application
-            icon: fa-duotone fa-grid-2-plus
-          - link: Create a scenario
-            href: /voice-ai/configure-voximplant/overview#create-a-scenario
-            icon: fa-duotone fa-code
-          - link: Setup routing
-            href: /voice-ai/configure-voximplant/overview#setup-routing
-            icon: fa-duotone fa-route
-          - link: Application Storage
-            href: /voice-ai/configure-voximplant/overview#application-storage
-            icon: fa-duotone fa-database
       - section: Network options
         slug: network-options
         contents:
