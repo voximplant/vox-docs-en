@@ -1,172 +1,169 @@
-VoxEngine setup is centered on three components:
+# Getting started with Voice AI
 
-- `Applications`: top-level containers for each environment
-- `Scenarios`: JavaScript programs that control calls
-- `Routing rules`: destination patterns that trigger scenarios
+Voximplant combines a serverless **Voice AI Orchestration Platform** with a carrier-grade **Communications Platform as a Service (CPaaS)**. This allows you to connect real-time conversational AI models, LLMs, and speech engines directly to telephone lines, SIP trunks, WebRTC, and WhatsApp.
 
-![Basic inbound routing model](../../assets/getting-started/voxengine-structure.png)
+Before writing code or deploying an agent, consider three architectural choices:
 
-For your first project, we recommend configuring one application first, adding one scenario, and attaching a single routing rule that can receive test traffic.
-you can start by doing this via Voximplant's Control Panel (`manage.voximplant.com`) and later use the management API to do this programmatically.
-
-## Setup order
-
-<Steps>
-  <Step title="[Create an account](#create-an-account)" />
-  <Step title="[Create an application](#create-an-application)" />
-  <Step title="[Create a scenario](#create-a-scenario)" />
-  <Step title="[Setup routing](#setup-routing)" />
-  <Step title="[Application Storage](#application-storage)" />
-</Steps>
-
-
-<a id="create-an-account"></a>
-## <Icon icon="fa-duotone fa-user-plus" /> Create an account
-
-Use `manage.voximplant.com` to configure applications, scenarios, routing, channels, and storage.
-
-<Steps>
-  <Step title="Open manage.voximplant.com">
-    Go to [manage.voximplant.com](https://manage.voximplant.com).
-  </Step>
-  <Step title="Sign in or create an account">
-    Sign in with your existing account, or create a new one at [Sign up](https://manage.voximplant.com/auth/sign_up).
-  </Step>
-  <Step title="Verify access">
-    After login, confirm you can access the application list and project navigation.
-  </Step>
-</Steps>
-
-<Button href="https://manage.voximplant.com/auth/sign_up" intent="success" large full >
-    <strong>Sign up for a Voximplant account</strong>
-</Button>
-
-<a id="create-an-application"></a>
-## <Icon icon="../../assets/getting-started/icon-application-grid.svg" /> Create an application
-
-A Voximplant application is the top-level container for a task or environment. It holds scenarios, users, routing rules, and attached numbers.
-
-<Steps>
-  <Step title="Open Applications">
-    In Control Panel, open **Applications**.
-  </Step>
-  <Step title="Create a new application">
-    Click **New application** (or **Create** from the empty state).
-    ![Create an application](../../assets/getting-started/manage-create-application.png)
-  </Step>
-  <Step title="Name and save the application">
-    Set the application name (for example `voice-ai-staging`) and create it.
-  </Step>
-</Steps>
-
-
-Use different applications for projects that do not share the same Voximplant resources - `prod-agent-global` vs. `new-agent-prototype` -
-or for intentional isolation - such as `voice-ai-staging` vs. `voice-ai-production`.
-
-#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
-- [Applications setup guide](/platform/getting-started/create-an-application)
-- [Applications HTTP API reference](/reference/management-api/reference/applications)
-
-<a id="create-a-scenario"></a>
-## <Icon icon="fa-duotone fa-code" /> Create a scenario
-
-Scenarios are JavaScript documents inside an application. VoxEngine executes them when a routing rule matches.
-
-<Steps>
-  <Step title="Open your application" />
-  <Step title="Go to Scenarios">
-    Select **Scenarios**.
-  </Step>
-  <Step title="Create a scenario">
-    Click the plus button to create a scenario.
-    ![Create a scenario](../../assets/getting-started/manage-create-scenario.png)
-  </Step>
-  <Step title="Name and paste code">
-    Name the scenario and paste your example code.
-  </Step>
-</Steps>
-
-We recommend that you keep scenario names short and specific since there are situations where you may use this channel
-name elsewhere (like with SIP routing).
-
-#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
-- [Scenarios setup guide](/platform/getting-started/create-a-scenario)
-- [Scenarios HTTP API reference](/reference/management-api/reference/scenarios)
-
-<a id="setup-routing"></a>
-## <Icon icon="../../assets/getting-started/icon-routing-split.svg" /> Setup routing
-
-Routing rules decide which scenario starts for an incoming destination or a manually triggered outbound flow. For example,
-`^(\+91)\d{10}$` could go to an India-specific voice AI scenario, while `^(\+1)\d{10}$` could go to a US-specific one.
-
-<Steps>
-  <Step title="Open Routing">
-    Open your application and go to **Routing**.
-    ![Create a routing rule](../../assets/getting-started/manage-routing-create-rule.png)
-  </Step>
-  <Step title="Create a rule">
-    Click **Create** / **New rule**.
-    ![Attach scenarios to a routing rule](../../assets/getting-started/manage-routing-attach-scenario.png)
-  </Step>
-  <Step title="Set rule and pattern">
-    Set a rule name and a destination pattern.
-  </Step>
-  <Step title="Attach scenarios">
-    Attach one or more scenarios in priority order.
-  </Step>
-  <Step title="Save">
-    Save the rule.
-  </Step>
-</Steps>
-
+1. **Telephony channels**: How will users connect? (PSTN phone numbers, SIP PBX trunks, WebRTC in a web/mobile app, or WhatsApp Business).
+2. **AI pipeline architecture**: Are you running an end-to-end speech-to-speech model, a half-cascade, or a modular STT $\rightarrow$ LLM $\rightarrow$ TTS cascade?
+3. **Call direction**: Is your agent answering inbound customer calls or placing outbound notifications and campaigns?
 
 <Note>
-    For your first rule, we recommend a using `.*` to matches all destinations. You can create more specific rules later as needed.
+For common questions regarding platform latency, billing, and architecture, see our [Voice AI Frequently Asked Questions (FAQ)](/voice-ai/faq).
 </Note>
 
-Regular Expression pattern basics:
+---
 
-- `.*` matches any destination (good as a starting point & fallback)
-- `+?[1-9]\d{1,14}` matches E.164-style numbers
-- `123.+` matches destinations starting with `123`
+## Core concepts at a glance
 
-Routing evaluation is top-to-bottom. The first matching rule is used.
+Voximplant runs on **VoxEngine**, a serverless JavaScript runtime executing directly alongside live media streams:
 
-As you get more advanced with more unique situations, you can consider patterns such as:
+* **Applications**: Top-level project containers that isolate your scenarios, credentials, routing rules, and phone numbers.
+* **Scenarios**: Serverless JavaScript programs that control telephony logic, manipulate media streams, and communicate with AI providers.
+* **Routing rules**: Pattern-matching rules that evaluate incoming destinations and determine which scenario to launch.
+* **Phone numbers**: Virtual PSTN numbers (local, mobile, toll-free) used to receive calls or provide an outbound Caller ID.
+* **Secrets & Application Storage**: Isolated key-value storage for environment variables and encrypted storage for third-party AI provider API keys.
 
-- One explicit test rule with a unique alias/pattern
-- One fallback global rule (`.*`) below it
+---
 
-Voximplant also includes a rule check that will help verify  your patterns.
-![Validate routing with rule checker](../../assets/getting-started/manage-routing-rule-checker.png)
+## Step-by-step setup guide
 
-#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
-- [Routing rules setup guide](/platform/getting-started/create-a-routing-rule)
-- [Routing rules HTTP API reference](/reference/management-api/reference/rules)
+<Steps>
+  <Step title="Create an account">
+    ### 1. Create your account
+    
+    All platform resources are managed via the [Voximplant Control Panel](https://manage.voximplant.com):
+    
+    1. Sign up for an account at [manage.voximplant.com/auth/sign_up](https://manage.voximplant.com/auth/sign_up).
+    2. Choose an **Account name**. This name serves as your permanent global account identifier across SDK logins and API calls.
+    3. Confirm your email and log in to access the dashboard and claim your initial testing balance.
+  </Step>
 
-<a id="application-storage"></a>
-## <Icon icon="../../assets/getting-started/icon-application-storage.svg" /> Application Storage and Secrets
+  <Step title="Create an application">
+    ### 2. Create an application
+    
+    An application groups and isolates all resources for a specific project:
+    
+    1. In the Control Panel, open **Applications**.
+    2. Click **New application** (or **Create**).
+    3. Enter a name (for example, `voice-ai-staging`) and save.
+    
+    <Info title="Environment isolation">
+    Use separate applications for distinct environments—such as `voice-ai-staging` vs. `voice-ai-production`—to keep credentials and routing rules isolated.
+    </Info>
+    
+    For more details, see the [Applications setup guide](/platform/getting-started/create-an-application) or the [Applications HTTP API reference](/reference/management-api/reference/applications).
+  </Step>
 
-Voximplant provides two separate stores for every application:
+  <Step title="Create a scenario">
+    ### 3. Create a scenario
+    
+    Scenarios are JavaScript files executed by VoxEngine in the cloud when a call triggers a routing rule:
+    
+    1. Inside your application, navigate to **Scenarios**.
+    2. Click the plus button (**+**) to create a new scenario.
+    3. Enter a scenario name (for example, `voice-ai-agent.js`).
+    4. Paste your scenario logic and click **Save**.
+    
+    Below is a starter scenario that answers an incoming call, optimizes audio latency for AI processing, and plays an introductory greeting:
 
-- **Secrets** — for sensitive values such as API keys, tokens, and passwords. Use `VoxEngine.getSecretValue('<name>')` to read them.
-- **Application Storage** (`ApplicationStorage`) — a key-value store for small non-sensitive config values like destination numbers, feature flags, and shared counters across scenario instances.
+```javascript title="voice-ai-agent.js"
+VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
+  const call = e.call;
 
-The examples in this guide use **Secrets** to hold API keys for external services (for example `OPENAI_API_KEY`) and `ApplicationStorage` for non-sensitive config.
+  // Answer call with low-latency audio settings
+  call.answer({
+    disableDtxForAudio: true, // Disables discontinuous transmission to prevent audio clipping
+  });
 
-![Application Storage and Secrets in manage.voximplant.com](../../assets/getting-started/manage-app-storage-and-secrets.png)
+  call.addEventListener(CallEvents.Connected, () => {
+    // Connect your Voice AI agent here
+    call.say("Hello from the Voximplant Voice AI cloud.", {
+      voice: VoiceList.Amazon.en_US_Joanna,
+    });
+  });
 
+  call.addEventListener(CallEvents.PlaybackFinished, () => {
+    call.hangup();
+  });
+});
+```
 
-Example:
+    For more details, see the [Scenarios setup guide](/platform/getting-started/create-a-scenario) or the [Scenarios HTTP API reference](/reference/management-api/reference/scenarios).
+  </Step>
 
-```js title="Read a secret and a config value"
+  <Step title="Configure routing rules">
+    ### 4. Configure routing rules
+    
+    Routing rules determine which scenario executes when traffic reaches the platform. They evaluate the destination string (dialed phone number, SIP address, or username) against a regular expression pattern:
+    
+    1. Inside your application, navigate to **Routing**.
+    2. Click **New rule**.
+    3. Set a descriptive name (e.g., `inbound-calls`).
+    4. Set the **Pattern** field to `.*` (matches all incoming destinations).
+    5. Under **Assigned scenarios**, drag or select your `voice-ai-agent.js` scenario.
+    6. Click **Save**.
+    
+    <Note>
+    Routing rules evaluate from top to bottom. The first rule whose pattern matches the destination executes. For initial testing, `.*` acts as an ideal catch-all pattern.
+    </Note>
+    
+    For more details, see the [Routing rules setup guide](/platform/getting-started/create-a-routing-rule) or the [Routing rules HTTP API reference](/reference/management-api/reference/rules).
+  </Step>
+
+  <Step title="Configure Secrets and Application Storage">
+    ### 5. Store API keys and configuration
+    
+    Voximplant provides two separate storage mechanisms inside every application:
+    
+    * **Secrets**: Encrypted storage for sensitive credentials like provider API keys (`OPENAI_API_KEY`, `ELEVENLABS_API_KEY`). Accessible via `VoxEngine.getSecretValue('<name>')`.
+    * **Application Storage (`ApplicationStorage`)**: A persistent key-value store for non-sensitive runtime configuration, shared counters, and feature flags.
+
+```javascript title="Read a secret and a storage key"
 require(Modules.ApplicationStorage);
-const apiKey = VoxEngine.getSecretValue('OPENAI_API_KEY');
+
+// Retrieve an encrypted API key
+const apiKey = VoxEngine.getSecretValue("OPENAI_API_KEY");
+
+// Retrieve non-sensitive configuration
 const calleeDestination = (await ApplicationStorage.get("CALLEE_DESTINATION")).value;
 ```
 
+    For more details, see the [Secrets guide](/platform/storage/secret-storage) and the [ApplicationStorage API reference](/reference/voxengine/application-storage).
+  </Step>
 
-#### <icon icon="fa-duotone fa-solid fa-link" /> More information:
-- [Secrets guide](/platform/storage/secret-storage)
-- [ApplicationStorage VoxEngine API reference](/reference/voxengine/application-storage)
-- [Voximplant key-value storage announcement blog](https://voximplant.com/blog/voximplant_key_value_storage)
+  <Step title="Attach a phone number (optional)">
+    ### 6. Attach a phone number
+    
+    If callers need to reach your Voice AI agent from a standard mobile phone or landline:
+    
+    1. In the Control Panel, go to **Numbers** → **Buy phone number**.
+    2. Purchase a local, mobile, or toll-free number.
+    3. Return to **Applications**, open your application, and select the **Numbers** tab.
+    4. Attach the purchased number and bind it to your routing rule.
+    
+    <Info title="Testing without a phone number">
+    If you are testing using WebRTC, our client SDKs, or the built-in Web Softphone under **Testing tools** in the top navigation bar, a phone number is optional.
+    </Info>
+  </Step>
+</Steps>
+
+---
+
+## Choosing your Voice AI pipeline
+
+Once your basic application structure is deployed, choose the pipeline architecture that fits your use case:
+
+* **Speech-to-Speech (Full Duplex)**: Raw audio streams directly between the caller and an end-to-end conversational model with native turn-taking (e.g., OpenAI Realtime, Google Gemini Live, Ultravox, xAI Grok).
+* **Half-Cascade (Speech/LLM $\rightarrow$ Realtime TTS)**: Use a multimodal speech model for reasoning, but pipe generated text into a dedicated low-latency neural TTS provider like [Grok TTS](/voice-ai/speech/grok-tts), Cartesia, or ElevenLabs for distinct voice branding.
+* **Full Cascade (STT $\rightarrow$ LLM $\rightarrow$ TTS)**: Connect best-of-breed components—such as Deepgram for transcription, an open-source or commercial LLM for reasoning, and Cartesia or ElevenLabs for speech output.
+
+---
+
+## Next steps
+
+Explore our production-ready connectors to wire up your chosen provider:
+
+* [Voice AI Connectors Overview](/voice-ai/overview) — Browse complete scenario code and setup guides for OpenAI, Gemini, ElevenLabs, Cartesia, Deepgram, and more.
+* [Inbound vs. Outbound Calling](/voice-ai/inbound-vs-outbound/inbound-calls) — Learn how to handle inbound customer service inquiries versus triggering proactive outbound AI agent calls.
+* [Bring your own LLM](/voice-ai/bring-your-own-llm) — Connect custom self-hosted models or private OpenAI-compatible endpoints.

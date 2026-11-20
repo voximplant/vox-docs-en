@@ -78,9 +78,6 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
-      - page: Voice AI on Voximplant
-        path: ./pages/voice-ai/voice-ai-on-voximplant/overview.mdx
-        icon: fa-duotone fa-star
       - section: Build with AI coding agents
         slug: vibe-coding
         contents:
