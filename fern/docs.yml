@@ -97,6 +97,7 @@ navigation:
             icon: fa-duotone fa-waveform-lines
           - link: Telephony Networks
             href: /voice-ai/voice-ai-on-voximplant/overview#what-telephony-networks-are-you-using
+            icon: fa-duotone fa-phone-volume
           - link: Guide Usage
             href: /voice-ai/voice-ai-on-voximplant/overview#using-these-guides
             icon: fa-duotone fa-book-open
@@ -132,6 +133,7 @@ navigation:
             icon: fa-duotone fa-route
           - link: Application Storage
             href: /voice-ai/configure-voximplant/overview#application-storage
+            icon: fa-duotone fa-database
       - section: Network options
         slug: network-options
         contents:
@@ -142,6 +144,7 @@ navigation:
           - page: SIP
             slug: sip
             path: ./pages/voice-ai/network-options/sip.mdx
+            icon: fa-duotone fa-phone-office
           - page: WhatsApp
             slug: whatsapp
             path: ./pages/voice-ai/network-options/whatsapp.mdx
@@ -641,18 +644,6 @@ navigation:
           - page: Two-factor authorization
             path: ./pages/platform/solutions/2fa.md
             icon: fa-duotone fa-mobile-screen-button
-
-      - page: Working with API requests
-        path: ./pages/platform/api-requests.mdx
-        slug: api-requests
-        icon: fa-duotone fa-arrow-right-arrow-left
-      - section: Management API guides
-        slug: management-api
-        contents:
-          - page: Callbacks
-            path: ./pages/platform/management-api/callbacks.mdx
-            slug: callbacks
-            icon: fa-duotone fa-webhook
 
   - tab: sdk
     layout:
@@ -1169,6 +1160,10 @@ navigation:
               - page: WebSocketReadyState
                 path: ./pages/reference/voxengine/websocket-ready-state.mdx
                 slug: websocket-ready-state
+              - page: Working with API requests
+                path: ./pages/reference/voxengine/api-requests.mdx
+                slug: api-requests
+                icon: fa-duotone fa-arrow-right-arrow-left
             skip-slug: true
           - section: Queues and routing
             slug: queues-and-routing
@@ -1245,6 +1240,10 @@ navigation:
             path: ./pages/reference/management-api/authorization.mdx
             slug: authorization
             icon: fa-duotone fa-key
+          - page: Callbacks
+            path: ./pages/reference/management-api/callbacks.mdx
+            slug: callbacks
+            icon: fa-duotone fa-webhook
           - page: Errors
             path: ./pages/reference/management-api/errors.mdx
             icon: fa-duotone fa-triangle-exclamation
