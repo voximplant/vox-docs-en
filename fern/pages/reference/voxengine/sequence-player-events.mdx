@@ -1,0 +1,43 @@
+---
+title: SequencePlayerEvents
+subtitle: 7 values
+---
+
+## Values
+
+<a id="created" />
+<ParamField path="Created" type="'SequencePlayer.Created'">
+Triggered when [SequencePlayer](/reference/voxengine/sequence-player) created.
+</ParamField>
+
+<a id="playbackready" />
+<ParamField path="PlaybackReady" type="'SequencePlayer.PlaybackReady'">
+Triggered by the `VoxEngine.createSequencePlayer` methods when
+1) all the segments audio files download to the Voximplant cache is finished;
+2) all the audio files is found in the cache (i.e., it is in the cache before).
+</ParamField>
+
+<a id="started" />
+<ParamField path="Started" type="'SequencePlayer.Started'">
+Triggered when playback of the first SequencePlayer segment starts.
+</ParamField>
+
+<a id="stopped" />
+<ParamField path="Stopped" type="'SequencePlayer.Stopped'">
+Triggers as a result of the `SequencePlayer.stop` method call.
+</ParamField>
+
+<a id="playbackfinished" />
+<ParamField path="PlaybackFinished" type="'SequencePlayer.PlaybackFinished'">
+Triggered when playback has finished successfully or with an error.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'SequencePlayer.Error'">
+Triggered when playback has finished with an error
+</ParamField>
+
+<a id="playbackmarkerreached" />
+<ParamField path="PlaybackMarkerReached" type="'SequencePlayer.PlaybackMarkerReached'">
+Triggered when `SequencePlayer.addMarker` is reached.
+</ParamField>

@@ -1,0 +1,53 @@
+---
+title: "Migration guide from Beta"
+subtitle: "Migrate from Beta OpenAI client in Voximplant."
+noindex: true
+---
+
+If you are using the deprecated OpenAI realtime client in your application, this guide will help you to migrate to the newest version of the realtime client.
+
+Follow the steps below to migrate to the GA version:
+
+1. Remove the `Beta` namespace for the GA RealtimeAPI Client. For example, `OpenAI.Beta.functionName` becomes `OpenAI.functionName`, the same for events, etc.
+2. [RealtimeAPIClientParameters](/reference/voxengine/openai#realtimeapiclientparameters) now have the [type parameter](/reference/voxengine/openai/realtime-api-client-type) that lets developers choose between two API modes (realtime/transcription).
+3. `RealtimeAPIClient` methods related to the API communication (`sessionUpdate`, `responseCreate`, `conversationItemCreate`, etc.) expect parameters to be a full object as it is described in the OpenAI Realtime API reference, except the `"type"` field on the top level, which is determined by the method name itself.
+
+For example, in the Beta Client `sessionUpdate` was called in the following manner:
+
+```javascript
+realtimeAPIClient.sessionUpdate({
+    "instructions": "You are a helpful assistant.",
+    "voice": "sage",
+    "input_audio_transcription": {
+        "model": "whisper-1"
+    }
+});
+```
+
+In the GA Client `sessionUpdate` is called as follows:
+
+```javascript
+realtimeAPIClient.sessionUpdate({
+    "session": {
+        "type": "realtime",
+        "instructions": "You are a helpful assistant.",
+        "audio": {
+            "input": {
+                "transcription": {
+                    "model": "whisper-1",
+                    "language": "en"
+                }
+            }
+        }
+    }
+});
+```
+
+4. Several of the OpenAI messages and parameters have been renamed in GA, so please follow the [OpenAI Realtime API Reference](https://platform.openai.com/docs/api-reference/realtime-client-events/session) when creating parameters objects for the GA Client methods. More info is also available at [https://platform.openai.com/docs/guides/realtime#beta-to-ga-migration](https://platform.openai.com/docs/guides/realtime#beta-to-ga-migration).
+5. Interruption support requires additional VoxEngine code to clear the media buffer when `input_audio_buffer.speech_started` event is received from OpenAI's server VAD:
+
+```javascript
+realtimeAPIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechStarted, (event) => {
+    if (realtimeAPIClient) realtimeAPIClient.clearMediaBuffer();
+});
+```

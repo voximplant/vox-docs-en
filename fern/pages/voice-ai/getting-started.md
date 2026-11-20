@@ -8,7 +8,7 @@ Most Voice AI orchestration guides assume you already have a functional telephon
 
 If you haven't registered yet:
 
-1. Sign up for an account in the [Voximplant Control Panel]().
+1. Sign up for an account in the [Voximplant Control Panel](https://manage.voximplant.com).
 2. Choose a unique **Account name** (this acts as your global namespace across the platform).
 3. Confirm your email address and log in to the dashboard to claim your initial testing balance.
 
@@ -90,6 +90,6 @@ Now that your application workspace, scenario engine, and routing switchboard ar
 
 Choose the architecture that fits your use case:
 
-* **Speech-to-Speech & Realtime APIs** — Connect low-latency streaming agents with [OpenAI Realtime](), [Google Gemini Live](), or [Ultravox]().
-* **Cascade Pipelines** — Build modular architectures by combining [Deepgram]() (STT), your own self-hosted or cloud LLM, and [Cartesia]() or [ElevenLabs]() (TTS).
-* **Tool Calling with MCP** — Connect your live voice bot to CRMs, ticketing systems, and databases using the native VoxEngine [Model Context Protocol (MCP)]() client.
+* **Speech-to-Speech & Realtime APIs** — Connect low-latency streaming agents with [OpenAI Realtime](/voice-ai/openai/overview), [Google Gemini Live](/voice-ai/google/overview), or [Ultravox](/voice-ai/ultravox/overview).
+* **Cascade Pipelines** — Build modular architectures by combining [Deepgram](/voice-ai/deepgram/overview) (STT), your own self-hosted or cloud LLM, and [Cartesia](/voice-ai/cartesia/overview) or [ElevenLabs](/voice-ai/elevenlabs/overview) (TTS).
+* **Tool Calling with MCP** — Connect your live voice bot to CRMs, ticketing systems, and databases using the native VoxEngine [Model Context Protocol (MCP)](/voice-ai/mcp-client) client.

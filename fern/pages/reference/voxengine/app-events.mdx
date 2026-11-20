@@ -1,0 +1,54 @@
+---
+title: AppEvents
+subtitle: 7 values
+---
+
+## Values
+
+<a id="callalerting" />
+<ParamField path="CallAlerting" type="'Application.CallAlerting'">
+Triggered when an incoming call arrives.
+</ParamField>
+
+<a id="terminating" />
+<ParamField path="Terminating" type="'Application.Terminating'">
+Triggered when a session is about to terminate. Triggers in two cases:
+1) when there are no calls and/or ACD requests in a call session. See the [session limits](/help/troubleshooting/limits-and-restrictions) for details;
+2) when the [VoxEngine.terminate](/reference/voxengine/voxengine#terminate) method is called. Timers and any other external resources are not available after this event is triggered,
+but you can perform one HTTP request inside the event handler (e.g. to notify an external system about the fact that the session is finished).
+When that request is finished (or no such request is made), the `AppEvents.Terminated` event is triggered.
+</ParamField>
+
+<a id="terminated" />
+<ParamField path="Terminated" type="'Application.Terminated'">
+Triggered when a session is terminated and after the `AppEvents.Terminating` event is triggered.
+The time between these events depends on handler for `AppEvents.Terminating` event.
+Use the event just for debugging, only the `Logger.write` method could be used in a handler.
+</ParamField>
+
+<a id="started" />
+<ParamField path="Started" type="'Application.Started'">
+The very first event is triggered due to incoming call or HTTP request to Voximplant cloud over the internet.
+Triggers only once in a session, so if you execute the same HTTP request again it creates the new, separate session.
+Note that usage of the event in your JS scenario is optional.
+</ParamField>
+
+<a id="httprequest" />
+<ParamField path="HttpRequest" type="'Application.HttpRequest'">
+Triggered when the Management API request is received by the session.
+
+If you [start a call session with the HTTP request](/reference/management-api/reference/scenarios/start-scenarios), you get an answer: an object with media\_session\_access\_url property.
+The property's value is the managing URL for the specified session, so it can be used in managing HTTP request that triggers `AppEvents.HttpRequest` event.
+
+You can find more information in the [Remote session management](/platform/telephony/calls) article.
+</ParamField>
+
+<a id="websocket" />
+<ParamField path="WebSocket" type="'AppEvents.NewWebSocketConnection'">
+Triggered when there is a new connection to a WebSocket.
+</ParamField>
+
+<a id="newwebsocketfailed" />
+<ParamField path="NewWebSocketFailed" type="'Application.OnNewWebSocketFailed'">
+Triggered when a WebSocket fails. It can happen when the number of incoming WebSocket connections exceeds the number of calls in one session + 3.
+</ParamField>

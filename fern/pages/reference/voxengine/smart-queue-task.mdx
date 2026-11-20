@@ -1,0 +1,76 @@
+---
+title: SmartQueueTask
+subtitle: 'A SmartQueue task is for a certain agent, which can be a call or a chat.'
+---
+
+A [SmartQueue](/reference/voxengine/scenario-globals#smartqueue) task is for a certain agent, which can be a call or a chat.
+Add the following line to your scenario code to use the class:
+```
+require(Modules.SmartQueue);
+```
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [SmartQueueEvents](/reference/voxengine/smart-queue-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: SmartQueueEvents | T, callback: (event: _SmartQueueEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="SmartQueueEvents | T" required />
+
+<ParamField path="callback" type="(event: _SmartQueueEvents[T]) => any" required />
+
+### end
+
+Ends the current task.
+
+```ts
+end(description: string, terminationStatus?: TerminationStatus): void
+```
+
+**Parameters**
+
+<ParamField path="description" type="string" required />
+
+<ParamField path="terminationStatus" type="TerminationStatus" />
+
+### removeEventListener
+
+Removes a handler for the specified [SmartQueueEvents](/reference/voxengine/smart-queue-events) event.
+
+```ts
+removeEventListener(event: SmartQueueEvents | T, callback?: (event: _SmartQueueEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="SmartQueueEvents | T" required />
+
+<ParamField path="callback" type="(event: _SmartQueueEvents[T]) => any" />
+
+## Properties
+
+<a id="agentcall" />
+<ParamField path="agentCall" type="Call | null">
+The agent's Call object.
+</ParamField>
+
+<a id="clientcall" />
+<ParamField path="clientCall" type="Call | null">
+The client's Call object.
+</ParamField>
+
+<a id="id" />
+<ParamField path="id" type="string">
+A [SmartQueue](/reference/voxengine/scenario-globals#smartqueue) task's ID.
+</ParamField>
+
+<a id="parameters" />
+<ParamField path="parameters" type="SmartQueueTaskParameters">
+SmartQueue task's parameters, such as required skills, priority, queue, etc.
+</ParamField>

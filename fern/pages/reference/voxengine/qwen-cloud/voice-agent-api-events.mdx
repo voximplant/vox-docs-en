@@ -1,0 +1,176 @@
+---
+title: VoiceAgentAPIEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.QwenCloud); ```'
+---
+
+## Values
+
+<a id="unknown" />
+<ParamField path="Unknown" type="'QwenCloud.VoiceAgentAPI.Unknown'">
+The unknown event.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'QwenCloud.VoiceAgentAPI.Error'">
+Sent when an error occurs. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#error](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#error)
+</ParamField>
+
+<a id="sessioncreated" />
+<ParamField path="SessionCreated" type="'QwenCloud.VoiceAgentAPI.SessionCreated'">
+Returned when a session is created. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#session-created](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#session-created)
+</ParamField>
+
+<a id="sessionupdated" />
+<ParamField path="SessionUpdated" type="'QwenCloud.VoiceAgentAPI.SessionUpdated'">
+Returned after session.update is applied. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#session-updated](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#session-updated)
+</ParamField>
+
+<a id="inputaudiobufferspeechstarted" />
+<ParamField path="InputAudioBufferSpeechStarted" type="'QwenCloud.VoiceAgentAPI.InputAudioBufferSpeechStarted'">
+VAD detected the start of speech. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-speech-started](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-speech-started)
+</ParamField>
+
+<a id="inputaudiobufferspeechstopped" />
+<ParamField path="InputAudioBufferSpeechStopped" type="'QwenCloud.VoiceAgentAPI.InputAudioBufferSpeechStopped'">
+VAD detected the end of speech. In smart_turn mode, reason turn_invalid means the turn was rejected. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-speech-stopped](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-speech-stopped)
+</ParamField>
+
+<a id="inputaudiobuffercommitted" />
+<ParamField path="InputAudioBufferCommitted" type="'QwenCloud.VoiceAgentAPI.InputAudioBufferCommitted'">
+The input audio buffer was committed as a user message. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-committed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-committed)
+</ParamField>
+
+<a id="inputaudiobuffercleared" />
+<ParamField path="InputAudioBufferCleared" type="'QwenCloud.VoiceAgentAPI.InputAudioBufferCleared'">
+The input audio buffer was cleared (push-to-talk). [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-cleared](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#input-audio-buffer-cleared)
+</ParamField>
+
+<a id="conversationitemcreated" />
+<ParamField path="ConversationItemCreated" type="'QwenCloud.VoiceAgentAPI.ConversationItemCreated'">
+A conversation item was created. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-created](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-created)
+</ParamField>
+
+<a id="conversationitemdeleted" />
+<ParamField path="ConversationItemDeleted" type="'QwenCloud.VoiceAgentAPI.ConversationItemDeleted'">
+A conversation item was deleted. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-deleted](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-deleted)
+</ParamField>
+
+<a id="conversationitemretrieved" />
+<ParamField path="ConversationItemRetrieved" type="'QwenCloud.VoiceAgentAPI.ConversationItemRetrieved'">
+A conversation item was retrieved. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-retrieved](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-retrieved)
+</ParamField>
+
+<a id="conversationiteminputaudiotranscriptiondelta" />
+<ParamField path="ConversationItemInputAudioTranscriptionDelta" type="'QwenCloud.VoiceAgentAPI.ConversationItemInputAudioTranscriptionDelta'">
+Incremental input audio transcription. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-delta](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-delta)
+</ParamField>
+
+<a id="conversationiteminputaudiotranscriptioncompleted" />
+<ParamField path="ConversationItemInputAudioTranscriptionCompleted" type="'QwenCloud.VoiceAgentAPI.ConversationItemInputAudioTranscriptionCompleted'">
+Final input audio transcription. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-completed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-completed)
+</ParamField>
+
+<a id="conversationiteminputaudiotranscriptionfailed" />
+<ParamField path="ConversationItemInputAudioTranscriptionFailed" type="'QwenCloud.VoiceAgentAPI.ConversationItemInputAudioTranscriptionFailed'">
+Input audio transcription failed. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-failed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-input-audio-transcription-failed)
+</ParamField>
+
+<a id="conversationitemambientaudiotranscriptiondelta" />
+<ParamField path="ConversationItemAmbientAudioTranscriptionDelta" type="'QwenCloud.VoiceAgentAPI.ConversationItemAmbientAudioTranscriptionDelta'">
+Incremental ambient audio transcription in smart_turn mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-ambient-audio-transcription-delta](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-ambient-audio-transcription-delta)
+</ParamField>
+
+<a id="conversationitemambientaudiotranscriptioncompleted" />
+<ParamField path="ConversationItemAmbientAudioTranscriptionCompleted" type="'QwenCloud.VoiceAgentAPI.ConversationItemAmbientAudioTranscriptionCompleted'">
+Final ambient audio transcription in smart_turn mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-ambient-audio-transcription-completed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#conversation-item-ambient-audio-transcription-completed)
+</ParamField>
+
+<a id="responsecreated" />
+<ParamField path="ResponseCreated" type="'QwenCloud.VoiceAgentAPI.ResponseCreated'">
+A model response started. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-created](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-created)
+</ParamField>
+
+<a id="responsedone" />
+<ParamField path="ResponseDone" type="'QwenCloud.VoiceAgentAPI.ResponseDone'">
+A model response finished. status can be completed, cancelled, or failed. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-done)
+</ParamField>
+
+<a id="responseoutputitemadded" />
+<ParamField path="ResponseOutputItemAdded" type="'QwenCloud.VoiceAgentAPI.ResponseOutputItemAdded'">
+An output item was added to the response. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-output-item-added](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-output-item-added)
+</ParamField>
+
+<a id="responseoutputitemdone" />
+<ParamField path="ResponseOutputItemDone" type="'QwenCloud.VoiceAgentAPI.ResponseOutputItemDone'">
+An output item finished. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-output-item-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-output-item-done)
+</ParamField>
+
+<a id="responsecontentpartadded" />
+<ParamField path="ResponseContentPartAdded" type="'QwenCloud.VoiceAgentAPI.ResponseContentPartAdded'">
+A content part was added to an output item. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-content-part-added](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-content-part-added)
+</ParamField>
+
+<a id="responsecontentpartdone" />
+<ParamField path="ResponseContentPartDone" type="'QwenCloud.VoiceAgentAPI.ResponseContentPartDone'">
+A content part finished. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-content-part-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-content-part-done)
+</ParamField>
+
+<a id="responsetextdelta" />
+<ParamField path="ResponseTextDelta" type="'QwenCloud.VoiceAgentAPI.ResponseTextDelta'">
+Incremental text in text-only mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-text-delta](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-text-delta)
+</ParamField>
+
+<a id="responsetextdone" />
+<ParamField path="ResponseTextDone" type="'QwenCloud.VoiceAgentAPI.ResponseTextDone'">
+Text output finished in text-only mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-text-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-text-done)
+</ParamField>
+
+<a id="responseaudiotranscriptdelta" />
+<ParamField path="ResponseAudioTranscriptDelta" type="'QwenCloud.VoiceAgentAPI.ResponseAudioTranscriptDelta'">
+Incremental assistant caption in audio mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-transcript-delta](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-transcript-delta)
+</ParamField>
+
+<a id="responseaudiotranscriptdone" />
+<ParamField path="ResponseAudioTranscriptDone" type="'QwenCloud.VoiceAgentAPI.ResponseAudioTranscriptDone'">
+Assistant caption finished in audio mode. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-transcript-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-transcript-done)
+</ParamField>
+
+<a id="responseaudiodone" />
+<ParamField path="ResponseAudioDone" type="'QwenCloud.VoiceAgentAPI.ResponseAudioDone'">
+Assistant audio output finished. Audio bytes arrive as media, not this event. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-audio-done)
+</ParamField>
+
+<a id="responsefunctioncallargumentsdelta" />
+<ParamField path="ResponseFunctionCallArgumentsDelta" type="'QwenCloud.VoiceAgentAPI.ResponseFunctionCallArgumentsDelta'">
+Incremental function-call arguments. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-function-call-arguments-delta](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-function-call-arguments-delta)
+</ParamField>
+
+<a id="responsefunctioncallargumentsdone" />
+<ParamField path="ResponseFunctionCallArgumentsDone" type="'QwenCloud.VoiceAgentAPI.ResponseFunctionCallArgumentsDone'">
+Function-call arguments are complete. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-function-call-arguments-done](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#response-function-call-arguments-done)
+</ParamField>
+
+<a id="voiceprintaudiolistinprogress" />
+<ParamField path="VoiceprintAudioListInProgress" type="'QwenCloud.VoiceAgentAPI.VoiceprintAudioListInProgress'">
+Voiceprint enrollment started. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-in-progress](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-in-progress)
+</ParamField>
+
+<a id="voiceprintaudiolistcompleted" />
+<ParamField path="VoiceprintAudioListCompleted" type="'QwenCloud.VoiceAgentAPI.VoiceprintAudioListCompleted'">
+Voiceprint enrollment completed. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-completed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-completed)
+</ParamField>
+
+<a id="voiceprintaudiolistfailed" />
+<ParamField path="VoiceprintAudioListFailed" type="'QwenCloud.VoiceAgentAPI.VoiceprintAudioListFailed'">
+Voiceprint enrollment failed. The conversation continues. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-failed](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/server-events#voiceprint-audio-list-failed)
+</ParamField>
+
+<a id="websocketerror" />
+<ParamField path="WebSocketError" type="'QwenCloud.VoiceAgentAPI.WebSocketError'">
+The WebSocket error response event.
+</ParamField>
+
+<a id="connectorinformation" />
+<ParamField path="ConnectorInformation" type="'QwenCloud.VoiceAgentAPI.ConnectorInformation'">
+Contains Voice AI integration session information.
+</ParamField>

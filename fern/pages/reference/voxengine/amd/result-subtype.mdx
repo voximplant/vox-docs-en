@@ -1,0 +1,23 @@
+---
+title: ResultSubtype
+subtitle: 'Answering machine result subtype, such as mimic, silence or none.'
+---
+
+## Values
+
+<a id="mimic" />
+<ParamField path="MIMIC" type="'MIMIC'">
+AI-powered answering machine that mimics human voice and conversation style.
+Reported only with the `AMD.ResultClass.VOICEMAIL` result class.
+</ParamField>
+
+<a id="silence" />
+<ParamField path="SILENCE" type="'SILENCE'">
+Prolonged silence on the line.
+Reported only with the `AMD.ResultClass.TIMEOUT` result class.
+</ParamField>
+
+<a id="none" />
+<ParamField path="NONE" type="'NONE'">
+Other types of answering machines.
+</ParamField>

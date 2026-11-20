@@ -18,7 +18,7 @@ The Android SDK runtime follows modern Kotlin patterns using singleton controlle
 
 * **Core initialization**: [VICore]() prepares global native libraries and requires initialization once in your `Application.onCreate()`.
 * **Client singleton**: The [Client]() object controls cloud connectivity, user sessions, and global network listeners ([ClientSessionListener]()).
-* **Call interface**: The [Call]() interface provides methods to answer, hold, mute, send DTMF tones, and track call quality events via [CallListener]().
+* **Call interface**: The [Call](/reference/voxengine/call) interface provides methods to answer, hold, mute, send DTMF tones, and track call quality events via [CallListener]().
 
 ---
 

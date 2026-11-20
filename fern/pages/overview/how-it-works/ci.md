@@ -26,7 +26,7 @@ With VoxEngine CI, you can author scenario code in your preferred local IDE usin
 
 To authenticate VoxEngine CI with your Voximplant account, you need a service account credentials JSON file:
 
-1. Log in to the [Control Panel]().
+1. Log in to the [Control Panel](https://manage.voximplant.com).
 2. Navigate to **Settings** → **Service accounts**.
 3. Create a service account with the `Applications` and `Scenarios` roles and generate an RSA key pair.
 4. Download the generated credentials JSON file.
@@ -131,7 +131,7 @@ In the same application folder, configure routing rules in `rules.config.json`:
 ]
 ```
 
-* **`ruleName`**: The name of the [routing rule]().
+* **`ruleName`**: The name of the [routing rule](/platform/getting-started/create-a-routing-rule).
 * **`scenarios`**: An array of scenario names assigned to this rule. The order in this array defines execution order in the shared global JavaScript scope.
 * **`rulePattern`**: Regular expression matched against incoming call destinations (`.*` matches all calls).
 

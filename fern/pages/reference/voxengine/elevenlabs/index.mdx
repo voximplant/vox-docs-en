@@ -1,0 +1,707 @@
+---
+title: ElevenLabs
+subtitle: Agents WebSocket client for ElevenLabs conversational AI scenarios.
+---
+
+ElevenLabs provides a VoxEngine client for connecting a call or media unit to the ElevenLabs Agents WebSocket API.
+
+Use `ElevenLabs.createAgentsClient(...)` to create an `AgentsClient` for the current scenario.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="ElevenLabs connector overview" icon="fa-duotone fa-circle-info" href="/voice-ai/elevenlabs/overview">
+    Learn how ElevenLabs Agents fits into a VoxEngine call flow.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the ElevenLabs Agents client.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): conversation, tools, and contextual client messages.
+- <Icon icon="fa-duotone fa-waveform-lines" /> [Events](#events): WebSocket media bridge events.
+- <Icon icon="fa-duotone fa-bolt" /> [AgentsEvents](#agentsevents): ElevenLabs Agents event names and payload fields.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.ElevenLabs);
+```
+
+Create the client, bridge media, and listen for ElevenLabs Agents events.
+
+## Factory functions
+
+<a id="createagentsclient" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createAgentsClient
+
+Creates a new [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance.
+
+```ts
+createAgentsClient(parameters: AgentsClientParameters): Promise<ElevenLabs.AgentsClient>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>AgentsClient<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;ElevenLabs.AgentsClient&gt;</code> | Resolves to the [`ElevenLabs.AgentsClient`](#agentsclient) instance. |
+
+<a id="createrealtimettsplayer" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createRealtimeTTSPlayer
+
+Creates a new [ElevenLabs.RealtimeTTSPlayer](/reference/voxengine/elevenlabs/realtime-tts-player) instance with the specified text (TTS is used to play the text). You can attach media streams later via the `ElevenLabs.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+NOTE: this method uses 11labs [initializeConnection](https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input#send.initializeConnection) method internally.
+
+```ts
+createRealtimeTTSPlayer(text: string, parameters?: RealtimeTTSPlayerParameters): RealtimeTTSPlayer
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `text` | `string` | ✓ |  |
+| `parameters` | <code>RealtimeTTS<wbr />Player<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>RealtimeTTS<wbr />Player</code> | The requested `RealtimeTTSPlayer` value. |
+
+## AgentsClient
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [ElevenLabs.AgentsEvents](/reference/voxengine/elevenlabs#agentsevents) or [ElevenLabs.Events](/reference/voxengine/elevenlabs#events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: ElevenLabs.Events | ElevenLabs.AgentsEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>ElevenLabs.<wbr />Events \| ElevenLabs.<wbr />AgentsEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="clearmediabuffer" />
+### <Icon icon="fa-duotone fa-function" /> clearMediaBuffer
+
+Clears the ElevenLabs WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>ClearMedia<wbr />Buffer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="clienttoolresult" />
+### <Icon icon="fa-duotone fa-function" /> clientToolResult
+
+Result of the client tool call. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Client-Tool-Result](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Client-Tool-Result)
+
+```ts
+clientToolResult(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="close" />
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the ElevenLabs connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="contextualupdate" />
+### <Icon icon="fa-duotone fa-function" /> contextualUpdate
+
+Allows to send non-interrupting background information to the conversation. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Contextual-Update](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Contextual-Update)
+
+```ts
+contextualUpdate(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="conversationinitiationclientdata" />
+### <Icon icon="fa-duotone fa-function" /> conversationInitiationClientData
+
+Defines what can be customized when starting a conversation. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Conversation-Initiation-Client-Data](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#send.Conversation-Initiation-Client-Data)
+
+```ts
+conversationInitiationClientData(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the AgentsClient id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [ElevenLabs.AgentsEvents](/reference/voxengine/elevenlabs#agentsevents) or [ElevenLabs.Events](/reference/voxengine/elevenlabs#events) event.
+
+```ts
+removeEventListener(event: ElevenLabs.Events | ElevenLabs.AgentsEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>ElevenLabs.<wbr />Events \| ElevenLabs.<wbr />AgentsEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmediato" />
+### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Starts sending media from the ElevenLabs (via WebSocket) to the media unit. ElevenLabs works in real time.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stopmediato" />
+### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Stops sending media from the ElevenLabs (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="usermessage" />
+### <Icon icon="fa-duotone fa-function" /> userMessage
+
+Allows to send user text messages to the conversation. [https://elevenlabs.io/docs/agents-platform/customization/events/client-to-server-events#user-messages](https://elevenlabs.io/docs/agents-platform/customization/events/client-to-server-events#user-messages)
+
+```ts
+userMessage(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="websocketid" />
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the ElevenLabs WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## Events
+
+These events describe audio received through the ElevenLabs WebSocket media bridge.
+
+<a id="events-websocketmediastarted" />
+<a id="websocketmediastarted" />
+<a id="-websocketmediastarted" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaStarted
+
+Triggered when the audio stream sent by a third party through an ElevenLabs WebSocket starts playing.
+
+Event constant: `Events.WebSocketMediaStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `encoding` | `string` | ✗ | Audio encoding formats. |
+| <code>custom<wbr />Parameters</code> | <code>&#123; [key: string]: string &#125;</code> | ✗ | Custom parameters. |
+
+<a id="events-websocketmediaended" />
+<a id="websocketmediaended" />
+<a id="-websocketmediaended" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaEnded
+
+Triggered after the end of the audio stream sent by a third party through an ElevenLabs WebSocket (**1 second of silence**).
+
+Event constant: `Events.WebSocketMediaEnded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `mediaInfo` | <code>WebSocket<wbr />MediaInfo</code> | ✗ | Information about the audio stream that can be obtained after the stream stops or pauses (**1 second of silence**). |
+
+## AgentsEvents
+
+These events mirror server messages from the ElevenLabs Agents WebSocket API. The `data` field contains the provider event payload.
+
+<AccordionGroup>
+<a id="agentsevents-unknown" />
+<a id="unknown" />
+<a id="-unknown" />
+<Accordion title="Unknown">
+
+The unknown event.
+
+Event constant: `AgentsEvents.Unknown`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket) for the full payload shape. |
+</Accordion>
+<a id="agentsevents-httpresponse" />
+<a id="httpresponse" />
+<a id="-httpresponse" />
+<Accordion title="HTTPResponse">
+
+The HTTP response event.
+
+Event constant: `AgentsEvents.HTTPResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket) for the full payload shape. |
+</Accordion>
+<a id="agentsevents-conversationinitiationmetadata" />
+<a id="conversationinitiationmetadata" />
+<a id="-conversationinitiationmetadata" />
+<Accordion title="ConversationInitiationMetadata">
+
+Automatically sent when starting a conversation. Initializes conversation settings and parameters. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#conversation_initiation_metadata](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#conversation_initiation_metadata)
+
+Event constant: `AgentsEvents.ConversationInitiationMetadata`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Initial connection metadata See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"conversation_initiation_metadata"</code> | ✓ | Provider-defined field. |
+| `data.conversation_initiation_metadata_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "conversation_initiation_metadata"
+}
+```
+</Accordion>
+<a id="agentsevents-ping" />
+<a id="ping" />
+<a id="-ping" />
+<Accordion title="Ping">
+
+Health check event requiring immediate response. Used to maintain WebSocket connection. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#ping](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#ping)
+
+Event constant: `AgentsEvents.Ping`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Keepalive ping from server See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | `"ping"` | ✓ | Provider-defined field. |
+| `data.ping_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "ping"
+}
+```
+</Accordion>
+<a id="agentsevents-usertranscript" />
+<a id="usertranscript" />
+<a id="-usertranscript" />
+<Accordion title="UserTranscript">
+
+Contains finalized speech-to-text results. Represents complete user utterances. Used for conversation history. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#user_transcript](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#user_transcript)
+
+Event constant: `AgentsEvents.UserTranscript`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Final transcription of user speech See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"user_transcript"</code> | ✓ | Provider-defined field. |
+| `data.user_transcription_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "user_transcript"
+}
+```
+</Accordion>
+<a id="agentsevents-agentresponse" />
+<a id="agentresponse" />
+<a id="-agentresponse" />
+<Accordion title="AgentResponse">
+
+Contains complete agent message. Sent with first audio chunk. Used for display and history. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_response](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_response)
+
+Event constant: `AgentsEvents.AgentResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Agent's text response See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"agent_response"</code> | ✓ | Provider-defined field. |
+| `data.agent_response_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "agent_response"
+}
+```
+</Accordion>
+<a id="agentsevents-agentresponsecorrection" />
+<a id="agentresponsecorrection" />
+<a id="-agentresponsecorrection" />
+<Accordion title="AgentResponseCorrection">
+
+Contains truncated response after interruption. Updates displayed message. Maintains conversation accuracy. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_response_correction](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_response_correction)
+
+Event constant: `AgentsEvents.AgentResponseCorrection`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Corrected response after interruption See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"agent_response_correction"</code> | ✓ | Provider-defined field. |
+| `data.agent_response_correction_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "agent_response_correction"
+}
+```
+</Accordion>
+<a id="agentsevents-interruption" />
+<a id="interruption" />
+<a id="-interruption" />
+<Accordion title="Interruption">
+
+Contains event id of interrupted event. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Interruption](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Interruption)
+
+Event constant: `AgentsEvents.Interruption`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | User interrupted agent speech See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"interruption"</code> | ✓ | Provider-defined field. |
+| `data.interruption_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "interruption"
+}
+```
+</Accordion>
+<a id="agentsevents-contextualupdate" />
+<Accordion title="ContextualUpdate">
+
+Contains contextual information to be added to the conversation state. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Contextual-Update](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Contextual-Update)
+
+Event constant: `AgentsEvents.ContextualUpdate`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="agentsevents-clienttoolcall" />
+<a id="clienttoolcall" />
+<a id="-clienttoolcall" />
+<Accordion title="ClientToolCall">
+
+Represents a function call the agent wants the client to execute. Contains tool name, tool call ID, and parameters. Requires client-side execution of the function and sending the result back to the server. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#client_tool_call](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#client_tool_call)
+
+Event constant: `AgentsEvents.ClientToolCall`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Tool for client to execute See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"client_tool_call"</code> | ✓ | Provider-defined field. |
+| `data.client_tool_call` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "client_tool_call"
+}
+```
+</Accordion>
+<a id="agentsevents-vadscore" />
+<a id="vadscore" />
+<a id="-vadscore" />
+<Accordion title="VadScore">
+
+Voice Activity Detection score event. Indicates the probability that the user is speaking. Values range from 0 to 1, where higher values indicate higher confidence of speech. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#vad_score](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#vad_score)
+
+Event constant: `AgentsEvents.VadScore`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="agentsevents-internaltentativeagentresponse" />
+<a id="internaltentativeagentresponse" />
+<a id="-internaltentativeagentresponse" />
+<Accordion title="InternalTentativeAgentResponse">
+
+Contains preliminary text from the agent. [https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Internal-Tentative-Agent-Response](https://elevenlabs.io/docs/agents-platform/api-reference/agents-platform/websocket#receive.Internal-Tentative-Agent-Response)
+
+Event constant: `AgentsEvents.InternalTentativeAgentResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Internal tentative agent response (not for public use) See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"internal_tentative_agent_response"</code> | ✓ | Provider-defined field. |
+| `data.tentative_agent_response_internal_event` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "internal_tentative_agent_response"
+}
+```
+</Accordion>
+<a id="agentsevents-websocketerror" />
+<a id="websocketerror" />
+<a id="-websocketerror" />
+<Accordion title="WebSocketError">
+
+The WebSocket error response event.
+
+Event constant: `AgentsEvents.WebSocketError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="agentsevents-connectorinformation" />
+<a id="connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `AgentsEvents.ConnectorInformation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="agentsevents-agenttoolresponse" />
+<a id="agenttoolresponse" />
+<a id="-agenttoolresponse" />
+<Accordion title="AgentToolResponse">
+
+Indicates when the agent has executed a tool function. Contains tool metadata and execution status. Provides visibility into agent tool usage during conversations. [https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_tool_response](https://elevenlabs.io/docs/agents-platform/customization/events/client-events#agent_tool_response)
+
+Event constant: `AgentsEvents.AgentToolResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | `AgentsClient` | ✓ | The [ElevenLabs.AgentsClient](/reference/voxengine/elevenlabs#agentsclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Result of agent tool execution See the [partner event documentation](https://elevenlabs.io/docs/eleven-agents/api-reference/eleven-agents/websocket). |
+| `data.type` | <code>"agent_tool_response"</code> | ✓ | Provider-defined field. |
+| `data.agent_tool_response` | `unknown` | ✓ | Provider-defined field. |
+
+Example `data`:
+
+```json
+{
+  "type": "agent_tool_response"
+}
+```
+</Accordion>
+</AccordionGroup>

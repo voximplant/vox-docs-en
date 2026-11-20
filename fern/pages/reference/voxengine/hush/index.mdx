@@ -1,0 +1,71 @@
+---
+title: Hush
+subtitle: 'Bidirectional noise suppression on the Voximplant platform. Add the following line to your scenario code to use the namespace: ``` require(Modules.Hush); ```'
+---
+
+## Classes
+
+- [NoiseSuppression](/reference/voxengine/hush/noise-suppression)
+## Enums
+
+- [Events](/reference/voxengine/hush/events)
+- [NoiseSuppressionEvents](/reference/voxengine/hush/noise-suppression-events)
+## Functions
+
+### createNoiseSuppression
+
+Creates a [Hush.NoiseSuppression](/reference/voxengine/hush/noise-suppression) instance.
+
+```ts
+createNoiseSuppression(parameters: NoiseSuppressionParameters): Promise<Hush.NoiseSuppression>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="NoiseSuppressionParameters" required />
+
+## Types
+
+### NoiseSuppressionParameters
+
+*Extends:* `_WebSocketBasedClientParameters`
+
+[Hush.NoiseSuppression](/reference/voxengine/hush/noise-suppression) parameters. Can be passed as arguments to the `Hush.createNoiseSuppression` method.
+
+<a id="noisesuppressionparameters-attenlimdb" />
+<ParamField path="attenLimDb" type="number">
+_optional_
+
+Optional. Attenuation limit in dB. **0** means no limit. The default value is **0**.
+</ParamField>
+
+#### Inherited fields
+
+<a id="noisesuppressionparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="noisesuppressionparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="noisesuppressionparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>

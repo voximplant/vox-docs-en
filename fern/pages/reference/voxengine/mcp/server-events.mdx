@@ -1,0 +1,31 @@
+---
+title: ServerEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.MCP); ```'
+---
+
+## Values
+
+<a id="unknown" />
+<ParamField path="Unknown" type="'MCP.Server.Unknown'">
+The unknown event.
+</ParamField>
+
+<a id="toolslist" />
+<ParamField path="ToolsList" type="'MCP.Server.ToolsList'">
+The tools list returned from the MCP server. [https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#ListToolsResult](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#ListToolsResult)
+</ParamField>
+
+<a id="toolresult" />
+<ParamField path="ToolResult" type="'MCP.Server.ToolResult'">
+The tool result returned from the MCP server. [https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#CallToolResult](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#CallToolResult)
+</ParamField>
+
+<a id="mcperror" />
+<ParamField path="MCPError" type="'MCP.Server.MCPError'">
+The MCP error event.
+</ParamField>
+
+<a id="connectorinformation" />
+<ParamField path="ConnectorInformation" type="'MCP.Server.ConnectorInformation'">
+Contains Voice AI integration session information.
+</ParamField>

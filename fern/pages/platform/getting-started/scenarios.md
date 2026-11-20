@@ -4,7 +4,7 @@ If an application is your project's container, the **scenario** is its brain.
 
 Scenarios are serverless JavaScript files executed directly inside Voximplant's global media runtime (VoxEngine). This is where you implement all call and messaging logic: answering incoming calls, dialing out to phone numbers or SIP endpoints, synthesizing speech (TTS), transcribing speech (STT), orchestrating Voice AI agents, and bridging media streams.
 
-Every scenario belongs to an [application]() and executes when triggered by a [routing rule]().
+Every scenario belongs to an [application](/platform/getting-started/create-an-application) and executes when triggered by a [routing rule](/platform/getting-started/create-a-routing-rule).
 
 ---
 
@@ -12,7 +12,7 @@ Every scenario belongs to an [application]() and executes when triggered by a [r
 
 To create your scenario in the Voximplant Control Panel:
 
-1. Open your application in the [Voximplant Control Panel]().
+1. Open your application in the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the application sidebar, navigate to **Scenarios**.
 3. Click **Create scenario** (or the **+** icon).
 4. Enter a name for your scenario (for example, `main-call-flow.js`).
@@ -20,7 +20,7 @@ To create your scenario in the Voximplant Control Panel:
 6. Click **Save** in the upper-right corner.
 
 <Info title="Programmatic deployment">
-You can also create, update, and manage scenarios programmatically using the [Management API]() or automate your deployment pipeline directly from your local IDE with [VoxEngine CI]().
+You can also create, update, and manage scenarios programmatically using the [Management API](/overview/how-voximplant-works/management-api) or automate your deployment pipeline directly from your local IDE with [VoxEngine CI](/overview/how-voximplant-works/vox-engine-ci).
 </Info>
 
 ```javascript title="Example scenario"
@@ -74,7 +74,7 @@ Because all scenarios assigned to a single routing rule share the same global sc
 * **Review VoxEngine core concepts**: Before writing complex logic, review [VoxEngine concepts]() to understand event nesting, callback execution timeouts, and the asynchronous lifecycle.
 * **Use ready-made templates**: When creating a scenario in the control panel, you can choose from pre-built scenario templates covering common use cases such as call forwarding, IVR menus, and AI assistant integration.
 * **Start simple**: Begin with a single scenario handling your primary call flow. As your application grows, split reusable helper functions and configuration into separate scenario files bound to the same routing rule.
-* **Inspect real-time logs**: Output diagnostic messages using `Logger.write()` and inspect live debug traces in the [Call history]() section of your control panel.
+* **Inspect real-time logs**: Output diagnostic messages using `Logger.write()` and inspect live debug traces in the [Call history](/reference/management-api/reference/history) section of your control panel.
 
 ---
 

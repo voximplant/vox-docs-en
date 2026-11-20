@@ -1,0 +1,116 @@
+---
+title: Getting Started
+subtitle: Before you build your first Voice AI scenario
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+Voximplant is both a Voice AI Orchestration platform (VAOIP) and a powerful Communications Platform as a Service (CPaaS) with extensive capabilities that include telephony and messaging capabilities with support for phone, Web, WhatsApp, and native mobile apps. This guide will focus on core capabilities most commonly used in Voice AI applications.
+
+Before you start, you should have an idea of the following:
+
+- What telephony networks are you using - phone numbers, WhatsApp, SIP, WebRTC?
+- What LLM and Speech engine do you want to use?
+- Do you need inbound or outbound calling?
+
+<Note>
+See our [Voice AI Frequently Asked Questions (FAQ)](/voice-ai/faq) for more background on Voximplant and Voice AI.
+</Note>
+
+Before we start, let’s review what VoxEngine is and how it works.
+
+## VoxEngine Overview
+
+VoxEngine is Voximplant’s serverless environment that executes code to control the telephony experience and interact with external services. It is designed to be flexible for a wide variety of call flows and use cases.
+
+Below are some quick highlights from the VoxImplant of the environment. We dive deeper on these topics in the [Voximplant Configuration](/voice-ai/configure-voximplant/overview) section after this.
+
+- **Applications**: top-level container for environments and resources.
+- **Scenarios**: JavaScript call-control programs executed by VoxEngine.
+- **Routing rules**: destination matching and scenario selection.
+- **Phone numbers**: PSTN entry points for inbound and outbound calling.
+- **Users**: app/SIP-style endpoints for web and mobile calling.
+- **Application Storage**: key-value store for API keys and configuration.
+
+<a id="applications"></a>
+### <Icon icon="fa-duotone fa-layer-group" /> Applications
+
+Applications are the top-level container for your project. Everything discussed below needs to be associated with an application.
+
+<a id="scenarios"></a>
+### <Icon icon="fa-duotone fa-file-code" /> Scenarios
+
+These are simply JavaScript-based programs and sub-programs that you specify. These run automatically whenever there is an incoming call or you choose to initiate them.
+
+To get started, we recommend you copy the scenario code from one of the [Voice AI Connector guides](/voice-ai/overview), or just use a basic hello world example like the one below.
+
+```js
+VoxEngine.addEventListener(AppEvents.CallAlerting, e => {
+  // this code is executed in the cloud on every incoming call
+  e.call.answer();
+  e.call.say("Hello from the VoxEngine cloud", { voice: VoiceList.Amazon.en_US_Joanna });
+  e.call.hangup();
+});
+```
+
+<a id="routing-rules"></a>
+### <Icon icon="fa-duotone fa-diagram-project" />  Routing rules
+
+Routing rules execute one or more scenarios. For incoming calls, you define a pattern (based on regular expressions) that matches the phone number, SIP address, or a user name. You can also initiate these via API.
+
+To start you just need to create one with a universal pattern match: `.*`.
+
+<a id="phone-numbers"></a>
+### <Icon icon="fa-duotone fa-phone" /> Phone numbers
+
+The VoxEngine portal and APIs let you purchase and assign phone numbers to applications. If you want to give your application a phone number or dial out to a phone number, you will need to set one of these up.
+
+Setting a phone number is completely optional, but most applications include one.
+
+<a id="users"></a>
+### <Icon icon="fa-duotone fa-user" /> Users
+
+In addition to phone numbers, VoxEngine also allows you to place and receive calls from users that you define on the platform. If you are just using phone numbers then users are optional. Users are needed for some SIP interactions, web calling, and using our native client SDKs.
+
+<a id="application-storage"></a>
+### <Icon icon="fa-duotone fa-database" /> Application Storage
+
+Voximplant provides a key value storage system that you can use for environment-style variables and temporary storage.
+
+## What LLM and Speech engine do you want to use?
+
+Voximplant offers a number of built-in Voice AI connectors that connect with popular Voice AI platforms - Cartesia, Deepgram, ElevenLabs, Google Gemini, Grok, OpenAI, Ultravox, etc. These connectors use a WebSocket interface to integrate directly with these environments as a client. There are even mechanisms to build your own connector.
+
+<Note>
+You will need an API key from the Voice AI platform, which means you will need to already have an account with developer access setup.
+</Note>
+
+All of these options offer speech-to-speech capabilities. Some platforms handle speech natively (OpenAI, Gemini, Grok, Ultravox for input) while some allow you to select the speech provider(s) from within their environments (Cartesia, Deepgram, ElevenLabs,Ultravox for output). Alternatively you can implement half-cascade architectures where you use Voximplant controlled Text-to-Speech (TTS), including realtime TTS providers such as [Grok TTS](/voice-ai/speech/grok-tts). Full cascade architectures where you manage Speech-to-Text (STT), the LLM, and TTS are also possible.
+
+<Note>
+We recommend starting with one of our Voice AI connectors in a speech-to-speech pipeline.
+</Note>
+
+## What telephony networks are you using?
+
+Voximplant supports calling the following networks and technology:
+
+- Public Switched Telephone Network (PSTN) - outbound calling to more than 230 countries and territories and phone numbers from more than 100 countries
+- Session Initiation Protocol (SIP) - calling with existing SIP infrastructure and SIP trunking providers
+- WhatsApp - calling from an existing WhatsApp Business account
+- Web - use the Web SDK to call using WebRTC
+- Native mobile apps - connect to users directly on mobile and other platforms using one of our many media client SDKs
+
+<Note>
+We recommend starting with phone numbers and inbound PSTN calling.
+</Note>
+
+## Using these Guides
+
+To get started, see the [Configure Voximplant](/voice-ai/configure-voximplant/overview) and [Inbound vs. Outbound calling](/voice-ai/inbound-vs-outbound/inbound-calls) sections that follow. Once you know the Voice AI connector you want to use and the call flow direction you want to use, see our Voice AI Connector guides:
+
+➡️ [https://docs.voximplant.ai/voice-ai-orchestration/](/voice-ai/overview)
+
+Copy the full example code in each guide. Remember you will also need to populate Application Storage with any API keys mentioned in the prerequisites (or add them to the code).

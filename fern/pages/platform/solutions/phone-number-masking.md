@@ -1,6 +1,6 @@
 # Phone number masking
 
-Learn how to build a phone number masking solution using Voximplant's [Key-Value Storage]().
+Learn how to build a phone number masking solution using Voximplant's [Key-Value Storage](/platform/storage/key-value-storage).
 
 Phone number masking protects user privacy in rideshare, delivery, and marketplace platforms by allowing customers and service providers (such as couriers or drivers) to call each other without revealing their personal phone numbers. Both parties dial a single shared virtual number rented from Voximplant and enter an **order number** on the keypad to connect.
 
@@ -13,10 +13,10 @@ How it works:
 
 ## Prerequisites
 
-1. Create an [application]().
-2. Create a [scenario]().
-3. Create a [routing rule]() and bind it to your scenario.
-4. Rent a [phone number]() and attach it to your routing rule as the shared virtual number.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create a [scenario](/platform/getting-started/create-a-scenario).
+3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) and bind it to your scenario.
+4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) and attach it to your routing rule as the shared virtual number.
 5. Prepare test phone numbers representing the courier, customer, and support agent.
 
 ---
@@ -358,7 +358,7 @@ if (store.input.length >= 5) {
 
 ### 2. Query Key-Value Storage
 
-Look up the entered order number in storage using [ApplicationStorage.get()]():
+Look up the entered order number in storage using [ApplicationStorage.get()](/reference/voxengine/application-storage#get):
 
 ```javascript title="Lookup order in Key-Value Storage"
 store.data.order_number = store.input;
@@ -424,7 +424,7 @@ else {
 
 ### 3. Bridge the call
 
-In `callCourierOrClient()`, notify the caller that the connection is underway, initiate the outbound call to the callee using [callPSTN()](), and play hold music to the caller:
+In `callCourierOrClient()`, notify the caller that the connection is underway, initiate the outbound call to the callee using [callPSTN()](/reference/voxengine/voxengine#callpstn), and play hold music to the caller:
 
 ```javascript title="Dial destination and play hold music"
 await say(store.data.sub_status === 'Courier' ? phrases.waitForClient : phrases.waitForCourier, call);
@@ -464,7 +464,7 @@ secondCall.addEventListener(CallEvents.Failed, async () => {
 
 ### Text-to-speech helper
 
-Use [call.say()]() to play system prompts to either party. Select a voice from the [list of Voximplant TTS providers]():
+Use [call.say()](/reference/voxengine/call#say) to play system prompts to either party. Select a voice from the [list of Voximplant TTS providers]():
 
 ```javascript title="Text-to-speech helper"
 function say(text, call = store.call) {
@@ -479,13 +479,13 @@ function say(text, call = store.call) {
 }
 ```
 
-You can also record masked conversations for quality assurance using [call.record()]().
+You can also record masked conversations for quality assurance using [call.record()](/reference/voxengine/call#record).
 
 ---
 
 ## Managing order data in Key-Value Storage
 
-To allow the scenario to look up active orders, your backend populates Key-Value Storage using the [Management API](). You can use the official [Python API client]():
+To allow the scenario to look up active orders, your backend populates Key-Value Storage using the [Management API](/overview/how-voximplant-works/management-api). You can use the official [Python API client]():
 
 1. Install the Python SDK:
 ```bash title="Install Python SDK"

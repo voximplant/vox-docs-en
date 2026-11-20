@@ -1,0 +1,16 @@
+---
+title: SmartQueueOperatorSettingsMode
+subtitle: The SmartQueue task distribution mode. Can be passed via the SmartQueueOperatorSettings.mode parameter.
+---
+
+## Values
+
+<a id="strict" />
+<ParamField path="STRICT" type="'STRICT'">
+Cancels the task if it is impossible to select the specific operator
+</ParamField>
+
+<a id="smart" />
+<ParamField path="SMART" type="'SMART'">
+Distributes the task to another operator if it is impossible to select the specific operator
+</ParamField>

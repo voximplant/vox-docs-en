@@ -1,0 +1,211 @@
+---
+title: WhatsApp
+subtitle: Connect WhatsApp Business calling to Voximplant scenarios
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## <Icon icon="fa-brands fa-whatsapp" /> Overview
+
+WhatsApp integration lets you process WhatsApp calls/messages with VoxEngine logic and route them to your Voice AI scenarios.
+Use the integration flow to connect Meta credentials, complete verification, and attach numbers.
+
+![WhatsApp integration overview](../../../assets/getting-started/whatsapp-overview.png)
+
+## Prerequisites
+
+- Meta developer account with a WhatsApp Business app in [developers.facebook.com](https://developers.facebook.com/apps).
+- WhatsApp Business phone number added in WhatsApp Manager and ready for verification.
+- Meta Cloud API credentials: **Temporary Access Token** and **Phone Number ID**.
+
+## Inbound
+
+### <Icon icon="fa-duotone fa-video" /> Full inbound setup walkthrough video
+
+Use this step-by-step video to see the full setup in Meta and Voximplant.
+
+Video link: [WhatsApp Business Calling setup overview](https://www.youtube.com/watch?v=HgJqTYfWq30)
+
+<llms-ignore>
+<iframe
+    width="100%"
+    height="360"
+    src="https://www.youtube.com/embed/HgJqTYfWq30"
+    title="WhatsApp Business Calling setup overview"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+/>
+</llms-ignore>
+
+
+
+### <Icon icon="fa-duotone fa-screwdriver-wrench" /> Setup flow (Inbound)
+
+
+<Steps>
+    <Step title="Prepare WhatsApp Cloud API in Meta">
+        In [developers.facebook.com/apps](https://developers.facebook.com/apps), create a **Business** app, add
+        **WhatsApp**, and open **WhatsApp > API Setup**.
+        Keep your **Temporary Access Token** and **Phone Number ID** available.
+        ![Meta API Setup](../../../assets/getting-started/meta-api-setup.png)
+        {/*![WhatsApp registration](../../../assets/getting-started/whatsapp-registration.png)*/}
+    </Step>
+    <Step title="Verify and register the WhatsApp number on the Meta side">
+        In WhatsApp Manager, complete verification and registration on the WhatsApp Cloud API side:
+        1. In the **Profile** tab, click **Send verification code**.
+        ![Send verification code](../../../assets/getting-started/wa-send-code.png)
+
+        2. Choose how to receive the code (**SMS** or **phone call**).
+        ![Choose verification method](../../../assets/getting-started/wa-method.png)
+
+        3. Enter the received code and keep it for the registration step.
+        ![Enter verification code](../../../assets/getting-started/wa-code.png)
+
+        4. Open the **Certificate** tab and wait until **Display Name** status becomes **Approved**.
+        ![Display Name status](../../../assets/getting-started/wa-certificate-status.png)
+
+        5. After approval, register the phone number with the Meta Graph API request shown in the guide/modal.
+        ![Phone registration step](../../../assets/getting-started/wa-registration-approved.png)
+
+        6. Refresh the phone numbers page and confirm the number status is **Connected**.
+        ![Connected status](../../../assets/getting-started/wa-connected.png)
+    </Step>
+    <Step title="Create Voximplant application">
+        In [manage.voximplant.com](https://manage.voximplant.com), create or open an application for this WhatsApp
+        inbound flow.
+        ![Create Voximplant application](../../../assets/getting-started/vox-create-app.png)
+    </Step>
+    <Step title="Create inbound scenario">
+        Create your inbound scenario (for example `whatsapp-inbound`) and add the call handling logic.
+        ![WhatsApp inbound scenario code](../../../assets/getting-started/vox-scenario-code.png)
+
+        ```js title="Minimal inbound WhatsApp scenario"
+        VoxEngine.addEventListener(AppEvents.CallAlerting, (event) => {
+            const call = event.call;
+            call.answer();
+            call.say("Hello, this WhatsApp call is connected to Voximplant.", {voice: VoiceList.Amazon.en_US_Joanna});
+            call.addEventListener(CallEvents.Disconnected, () => VoxEngine.terminate());
+        });
+        ```
+    </Step>
+    <Step title="Connect the WhatsApp number in Voximplant">
+        Open **WhatsApp numbers** in your application and click **Add WhatsApp number**.
+        ![WhatsApp numbers in manage.voximplant.com](../../../assets/getting-started/manage-whatsapp-numbers.png)
+
+        Follow the modal instructions:
+        ![WhatsApp configuration modal](../../../assets/getting-started/vox-whatsapp-config.png)
+
+        You will need to execute the Meta Graph API requests via cURL.
+        <video
+            src="../../../assets/getting-started/terminal-curl.mp4"
+            width="100%"
+            autoPlay
+            loop
+            playsInline
+            muted
+            controls
+        />
+        Then copy the returned `password` into **SIP password**, set the WhatsApp number, and click **Save**.
+        ![Save SIP password](../../../assets/getting-started/vox-sip-save.png)
+    </Step>
+    <Step title="Create routing rule">
+        Create a routing rule and attach the inbound scenario.
+        Open your application and go to **Routing**.
+        ![Create a routing rule](../../../assets/getting-started/manage-routing-create-rule.png)
+
+        Click **Create** / **New rule**. The default mask `.*` is fine to process all inbound calls.
+        ![Attach scenarios to a routing rule](../../../assets/getting-started/manage-routing-attach-scenario.png)
+    </Step>
+    <Step title="Attach the WhatsApp number to your Application">
+        Select the available WhatsApp number and attach it to the current application.
+        <video
+            src="../../../assets/getting-started/attach-whatsapp-number.mp4"
+            width="100%"
+            autoPlay
+            loop
+            playsInline
+            muted
+            controls
+        />
+    </Step>
+    <Step title="Test inbound calling">
+        Now you can place a call to your WhatsApp Business number and see it hit your VoxEngine scenario!
+    </Step>
+</Steps>
+
+
+## <Icon icon="fa-duotone fa-arrow-up-right" /> Outbound specifics
+
+Outbound requires the same setup as inbound. Then you can use `VoxEngine.callWhatsappUser()` to initiate outbound calling to WhatsApp users from one of your WhatsApp business phone numbers from a scenario.
+
+```js title="Outbound WhatsApp"
+const call = VoxEngine.callWhatsappUser({
+  number: "+15551234567",
+  callerid: "15557654321"
+});
+```
+
+### <Icon icon="fa-duotone fa-video" /> Outbound video walkthrough:
+
+Video link: [Outbound WhatsApp calling walkthrough](https://www.youtube.com/watch?v=K5PmVQJGoLc)
+
+<llms-ignore>
+<iframe
+    width="100%"
+    height="360"
+    src="https://www.youtube.com/embed/K5PmVQJGoLc"
+    title="Outbound WhatsApp calling walkthrough"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+/>
+</llms-ignore>
+
+### <Icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Processing calls in scenarios guide](/voice-ai/inbound-vs-outbound/inbound-calls)
+- [VoxEngine Call class](/reference/voxengine/call)
+- [VoxEngine.callWhatsappUser](/reference/voxengine/voxengine#callwhatsappuser)
+
+
+## Multi-modal simultaneous voice & messaging support
+The WhatsApp integration supports both calls and messages, so you can create multi-modal scenarios that handle voice and text in the same flow.
+For example, you can answer the call, send a welcome message, then continue with voice prompts and responses.
+
+### Architecture
+
+This follows a similar setup procedure as above, but requires an additional server to proxy messages.
+
+![WhatsApp multi-modal architecture](../../../assets/getting-started/whatsapp-multi-modal-achitecture.png)
+
+
+### <Icon icon="fa-duotone fa-video" /> Walkthrough and demo
+See here for a quick walkthrough and demo of this capability:
+Video link: [Inbound WhatsApp calling demo](https://www.youtube.com/watch?v=aPw7_aqZBhE)
+
+<llms-ignore>
+<iframe
+    width="100%"
+    height="360"
+    src="https://www.youtube.com/embed/aPw7_aqZBhE"
+    title="Inbound WhatsApp calling demo"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+/>
+</llms-ignore>
+
+### <Icon icon="fa-duotone fa-code" /> Example code
+
+VoxEngine code sample for the WhatsApp multi-modal voice + text flow using `gpt-realtime-2.1`:
+
+<Code
+    src="../../../examples/whatsapp/voxengine_openai_ga.js"
+    title="voxengine_openai_ga.js"
+    language="javascript"
+/>
+
+Node.js proxy server code:
+- [WhatsApp Multi-modal Proxy Server](/voice-ai/network-options/whatsapp-multimodal-server)

@@ -1,0 +1,67 @@
+---
+title: AnsweringMachineDetector
+subtitle: Answering machine or voicemail detector class.
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [AMD.Events](/reference/voxengine/amd/events). Use only functions as handlers; anything except a function leads to an error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: AMD.Events | T, callback: (event: AMD._Events[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AMD.Events | T" required />
+
+<ParamField path="callback" type="(event: AMD._Events[T]) => any" required />
+
+### detect
+
+Starts answering machine or voicemail recognition session.
+
+```ts
+detect(): Promise<AMD._DetectionCompleteEvent | AMD._DetectionErrorEvent>
+```
+
+### id
+
+Returns the Answering machine detector's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [AMD.Events](/reference/voxengine/amd/events) event.
+
+```ts
+removeEventListener(event: AMD.Events | T, callback?: (event: AMD._Events[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AMD.Events | T" required />
+
+<ParamField path="callback" type="(event: AMD._Events[T]) => any" />
+
+## Properties
+
+<a id="call" />
+<ParamField path="call" type="Call">
+_readonly, optional_
+</ParamField>
+
+<a id="model" />
+<ParamField path="model" type="AMD.Model">
+_readonly_
+</ParamField>
+
+<a id="timeout" />
+<ParamField path="timeout" type="number">
+_readonly, optional_
+</ParamField>

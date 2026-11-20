@@ -1,0 +1,68 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Ultravox API key in Voximplant [Secrets](/platform/storage/secret-storage) under `ULTRAVOX_API_KEY`.
+
+## Session setup
+
+Ultravox uses a WebSocket API client created via `Ultravox.createWebSocketAPIClient(...)`. The key inputs are:
+
+- `endpoint`: use `Ultravox.HTTPEndpoint.CREATE_CALL` (or `CREATE_AGENT_CALL` for an existing Ultravox agent).
+- `authorizations`: include `X-API-Key` with your Ultravox API key.
+- `body`: provide `systemPrompt`, `model`, and `voice`.
+
+## Connect call audio
+
+Once the client is created, bridge audio both ways between the call and Ultravox:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+```
+
+## Barge-in
+
+Ultravox supports barge-in by providing a `PlaybackClearBuffer` event. If you want to interrupt the agent speech, listen for this
+event and clear the media buffer with `clearMediaBuffer()`:
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(Ultravox.WebSocketAPIEvents.PlaybackClearBuffer, (event) => {
+    Logger.write("===PLAYBACK_CLEAR_BUFFER===");
+    voiceAIClient.clearMediaBuffer();
+});
+```
+
+The Ultravox server may also request a buffer clear via `PlaybackClearBuffer` — this example handles both cases.
+
+## Events
+
+The client supports both WebSocket API events and media events. Key events used in the example:
+
+- `Ultravox.WebSocketAPIEvents`: `Transcript`, `HTTPResponse`, `State`, `Debug`, `WebSocketError`, `ConnectorInformation`, `Unknown`, `PlaybackClearBuffer`
+- `Ultravox.Events`: `WebSocketMediaStarted`, `WebSocketMediaEnded`
+
+## Full VoxEngine scenario
+
+<Code
+      src="../../../examples/ultravox/voxeengine-ultravox-answer-incoming-call.js"
+      title="voxeengine-ultravox-answer-incoming-call.js"
+      language="javascript"
+      maxLines={0}
+    />

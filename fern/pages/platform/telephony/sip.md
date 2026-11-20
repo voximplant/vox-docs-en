@@ -16,7 +16,7 @@ Manage incoming and outgoing SIP traffic between Voximplant and external PBXs, s
 
 ## How to call a third-party PBX
 
-To dial an external SIP address from your cloud scenario, use the [callSIP]() method:
+To dial an external SIP address from your cloud scenario, use the [callSIP](/reference/voxengine/voxengine#callsip) method:
 
 ```javascript title="SIP call transport options"
 // Use default UDP transport
@@ -60,7 +60,7 @@ To place a SIP call directly from a Web or Mobile SDK, pass the target SIP URI a
 
 ## How to receive calls from a third-party PBX
 
-To allow an external PBX or SIP server to send calls into your Voximplant application, you must first whitelist your PBX's public IP address in the [control panel]().
+To allow an external PBX or SIP server to send calls into your Voximplant application, you must first whitelist your PBX's public IP address in the [control panel](https://manage.voximplant.com).
 
 <Info title="Whitelist IP addresses, not domain names">
 Always whitelist the numerical public IP address of your PBX rather than a domain name (for example, whitelist `79.104.38.102` rather than `sip.example.com`).
@@ -75,14 +75,14 @@ Once whitelisted, configure your external PBX to route calls to your Voximplant 
 
 When an incoming SIP call arrives:
 
-1. A matching [routing rule]() evaluates the `destination` portion of the SIP URI.
-2. The matched [scenario]() starts execution.
+1. A matching [routing rule](/platform/getting-started/create-a-routing-rule) evaluates the `destination` portion of the SIP URI.
+2. The matched [scenario](/platform/getting-started/create-a-scenario) starts execution.
 3. Access the dialed target string in your scenario using the `e.destination` property on the incoming call object.
 
-For full implementation examples, refer to the [voice calls guide]() and [video calls guide]().
+For full implementation examples, refer to the [voice calls guide](/platform/telephony/calls) and [video calls guide](/platform/contact-center/video).
 
 <Warning title="Restricted domain">
-You cannot route incoming SIP calls from external PBXs using `voximplant.com` as the source domain. To route calls between Voximplant users, follow the instructions in [how to call a Voximplant user]().
+You cannot route incoming SIP calls from external PBXs using `voximplant.com` as the source domain. To route calls between Voximplant users, follow the instructions in [how to call a Voximplant user](/platform/telephony/calls).
 </Warning>
 
 ---
@@ -91,7 +91,7 @@ You cannot route incoming SIP calls from external PBXs using `voximplant.com` as
 
 You can connect external SIP softphones or hardware devices (such as Linphone, Bria, or standard desk phones) to Voximplant:
 
-1. In the control panel, [create an application]() and [create a user]().
+1. In the control panel, [create an application](/platform/getting-started/create-an-application) and [create a user](/platform/getting-started/create-users).
 2. In your third-party SIP client, add a new SIP account with the following parameters:
    * **Username**: The Voximplant username (e.g., `alice`).
    * **Domain / Proxy**: Your Voximplant application domain (`application.account.voximplant.com`).
@@ -109,7 +109,7 @@ A **SIP registration** allows Voximplant to register as an extension (client) on
 
 ### Create a SIP registration
 
-You can configure SIP registrations in the [control panel]() or programmatically using the [Management API]():
+You can configure SIP registrations in the [control panel](https://manage.voximplant.com) or programmatically using the [Management API](/overview/how-voximplant-works/management-api):
 
 Required parameters:
 * **Proxy**: Your provider's SIP proxy host and optional port (e.g., `sip.provider.com` or `sip.provider.com:5090;transport=tcp`). UDP is used by default.
@@ -129,11 +129,11 @@ You can monitor registration health in the control panel:
 * **In progress**: Provisioning is underway (typically completes within 2 minutes).
 * **Failed**: The remote SIP proxy rejected registration. Check the error code in the control panel tooltip.
 
-Status change notifications can be dispatched via email or HTTP callbacks. Learn more in [Management API callbacks]().
+Status change notifications can be dispatched via email or HTTP callbacks. Learn more in [Management API callbacks](/platform/management-api/callbacks).
 
 ### Placing calls through a SIP registration
 
-To place an outbound call through an active SIP registration, pass its `regId` to [VoxEngine.callSIP]():
+To place an outbound call through an active SIP registration, pass its `regId` to [VoxEngine.callSIP](/reference/voxengine/voxengine#callsip):
 
 ```javascript title="Outbound call via SIP registration"
 const call = VoxEngine.callSIP("12125550199", {
@@ -141,7 +141,7 @@ const call = VoxEngine.callSIP("12125550199", {
 });
 ```
 
-You can obtain the `regId` from the control panel or via the [GetSipRegistrations]() Management API method.
+You can obtain the `regId` from the control panel or via the [GetSipRegistrations](/reference/management-api/reference/sip-registration/get-sip-registrations) Management API method.
 
 ### Processing incoming calls from a SIP registration
 
@@ -149,7 +149,7 @@ To route inbound calls arriving through a SIP registration:
 
 1. Open your application in the control panel.
 2. Navigate to **SIP registrations** and click **Attach registration**.
-3. Select your active registration and choose the target [routing rule]().
+3. Select your active registration and choose the target [routing rule](/platform/getting-started/create-a-routing-rule).
 
 Calls arriving via this registration automatically execute the scenario bound to that routing rule without requiring regex pattern matching.
 
@@ -159,8 +159,8 @@ Calls arriving via this registration automatically execute the scenario bound to
 
 Voximplant supports the following media codecs across SIP connections:
 
-* **Audio codecs**: [G.729](), [G.722](), [G.711 (u-law and a-law)](), [Opus](), [ILBC]()
-* **Video codecs**: [H.264](), [VP8]()
+* **Audio codecs**: [G.729](), [G.722](), [G.711 (u-law and a-law)](), [Opus](/reference/voxengine/websocket-audio-encoding#opus), [ILBC]()
+* **Video codecs**: [H.264](), [VP8](/reference/voxengine/video-codecs#vp8)
 
 The platform supports the following OpenSSL cipher suites for TLS encryption:
 
@@ -174,7 +174,7 @@ Blind transfers allow a callee to transfer an active call to another party witho
 
 In traditional telephony setups, a blind transfer (SIP `REFER`) requested by a third-party SIP endpoint initiated a separate call in a new session, where the transfer target always saw the transferor's number as the caller ID.
 
-With Voximplant's [handleBlindTransfer()]() mode, you can control the third call leg directly within your existing cloud scenario session. This provides complete programmatic control over the transfer: you can customize the caller ID displayed to the transfer target (for example, setting [displayName]()), pass custom SIP headers, and handle failure fallbacks.
+With Voximplant's [handleBlindTransfer()](/reference/voxengine/call#handleblindtransfer) mode, you can control the third call leg directly within your existing cloud scenario session. This provides complete programmatic control over the transfer: you can customize the caller ID displayed to the transfer target (for example, setting [displayName](/reference/voxengine/call#displayname)), pass custom SIP headers, and handle failure fallbacks.
 
 ---
 
@@ -191,8 +191,8 @@ The [CallEvents.BlindTransferRequested]() event provides the following parameter
 
 To inform the transferor of the transfer status, invoke one of the following methods on the transferor's call object:
 
-* [notifyBlindTransferSuccess()](): Signals that the transfer target has answered.
-* [notifyBlindTransferFailed()](): Signals that the transfer failed, passing a status code and reason description.
+* [notifyBlindTransferSuccess()](/reference/voxengine/call#notifyblindtransfersuccess): Signals that the transfer target has answered.
+* [notifyBlindTransferFailed()](/reference/voxengine/call#notifyblindtransferfailed): Signals that the transfer failed, passing a status code and reason description.
 
 ```javascript title="Handle blind transfer in existing session"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (inc) => {
@@ -229,7 +229,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (inc) => {
 
 ### Transferring to a SIP address
 
-If you need to bridge the transfer to an external SIP URI using [callSIP]() instead of routing to an application user with [callUser](), extract the target destination from the incoming SIP headers:
+If you need to bridge the transfer to an external SIP URI using [callSIP](/reference/voxengine/voxengine#callsip) instead of routing to an application user with [callUser](/reference/voxengine/voxengine#calluser), extract the target destination from the incoming SIP headers:
 
 ```javascript title="Transfer call to a SIP endpoint"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (inc) => {

@@ -2,7 +2,7 @@
 
 The **Voximplant Control Panel** is the web-based administrative interface and developer workspace for your account. It serves as your primary mission control: whether you are writing serverless code in the Cloud IDE, renting phone numbers across 60+ countries, inspecting live call logs, or generating API keys for your backend.
 
-While virtually every action can also be automated programmatically via the [Management API](), the Control Panel provides the visual tools you need to build, test, and monitor your communications stack.
+While virtually every action can also be automated programmatically via the [Management API](/overview/how-voximplant-works/management-api), the Control Panel provides the visual tools you need to build, test, and monitor your communications stack.
 
 ---
 
@@ -13,7 +13,7 @@ Getting started with Voximplant takes less than two minutes:
 1. Navigate to the [registration page]().
 2. Enter your email address, create a secure password, and choose your **Account name**.
 3. Confirm your email address via the verification link sent to your inbox.
-4. Log in to the [Voximplant Control Panel]() to claim your testing balance and access your dashboard.
+4. Log in to the [Voximplant Control Panel](https://manage.voximplant.com) to claim your testing balance and access your dashboard.
 
 <Info title="Choosing your account name">
 Your **Account name** is a permanent, unique identifier within the Voximplant global infrastructure. It is used across the platform, including fully qualified SDK/SIP login credentials (`username@appname.accountname.voximplant.com`) and API requests. Choose an alphanumeric name that represents your company or project.
@@ -26,8 +26,8 @@ Your **Account name** is a permanent, unique identifier within the Voximplant gl
 The Control Panel is divided into dedicated functional areas designed to support every phase of the development lifecycle:
 
 ### 1. Applications and scenario development
-* **Applications**: The top-level workspace where you group project resources. Everything you build lives inside an [application]().
-* **Cloud IDE**: Write, edit, and test your serverless JavaScript [scenarios]() directly in your browser with built-in syntax highlighting, autocomplete, and code templates.
+* **Applications**: The top-level workspace where you group project resources. Everything you build lives inside an [application](/platform/getting-started/create-an-application).
+* **Cloud IDE**: Write, edit, and test your serverless JavaScript [scenarios](/platform/getting-started/create-a-scenario) directly in your browser with built-in syntax highlighting, autocomplete, and code templates.
 * **Routing rules**: Configure the pattern-matching engine that directs incoming phone calls, SIP URIs, and SDK connections to your scenarios.
 * **Users**: Provision application users for authenticating Web, iOS, Android, and Flutter SDK clients.
 * **Key-Value storage & Secrets**: Securely store API keys, tokens, and database credentials, and manage persistent key-value pairs across active calls.
@@ -49,7 +49,7 @@ Accessible from the top navigation bar under **Testing tools**:
 * **Web softphone**: Place live test calls to your scenarios or registered users directly from your browser without configuring an external SIP client.
 
 ### 5. Access control and automation
-* **Service accounts**: Create server-to-server credentials and generate cryptographic RSA key pairs for authenticating backend requests via [JWT authorization]().
+* **Service accounts**: Create server-to-server credentials and generate cryptographic RSA key pairs for authenticating backend requests via [JWT authorization](/reference/management-api/authorization).
 * **Role-based permissions**: Restrict service account capabilities to specific scopes (e.g., billing, call control, or user management) according to the principle of least privilege.
 * **Child accounts**: Create and manage isolated sub-accounts with independent balance pools for multi-tenant SaaS architectures.
 

@@ -1,0 +1,164 @@
+---
+title: Build and Deploy
+subtitle: Improve delivery, security, and operations as Voice AI traffic grows
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+These capabilities focus on operational maturity: faster releases, secure automation, team access controls, and platform governance.
+
+<CardGroup cols={3}>
+  <Card title="Explore debug tools" icon="fa-duotone fa-bug" href="#explore-debug-tools">
+    Diagnose call flow, routing, and media behavior quickly.
+  </Card>
+  <Card title="Voxengine-ci" icon="fa-duotone fa-code-branch" href="#voxengine-ci">
+    Ship scenario updates through repeatable CI/CD workflows.
+  </Card>
+  <Card title="Use service accounts" icon="fa-duotone fa-key" href="#service-accounts">
+    Secure automation with scoped, non-human credentials.
+  </Card>
+  <Card title="Setup sub-users" icon="fa-duotone fa-users" href="#setup-sub-users">
+    Delegate control-panel access by role and team.
+  </Card>
+  <Card title="Manage billing" icon="fa-duotone fa-wallet" href="#manage-billing">
+    Control spend, plans, and financial operations.
+  </Card>
+  <Card title="Client Media SDKs" icon="fa-duotone fa-mobile-screen" href="#client-media-sdks">
+    Build web and mobile calling clients on Voximplant SDKs.
+  </Card>
+  <Card title="Management SDKs" icon="fa-duotone fa-code" href="#management-sdks">
+    Automate provisioning and operations from server-side tooling.
+  </Card>
+  <Card title="Using the Management API" icon="fa-duotone fa-gears" href="#using-the-management-api">
+    Run provisioning and operations through backend APIs.
+  </Card>
+  <Card title="Even More" icon="fa-duotone fa-circle-plus" href="#even-more-build-and-deploy">
+    Explore additional guides and references.
+  </Card>
+</CardGroup>
+
+<AccordionGroup>
+  <a id="explore-debug-tools"></a>
+  <Accordion title="Explore debug tools">
+    Debug and troubleshooting workflows help teams resolve routing, media, and runtime issues quickly in production.
+
+    - Use IDE and debugger tools to iterate faster on scenario behavior.
+    - Review logs systematically to reduce time-to-resolution.
+    - Standardize troubleshooting runbooks across teams.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Debug links:
+    - [VoxEngine IDE guide](/overview/how-voximplant-works/cloud-ide)
+    - [Scenario troubleshooting guide](/help/troubleshooting/vox-engine-scenarios)
+  </Accordion>
+
+  <a id="voxengine-ci"></a>
+  <Accordion title="Voxengine-ci">
+    Voxengine-ci makes scenario delivery repeatable so teams can ship and manage updates with less operational risk.
+
+    - Move from manual updates to CI/CD-driven deployments.
+    - Standardize promotion from staging to production applications.
+    - Keep scenario and routing changes auditable in source control.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Voxengine-ci links:
+    - [VoxEngine CI guide](/overview/how-voximplant-works/vox-engine-ci)
+    - [voxengine-ci on GitHub](https://github.com/voximplant/voxengine-ci)
+  </Accordion>
+
+  <a id="service-accounts"></a>
+  <Accordion title="Use service accounts">
+    Service accounts are the foundation for secure API automation in production teams.
+
+    - Separate non-human automation access from user accounts.
+    - Use role-based permissions to scope what automation can do.
+    - Improve auditability and credential governance.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Service account links:
+      - [Management API basics](/overview/how-voximplant-works/management-api)
+      - [Management API authorization guide](/reference/management-api/authorization)
+  </Accordion>
+
+  <a id="setup-sub-users"></a>
+  <Accordion title="Setup sub-users">
+    Sub-users let teams collaborate in the control panel with clear ownership and role-based access.
+
+    - Assign roles aligned to operations, QA, and engineering responsibilities.
+    - Reduce risk from shared admin credentials.
+    - Improve governance as teams and environments scale.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Sub-user links:
+    - [Subusers concept](/platform/getting-started/create-users)
+    - [Child accounts guide](/overview/how-voximplant-works/management-api)
+  </Accordion>
+
+  <a id="manage-billing"></a>
+  <Accordion title="Manage billing">
+    Billing controls help you forecast spend, control plan usage, and keep production operations predictable.
+
+    - Monitor balance and service usage as traffic grows.
+    - Plan capacity and spending across environments and teams.
+    - Align billing operations with deployment and scaling plans.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Billing links:
+    - [How billing works](/overview/how-billing-works)
+    - [Billing API guide](/overview/how-billing-works)
+  </Accordion>
+
+  <a id="client-media-sdks"></a>
+  <Accordion title="Client Media SDKs">
+    Client Media SDKs let your team ship browser and native app calling experiences that integrate directly with Voximplant users and call flows.
+
+    - Build app-based calling experiences for web and mobile channels.
+    - Reuse your telephony and routing architecture with SDK-authenticated users.
+    - Standardize app calling behavior across platforms.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Client Media SDK links:
+    - [IOS SDK reference](/reference/i-os-and-mac-os-sdk/overview)
+    - [Android SDK reference](/reference/android-sdk/overview)
+    - [React Native SDK reference](/reference/react-native-sdk/overview)
+    - [Web SDK reference](/reference/web-sdk/overview)
+    - [Flutter SDK reference](/reference/flutter-sdk/overview)
+
+  </Accordion>
+
+  <a id="management-sdks"></a>
+  <Accordion title="Management SDKs">
+    Management SDKs and client libraries are the fastest way to operationalize account setup, routing changes, and scenario launch flows from backend systems.
+
+    - Use official API client libraries instead of hand-writing raw HTTP calls.
+    - Integrate provisioning and lifecycle tasks into CI/CD and internal tools.
+    - Keep deployment workflows consistent across staging and production.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Management SDK links:
+    - [Curl](/reference/management-api)
+    - [Node.js](https://www.npmjs.com/package/@voximplant/apiclient-nodejs)
+    - [Python](https://pypi.org/project/voximplant-apiclient/)
+    - [PHP](https://packagist.org/packages/voximplant/apiclient-php)
+    - [Go](https://github.com/voximplant/apiclient-go)
+  </Accordion>
+
+  <a id="using-the-management-api"></a>
+  <Accordion title="Using the Management API">
+    The Management API lets you provision, control, and operate Voximplant resources from your backend systems.
+
+    - Automate application, user, routing, and scenario management.
+    - Start scenarios and conferences programmatically.
+    - Integrate platform operations into your existing backend workflows.
+
+    #### <icon icon="fa-duotone fa-solid fa-link" /> Management API links:
+    - [Management API basics](/overview/how-voximplant-works/management-api)
+    - [Management API guide](/overview/how-voximplant-works/management-api)
+
+  </Accordion>
+
+  <a id="even-more-build-and-deploy"></a>
+  <Accordion title="Even More">
+    <Info>
+
+    - [Voximplant guides](/voice-ai/getting-started)
+    - [Voximplant API references](/reference/overview)
+
+    </Info>
+  </Accordion>
+</AccordionGroup>

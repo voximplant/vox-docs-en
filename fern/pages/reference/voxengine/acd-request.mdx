@@ -1,0 +1,58 @@
+---
+title: ACDRequest
+subtitle: 'Represents a request that is put to the ACD queue. Add the following line to your scenario code to use the class: ``` require(Modules.ACD); ```'
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [ACDEvents](/reference/voxengine/acd-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: ACDEvents | T, callback: (event: _ACDEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ACDEvents | T" required />
+
+<ParamField path="callback" type="(event: _ACDEvents[T]) => any" required />
+
+### cancel
+
+Cancel pending request and remove it from the queue
+
+```ts
+cancel(): void
+```
+
+### getStatus
+
+Gets status of the current request. Not to be called before the request is successfully queued (the `ACDEvents.Queued` event). This method's call triggers the `ACDEvents.Waiting` event; it is possible to retrieve an estimated waiting time in minutes via the **ewt** property of the event.
+
+```ts
+getStatus(): void
+```
+
+### id
+
+Returns the request's id. It can be used as the **acd\_request\_id** parameter in the [GetACDHistory](/reference/management-api/reference/history/get-acd-history) method to search in ACD history.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [ACDEvents](/reference/voxengine/acd-events) event.
+
+```ts
+removeEventListener(event: ACDEvents | T, callback?: (event: _ACDEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ACDEvents | T" required />
+
+<ParamField path="callback" type="(event: _ACDEvents[T]) => any" />

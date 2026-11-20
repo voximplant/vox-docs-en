@@ -1,0 +1,81 @@
+---
+title: TerminationStatus
+subtitle: The SmartQueue termination status.
+---
+
+## Values
+
+<a id="none" />
+<ParamField path="NONE" type="0">
+No termination status has been provided
+</ParamField>
+
+<a id="internalerror" />
+<ParamField path="INTERNAL_ERROR" type="500">
+Internal error has occurred (ErrorCode, EndTaskCode, EndOperatorActivityCode)
+</ParamField>
+
+<a id="normal" />
+<ParamField path="NORMAL" type="1000">
+Task has been completed successfully in the scenario (TaskCanceledCode)
+</ParamField>
+
+<a id="timeoutreached" />
+<ParamField path="TIMEOUT_REACHED" type="1001">
+Timeout for the task has expired (TaskCanceledCode)
+</ParamField>
+
+<a id="msnotanswered" />
+<ParamField path="MS_NOT_ANSWERED" type="1002">
+Media server does not answer (TaskCanceledCode)
+</ParamField>
+
+<a id="queueempty" />
+<ParamField path="QUEUE_EMPTY" type="1003">
+Queue is empty
+</ParamField>
+
+<a id="maxwaitingtimereached" />
+<ParamField path="MAX_WAITING_TIME_REACHED" type="1004">
+Maximum waiting time has been reached
+</ParamField>
+
+<a id="maxqueuesizereached" />
+<ParamField path="MAX_QUEUE_SIZE_REACHED" type="1005">
+Maximum queue size has been reached
+</ParamField>
+
+<a id="operatornotavailable" />
+<ParamField path="OPERATOR_NOT_AVAILABLE" type="1006">
+No agents available
+</ParamField>
+
+<a id="clientterminate" />
+<ParamField path="CLIENT_TERMINATE" type="1100">
+Customer has cancelled the task (EndTaskCode)
+</ParamField>
+
+<a id="finishedbyclient" />
+<ParamField path="FINISHED_BY_CLIENT" type="1201">
+Customer has finished the task (EndOperatorActivityCode)
+</ParamField>
+
+<a id="finishedbyoperator" />
+<ParamField path="FINISHED_BY_OPERATOR" type="1202">
+Agent has finished the task (EndOperatorActivityCode)
+</ParamField>
+
+<a id="failed" />
+<ParamField path="FAILED" type="1203">
+Agent has missed or declined the task (EndOperatorActivityCode)
+</ParamField>
+
+<a id="canceled" />
+<ParamField path="CANCELED" type="1204">
+Task is cancelled in the scenario (EndOperatorActivityCode)
+</ParamField>
+
+<a id="transferred" />
+<ParamField path="TRANSFERRED" type="1205">
+Task is transferred (EndOperatorActivityCode)
+</ParamField>

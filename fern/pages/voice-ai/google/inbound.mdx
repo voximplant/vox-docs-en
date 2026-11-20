@@ -1,0 +1,104 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to Gemini Live API for real-time speech-to-speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to Gemini Live API for real-time speech-to-speech conversations.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+<Info title="Gemini 3.8 Live">
+  This page reflects the current `gemini-3.8-live` flow from Google’s Live API docs:
+  https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live
+</Info>
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Gemini API key in Voximplant [Secrets](/platform/storage/secret-storage) under `GEMINI_API_KEY`.
+
+## Session setup
+
+The Gemini Live API session is configured via `connectConfig`, passed into `Gemini.createLiveAPIClient(...)`.
+
+In the full scenario, see `GEMINI_CONNECT_CONFIG`:
+
+- `systemInstruction` maps directly to `SYSTEM_PROMPT`, defining the agent’s behavior.
+- `responseModalities: ["AUDIO"]` asks Gemini to speak back over the call.
+- `inputAudioTranscription` and `outputAudioTranscription` are enabled so `ServerContent` includes user + agent text.
+
+<Info title="Transcription logging">
+  If you don’t need transcript logs, you can remove `inputAudioTranscription` and `outputAudioTranscription`.
+</Info>
+
+## Connect call audio
+
+Once the Gemini Live API session is ready, bridge audio between the call and Gemini:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, geminiLiveAPIClient);
+```
+
+In the example, this happens in the `Gemini.LiveAPIEvents.SetupComplete` handler, **after** the Gemini session is ready. The same handler also sends a starter message to trigger the greeting:
+
+```js title="Trigger the greeting"
+geminiLiveAPIClient.sendRealtimeInput({
+  text: GREETING_TRIGGER,
+});
+```
+
+## Barge-in
+
+Gemini includes an `interrupted` flag in `ServerContent` when the caller starts speaking during TTS. The example clears the media buffer so the agent stops speaking immediately:
+
+```js title="Barge-in handling"
+if (payload.interrupted) {
+  geminiLiveAPIClient.clearMediaBuffer();
+}
+```
+
+## Events
+
+The scenario listens for `Gemini.LiveAPIEvents.ServerContent` to capture transcript text:
+
+```js title="Transcripts"
+geminiLiveAPIClient.addEventListener(Gemini.LiveAPIEvents.ServerContent, (event) => {
+  const payload = event?.data?.payload || {};
+  if (payload.inputTranscription?.text) Logger.write(payload.inputTranscription.text);
+  if (payload.outputTranscription?.text) Logger.write(payload.outputTranscription.text);
+});
+```
+
+For illustration, the example also logs **all Gemini events**:
+
+- `Gemini.LiveAPIEvents`: `SetupComplete`, `ServerContent`, `ToolCall`, `ToolCallCancellation`, `ConnectorInformation`, `Unknown`
+- `Gemini.Events`: `WebSocketMediaStarted`, `WebSocketMediaEnded`
+
+## Notes
+
+- The example uses the Gemini Developer API (`Gemini.Backend.GEMINI_API`), not Vertex AI.
+- The current sample uses `gemini-3.8-live`. `gemini-3.8-live` does not accept `thinkingLevel`; omit `thinkingConfig`.
+- `inputAudioTranscription` and `outputAudioTranscription` are enabled so you can log user and agent text in `ServerContent` events.
+
+<Warning title="Older Live models">
+  `gemini-3.1-flash-live-preview` samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `gemini-2.5-flash-native-audio-preview-12-2025` samples used `sendClientContent(...)` for the greeting and `thinkingBudget` instead of the `3.1` `thinkingLevel` field.
+</Warning>
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/gemini-live/voxeengine-gemini-answer-incoming-call.js"
+  title="voxeengine-gemini-answer-incoming-call.js"
+  language="javascript"
+  maxLines={0}
+/>

@@ -1,0 +1,48 @@
+---
+title: Inbound calls
+subtitle: Flows where the caller initiates the session
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+Inbound flows start when a caller reaches your destination (phone number, WhatsApp destination, SIP username, or app user alias) and a routing rule launches your scenario.
+
+## Use `AppEvents.CallAlerting` as the entry point
+
+All inbound calls use the same entry point, allowing easy, common handling regardless of the channel. Use `AppEvents.CallAlerting` to answer the call and start your Voice AI logic.
+
+For example:
+
+```js title="Inbound Voice AI pattern"
+VoxEngine.addEventListener(AppEvents.CallAlerting, async (event) => {
+  const call = event.call;  // call object for the inbound session
+  call.answer();            // stops ringing and connects media
+
+    // Termination functions - add cleanup and logging as needed
+    call.addEventListener(CallEvents.Disconnected, ()=>VoxEngine.terminate());
+    call.addEventListener(CallEvents.Failed, ()=>VoxEngine.terminate());
+
+  // Connect the Voice AI client
+  const voiceAIClient = OpenAI.createRealtimeAPIClient({apiKey: "your-key", model: "your-realtime-model"});
+
+  // Bridge media between the call and the Voice AI client so they can speak and hear each other
+  VoxEngine.sendMediaBetween(call, voiceAIClient);
+});
+```
+
+## Inbound guidelines:
+
+- Answer quickly with `call.answer()`
+- Listen for key call events (`Disconnected`, `Failed`, etc.) and handle as needed
+- Create/configure the connector client
+- Bridge media between call and connector:
+    - Use `VoxEngine.sendMediaBetween(...)` for simple two-party bridging
+    - Alternatively use `call.sendMediaTo(...)` and `connector.sendMediaTo(...)` for more complex pipelines
+- Invoke methods and handle events from the connector to drive your Voice AI logic
+
+## <icon icon="fa-duotone fa-solid fa-link" /> More information:
+- [Calls and Sessions concepts](/platform/telephony/calls)
+- [Launching a routing rule](/platform/getting-started/create-a-routing-rule#launching-a-routing-rule)
+- [VoxEngine Call class](/reference/voxengine/call)

@@ -1,0 +1,55 @@
+---
+title: "OpenAI TTS voices"
+subtitle: "Use OpenAI text-to-speech voices with Voximplant."
+---
+
+OpenAI, the organization that specializes in artificial intelligence researches, in addition to [ChatGPT](/voice-ai/openai/overview){/* TODO: unmapped link */}, provides realistic [text-to-speech voices](/voice-ai/speech/openai-tts), that you can use *easily* with your Voximplant application.
+
+## Setup
+
+The only requirement to use the Open AI voices with Voximplant applications is having [an Open AI account](https://platform.openai.com/) and have a working **API key**.
+
+Create an `OPENAI_API_KEY` [Secret](/platform/storage/secret-storage) with your OpenAI API key. To use the voices, create [a URL player](/reference/voxengine/voxengine#createurlplayer) in your [VoxEngine scenario](/platform/getting-started/create-a-scenario) and prepare a POST request as it is explained in the [Media players](/reference/voxengine/player) guide.
+
+Take a look at the following example with comments:
+
+```javascript title="Using OpenAI TTS"
+// prepare your openAI API key
+const openaiApiKey = VoxEngine.getSecretValue('OPENAI_API_KEY');
+if (!openaiApiKey) throw new Error('Set OPENAI_API_KEY in Voximplant Secrets');
+
+// prepare the url player request and parameters
+const urlPlayerRequest = {
+  method: URLPlayerRequestMethod.POST,
+  url: 'https://api.openai.com/v1/audio/speech',
+  headers: [
+    { name: 'Authorization', value: 'Bearer ' + openaiApiKey },
+    { name: 'Content-Type', value: 'application/json' }
+  ],
+  body: {
+    text: JSON.stringify({
+      model: 'tts-1',
+      input: 'Today is a wonderful day to build something people love!',
+      voice: 'alloy'
+    })
+  }
+};
+
+const urlPlayerParameters = {
+  progressivePlayback: true
+};
+
+// create the url player
+const player = VoxEngine.createURLPlayer(urlPlayerRequest, urlPlayerParameters);
+
+// send the generated audio to the call
+player.sendMediaTo(call);
+
+```
+
+To modify the voice parameters, modify the body of your URL player request according to the [OpenAI TTS documentation](https://platform.openai.com/docs/guides/text-to-speech).
+
+## See also
+
+- [Speech synthesis](/voice-ai/speech/openai-tts)
+- [Media players](/reference/voxengine/player)

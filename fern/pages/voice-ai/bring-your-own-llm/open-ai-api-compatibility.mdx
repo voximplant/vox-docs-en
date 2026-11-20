@@ -1,0 +1,121 @@
+---
+title: OpenAI API compatibility
+subtitle: Use OpenAI-compatible LLM APIs in VoxEngine voice AI pipelines.
+---
+
+In addition to its many native Voice AI clients, Voximplant supports many additional OpenAI-compatible LLM models and deployment options through its **Bring your own LLM** interface.
+
+Use the *Bring your own LLM capability* when:
+
+- You need a specific model not offered via Voximplant's existing Voice AI clients - dozens of models are provided across several vendors with a growing list.
+- You need hosting of supported models on specific cloud endpoints for data sovereignty, compliance, or cost savings - control how and where models are deployed.
+- You plan to switch between supported providers and want to keep a consistent interface - avoid building custom interfaces for each provider.
+- Easy addition of text-based LLM support - use text-based LLMs to supplement functionality.
+
+The Bring your own LLM capability does have some limitations. Note these caveats:
+- Realtime API support is limited to only a few LLM providers
+- Most model support is via text-based LLMs that require implementing a [cascaded pipeline](/voice-ai/pipeline-options#full-cascade) for Voice AI support.
+- While the core API interface is the same, event usage, parameters, and payloads may vary by provider.
+
+<Info>
+We recommend using one of Voximplant's direct speech-to-speech Voice AI clients when they are available.
+    The existing Voice AI connectors usually provide a simpler implementation when the provider's built-in voice, language, and agent behavior meet your requirements.
+</Info>
+
+<Note>
+Voximplant's [HTTP requests API](/platform/api-requests), [webhooks interface](/platform/management-api/callbacks), and [WebSocket module](/reference/voxengine/voxengine#createwebsocket) can be used to interface with unsupported LLM platforms.
+</Note>
+
+
+## Supported API options
+
+Bring your own LLM is supported across all of OpenAI's LLM API options.
+
+| API option | Best for | VoxEngine client |
+| --- | --- | --- |
+| Chat Completions | Existing chat bot logic, simple streaming text generation, manual conversation history | `OpenAI.createChatCompletionsAPIClient()` |
+| Responses API | Newer agentic workflows, tool use, structured items, longer-running voice flows | `OpenAI.createResponsesAPIClient()` |
+| Realtime API | Direct speech-to-speech sessions where the model handles audio input and audio output | `OpenAI.createRealtimeAPIClient()` |
+
+<Note>
+Third-party OpenAI compatibility varies considerably by vendor. Always check the provider's supported endpoints, events, models, and streaming behavior.
+</Note>
+
+## Using OpenAI-compatible interfaces
+
+For Chat Completions and Responses, the main integration requirement is specifying the provider's OpenAI-compatible API root as `baseUrl` and providing an API key from that provider.
+`OpenAI.createChatCompletionsAPIClient()`, `OpenAI.createResponsesAPIClient()`, and `OpenAI.createRealtimeAPIClient()` all accept `apiKey` and optional `baseUrl` parameters.
+
+<Note>
+    You can securely store provider keys in [Voximplant Secrets](/platform/storage/secret-storage) and retrieve them in VoxEngine with `VoxEngine.getSecretValue()`.
+</Note>
+
+## Reference examples
+
+| API option | Scenario | Example Description |
+| --- | --- | --- |
+| Chat Completions | [Chat Completions with Together AI](/voice-ai/bring-your-own-llm/chat-completions-together) | Together AI through `https://api.together.ai/v1` |
+| Responses API | [Responses: Deepgram-Groq-Inworld](/voice-ai/bring-your-own-llm/full-cascade-groq) | Deepgram STT, Groq Responses API, and Inworld TTS |
+| Responses API | [Responses: Microsoft-Grok-Grok TTS](/voice-ai/bring-your-own-llm/grok-full-cascade) | Microsoft STT, xAI Grok Responses API, and Grok Realtime TTS |
+| Realtime API | [Realtime: Azure OpenAI](/voice-ai/bring-your-own-llm/azure-openai-realtime) | Azure OpenAI Realtime deployment |
+
+## Provider options
+
+Provider support changes quickly. Treat this table as implementation guidance, then verify the provider's current API docs before production use.
+
+| Provider | Completions | Responses API | Realtime | Example base URL |
+| --- | --- | --- | --- | --- |
+| xAI / Grok | [Yes](https://docs.x.ai/developers/rest-api-reference/inference/chat) | [Yes](https://docs.x.ai/developers/model-capabilities/text/generate-text) | [OpenAI Realtime-compatible](https://docs.x.ai/developers/model-capabilities/audio/voice-agent) | `https://api.x.ai/v1` |
+| Groq | [Yes](https://console.groq.com/docs/openai) | [Yes, beta](https://console.groq.com/docs/responses-api) | [Not documented](https://console.groq.com/docs/api-reference) | `https://api.groq.com/openai/v1` |
+| Fireworks | [Yes](https://docs.fireworks.ai/tools-sdks/openai-compatibility) | [Yes](https://docs.fireworks.ai/guides/response-api) | [Not documented](https://docs.fireworks.ai/tools-sdks/openai-compatibility) | `https://api.fireworks.ai/inference/v1` |
+| SambaNova | [Yes](https://docs.sambanova.ai/docs/en/features/openai-compatibility) | [Yes](https://docs.sambanova.ai/docs/en/features/responses) | [Not documented](https://docs.sambanova.ai/docs/en/features/openai-compatibility) | `https://api.sambanova.ai/v1` |
+| Google Gemini | [Yes](https://ai.google.dev/gemini-api/docs/openai) | [Not documented](https://ai.google.dev/gemini-api/docs/openai) | [Native Live API](https://ai.google.dev/gemini-api/docs/live-api) | `https://generativelanguage.googleapis.com/v1beta/openai/` |
+| Anthropic Claude | [Limited](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk) | [Not documented](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk) | [No audio support](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk) | `https://api.anthropic.com/v1/` |
+| Together AI | [Yes](https://docs.together.ai/docs/inference/openai-compatibility) | [Not documented](https://docs.together.ai/docs/inference/openai-compatibility) | [Speech APIs only](https://docs.together.ai/reference/audio-transcriptions-realtime) | `https://api.together.ai/v1` |
+| DeepSeek | [Yes](https://api-docs.deepseek.com/) | [Not documented](https://api-docs.deepseek.com/) | [Not documented](https://api-docs.deepseek.com/) | `https://api.deepseek.com` |
+| Mistral | [Yes](https://docs.mistral.ai/resources/migration-guides) | [Not documented](https://docs.mistral.ai/resources/migration-guides) | [Not documented](https://docs.mistral.ai/resources/migration-guides) | `https://api.mistral.ai/v1` |
+| Cerebras | [Limited](https://inference-docs.cerebras.ai/resources/openai) | [Not documented](https://inference-docs.cerebras.ai/resources/openai) | [Not documented](https://inference-docs.cerebras.ai/resources/openai) | `https://api.cerebras.ai/v1` |
+| Kimi / Moonshot | [Yes](https://platform.kimi.ai/docs/api/overview) | [Not documented](https://platform.kimi.ai/docs/api/overview) | [Not documented](https://platform.kimi.ai/docs/api/overview) | `https://api.moonshot.ai/v1` |
+| Qwen / Alibaba Cloud Model Studio | [Yes](https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-openai-chat-completions) | [Yes](https://www.alibabacloud.com/help/en/model-studio/compatibility-with-openai-responses-api) | [Qwen-Omni-Realtime](https://www.alibabacloud.com/help/en/model-studio/realtime) | Region-specific compatible-mode URLs |
+| Azure OpenAI / Microsoft Foundry v1 | [Yes](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/chatgpt) | [Yes](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses) | [GPT Realtime](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/realtime-audio) | `https://<resource>.openai.azure.com/openai/v1/` |
+
+<Warning>
+Provider examples can change. Confirm the current base URL, supported models, request fields, streaming behavior, and tool support in the provider's documentation before production use.
+</Warning>
+
+<Note>
+Some third-party voice providers advertise OpenAI compatibility, but may use different event names, unsupported events, or different audio behavior. When Voximplant has a dedicated connector for a realtime provider, prefer that connector for production.
+</Note>
+
+## Choosing Chat Completions vs Responses vs Realtime
+
+| Requirement | Recommended option |
+| --- | --- |
+| Use the broadest set of OpenAI-compatible LLM providers | Chat Completions |
+| Reuse an existing text chatbot prompt and message history | Chat Completions |
+| Use newer OpenAI-style agent workflows | Responses API |
+| Use built-in tools, structured response items, or response IDs | Responses API, if the provider supports those features |
+| Build a direct OpenAI speech-to-speech voice agent | Realtime API |
+| Use a third-party realtime speech provider | Use the dedicated [Voximplant connector](/voice-ai/client-options) when available |
+| Mix independent STT, LLM, and TTS providers | Chat Completions or Responses inside a full cascade |
+
+## Compatibility checklist
+
+Before using a third-party provider in production, verify:
+
+- The correct `baseUrl`.
+- The provider supports the API shape you are using: Chat Completions, Responses, or Realtime.
+- The selected model supports streaming.
+- The selected model supports your message format, role names, tools, and structured output settings.
+- Whether the provider supports stored context, `previous_response_id`, or requires you to resend conversation history.
+- The provider's timeout, rate limit, and maximum context behavior.
+- The provider's data retention, logging, and compliance terms.
+- Audio behavior if using a realtime speech API.
+
+## Related guides
+
+- [Pipeline Options](/voice-ai/pipeline-options)
+- [OpenAI overview](/voice-ai/openai/overview)
+- [Responses: Deepgram-Groq-Inworld](/voice-ai/bring-your-own-llm/full-cascade-groq)
+- [Responses: Microsoft-Grok-Grok TTS](/voice-ai/bring-your-own-llm/grok-full-cascade)
+- [Run TTS in VoxEngine](/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine)

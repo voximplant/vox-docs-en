@@ -1,0 +1,65 @@
+---
+title: PhoneNumber
+---
+
+## Functions
+
+### getInfo
+
+Get the phone number info.
+
+```ts
+getInfo(number: string, country?: string): Info
+```
+
+**Parameters**
+
+<ParamField path="number" type="string" required />
+
+<ParamField path="country" type="string" />
+
+## Types
+
+### Info
+
+<a id="info-error" />
+<ParamField path="error" type="string">
+_optional_
+
+Optional. Error string. Possible values are: INVALID\_COUNTRY\_CODE, NOT\_A\_NUMBER, TOO\_SHORT\_AFTER\_IDD, TOO\_SHORT\_NSN, TOO\_LONG\_NSN
+</ParamField>
+
+<a id="info-ispossiblenumber" />
+<ParamField path="isPossibleNumber" type="boolean">
+Whether the number is possible in specified country (just by analyzing length information)
+</ParamField>
+
+<a id="info-isvalidnumber" />
+<ParamField path="isValidNumber" type="boolean">
+Whether the number is valid in specified country
+</ParamField>
+
+<a id="info-isvalidnumberforregion" />
+<ParamField path="isValidNumberForRegion" type="boolean">
+Whether the number is valid in detected region
+</ParamField>
+
+<a id="info-location" />
+<ParamField path="location" type="string">
+The phone number's city, state and country. If the city (or state) is unavailable, only state and country (or just country) is shown
+</ParamField>
+
+<a id="info-number" />
+<ParamField path="number" type="string">
+Number in international E.164 format, starting with +
+</ParamField>
+
+<a id="info-numbertype" />
+<ParamField path="numberType" type="string">
+Number type, one of: FIXED\_LINE, MOBILE, FIXED\_LINE\_OR\_MOBILE, TOLL\_FREE, PREMIUM\_RATE, SHARED\_COST, VOIP, PERSONAL\_NUMBER, PAGER, UAN, VOICEMAIL, UNKNOWN
+</ParamField>
+
+<a id="info-region" />
+<ParamField path="region" type="string">
+2-letter country code of specified phone number (ISO 3166-1)
+</ParamField>

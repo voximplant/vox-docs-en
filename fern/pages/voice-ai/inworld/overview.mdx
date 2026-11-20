@@ -1,0 +1,92 @@
+---
+title: Overview
+subtitle: Inworld Realtime API in VoxEngine
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Benefits
+
+The native Inworld module connects Voximplant calls to Inworld's Realtime API for speech-to-speech conversations.
+It brings Inworld's conversation-aware speech delivery into VoxEngine call flows across phone numbers, SIP, WhatsApp, WebRTC, and app users.
+Voximplant handles the communications layer, media bridge, routing, and call control so you can use Inworld without building a custom media gateway.
+
+Capability and feature highlights:
+
+- Low-latency media integration between Voximplant calls and Inworld Realtime over WebSocket.
+- VoxEngine control over call flow, session updates, provider events, transfers, fallback handling, and custom business logic.
+- One Voice AI architecture for phone numbers, outbound calls, SIP devices and networks, Web SDK calls, mobile SDK calls, and WhatsApp Business Calling where supported.
+- Inworld conversation-aware delivery, using prior audio context to shape how responses sound.
+- Supports TTS-2 cloned voices, voice direction, multilingual consistency, and persona control for agents where tone, pacing, timing, and brand voice matter.
+- OpenAI-compatible realtime concepts such as session updates, response creation, tools, and streaming events.
+
+## Demo video
+
+Inworld Realtime API and Voximplant inbound SIP demo.
+
+Video link: [Inworld Realtime API and Voximplant inbound SIP demo](https://youtu.be/1jQ9UZfCABQ)
+
+<llms-ignore>
+<iframe
+  width="100%"
+  height="360"
+  src="https://www.youtube.com/embed/1jQ9UZfCABQ"
+  title="Inworld Realtime API and Voximplant inbound SIP demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowFullScreen
+/>
+</llms-ignore>
+
+## Architecture
+
+VoxEngine sits between your communications channels and Inworld Realtime.
+The scenario receives or places the call, creates the Inworld client, sends the session configuration after Inworld emits `SessionCreated`, and bridges audio after `SessionUpdated`.
+Provider events flow back into VoxEngine so your JavaScript can handle transcripts, response lifecycle events, barge-in, tool calls, transfer logic, and teardown.
+
+![Inworld Realtime API architecture](../../../assets/voice-ai/inworld/inworld-realtime-architecture.webp)
+
+## Prerequisites
+
+- [Voximplant Getting Started](/voice-ai/getting-started)
+- Inworld account - sign up at https://platform.inworld.ai/login
+- Inworld [API key](https://docs.inworld.ai/api-reference/introduction#getting-an-api-key).
+
+
+## Development notes
+
+- **Native VoxEngine module**: load with `require(Modules.Inworld)` and create an `Inworld.RealtimeAPIClient` via `Inworld.createRealtimeAPIClient(...)`.
+- **Client setup**: create an `Inworld.RealtimeAPIClient` with your Inworld API key and a `sessionKey`; the session key can be any unique string.
+- **Session setup**: after `SessionCreated`, call `sessionUpdate(...)` with a Realtime API session object. Inworld supports OpenAI-compatible fields such as `instructions`, `output_modalities`, `audio.input`, `audio.output`, `tools`, and `tool_choice`.
+- **Voice behavior**: configure Inworld TTS-2 voice, delivery mode, segmentation, backchannel behavior, naturalness, and responsiveness through the session config and `providerData`.
+- **Audio bridge**: once the session is updated, call `VoxEngine.sendMediaBetween(call, voiceAIClient)` to connect the caller and Inworld.
+- **Barge-in**: listen for `Inworld.RealtimeAPIEvents.InputAudioBufferSpeechStarted` and call `voiceAIClient.outputAudioBufferClear({})`.
+- **Function calling**: define tools in the session config, handle function-call events in VoxEngine, and send results back with `conversationItemCreate(...)`.
+- **Events**: use `Inworld.RealtimeAPIEvents` for session, transcript, response, tool-call, error, and diagnostic events. Use `Inworld.Events` for VoxEngine WebSocket media lifecycle events.
+
+See the [Inworld module API reference](/reference/voxengine/inworld) for full details on methods, events, and types.
+
+## Examples
+
+- [Example: Answering an incoming call](/voice-ai/inworld/inbound)
+- [Example: Placing an outbound call](/voice-ai/inworld/outbound)
+- [Example: Function calling](/voice-ai/inworld/function-calling)
+
+## Links
+
+### Voximplant
+
+- [Inworld inbound example](/voice-ai/inworld/inbound)
+- [Inworld outbound example](/voice-ai/inworld/outbound)
+- [Inworld function calling example](/voice-ai/inworld/function-calling)
+- [Inworld module API reference](/reference/voxengine/inworld)
+- [Voximplant Inworld Realtime product page](https://voximplant.com/products/inworld-client)
+
+### Inworld
+
+- API keys and authentication: https://docs.inworld.ai/api-reference/introduction#getting-an-api-key
+- Realtime API overview: https://docs.inworld.ai/realtime/overview
+- Configuring models: https://docs.inworld.ai/realtime/usage/using-realtime-models
+- OpenAI migration guide: https://docs.inworld.ai/realtime/openai-migration

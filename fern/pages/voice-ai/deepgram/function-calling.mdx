@@ -1,0 +1,97 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Deepgram API key in Voximplant [Secrets](/platform/storage/secret-storage) under `DEEPGRAM_API_KEY`.
+
+## Session setup
+
+The Voice Agent session is configured via a `settingsOptions` object passed to `Deepgram.createVoiceAgentClient(...)`.
+
+For function calling, the key part is `SETTINGS_OPTIONS.agent.think.functions`:
+
+- `name`, `description`, `parameters`: define the tool schema the LLM can call
+- `client_side: true`: ensures VoxEngine receives `FunctionCallRequest` and can respond
+
+## Connect call audio
+
+Once the `Deepgram.VoiceAgentClient` is created, bridge audio both ways:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAgentClient);
+```
+
+## Function calling
+
+In the scenario, `Deepgram.VoiceAgentEvents.FunctionCallRequest` delivers one or more function calls requested by the agent.
+
+Each call includes an `id`, a `name`, and JSON string `arguments`. Respond using `voiceAgentClient.sendFunctionCallResponse(...)` with a `FunctionCallResponse` message containing the same `id`:
+
+```js title="Handle FunctionCallRequest and respond"
+voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.FunctionCallRequest, (event) => {
+  const { functions } = event?.data?.payload || {};
+  if (!Array.isArray(functions)) return;
+
+  functions.forEach(({ id, name, arguments: rawArguments }) => {
+    // ...perform the function...
+    voiceAgentClient.sendFunctionCallResponse({
+      type: "FunctionCallResponse",
+      id,
+      name,
+      content: JSON.stringify({ ok: true }),
+    });
+  });
+});
+```
+
+## Barge-in
+
+As in the other examples, keep the experience interruption-friendly by clearing buffered audio on `UserStartedSpeaking`:
+
+```js title="Barge-in"
+voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.UserStartedSpeaking, () => {
+  voiceAgentClient.clearMediaBuffer();
+});
+```
+
+## Events
+
+The function calling flow is driven by:
+
+- `Deepgram.VoiceAgentEvents.FunctionCallRequest`: agent requests a client-side function execution
+- `Deepgram.VoiceAgentEvents.FunctionCallResponse`: emitted when a function call response is processed
+
+For the complete list of supported events:
+
+- [Voice Agent events](/reference/voxengine/deepgram#voiceagentevents)
+- [WebSocket media events](/reference/voxengine/deepgram#events)
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/deepgram).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/deepgram/voxeengine-deepgram-function-calling.js"
+  title="voxeengine-deepgram-function-calling.js"
+  language="javascript"
+  maxLines={0}
+/>

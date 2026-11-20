@@ -1,0 +1,56 @@
+---
+title: Events
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.AI); ```'
+---
+
+## Values
+
+<a id="dialogflowqueryresult" />
+<ParamField path="DialogflowQueryResult" type="'AI.Events.DialogflowQueryResult'">
+Triggered when a Dialogflow instance returns a query result.
+</ParamField>
+
+<a id="dialogflowrecognitionresult" />
+<ParamField path="DialogflowRecognitionResult" type="'AI.Events.DialogflowRecognitionResult'">
+Triggered when a Dialogflow instance returns a recognition result.
+</ParamField>
+
+<a id="dialogflowresponse" />
+<ParamField path="DialogflowResponse" type="'AI.Events.DialogflowResponse'">
+Triggered when a Dialogflow instance returns an intent response.
+</ParamField>
+
+<a id="dialogflowerror" />
+<ParamField path="DialogflowError" type="'AI.Events.DialogflowError'">
+Triggered when a Dialogflow instance causes error.
+</ParamField>
+
+<a id="dialogflowstopped" />
+<ParamField path="DialogflowStopped" type="'AI.Events.DialogflowStopped'">
+Triggered when a Dialogflow instance is stopped.
+</ParamField>
+
+<a id="dialogflowplaybackfinished" />
+<ParamField path="DialogflowPlaybackFinished" type="'AI.Events.DialogflowPlaybackFinished'">
+Triggered when a playback of a single phrase is finished successfully or in case of playback error.
+</ParamField>
+
+<a id="dialogflowplaybackstarted" />
+<ParamField path="DialogflowPlaybackStarted" type="'AI.Events.DialogflowPlaybackStarted'">
+Triggered when a playback of a single phrase is started.
+</ParamField>
+
+<a id="dialogflowplaybackmarkerreached" />
+<ParamField path="DialogflowPlaybackMarkerReached" type="'AI.Events.DialogflowPlaybackMarkerReached'">
+Triggered when 'DialogflowInstance.addMarker' is reached.
+</ParamField>
+
+<a id="voicemaildetected" />
+<ParamField path="VoicemailDetected" type="'AI.Events.VoicemailDetected'">
+Triggered when an answering machine or voicemail is detected.
+</ParamField>
+
+<a id="voicemailnotdetected" />
+<ParamField path="VoicemailNotDetected" type="'AI.Events.VoicemailNotDetected'">
+Triggered when an answering machine or voicemail is not detected.
+</ParamField>

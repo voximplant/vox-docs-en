@@ -23,8 +23,8 @@ Key capabilities:
 
 ### 1. Create an application and user
 
-1. Create a Voximplant [application]().
-2. Create an application [user]() that the web widget will use to authenticate with the platform.
+1. Create a Voximplant [application](/platform/getting-started/create-an-application).
+2. Create an application [user](/platform/getting-started/create-users) that the web widget will use to authenticate with the platform.
 
 ### 2. Create the microphone test scenario
 
@@ -110,12 +110,12 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 ```
 
 <Warning title="Caller ID requirement">
-To place outbound calls to phone numbers (PSTN), you must specify a verified Caller ID. You can [buy a phone number from Voximplant]() or verify your existing phone number in the Control Panel using an automated verification call.
+To place outbound calls to phone numbers (PSTN), you must specify a verified Caller ID. You can [buy a phone number from Voximplant](/platform/getting-started/buy-a-phone-number) or verify your existing phone number in the Control Panel using an automated verification call.
 </Warning>
 
 ### 4. Configure routing rules
 
-Create two separate [routing rules]() in your application:
+Create two separate [routing rules](/platform/getting-started/create-a-routing-rule) in your application:
 
 1. **Microphone test rule**:
    * Name: `testmic-rule`

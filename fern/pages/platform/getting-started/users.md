@@ -1,6 +1,6 @@
 # Create users
 
-In Voximplant, **users** represent identity and authorization credentials within an [application](). They provide the credentials that client applications (Web, iOS, Android, React Native, and Flutter) or SIP endpoints use to authenticate, place calls, receive calls, and send messages.
+In Voximplant, **users** represent identity and authorization credentials within an [application](/platform/getting-started/create-an-application). They provide the credentials that client applications (Web, iOS, Android, React Native, and Flutter) or SIP endpoints use to authenticate, place calls, receive calls, and send messages.
 
 ---
 
@@ -36,7 +36,7 @@ username@appname.accountname.voximplant.com
 
 To create a user manually:
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the left navigation menu, click **Applications** and open your project.
 3. Select the **Users** tab from the application sidebar.
 4. Click **Create user** (or the **+** icon).
@@ -49,7 +49,7 @@ To create a user manually:
 6. Click **Create** (or check **Create another** to continue adding users).
 
 <Info title="Programmatic user provisioning">
-If your application manages a dynamic user base, do not create users manually. Use the [AddUser]() Management API method from your backend to automatically provision users when they register in your product.
+If your application manages a dynamic user base, do not create users manually. Use the [AddUser](/reference/management-api/reference/users/add-user) Management API method from your backend to automatically provision users when they register in your product.
 </Info>
 
 ---
@@ -60,7 +60,7 @@ If your application manages a dynamic user base, do not create users manually. U
 **A**: An **account user** is a team member who logs in to the Voximplant Control Panel to manage applications, billing, and settings. An **application user** is an end user identity that connects through client SDKs or SIP softphones to place and receive calls.
 
 **Q**: **Can I allocate a separate balance to specific users?**  
-**A**: Yes. When creating or editing a user, enable the **Separate balance** option. This is useful when you want specific departments, clients, or test accounts to operate with their own prepaid funds. For complete workspace isolation, consider creating [child accounts]().
+**A**: Yes. When creating or editing a user, enable the **Separate balance** option. This is useful when you want specific departments, clients, or test accounts to operate with their own prepaid funds. For complete workspace isolation, consider creating [child accounts](/overview/how-voximplant-works/management-api).
 
 **Q**: **What happens when a user is marked inactive?**  
 **A**: Inactive users cannot log in via SDKs or SIP clients. Any active sessions for that user will fail to authenticate until the active flag is restored.

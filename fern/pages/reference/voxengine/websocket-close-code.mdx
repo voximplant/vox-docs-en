@@ -1,0 +1,81 @@
+---
+title: WebSocketCloseCode
+subtitle: 15 values
+---
+
+## Values
+
+<a id="closenormal" />
+<ParamField path="CLOSE_NORMAL" type="1000">
+Normal connection closure.
+</ParamField>
+
+<a id="closegoingaway" />
+<ParamField path="CLOSE_GOING_AWAY" type="1001">
+Endpoint left (browser tab closing).
+</ParamField>
+
+<a id="closeprotocolerror" />
+<ParamField path="CLOSE_PROTOCOL_ERROR" type="1002">
+Endpoint received a malformed frame.
+</ParamField>
+
+<a id="closeunsupported" />
+<ParamField path="CLOSE_UNSUPPORTED" type="1003">
+Endpoint received an unsupported frame.
+</ParamField>
+
+<a id="closednostatus" />
+<ParamField path="CLOSED_NO_STATUS" type="1005">
+Expected close status, received none.
+</ParamField>
+
+<a id="closeabnormal" />
+<ParamField path="CLOSE_ABNORMAL" type="1006">
+No close code frame has been received.
+</ParamField>
+
+<a id="closeunsupportedpayload" />
+<ParamField path="CLOSE_UNSUPPORTED_PAYLOAD" type="1007">
+Endpoint received inconsistent message.
+</ParamField>
+
+<a id="closepolicyviolation" />
+<ParamField path="CLOSE_POLICY_VIOLATION" type="1008">
+Received message violates endpoint policy.
+</ParamField>
+
+<a id="closetoolarge" />
+<ParamField path="CLOSE_TOO_LARGE" type="1009">
+Too big frame.
+</ParamField>
+
+<a id="closemandatoryextension" />
+<ParamField path="CLOSE_MANDATORY_EXTENSION" type="1010">
+Client wanted an extension which server does not negotiate.
+</ParamField>
+
+<a id="closeservererror" />
+<ParamField path="CLOSE_SERVER_ERROR" type="1011">
+Internal server error while operating.
+</ParamField>
+
+<a id="closeservicerestart" />
+<ParamField path="CLOSE_SERVICE_RESTART" type="1012">
+Server/service is restarting.
+</ParamField>
+
+<a id="closetryagainlater" />
+<ParamField path="CLOSE_TRY_AGAIN_LATER" type="1013">
+Temporary server condition forced blocking the client's request.
+</ParamField>
+
+<a id="closebadgateway" />
+<ParamField path="CLOSE_BAD_GATEWAY" type="1014">
+Server acting as gateway received an invalid response.
+</ParamField>
+
+<a id="closetlsfail" />
+<ParamField path="CLOSE_TLS_FAIL" type="1015">
+Failed to perform a TLS handshake.
+</ParamField>

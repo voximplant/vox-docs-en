@@ -1,0 +1,104 @@
+---
+title: Agent
+subtitle: Represents a CCAI Agent instance.
+---
+
+## Constructor
+
+```ts
+new Agent(agentId: string, region?: string)
+```
+
+**Parameters**
+
+<ParamField path="agentId" type="string" required />
+
+<ParamField path="region" type="string" />
+
+```ts
+new Agent(agentId: string, region?: string)
+```
+
+**Parameters**
+
+<ParamField path="agentId" type="string" required />
+
+<ParamField path="region" type="string" />
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [CCAI.Events.Agent](/reference/voxengine/ccai/events/agent) event. Use only functions as handlers; anything except a function leads to an error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: CCAI.Events.Agent | T, callback: (event: CCAI.Events._AgentEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Agent | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._AgentEvents[T]) => any" required />
+
+### destroy
+
+Destroys a CCAI Agent instance.
+
+```ts
+destroy(): void
+```
+
+### getConversationProfile
+
+Gets the Dialogflow conversation profile.
+
+```ts
+getConversationProfile(request: Object): Promise<GetConversationProfileResult>
+```
+
+**Parameters**
+
+<ParamField path="request" type="Object" required />
+
+### getProfilesList
+
+Gets the list of a Dialogflow conversation profiles.
+
+```ts
+getProfilesList(): Promise<GetProfilesListResult>
+```
+
+### id
+
+Returns the CCAI Agent id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [CCAI.Events.Agent](/reference/voxengine/ccai/events/agent) event.
+
+```ts
+removeEventListener(event: CCAI.Events.Agent | T, callback?: (event: CCAI.Events._AgentEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Agent | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._AgentEvents[T]) => any" />
+
+### updateConversationProfile
+
+Updates the Dialogflow conversation profile.
+
+```ts
+updateConversationProfile(request: Object): Promise<UpdateConversationProfileResult>
+```
+
+**Parameters**
+
+<ParamField path="request" type="Object" required />

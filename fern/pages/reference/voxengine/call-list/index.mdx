@@ -1,0 +1,138 @@
+---
+title: CallList
+subtitle: 'Represents a call list to interact with Voximplant''s call list processing functionality.'
+---
+
+Represents a call list to interact with Voximplant's call list processing functionality.
+Add the following line to your scenario code to use the namespace:
+```
+require(Modules.CallList);
+```
+
+## Functions
+
+### reportError
+
+Reports error to the CallList module and continues the call list.
+
+Call this method if the call attempt is not successful. If you do not call this method or
+[reportError](/reference/voxengine/call-list#reporterror), the call list considers this task
+successful and does not make any more attempts to call this task.
+
+```ts
+reportError(error: string | Object, callback?: (result: Net.HttpRequestResult) => void): void
+```
+
+**Parameters**
+
+<ParamField path="error" type="string | Object" required />
+
+<ParamField path="callback" type="(result: Net.HttpRequestResult) => void" />
+
+### reportErrorAsync
+
+Reports error to the CallList module asynchronously and continues the call list.
+
+Call this method if the call attempt is not successful. If you do not call this method or
+[reportErrorAsync](/reference/voxengine/call-list#reporterrorasync), the call list considers this task
+successful and does not make any more attempts to call this task.
+
+```ts
+reportErrorAsync(error: string | Object): Promise<Net.HttpRequestResult>
+```
+
+**Parameters**
+
+<ParamField path="error" type="string | Object" required />
+
+### reportProgress
+
+Reports progress to the CallList module.
+
+```ts
+reportProgress(progress: string | Object, callback?: (result: Net.HttpRequestResult) => void): void
+```
+
+**Parameters**
+
+<ParamField path="progress" type="string | Object" required />
+
+<ParamField path="callback" type="(result: Net.HttpRequestResult) => void" />
+
+### reportProgressAsync
+
+Reports progress to the CallList module.
+
+```ts
+reportProgressAsync(progress: string | Object): Promise<Net.HttpRequestResult>
+```
+
+**Parameters**
+
+<ParamField path="progress" type="string | Object" required />
+
+### reportResult
+
+Reports successful result to the CallList module, saves the report to result_data field in the sheet,
+stops the calling attempts for this task and proceeds to the next task.
+
+```ts
+reportResult(result: string | Object, callback?: (result: Net.HttpRequestResult) => void): void
+```
+
+**Parameters**
+
+<ParamField path="result" type="string | Object" required />
+
+<ParamField path="callback" type="(result: Net.HttpRequestResult) => void" />
+
+### reportResultAsync
+
+Reports successful result to the CallList module asynchronously, saves the report to result_data field in the sheet,
+stops the calling attempts for this task and proceeds to the next task.
+
+```ts
+reportResultAsync(result: string | Object): Promise<Net.HttpRequestResult>
+```
+
+**Parameters**
+
+<ParamField path="result" type="string | Object" required />
+
+### requestNextAttempt
+
+Changes parameters for the current task and request another calling attempt with updated data.
+This method can change the following fields for the current task: `start_at`, `attempts_left`, `custom_data`,
+`start_execution_time`, `end_execution_time` and `next_attempt_time`. The new values work for all remaining attempts.
+This method does not change the global call list settings.
+NOTE: if you do not change the `attempts_left` manually, the call list decreases its value by 1 automatically.
+After an unsuccessful calling attempt, provide an error field to the data object.
+Refer to the [Editable call lists](/platform/solutions/automated-call-lists) guide to learn more.
+
+```ts
+requestNextAttempt(data: Object, callback?: (result: Net.HttpRequestResult) => void): void
+```
+
+**Parameters**
+
+<ParamField path="data" type="Object" required />
+
+<ParamField path="callback" type="(result: Net.HttpRequestResult) => void" />
+
+### requestNextAttemptAsync
+
+Changes parameters for the current task and request another calling attempt with updated data asynchronously.
+This method can change the following fields for the current task: `start_at`, `attempts_left`, `custom_data`,
+`start_execution_time`, `end_execution_time` and `next_attempt_time`. The new values work for all remaining attempts.
+This method does not change the global call list settings.
+NOTE: if you do not change the `attempts_left` manually, the call list decreases its value by 1 automatically.
+After an unsuccessful calling attempt, provide an error field to the data object.
+Refer to the [Editable call lists](/platform/solutions/automated-call-lists) guide to learn more.
+
+```ts
+requestNextAttemptAsync(data: Object): Promise<Net.HttpRequestResult>
+```
+
+**Parameters**
+
+<ParamField path="data" type="Object" required />

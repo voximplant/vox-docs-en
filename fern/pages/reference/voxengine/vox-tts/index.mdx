@@ -1,0 +1,125 @@
+---
+title: VoxTTS
+subtitle: Internal Voximplant realtime streaming text-to-speech integration.
+---
+
+Internal Voximplant realtime streaming text-to-speech integration.
+Add the following line to your scenario code to use the namespace:
+```
+require(Modules.VoxTTS);
+```
+
+## Constants
+
+| Name | Type | Description |
+| --- | --- | --- |
+| <a id="voicelist" /> `VoiceList` | <code>typeof Vox<wbr />TTSVoiceList</code> | The list of available voices for [VoxTTS](/reference/voxengine/vox-tts). |
+| <a id="modellist" /> `ModelList` | <code>typeof Vox<wbr />TTSModelList</code> | The list of available models for [VoxTTS](/reference/voxengine/vox-tts). |
+
+## Classes
+
+- [RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player)
+## Functions
+
+### createRealtimeTTSPlayer
+
+Creates a new [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player) instance. You can attach media streams later via the `VoxTTS.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createRealtimeTTSPlayer(parameters: RealtimeTTSPlayerParameters): RealtimeTTSPlayer
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="RealtimeTTSPlayerParameters" required />
+
+## Types
+
+### RealtimeTTSPlayerParameters
+
+[VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player) parameters. Can be passed as arguments to the `VoxTTS.createRealtimeTTSPlayer` method.
+
+<a id="realtimettsplayerparameters-apikey" />
+<ParamField path="apiKey" type="string">
+_optional_
+
+Optional. VoxTTS API key. Use your VoxTTS API key if you have your own.
+</ParamField>
+
+<a id="realtimettsplayerparameters-createcontextparameters" />
+<ParamField path="createContextParameters" type="CreateContextParameters">
+Object to provide parameters directly to the VoxTTS provider Create Context message.
+</ParamField>
+
+<a id="realtimettsplayerparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+Note: Enable this only for diagnostic purposes.
+</ParamField>
+
+## Type aliases
+
+### CreateContextParameters
+
+Parameters for creating a VoxTTS provider context. Passed via `VoxTTS.RealtimeTTSPlayerParameters.createContextParameters`.
+
+```ts
+type CreateContextParameters = {
+    /**
+     * Optional. Parameters for creating the TTS context. When omitted or empty, [VoxTTS.VoiceList.Sergey] and [VoxTTS.ModelList.VoxTTS] are used.
+     */
+    create?: {
+      /**
+       * Optional. The model to use for synthesis. Defaults to [VoxTTS.ModelList.VoxTTS].
+       */
+      modelId?: VoxTTSModelList;
+      /**
+       * Optional. The voice to use for synthesis. Defaults to [VoxTTS.VoiceList.Sergey].
+       */
+      voiceId?: VoxTTSVoiceList;
+      /**
+       * Optional. Parameters for cloning the TTS context.
+       */
+      cloning?: Object;
+      /**
+       * Optional. Whether to use stress normalization. The default value is **false**.
+       */
+      normalizeWithStress?: boolean;
+    };
+    /**
+     * Optional. Identifier of the provider context. Use the same value in [VoxTTS.RealtimeTTSPlayer.send] requests.
+     */
+    contextId?: string;
+  }
+```
+
+### VoxTTSSendParameters
+
+Parameters for the `VoxTTS.RealtimeTTSPlayer.send` method.
+
+```ts
+type VoxTTSSendParameters = {
+    /**
+     * Send text message parameters.
+     */
+    send_text: {
+      /**
+       * Text to synthesize.
+       */
+      text: string;
+      /**
+       * Flush context parameters passed directly to the VoxTTS provider.
+       */
+      flush_context: Object;
+    };
+    /**
+     * Optional. Identifier of the provider context.
+     */
+    contextId?: string;
+  }
+```

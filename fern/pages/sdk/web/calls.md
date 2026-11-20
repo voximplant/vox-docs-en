@@ -2,13 +2,13 @@
 
 Learn how to implement outbound and inbound voice and video calling in modern web applications using the Voximplant Web SDK.
 
-Before integrating calling functionality, ensure you have initialized the SDK, established a connection to the Voximplant Cloud, and authenticated a user. Refer to the [Web SDK quickstart]() to set up your client.
+Before integrating calling functionality, ensure you have initialized the SDK, established a connection to the Voximplant Cloud, and authenticated a user. Refer to the [Web SDK quickstart](/sdk/web) to set up your client.
 
 ---
 
 ## Cloud scenario requirements
 
-Every call initiated from or received by the Web SDK interacts with a VoxEngine cloud scenario through a [routing rule]().
+Every call initiated from or received by the Web SDK interacts with a VoxEngine cloud scenario through a [routing rule](/platform/getting-started/create-a-routing-rule).
 
 Calls initiated from an SDK involve two call legs:
 1. **SDK → VoxEngine scenario**: Treated as an incoming call inside your cloud scenario, handled via the `AppEvents.CallAlerting` event.

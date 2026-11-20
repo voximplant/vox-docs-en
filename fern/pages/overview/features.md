@@ -16,9 +16,9 @@ Voximplant acts as the central control plane for your voice AI workflows, orches
 Build your communication layer once and deploy it across web, mobile, and desktop environments.
 
 * **Cloud infrastructure**: Scalable, serverless backend that processes real-time media across global edge nodes.
-* **[Web SDK]()**: Modern, TypeScript-first SDK with support for React, Vue, Angular, and vanilla JavaScript setups.
-* **Mobile SDKs**: Native libraries for **[iOS & macOS]()** (Swift) and **[Android]()** (Kotlin with Jetpack Compose support).
-* **Cross-platform SDKs**: Full support for **[Flutter]()** and **[React Native]()**.
+* **[Web SDK](/sdk/web)**: Modern, TypeScript-first SDK with support for React, Vue, Angular, and vanilla JavaScript setups.
+* **Mobile SDKs**: Native libraries for **[iOS & macOS](/sdk/i-os-and-mac-os/getting-started)** (Swift) and **[Android](/sdk/android)** (Kotlin with Jetpack Compose support).
+* **Cross-platform SDKs**: Full support for **[Flutter](/sdk/flutter)** and **[React Native](/sdk/react-native)**.
 * **Native telephony features**: Built-in support for push notifications (CallKit, PushKit, FCM), audio device switching, and background execution.
 
 ## Voice, video & conferencing
@@ -26,15 +26,15 @@ Build your communication layer once and deploy it across web, mobile, and deskto
 Embed carrier-grade real-time voice and video into cloud, web, or mobile applications.
 
 * **[Voice]() & [Video]() calling**: High-definition peer-to-peer and cloud-bridged 1-on-1 or group sessions.
-* **[Conferences]()**: Host multi-party audio and video conferences with up to 50–100 participants.
+* **[Conferences](/platform/telephony/conferences)**: Host multi-party audio and video conferences with up to 50–100 participants.
 * **Media controls**: Native support for [screen sharing]() and [video streaming]() to external RTMP destinations.
-* **[Call recording]()**: Record [audio and video calls]() to the Voximplant Cloud or directly into your own Amazon S3-compatible storage.
+* **[Call recording](/platform/telephony/recording-and-streaming)**: Record [audio and video calls]() to the Voximplant Cloud or directly into your own Amazon S3-compatible storage.
 
 ## Contact center & automation
 
 Transform customer operations with intelligent call distribution and automated campaigns.
 
-* **[Smart contact center]()**: Distribute calls and messages to agents based on skills, queues, and priority rules.
+* **[Smart contact center](/platform/contact-center/voice)**: Distribute calls and messages to agents based on skills, queues, and priority rules.
 * **[Analytics & reporting]()**: Track detailed agent performance metrics and call statistics.
 * **[Predictive dialer (PDS)]()**: Automate high-volume outbound campaigns with intelligent pacing.
 * **[Answering machine detection (AMD)]()**: Distinguish between human pickup, voicemail prompts, and busy signals before connecting.
@@ -44,24 +44,24 @@ Transform customer operations with intelligent call distribution and automated c
 
 Bridge your applications directly to the global telecommunications grid.
 
-* **[Phone numbers]()**: Rent local, national, and toll-free virtual numbers across 60+ countries.
-* **[SIP integration]()**: Connect existing on-premise PBX systems, cloud phone systems, or carrier trunks via SIP.
-* **[WebSocket module]()**: Stream full-duplex, low-latency raw audio and binary data to and from third-party services and AI pipelines.
+* **[Phone numbers](/platform/getting-started/buy-a-phone-number)**: Rent local, national, and toll-free virtual numbers across 60+ countries.
+* **[SIP integration](/platform/telephony/sip-calls-and-registrations)**: Connect existing on-premise PBX systems, cloud phone systems, or carrier trunks via SIP.
+* **[WebSocket module](/reference/voxengine/websocket)**: Stream full-duplex, low-latency raw audio and binary data to and from third-party services and AI pipelines.
 
 ## VoxEngine serverless runtime
 
 VoxEngine allows developers to write event-driven JavaScript scenarios that execute directly inside Voximplant's media nodes during active calls.
 
 * **[HTTP networking]()**: Make synchronous or asynchronous HTTP requests (`GET`, `POST`, `PUT`, `PATCH`) to external backends directly from call scenarios.
-* **[Key-Value Storage]()**: Store and retrieve persistent key-value pairs (up to 2,000 characters per value) to maintain session state or cache tokens across calls.
-* **[Real-time logging]()**: Write custom log messages up to 15,000 characters and stream them live via the [control panel]().
+* **[Key-Value Storage](/platform/storage/key-value-storage)**: Store and retrieve persistent key-value pairs (up to 2,000 characters per value) to maintain session state or cache tokens across calls.
+* **[Real-time logging]()**: Write custom log messages up to 15,000 characters and stream them live via the [control panel](https://manage.voximplant.com).
 
 ## Management & administration
 
 Automate platform operations and manage account infrastructure at scale.
 
-* **[Management API]()**: An OpenAPI-compliant REST API to automate everything available in the control panel—from provisioning numbers to triggering outbound calls.
-* **[Control panel]()**: A web interface for manual scenario editing, routing rule configuration, user permissions, and billing management.
+* **[Management API](/overview/how-voximplant-works/management-api)**: An OpenAPI-compliant REST API to automate everything available in the control panel—from provisioning numbers to triggering outbound calls.
+* **[Control panel](https://manage.voximplant.com)**: A web interface for manual scenario editing, routing rule configuration, user permissions, and billing management.
 
 ## Ecosystem integrations
 

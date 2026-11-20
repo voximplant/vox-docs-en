@@ -8,7 +8,7 @@ Before getting started, ensure you have installed `@voximplant/react-native-core
 
 ## Cloud scenario requirements
 
-Every call made or received by the React Native SDK interacts with a VoxEngine cloud scenario through a [routing rule]().
+Every call made or received by the React Native SDK interacts with a VoxEngine cloud scenario through a [routing rule](/platform/getting-started/create-a-routing-rule).
 
 Calls initiated from the SDK consist of two call legs:
 1. **SDK → VoxEngine scenario**: Treated as an incoming call inside your cloud scenario, handled via the `AppEvents.CallAlerting` event.

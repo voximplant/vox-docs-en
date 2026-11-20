@@ -1,0 +1,106 @@
+---
+title: SequencePlayer
+subtitle: Represents an instance with segments represented by audio and URL players. Can be created by calling the VoxEngine.createSequencePlayer method.
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [SequencePlayerEvents](/reference/voxengine/sequence-player-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: SequencePlayerEvents | T, callback: (event: _SequencePlayerEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="SequencePlayerEvents | T" required />
+
+<ParamField path="callback" type="(event: _SequencePlayerEvents[T]) => any" required />
+
+### addMarker
+
+Adds a playback marker to the specified segment. The `SequencePlayerEvents.PlaybackMarkerReached` event is triggered when the marker is reached.
+
+```ts
+addMarker(offset: number, segment: PlaybackParameters): void
+```
+
+**Parameters**
+
+<ParamField path="offset" type="number" required />
+
+<ParamField path="segment" type="PlaybackParameters" required />
+
+### id
+
+Returns the sequence player's id.
+
+```ts
+id(): string
+```
+
+### pause
+
+Pauses playback. To continue the playback use the `SequencePlayer.resume` method.
+
+```ts
+pause(): void
+```
+
+### removeEventListener
+
+Removes a handler for the specified [SequencePlayerEvents](/reference/voxengine/sequence-player-events) event.
+
+```ts
+removeEventListener(event: SequencePlayerEvents | T, callback?: (event: _SequencePlayerEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="SequencePlayerEvents | T" required />
+
+<ParamField path="callback" type="(event: _SequencePlayerEvents[T]) => any" />
+
+### resume
+
+Resumes playback after the `SequencePlayer.pause` method is called.
+
+```ts
+resume(): void
+```
+
+### sendMediaTo
+
+Starts sending media from the sequence player to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stop
+
+Stops playback. The current sequence player's instance with all its segments is destroyed.
+
+```ts
+stop(): void
+```
+
+### stopMediaTo
+
+Stops sending media from the sequence player to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />

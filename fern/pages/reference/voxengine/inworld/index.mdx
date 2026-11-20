@@ -1,0 +1,504 @@
+---
+title: Inworld
+subtitle: Realtime TTS player for Inworld speech synthesis in VoxEngine.
+---
+
+Inworld provides a real-time TTS player that can send generated audio to calls, WebSockets, and other VoxEngine media units.
+
+Use `Inworld.createRealtimeTTSPlayer(...)` to create a `RealtimeTTSPlayer` for the current scenario. After the player is created, call methods such as `send`, `sendMediaTo`, and `addEventListener` on that player instance.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="OpenAI with Inworld TTS" icon="fa-duotone fa-bolt" href="/voice-ai/openai/half-cascade-inworld">
+    Use Inworld as the realtime TTS layer in an OpenAI voice pipeline.
+  </Card>
+  <Card title="Realtime TTS pattern" icon="fa-duotone fa-waveform-lines" href="/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine">
+    See where realtime speech synthesis fits into VoxEngine call flows.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the realtime TTS player.
+- <Icon icon="fa-duotone fa-sliders" /> [RealtimeTTSPlayerParameters](#factory-functions): API key, provider context, and WebSocket options.
+- <Icon icon="fa-duotone fa-cube" /> [RealtimeTTSPlayer](#realtimettsplayer): runtime player object returned by the factory.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): direct Inworld player methods.
+- <Icon icon="fa-duotone fa-diagram-project" /> [Inherited Methods](#inherited-methods): playback and media methods inherited from the shared player base.
+- <Icon icon="fa-duotone fa-bolt" /> [PlayerEvents](#playerevents): player event names and playback lifecycle events.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.Inworld);
+```
+
+Create a player, send provider messages, and bridge playback with `sendMediaTo` or `VoxEngine.sendMediaBetween`.
+
+## Factory functions
+
+<a id="createrealtimeapiclient" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createRealtimeAPIClient
+
+Creates a new [Inworld.RealtimeAPIClient](/reference/voxengine/inworld/realtime-api-client) instance.
+
+```ts
+createRealtimeAPIClient(parameters: {
+  statistics?: boolean;
+  trace?: boolean;
+  privacy?: boolean;
+  onWebSocketClose?: (event: object) => void;
+  apiKey: string;
+  sessionKey: string;
+  authScheme?: string;
+}): Promise<Inworld.RealtimeAPIClient>
+```
+
+The required `parameters` object is typed as <code>Inworld.RealtimeAPI<wbr />Client<wbr />Parameters</code>.
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>RealtimeAPI<wbr />Client<wbr />Parameters</code> | ✓ | [Inworld.RealtimeAPIClient](/reference/voxengine/inworld/realtime-api-client) parameters. Can be passed as arguments to the `Inworld.createRealtimeAPIClient` method. |
+| ↳ `statistics` | `boolean` | ✗ | Enables statistics functionality. |
+| ↳ `trace` | `boolean` | ✗ | Whether to enable the tracing functionality. If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage. NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues. |
+| ↳ `privacy` | `boolean` | ✗ | Whether to enable the privacy functionality. If privacy is enabled, the logging for the WebSocket connection is disabled. NOTE: the default value is **false**. |
+| ↳ <code>onWebSocket<wbr />Close</code> | <code>(event: object) => void</code> | ✗ | A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed. |
+| ↳ `apiKey` | `string` | ✓ | The API key for the Inworld Realtime API. |
+| ↳ `sessionKey` | `string` | ✓ | The session key for the Inworld Realtime API. |
+| ↳ `authScheme` | `string` | ✗ | The authentication scheme (**basic** or **bearer**) for the Inworld Realtime API. The default value is **bearer**. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;Inworld.RealtimeAPIClient&gt;</code> | Resolves to the [`Inworld.RealtimeAPIClient`](/reference/voxengine/inworld/realtime-api-client) instance. |
+
+<a id="createrealtimettsplayer" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createRealtimeTTSPlayer
+
+Creates a new [Inworld.RealtimeTTSPlayer](/reference/voxengine/inworld#realtimettsplayer) instance. You can attach media streams later via the `Inworld.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createRealtimeTTSPlayer(parameters?: {
+  statistics?: boolean;
+  trace?: boolean;
+  privacy?: boolean;
+  createContextParameters?: Object;
+  apiKey?: string;
+}): RealtimeTTSPlayer
+```
+
+The optional `parameters` object is typed as <code>Inworld.RealtimeTTS<wbr />Player<wbr />Parameters</code>.
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>RealtimeTTS<wbr />Player<wbr />Parameters</code> | ✗ | [Inworld.RealtimeTTSPlayer](/reference/voxengine/inworld#realtimettsplayer) parameters. Can be passed as arguments to the `Inworld.createRealtimeTTSPlayer` method. |
+| ↳ `statistics` | `boolean` | ✗ | Enables statistics functionality. |
+| ↳ `trace` | `boolean` | ✗ | Whether to enable the tracing functionality. If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage. NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues. |
+| ↳ `privacy` | `boolean` | ✗ | Whether to enable the privacy functionality. If privacy is enabled, the logging for the WebSocket connection is disabled. NOTE: the default value is **false**. |
+| ↳ <code>create<wbr />Context<wbr />Parameters</code> | `Object` | ✗ | Object to provide parameters directly to the Inworld provider Create Context message. Find more information in the [documentation](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket). |
+| ↳ `apiKey` | `string` | ✗ | Inworld API key. Use your Inworld API key if you have your own Inworld account. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>RealtimeTTS<wbr />Player</code> | The requested `RealtimeTTSPlayer` value. |
+
+## RealtimeTTSPlayer
+
+## Methods
+
+<a id="clearbuffer" />
+### <Icon icon="fa-duotone fa-function" /> clearBuffer
+
+Clears an [Inworld.RealtimeTTSPlayer](/reference/voxengine/inworld#realtimettsplayer) buffer.
+
+```ts
+clearBuffer(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="send" />
+### <Icon icon="fa-duotone fa-function" /> send
+
+Send message object to the Inworld provider context.
+
+```ts
+send(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | Inworld TTS WebSocket message. Common message shapes: send_text, flush_context, close_context.  See the [partner API reference](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters`:
+
+```json
+{
+  "send_text": {
+    "text": "Hello, what a wonderful day to be a text-to-speech model!",
+    "flush_context": {}
+  },
+  "contextId": "ctx-1"
+}
+```
+
+## Inherited Methods
+
+`Inworld.RealtimeTTSPlayer` extends the shared player base (`BasePlayer` in the typings). Those base methods use the same playback contract documented on the public [Player](/reference/voxengine/player) page, and they emit [PlayerEvents](#playerevents).
+
+<a id="addeventlistener" />
+#### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Inherited from the shared player base. See [Player.addEventListener](/reference/voxengine/player#addeventlistener).
+
+Adds a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: PlayerEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>PlayerEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+#### <Icon icon="fa-duotone fa-function" /> id
+
+Inherited from the shared player base. See [Player.id](/reference/voxengine/player#id).
+
+Returns the player's id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="pause" />
+#### <Icon icon="fa-duotone fa-function" /> pause
+
+Inherited from the shared player base. See [Player.pause](/reference/voxengine/player#pause).
+
+Pauses playback. To continue the playback use the `Player.resume` method.
+
+```ts
+pause(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="removeeventlistener" />
+#### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Inherited from the shared player base. See [Player.removeEventListener](/reference/voxengine/player#removeeventlistener).
+
+Removes a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event.
+
+```ts
+removeEventListener(event: PlayerEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>PlayerEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="resume" />
+#### <Icon icon="fa-duotone fa-function" /> resume
+
+Inherited from the shared player base. See [Player.resume](/reference/voxengine/player#resume).
+
+Resumes playback after the `Player.pause` method is called.
+
+```ts
+resume(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmediato" />
+#### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Inherited from the shared player base. See [Player.sendMediaTo](/reference/voxengine/player#sendmediato).
+
+Starts sending media from the player to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stop" />
+#### <Icon icon="fa-duotone fa-function" /> stop
+
+Inherited from the shared player base. See [Player.stop](/reference/voxengine/player#stop).
+
+Stops playback. The current player's instance is destroyed.
+
+```ts
+stop(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stopmediato" />
+#### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Inherited from the shared player base. See [Player.stopMediaTo](/reference/voxengine/player#stopmediato).
+
+Stops sending media from the player to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+## PlayerEvents
+
+These are inherited [PlayerEvents](/reference/voxengine/player-events). Event callbacks receive the shared player event object; `player` is the `Inworld.RealtimeTTSPlayer` instance that emitted the event. Some events include additional playback fields noted below.
+
+<AccordionGroup>
+<a id="playerevents-created" />
+<a id="created" />
+<a id="-created" />
+<Accordion title="Created">
+
+Triggered when [Player](/reference/voxengine/player) created.
+
+Event constant: `PlayerEvents.Created`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-playbackready" />
+<a id="playbackready" />
+<a id="-playbackready" />
+<Accordion title="PlaybackReady">
+
+Triggers by the `createURLPlayer` and `createTTSPlayer` methods when
+1) the audio file download to the Voximplant cache is finished;
+2) the audio file is found in the cache (i.e., it is in the cache before).
+
+Event constant: `PlayerEvents.PlaybackReady`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-started" />
+<a id="started" />
+<a id="-started" />
+<Accordion title="Started">
+
+Triggered when playback is started. Note that if the `createURLPlayer` method is called with the **onPause** parameter set to true, the event is not triggered; it is triggered after the `Player.resume` method call.
+
+Event constant: `PlayerEvents.Started`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `duration` | `number` | ✓ | Playback duration |
+</Accordion>
+<a id="playerevents-stopped" />
+<a id="stopped" />
+<a id="-stopped" />
+<Accordion title="Stopped">
+
+Triggers as a result of the `Player.stop` method call.
+
+Event constant: `PlayerEvents.Stopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-playbackfinished" />
+<a id="playbackfinished" />
+<a id="-playbackfinished" />
+<Accordion title="PlaybackFinished">
+
+Triggered when playback has finished successfully or with an error.
+
+Event constant: `PlayerEvents.PlaybackFinished`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `error` | `string` | ✗ | Error message |
+</Accordion>
+<a id="playerevents-error" />
+<a id="error" />
+<a id="-error" />
+<Accordion title="Error">
+
+Triggered when playback has finished with an error.
+
+Event constant: `PlayerEvents.Error`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `error` | `string` | ✓ | Error message |
+</Accordion>
+<a id="playerevents-playbackmarkerreached" />
+<a id="playbackmarkerreached" />
+<a id="-playbackmarkerreached" />
+<Accordion title="PlaybackMarkerReached">
+
+Triggered when `Player.addMarker` is reached.
+
+Event constant: `PlayerEvents.PlaybackMarkerReached`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `offset` | `number` | ✓ | The marker offset |
+</Accordion>
+<a id="playerevents-playbackbuffering" />
+<a id="playbackbuffering" />
+<a id="-playbackbuffering" />
+<Accordion title="PlaybackBuffering">
+
+Triggered when an audio file is playing faster than it is being loaded.
+
+Event constant: `PlayerEvents.PlaybackBuffering`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-audiochunksplaybackfinished" />
+<a id="audiochunksplaybackfinished" />
+<a id="-audiochunksplaybackfinished" />
+<Accordion title="AudioChunksPlaybackFinished">
+
+Triggered when an audio chunk playback is finished. Note that this event is triggered only for RealtimeTTSPlayer instances.
+
+For [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player), the optional **final** field indicates whether the completed flush ends the current phrase or is an intermediate auto-flush.
+
+Event constant: `PlayerEvents.AudioChunksPlaybackFinished`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [Inworld.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| <code>timeToFirst<wbr />Byte</code> | `number` | ✓ | Time to first byte (TTFB) in milliseconds. Represents the delay between sending the request and receiving the first byte of audio data. |
+| `final` | `boolean` | ✗ | Whether the completed flush ends the current phrase. Present only for [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player) (`true` or `false`); omitted for other RealtimeTTS providers. - `true` — final (normal) flush; phrase playback is complete. - `false` — intermediate auto-flush; more audio is expected. |
+</Accordion>
+</AccordionGroup>

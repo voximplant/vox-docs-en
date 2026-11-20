@@ -1,0 +1,1388 @@
+---
+title: XAI
+subtitle: Voice Agent API and Realtime TTS for xAI Grok scenarios.
+---
+
+XAI provides VoxEngine clients for the xAI Grok Voice Agent API and Realtime TTS over WebSocket.
+
+Use `XAI.createVoiceAgentAPIClient(...)` to create a `VoiceAgentAPIClient` for voice-agent scenarios. After the client is created, call methods such as `sendMediaTo`, `responseCreate`, and `addEventListener` on that client instance.
+
+Use `XAI.createRealtimeTTSPlayer(...)` when you only need realtime text-to-speech playback.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Grok TTS" icon="fa-duotone fa-waveform-lines" href="/voice-ai/speech/grok-tts">
+    Stream speech with the standalone realtime TTS player.
+  </Card>
+  <Card title="Grok full cascade" icon="fa-duotone fa-diagram-project" href="/voice-ai/bring-your-own-llm/grok-full-cascade">
+    Combine Microsoft STT, Grok text generation, and Grok TTS.
+  </Card>
+  <Card title="Grok connector overview" icon="fa-duotone fa-circle-info" href="/voice-ai/xai/overview">
+    Learn how Grok Voice Agent fits into a VoxEngine call flow.
+  </Card>
+  <Card title="Answer an inbound call" icon="fa-duotone fa-phone-arrow-down-left" href="/voice-ai/xai/inbound">
+    Start from a complete inbound Grok Voice Agent scenario.
+  </Card>
+  <Card title="Grok features" icon="fa-duotone fa-stars" href="/voice-ai/xai/features">
+    See tool calls, context, and event-driven interaction patterns.
+  </Card>
+  <Card title="Place an outbound call" icon="fa-duotone fa-phone-arrow-up-right" href="/voice-ai/xai/outbound">
+    Start from a complete outbound Grok Voice Agent scenario.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the XAI Voice Agent client or realtime TTS player.
+- <Icon icon="fa-duotone fa-sliders" /> [VoiceAgentAPIClientParameters](#factory-functions): API key, tracing, privacy, and WebSocket options.
+- <Icon icon="fa-duotone fa-cube" /> [VoiceAgentAPIClient](#voiceagentapiclient): runtime client object returned by the factory.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): media, response, and connection control methods.
+- <Icon icon="fa-duotone fa-waveform-lines" /> [Events](#events): WebSocket media start and end payloads.
+- <Icon icon="fa-duotone fa-bolt" /> [VoiceAgentAPIEvents](#voiceagentapievents): xAI Voice Agent API event names and payload fields.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.XAI);
+```
+
+Create the client, bridge media, and listen for both WebSocket media events and Voice Agent API events.
+
+## Factory functions
+
+### <Icon icon="fa-duotone fa-brackets-curly" /> createRealtimeTTSPlayer
+
+Creates a new [XAI.RealtimeTTSPlayer](/reference/voxengine/xai/realtime-tts-player) instance. You can attach media streams later via the `XAI.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createRealtimeTTSPlayer(parameters?: {
+  statistics?: boolean;
+  trace?: boolean;
+  privacy?: boolean;
+  connectionParameters?: Object;
+  apiKey?: string;
+}): RealtimeTTSPlayer
+```
+
+The optional `parameters` object is typed as <code>XAI.RealtimeTTS<wbr />Player<wbr />Parameters</code>.
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>RealtimeTTS<wbr />Player<wbr />Parameters</code> | ✗ | [XAI.RealtimeTTSPlayer](/reference/voxengine/xai/realtime-tts-player) parameters. Can be passed as arguments to the `XAI.createRealtimeTTSPlayer` method. |
+| ↳ `statistics` | `boolean` | ✗ | Enables statistics functionality. |
+| ↳ `trace` | `boolean` | ✗ | Whether to enable the tracing functionality. If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage. NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues. |
+| ↳ `privacy` | `boolean` | ✗ | Whether to enable the privacy functionality. If privacy is enabled, the logging for the WebSocket connection is disabled. NOTE: the default value is **false**. |
+| ↳ <code>connection<wbr />Parameters</code> | `Object` | ✗ | Object to provide parameters for the xAI WebSocket connection. Must contain `voice` and `language`. Find more information in the [documentation](https://docs.x.ai/developers/model-capabilities/audio/text-to-speech#connection). VoxEngine requires voice and language and forwards speed, optimize_streaming_latency, and text_normalization. Audio output is fixed to PCM at 16000 Hz. The partner API also documents codec, sample_rate, bit_rate, and with_timestamps for direct provider use; these are not supported adapter controls. |
+| ↳ <code>connection<wbr />Parameters.<wbr />voice</code> | `string` | ✓ | Built-in xAI voice name or custom voice ID. VoxEngine requires this field when `connectionParameters` is supplied. |
+| ↳ <code>connection<wbr />Parameters.<wbr />language</code> | `string` | ✓ | BCP-47 language code or `auto` for automatic language detection. VoxEngine requires this field when `connectionParameters` is supplied. |
+| ↳ <code>connection<wbr />Parameters.<wbr />speed</code> | `number` | ✗ | Speech speed multiplier from `0.7` to `1.5`. Defaults to `1.0`. |
+| ↳ <code>connection<wbr />Parameters.<wbr />optimize_<wbr />streaming_<wbr />latency</code> | <code>0 \| 1 \| 2</code> | ✗ | Streaming latency optimization. `0` favors quality, `1` moderately reduces time to first audio, and `2` is the most aggressive. Defaults to `0`. |
+| ↳ <code>connection<wbr />Parameters.<wbr />text_<wbr />normalization</code> | `boolean` | ✗ | Normalize written text such as numbers and abbreviations into spoken form. Defaults to `false`. |
+| ↳ `apiKey` | `string` | ✗ | xAI API key. Use your xAI API key if you have your own xAI account. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>RealtimeTTS<wbr />Player</code> | The requested `RealtimeTTSPlayer` value. |
+
+### <Icon icon="fa-duotone fa-brackets-curly" /> createVoiceAgentAPIClient
+
+Creates a new [XAI.VoiceAgentAPIClient](/reference/voxengine/xai#voiceagentapiclient) instance.
+
+```ts
+createVoiceAgentAPIClient(parameters: {
+  statistics?: boolean;
+  trace?: boolean;
+  privacy?: boolean;
+  onWebSocketClose?: (event: object) => void;
+  xAIApiKey: string;
+  model?: string;
+  conversationId?: string;
+  reasoningEffort?: string;
+}): Promise<XAI.VoiceAgentAPIClient>
+```
+
+The required `parameters` object is typed as <code>XAI.VoiceAgent<wbr />APIClient<wbr />Parameters</code>.
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>VoiceAgent<wbr />APIClient<wbr />Parameters</code> | ✓ | [XAI.VoiceAgentAPIClient](/reference/voxengine/xai#voiceagentapiclient) parameters. Can be passed as arguments to the `XAI.createVoiceAgentAPIClient` method. |
+| ↳ `statistics` | `boolean` | ✗ | Enables statistics functionality. |
+| ↳ `trace` | `boolean` | ✗ | Whether to enable the tracing functionality. If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage. NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues. |
+| ↳ `privacy` | `boolean` | ✗ | Whether to enable the privacy functionality. If privacy is enabled, the logging for the WebSocket connection is disabled. NOTE: the default value is **false**. |
+| ↳ <code>onWebSocket<wbr />Close</code> | <code>(event: object) => void</code> | ✗ | A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed. |
+| ↳ `xAIApiKey` | `string` | ✓ | The xAI API key for the XAI VoiceAgent API. |
+| ↳ `model` | `string` | ✗ | The model to use for the XAI VoiceAgent API. [https://docs.x.ai/developers/model-capabilities/audio/voice-agent#model-selection](https://docs.x.ai/developers/model-capabilities/audio/voice-agent#model-selection). Note: The default value is **grok-voice-fast-1.0**. |
+| ↳ <code>conversation<wbr />Id</code> | `string` | ✗ | Conversation id from a previous `XAI.VoiceAgentAPIEvents.ConversationCreated` event. Pass it when creating a new client to resume the session after a WebSocket disconnect (xAI [session resumption](https://docs.x.ai/docs/guides/voice/agent#session-resumption)). Enable caching with `resumption: { enabled: true }` in `XAI.VoiceAgentAPIClient.sessionUpdate`. |
+| ↳ <code>reasoning<wbr />Effort</code> | `string` | ✗ | Controls whether the model uses reasoning (`high` \| `none`). Passed as the WebSocket `reasoning.effort` query parameter. Defaults to `high` on the xAI side when omitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;XAI.VoiceAgentAPIClient&gt;</code> | Resolves to the [`XAI.VoiceAgentAPIClient`](#voiceagentapiclient) instance. |
+
+## VoiceAgentAPIClient
+
+## Methods
+
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [XAI.VoiceAgentAPIEvents](/reference/voxengine/xai#voiceagentapievents) or [XAI.Events](/reference/voxengine/xai#events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: XAI.Events | XAI.VoiceAgentAPIEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>XAI.Events \| XAI.<wbr />VoiceAgent<wbr />APIEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> clearMediaBuffer
+
+Clears the XAI WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>ClearMedia<wbr />Buffer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the XAI connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> conversationItemCreate
+
+Create a new conversation item. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.create](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.create)
+
+```ts
+conversationItemCreate(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | xAI conversation.item.create client message. Common fields include type, event_id, and item; item can be a user message, assistant message, function call, or function call output.  See the [partner API reference](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.create). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters`:
+
+```json
+{
+  "type": "conversation.item.create",
+  "event_id": "event_345",
+  "item": {
+    "type": "message",
+    "role": "user",
+    "content": [
+      {
+        "type": "input_text",
+        "text": "Hello"
+      }
+    ]
+  }
+}
+```
+
+### <Icon icon="fa-duotone fa-function" /> conversationItemDelete
+
+Delete a conversation item by ID. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.delete](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.delete)
+
+```ts
+conversationItemDelete(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> conversationItemTruncate
+
+Truncate a previous assistant audio message item. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.truncate](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.truncate)
+
+```ts
+conversationItemTruncate(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the VoiceAgentAPIClient id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+### <Icon icon="fa-duotone fa-function" /> inputAudioBufferClear
+
+Clear input audio buffer. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.clear](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.clear)
+
+```ts
+inputAudioBufferClear(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | xAI input_audio_buffer.clear client message. Common fields include type and optional event_id.  See the [partner API reference](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.clear). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters`:
+
+```json
+{
+  "type": "input_audio_buffer.clear"
+}
+```
+
+### <Icon icon="fa-duotone fa-function" /> inputAudioBufferCommit
+
+Commit the input audio buffer as a user message. Only available when turn_detection type is null. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.commit](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.commit)
+
+```ts
+inputAudioBufferCommit(parameters?: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [XAI.VoiceAgentAPIEvents](/reference/voxengine/xai#voiceagentapievents) or [XAI.Events](/reference/voxengine/xai#events) event.
+
+```ts
+removeEventListener(event: XAI.Events | XAI.VoiceAgentAPIEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>XAI.Events \| XAI.<wbr />VoiceAgent<wbr />APIEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> responseCancel
+
+Send this event to cancel an in-progress response. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.cancel](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.cancel)
+
+```ts
+responseCancel(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> responseCreate
+
+Request the server to create a new assistant response when using client side vad. (This is handled automatically when using server side vad.) Prefer nested `{ response: { ... } }` body per xAI docs; flat fields are also accepted by the platform. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.create](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.create)
+
+```ts
+responseCreate(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | xAI response.create client message. Common fields include type, optional event_id, and optional response configuration.  See the [partner API reference](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.create). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters`:
+
+```json
+{
+  "type": "response.create"
+}
+```
+
+### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Starts sending media from the XAI (via WebSocket) to the media unit. XAI works in real time.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> sessionUpdate
+
+Send this event to update the session’s configuration. [https://docs.x.ai/developers/rest-api-reference/inference/voice#session.update](https://docs.x.ai/developers/rest-api-reference/inference/voice#session.update)
+
+```ts
+sessionUpdate(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | xAI session.update client message. Common fields include type, optional event_id, and session, which can configure prompt, voice, audio formats, turn detection, and tools.  See the [partner API reference](https://docs.x.ai/developers/rest-api-reference/inference/voice#session.update). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters`:
+
+```json
+{
+  "type": "session.update",
+  "session": {
+    "voice": "aria",
+    "instructions": "You are a helpful assistant",
+    "turn_detection": {
+      "type": "server_vad"
+    }
+  }
+}
+```
+
+### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Stops sending media from the XAI (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the XAI WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## Events
+
+These events describe audio received through the XAI WebSocket media bridge.
+
+<a id="events-websocketmediastarted" />
+<a id="websocketmediastarted" />
+<a id="-websocketmediastarted" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaStarted
+
+Triggered when the audio stream sent by a third party through an xAI WebSocket starts playing.
+
+Event constant: `Events.WebSocketMediaStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />APIClient</code> | ✓ | The [XAI.VoiceAgentAPIClient](/reference/voxengine/xai#voiceagentapiclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `encoding` | `string` | ✗ | Audio encoding formats. |
+| <code>custom<wbr />Parameters</code> | <code>&#123; [key: string]: string &#125;</code> | ✗ | Custom parameters. |
+
+<a id="events-websocketmediaended" />
+<a id="websocketmediaended" />
+<a id="-websocketmediaended" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaEnded
+
+Triggered after the end of the audio stream sent by a third party through an xAI WebSocket (**1 second of silence**).
+
+Event constant: `Events.WebSocketMediaEnded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />APIClient</code> | ✓ | The [XAI.VoiceAgentAPIClient](/reference/voxengine/xai#voiceagentapiclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `mediaInfo` | <code>WebSocket<wbr />MediaInfo</code> | ✗ | Information about the audio stream that can be obtained after the stream stops or pauses (**1 second of silence**). |
+
+## VoiceAgentAPIEvents
+
+These events mirror server messages from the xAI Voice Agent API. The `data` field contains the provider event payload.
+
+**All VoiceAgentAPIEvents callbacks receive these common fields:**
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `client` | <code>XAI.<wbr />VoiceAgent<wbr />APIClient</code> | The XAI.VoiceAgentAPIClient instance. |
+| `data` | `Object` | Pass-through xAI server event payload. |
+
+Per-event payload tables below show only event-specific fields (and any provider payload enrichment for `data`).
+
+<AccordionGroup>
+<a id="voiceagentapievents-unknown" />
+<a id="-unknown" />
+<Accordion title="Unknown">
+
+The unknown event.
+
+Event constant: `VoiceAgentAPIEvents.Unknown`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-error" />
+<a id="-error" />
+<Accordion title="Error">
+
+Sent when an error occurs. Contains error code and message. [https://docs.x.ai/developers/rest-api-reference/inference/voice#error](https://docs.x.ai/developers/rest-api-reference/inference/voice#error)
+
+Event constant: `VoiceAgentAPIEvents.Error`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-sessioncreated" />
+<a id="-sessioncreated" />
+<Accordion title="SessionCreated">
+
+Returned when a session is created. [https://docs.x.ai/developers/rest-api-reference/inference/voice#session.created](https://docs.x.ai/developers/rest-api-reference/inference/voice#session.created)
+
+Event constant: `VoiceAgentAPIEvents.SessionCreated`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-conversationcreated" />
+<a id="-conversationcreated" />
+<Accordion title="ConversationCreated">
+
+The first message at connection. Notifies the client that a conversation session has been created. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.created](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.created)
+
+Event constant: `VoiceAgentAPIEvents.ConversationCreated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The first message on connection. Notifies the client that a conversation session has been created. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.created). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `conversation.created`. |
+| `data.conversation` | `object` | ✓ | The conversation object. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_9101",
+  "type": "conversation.created",
+  "conversation": {
+    "id": "conv_001",
+    "object": "realtime.conversation"
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-sessionupdated" />
+<a id="-sessionupdated" />
+<Accordion title="SessionUpdated">
+
+Acknowledge the client's "session.update" message that the session has been updated. [https://docs.x.ai/developers/rest-api-reference/inference/voice#session.updated](https://docs.x.ai/developers/rest-api-reference/inference/voice#session.updated)
+
+Event constant: `VoiceAgentAPIEvents.SessionUpdated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Acknowledges the client's session.update message that the session has been configured. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#session.updated). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `session.updated`. |
+| `data.session` | `object` | ✓ | The updated session configuration. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_123",
+  "type": "session.updated",
+  "session": {
+    "model": "grok-voice-fast-1.0",
+    "instructions": "You are a helpful assistant.",
+    "voice": "Eve",
+    "turn_detection": {
+      "type": "server_vad"
+    }
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-conversationitemadded" />
+<a id="-conversationitemadded" />
+<Accordion title="ConversationItemAdded">
+
+Responding to the client that a new user message has been added to conversation history, or if an assistance response has been added to conversation history. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.added](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.added)
+
+Event constant: `VoiceAgentAPIEvents.ConversationItemAdded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A new user or assistant message has been added to the conversation history. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.added). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `conversation.item.added`. |
+| `data.previous_item_id` | `string` | ✓ | ID of the preceding item in conversation history. |
+| `data.item` | `object` | ✓ | The conversation item that was added. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_1920",
+  "type": "conversation.item.added",
+  "previous_item_id": "msg_002",
+  "item": {
+    "id": "msg_003",
+    "object": "realtime.item",
+    "type": "message",
+    "status": "completed",
+    "role": "user",
+    "content": [
+      {
+        "type": "input_audio",
+        "transcript": "hello how are you"
+      }
+    ]
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-conversationitemdeleted" />
+<a id="-conversationitemdeleted" />
+<Accordion title="ConversationItemDeleted">
+
+Returned when an item in the conversation is deleted. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.deleted](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.deleted)
+
+Event constant: `VoiceAgentAPIEvents.ConversationItemDeleted`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-conversationitemtruncated" />
+<a id="-conversationitemtruncated" />
+<Accordion title="ConversationItemTruncated">
+
+Returned when a conversation item is truncated. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.truncated](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.truncated)
+
+Event constant: `VoiceAgentAPIEvents.ConversationItemTruncated`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-conversationiteminputaudiotranscriptioncompleted" />
+<a id="-conversationiteminputaudiotranscriptioncompleted" />
+<Accordion title="ConversationItemInputAudioTranscriptionCompleted">
+
+Notify the client the audio transcription for input has been completed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.input_audio_transcription.completed](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.input_audio_transcription.completed)
+
+Event constant: `VoiceAgentAPIEvents.ConversationItemInputAudioTranscriptionCompleted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Audio transcription for the user's input has been completed. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.input_audio_transcription.completed). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | <code>"conversation.<wbr />item.<wbr />input_audio_transcription.<wbr />completed"</code> | ✓ | Event type. |
+| `data.item_id` | `string` | ✓ | ID of the conversation item whose audio was transcribed. |
+| `data.transcript` | `string` | ✓ | The transcribed text. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_2122",
+  "type": "conversation.item.input_audio_transcription.completed",
+  "item_id": "msg_003",
+  "transcript": "Hello, how are you?"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-conversationiteminputaudiotranscriptionupdated" />
+<a id="-conversationiteminputaudiotranscriptionupdated" />
+<Accordion title="ConversationItemInputAudioTranscriptionUpdated">
+
+Returned when input audio transcription is updated. [https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.input_audio_transcription.updated](https://docs.x.ai/developers/rest-api-reference/inference/voice#conversation.item.input_audio_transcription.updated)
+
+Event constant: `VoiceAgentAPIEvents.ConversationItemInputAudioTranscriptionUpdated`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-inputaudiobuffercommitted" />
+<a id="-inputaudiobuffercommitted" />
+<Accordion title="InputAudioBufferCommitted">
+
+Input audio buffer has been committed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.committed](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.committed)
+
+Event constant: `VoiceAgentAPIEvents.InputAudioBufferCommitted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Input audio buffer has been committed as a user message. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.committed). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `input_audio_buffer.committed`. |
+| `data.previous_item_id` | `string` | ✓ | ID of the preceding conversation item. |
+| `data.item_id` | `string` | ✓ | ID of the newly created user message item. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_1121",
+  "type": "input_audio_buffer.committed",
+  "previous_item_id": "msg_001",
+  "item_id": "msg_002"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-inputaudiobuffercleared" />
+<a id="-inputaudiobuffercleared" />
+<Accordion title="InputAudioBufferCleared">
+
+Input audio buffer has been cleared. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.cleared](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.cleared)
+
+Event constant: `VoiceAgentAPIEvents.InputAudioBufferCleared`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Confirms the input audio buffer has been cleared. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.cleared). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `input_audio_buffer.cleared`. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_1122",
+  "type": "input_audio_buffer.cleared"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-inputaudiobufferspeechstarted" />
+<a id="-inputaudiobufferspeechstarted" />
+<Accordion title="InputAudioBufferSpeechStarted">
+
+Notify the client the server's VAD has detected the start of a speech. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_started](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_started)
+
+Event constant: `VoiceAgentAPIEvents.InputAudioBufferSpeechStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Notifies that the server's VAD detected the start of speech. Only available with server_vad turn detection. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_started). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `input_audio_buffer.speech_started`. |
+| `data.item_id` | `string` | ✓ | ID of the associated message item. |
+| `data.audio_start_ms` | `integer` | ✓ | Millisecond offset in the audio buffer where speech was detected. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_1516",
+  "type": "input_audio_buffer.speech_started",
+  "item_id": "msg_003"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-inputaudiobufferspeechstopped" />
+<a id="-inputaudiobufferspeechstopped" />
+<Accordion title="InputAudioBufferSpeechStopped">
+
+Notify the client the server's VAD has detected the end of a speech. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_stopped](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_stopped)
+
+Event constant: `VoiceAgentAPIEvents.InputAudioBufferSpeechStopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Notifies that the server's VAD detected the end of speech. Only available with server_vad turn detection. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.speech_stopped). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `input_audio_buffer.speech_stopped`. |
+| `data.item_id` | `string` | ✓ | ID of the associated message item. |
+| `data.audio_end_ms` | `integer` | ✓ | Millisecond offset in the audio buffer where speech ended. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_1516",
+  "type": "input_audio_buffer.speech_stopped",
+  "item_id": "msg_003"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-inputaudiobuffertimeouttriggered" />
+<a id="-inputaudiobuffertimeouttriggered" />
+<Accordion title="InputAudioBufferTimeoutTriggered">
+
+Returned when the input audio buffer idle timeout is triggered. [https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.timeout_triggered](https://docs.x.ai/developers/rest-api-reference/inference/voice#input_audio_buffer.timeout_triggered)
+
+Event constant: `VoiceAgentAPIEvents.InputAudioBufferTimeoutTriggered`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsecreated" />
+<a id="-responsecreated" />
+<Accordion title="ResponseCreated">
+
+A new assistant response turn is in progress. Audio delta created from this assistant turn will have the same response id. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.created](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.created)
+
+Event constant: `VoiceAgentAPIEvents.ResponseCreated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A new assistant response turn is in progress. Audio deltas from this turn share the same response_id. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.created). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.created`. |
+| `data.response` | `object` | ✓ | The response object. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_2930",
+  "type": "response.created",
+  "response": {
+    "id": "resp_001",
+    "object": "realtime.response",
+    "status": "in_progress",
+    "output": []
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responsedone" />
+<a id="-responsedone" />
+<Accordion title="ResponseDone">
+
+The assistant's response is completed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The assistant's response is completed. Sent after all audio and transcript deltas. Ready for the client to add a new conversation item. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.done`. |
+| `data.response` | `object` | ✓ | The completed response object. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_3132",
+  "type": "response.done",
+  "response": {
+    "id": "resp_001",
+    "object": "realtime.response",
+    "status": "completed"
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responseoutputitemadded" />
+<a id="-responseoutputitemadded" />
+<Accordion title="ResponseOutputItemAdded">
+
+A new assistant response is added to message history. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.added](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.added)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputItemAdded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A new assistant response item is added to the message history. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.added). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.output_item.added`. |
+| `data.response_id` | `string` | ✓ | ID of the response this item belongs to. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.item` | `object` | ✓ | The output item that was added. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_3334",
+  "type": "response.output_item.added",
+  "response_id": "resp_001",
+  "output_index": 0,
+  "item": {
+    "id": "msg_007",
+    "object": "realtime.item",
+    "type": "message",
+    "status": "in_progress",
+    "role": "assistant",
+    "content": []
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responseoutputitemdone" />
+<a id="-responseoutputitemdone" />
+<Accordion title="ResponseOutputItemDone">
+
+A new assistant response is done. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputItemDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | An output item is complete. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_item.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.output_item.done`. |
+| `data.response_id` | `string` | ✓ | ID of the response this item belongs to. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.item` | `object` | ✓ | The completed output item. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_3335",
+  "type": "response.output_item.done",
+  "response_id": "resp_001",
+  "output_index": 0,
+  "item": {
+    "id": "msg_007",
+    "object": "realtime.item",
+    "type": "message",
+    "status": "completed",
+    "role": "assistant",
+    "content": []
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responseoutputtextdelta" />
+<a id="-responseoutputtextdelta" />
+<Accordion title="ResponseOutputTextDelta">
+
+Text delta of the assistant response. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_text.delta](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_text.delta)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputTextDelta`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responseoutputtextdone" />
+<a id="-responseoutputtextdone" />
+<Accordion title="ResponseOutputTextDone">
+
+The text of the assistant response has finished generating. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_text.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_text.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputTextDone`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responseoutputaudiotranscriptdelta" />
+<a id="-responseoutputaudiotranscriptdelta" />
+<Accordion title="ResponseOutputAudioTranscriptDelta">
+
+Audio transcript delta of the assistant response. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.delta](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.delta)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputAudioTranscriptDelta`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Streaming text transcript delta of the assistant's audio response. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.delta). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.output_audio_transcript.delta`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the output item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.content_index` | `integer` | ✓ | Index of the content part within the item. |
+| `data.delta` | `string` | ✓ | Text transcript fragment. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_4950",
+  "type": "response.output_audio_transcript.delta",
+  "response_id": "resp_001",
+  "item_id": "msg_008",
+  "delta": "Hello! I'm doing"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responseoutputaudiotranscriptdone" />
+<a id="-responseoutputaudiotranscriptdone" />
+<Accordion title="ResponseOutputAudioTranscriptDone">
+
+The audio transcript delta of the assistant response has finished generating. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputAudioTranscriptDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The audio transcript for this assistant turn has finished generating. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio_transcript.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.output_audio_transcript.done`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the output item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.content_index` | `integer` | ✓ | Index of the content part within the item. |
+| `data.transcript` | `string` | ✓ | The complete transcript text. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_5152",
+  "type": "response.output_audio_transcript.done",
+  "response_id": "resp_001",
+  "item_id": "msg_008"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responseoutputaudiodone" />
+<a id="-responseoutputaudiodone" />
+<Accordion title="ResponseOutputAudioDone">
+
+Notifies client that the audio for this turn has finished generating. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseOutputAudioDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Audio generation for this assistant turn has finished. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.output_audio.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.output_audio.done`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the output item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.content_index` | `integer` | ✓ | Index of the content part within the item. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_5152",
+  "type": "response.output_audio.done",
+  "response_id": "resp_001",
+  "item_id": "msg_008"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responsecontentpartadded" />
+<a id="-responsecontentpartadded" />
+<Accordion title="ResponseContentPartAdded">
+
+Notifies client that the content part added. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.added](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.added)
+
+Event constant: `VoiceAgentAPIEvents.ResponseContentPartAdded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A content part starts within an output item. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.added). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.content_part.added`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the output item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.content_index` | `integer` | ✓ | Index of the content part within the item. |
+| `data.part` | `object` | ✓ | The content part. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_3336",
+  "type": "response.content_part.added",
+  "response_id": "resp_001",
+  "item_id": "msg_007",
+  "output_index": 0,
+  "content_index": 0,
+  "part": {
+    "type": "audio"
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responsecontentpartdone" />
+<a id="-responsecontentpartdone" />
+<Accordion title="ResponseContentPartDone">
+
+Notifies client that the content part done. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseContentPartDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A content part finishes. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.content_part.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.content_part.done`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the output item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.content_index` | `integer` | ✓ | Index of the content part within the item. |
+| `data.part` | `object` | ✓ | The completed content part. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_3337",
+  "type": "response.content_part.done",
+  "response_id": "resp_001",
+  "item_id": "msg_007",
+  "output_index": 0,
+  "content_index": 0,
+  "part": {
+    "type": "audio"
+  }
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responsefunctioncallargumentsdelta" />
+<a id="-responsefunctioncallargumentsdelta" />
+<Accordion title="ResponseFunctionCallArgumentsDelta">
+
+Function call arguments delta. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.function_call_arguments.delta](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.function_call_arguments.delta)
+
+Event constant: `VoiceAgentAPIEvents.ResponseFunctionCallArgumentsDelta`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsefunctioncallargumentsdone" />
+<a id="-responsefunctioncallargumentsdone" />
+<Accordion title="ResponseFunctionCallArgumentsDone">
+
+Function call triggered with complete arguments. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.function_call_arguments.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.function_call_arguments.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseFunctionCallArgumentsDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | A function call has been triggered with complete arguments. Your code should execute the function and return results via `conversation.item.create` with type `function_call_output`. See the [partner event documentation](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.function_call_arguments.done). |
+| `data.event_id` | `string` | ✓ | Unique event identifier. |
+| `data.type` | `string` | ✓ | Always `response.function_call_arguments.done`. |
+| `data.response_id` | `string` | ✓ | ID of the response. |
+| `data.item_id` | `string` | ✓ | ID of the function call item. |
+| `data.output_index` | `integer` | ✓ | Index of the output item in the response. |
+| `data.call_id` | `string` | ✓ | Unique ID for this function call. Pass this as `call_id` in the `conversation.item.create` event with type `function_call_output`. |
+| `data.name` | `string` | ✓ | Name of the function to call. |
+| `data.arguments` | `string` | ✓ | JSON string of the function arguments. |
+
+Example `data`:
+
+```json
+{
+  "event_id": "event_fc01",
+  "type": "response.function_call_arguments.done",
+  "response_id": "resp_001",
+  "item_id": "msg_009",
+  "output_index": 0,
+  "call_id": "call_001",
+  "name": "get_weather",
+  "arguments": "{\"location\": \"San Francisco\"}"
+}
+```
+</Accordion>
+<a id="voiceagentapievents-responsemcpcallargumentsdelta" />
+<a id="-responsemcpcallargumentsdelta" />
+<Accordion title="ResponseMCPCallArgumentsDelta">
+
+MCP call arguments delta. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call_arguments.delta](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call_arguments.delta)
+
+Event constant: `VoiceAgentAPIEvents.ResponseMCPCallArgumentsDelta`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsemcpcallargumentsdone" />
+<a id="-responsemcpcallargumentsdone" />
+<Accordion title="ResponseMCPCallArgumentsDone">
+
+MCP call arguments completed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call_arguments.done](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call_arguments.done)
+
+Event constant: `VoiceAgentAPIEvents.ResponseMCPCallArgumentsDone`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsemcpcallinprogress" />
+<a id="-responsemcpcallinprogress" />
+<Accordion title="ResponseMCPCallInProgress">
+
+MCP call is in progress. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.in_progress](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.in_progress)
+
+Event constant: `VoiceAgentAPIEvents.ResponseMCPCallInProgress`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsemcpcallcompleted" />
+<a id="-responsemcpcallcompleted" />
+<Accordion title="ResponseMCPCallCompleted">
+
+MCP call completed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.completed](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.completed)
+
+Event constant: `VoiceAgentAPIEvents.ResponseMCPCallCompleted`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-responsemcpcallfailed" />
+<a id="-responsemcpcallfailed" />
+<Accordion title="ResponseMCPCallFailed">
+
+MCP call failed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.failed](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_call.failed)
+
+Event constant: `VoiceAgentAPIEvents.ResponseMCPCallFailed`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-mcplisttoolsinprogress" />
+<a id="-mcplisttoolsinprogress" />
+<Accordion title="MCPListToolsInProgress">
+
+MCP list tools is in progress. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.in_progress](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.in_progress)
+
+Event constant: `VoiceAgentAPIEvents.MCPListToolsInProgress`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-mcplisttoolscompleted" />
+<a id="-mcplisttoolscompleted" />
+<Accordion title="MCPListToolsCompleted">
+
+MCP list tools completed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.completed](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.completed)
+
+Event constant: `VoiceAgentAPIEvents.MCPListToolsCompleted`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-mcplisttoolsfailed" />
+<a id="-mcplisttoolsfailed" />
+<Accordion title="MCPListToolsFailed">
+
+MCP list tools failed. [https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.failed](https://docs.x.ai/developers/rest-api-reference/inference/voice#response.mcp_list_tools.failed)
+
+Event constant: `VoiceAgentAPIEvents.MCPListToolsFailed`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-websocketerror" />
+<a id="-websocketerror" />
+<Accordion title="WebSocketError">
+
+The WebSocket error response event.
+
+Event constant: `VoiceAgentAPIEvents.WebSocketError`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+<a id="voiceagentapievents-connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `VoiceAgentAPIEvents.ConnectorInformation`
+
+**Payload**
+
+*No event-specific payload columns are listed here; this callback still receives the common `client` and `data` fields. For `data`, see the partner documentation for the exact JSON shape.*
+</Accordion>
+</AccordionGroup>

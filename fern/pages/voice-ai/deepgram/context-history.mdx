@@ -1,0 +1,61 @@
+---
+title: "Example: Context history with ApplicationStorage"
+description: "This example answers an inbound call and uses ApplicationStorage to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via agent.context.messages."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound call and uses `ApplicationStorage` to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via `agent.context.messages`.
+
+For a full breakdown of session setup, media bridging, barge-in, and event handling, see [Example: Answering an incoming call](/voice-ai/deepgram/inbound).
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Deepgram API key in Voximplant [Secrets](/platform/storage/secret-storage) under `DEEPGRAM_API_KEY`.
+
+## How cross-call history works
+
+### 1) Pick a user identity and storage key
+
+The example uses the inbound caller ID (`call.callerid()`) as a simple “user identity”, and stores history under a key like `dgva_history:+15550123456`.
+
+<Info title="Caller ID is not always a stable user ID">
+  Caller ID can be missing, blocked, spoofed, or shared (for example, a PBX).
+</Info>
+
+### 2) Load stored history and pass it to Deepgram
+
+On call start, the scenario reads the stored JSON array from `ApplicationStorage` and passes it directly to the agent:
+
+- `SETTINGS_OPTIONS.agent.context.messages`: prior turns to preload into the session
+
+### 3) Append new turns and persist on hangup
+
+During the call, Deepgram emits `Deepgram.VoiceAgentEvents.History` events containing history items suitable for `context.messages`. The example appends those items to a `rollingHistory` array, trims it to a max size, and then saves it back to `ApplicationStorage` when the call ends.
+
+<Info title="Keep history small">
+  `ApplicationStorage` values are size-limited (up to 2000 characters per key), so store only what you need (for example last 10–20 items) and enforce a TTL to avoid unbounded growth. See [`ApplicationStorage.put`](/reference/voxengine/application-storage#put).
+</Info>
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/deepgram).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/deepgram/voxeengine-deepgram-ctx-history.js"
+  title="voxeengine-deepgram-ctx-history.js"
+  language="javascript"
+  maxLines={0}
+/>

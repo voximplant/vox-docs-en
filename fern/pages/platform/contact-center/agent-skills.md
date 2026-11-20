@@ -10,7 +10,7 @@ Each skill has a **name** and an assigned **level** ranging from 1 to 5. Agents 
 
 ### 1. Create a skill
 
-To create a skill, invoke the [SQ_AddSkill]() Management API method with your application ID and skill name. You can optionally include a descriptive comment (up to 200 characters):
+To create a skill, invoke the [SQ_AddSkill](/reference/management-api/reference/smartqueue/sq-add-skill) Management API method with your application ID and skill name. You can optionally include a descriptive comment (up to 200 characters):
 
 ```bash title="Create a skill"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_AddSkill" \
@@ -26,7 +26,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_AddSkill" \
 
 ### 2. Bind a skill to agents
 
-To assign a skill to one or more agents, use the [SQ_BindSkill]() method. Pass your application ID, target agent user IDs (separated by semicolons, or use the `all` keyword to bind to all agents), and an array specifying the skill IDs and proficiency levels (1–5):
+To assign a skill to one or more agents, use the [SQ_BindSkill](/reference/management-api/reference/smartqueue/sq-bind-skill) method. Pass your application ID, target agent user IDs (separated by semicolons, or use the `all` keyword to bind to all agents), and an array specifying the skill IDs and proficiency levels (1–5):
 
 ```bash title="Bind a skill to agents"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_BindSkill" \
@@ -42,7 +42,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_BindSkill" \
 
 ### 3. Unbind a skill
 
-To remove a skill from a specific agent, use the [SQ_UnbindSkill]() method:
+To remove a skill from a specific agent, use the [SQ_UnbindSkill](/reference/management-api/reference/smartqueue/sq-unbind-skill) method:
 
 ```bash title="Unbind a skill from an agent"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_UnbindSkill" \
@@ -62,7 +62,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_UnbindSkill" \
 
 ### Modify an existing skill
 
-To update a skill's name or description, use the [SQ_SetSkillInfo]() method:
+To update a skill's name or description, use the [SQ_SetSkillInfo](/reference/management-api/reference/smartqueue/sq-set-skill-info) method:
 
 ```bash title="Modify a skill"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_SetSkillInfo" \
@@ -78,7 +78,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_SetSkillInfo" \
 
 ### Delete a skill
 
-To delete a skill, use the [SQ_DelSkill]() method. Deleting a skill automatically unbinds it from all assigned agents:
+To delete a skill, use the [SQ_DelSkill](/reference/management-api/reference/smartqueue/sq-del-skill) method. Deleting a skill automatically unbinds it from all assigned agents:
 
 ```bash title="Delete a skill"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_DelSkill" \

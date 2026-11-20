@@ -8,7 +8,7 @@ Learn how to monitor real-time microphone activity and build an automated audio 
 
 Detecting microphone activity is useful for highlighting the active speaker in a multi-party conference, calculating talk time, or triggering automated prompts when a caller remains silent.
 
-To track microphone status on an active call leg, call the [handleMicStatus()]() method on the `Call` instance with `handle` set to `true`, then subscribe to the [CallEvents.MicStatusChange]() event:
+To track microphone status on an active call leg, call the [handleMicStatus()](/reference/voxengine/call#handlemicstatus) method on the `Call` instance with `handle` set to `true`, then subscribe to the [CallEvents.MicStatusChange]() event:
 
 ```javascript title="Monitor microphone activity"
 // Incoming call processing

@@ -1,0 +1,345 @@
+---
+title: Features Overview
+subtitle: Voice AI Orchestration on a Communications Platform
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+# Voximplant Platform Capabilities
+
+Voximplant Platform is a **Voice AI Orchestration Platform** and an established **Cloud Communications Platform** for building programmable voice, video, and messaging applications using serverless call control, SDKs, and APIs.
+
+<Info>
+  Click on any card below to see more information.
+</Info>
+
+
+## Capabilities at a glance
+
+<div className="capabilities-vendor-cards">
+    <CardGroup cols={3}>
+        <Card title="Voice AI orchestration" icon="fa-duotone fa-waveform-lines" href="#voice-ai-orchestration">
+            Connect real-time AI agents, speech systems, and telephony channels with code-driven orchestration.
+        </Card>
+        <Card title="Voice telephony" icon="fa-duotone fa-phone-volume" href="#voice-telephony">
+            Run inbound/outbound PSTN, SIP, WebRTC, and WhatsApp voice flows with fine-grained call control.
+        </Card>
+        <Card title="Tools and DX" icon="fa-duotone fa-code" href="#tools-and-developer-experience">
+            Use cloud IDE/debugging, multi-platform SDKs, and Management API automation.
+        </Card>
+        <Card title="Media streaming" icon="fa-duotone fa-signal-stream" href="#realtime-media-streaming">
+            Stream live call audio over WebSockets for real-time AI, transcription, and analysis pipelines.
+        </Card>
+        <Card title="Reliability and deployment" icon="fa-duotone fa-globe" href="#network-reliability-and-deployment">
+            Run globally on serverless infrastructure with multi-region coverage and uptime monitoring.
+        </Card>
+    </CardGroup>
+</div>
+
+## Voice AI vendors at a glance
+
+### Direct agent and real-time connectors
+
+<CardGroup cols={3}>
+    <Card title="OpenAI Realtime"
+          href="/voice-ai/openai/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/openai.svg" alt="OpenAI logo"/>
+    </span>
+
+        Realtime and agent-style voice integrations.
+    </Card>
+    <Card title="Google Gemini Live"
+          href="/voice-ai/google/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/gemini.svg" alt="Gemini logo"/>
+    </span>
+
+        Live speech interactions with Gemini APIs.
+    </Card>
+    <Card title="Ultravox Realtime" href="/voice-ai/ultravox/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/ultravox.svg" alt="Ultravox logo"/>
+    </span>
+
+        WebSocket-based speech-native connector.
+    </Card>
+    <Card title="Deepgram Voice Agent"
+          href="/voice-ai/deepgram/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/deepgram.svg" alt="Deepgram logo"/>
+    </span>
+
+        Native voice-agent connector and examples.
+    </Card>
+    <Card title="ElevenLabs ElevenAgents"
+          href="/voice-ai/elevenlabs/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/elevenlabs.svg" alt="ElevenLabs logo"/>
+    </span>
+
+        Conversational AI agent integrations.
+    </Card>
+    <Card title="Cartesia Line Agents"
+          href="/voice-ai/cartesia/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/cartesia.png" alt="Cartesia logo"/>
+    </span>
+
+        Line Agents runtime with VoxEngine orchestration.
+    </Card>
+    <Card title="xAI Grok Voice Agent"
+          href="/voice-ai/xai/overview">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/grok-x.svg" alt="xAI logo"/>
+    </span>
+
+        Grok voice-agent flow and feature support.
+    </Card>
+</CardGroup>
+
+### Speech and realtime TTS options
+
+<CardGroup cols={3}>
+    <Card title="ElevenLabs Streaming TTS"
+          href="/voice-ai/openai/half-cascade-elevenlabs">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/elevenlabs.svg" alt="ElevenLabs logo"/>
+    </span>
+
+        Streaming/realtime TTS option for voice AI pipelines.
+    </Card>
+    <Card title="Cartesia Realtime TTS"
+          href="/voice-ai/openai/half-cascade-cartesia">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/cartesia.png" alt="Cartesia logo"/>
+    </span>
+
+        Realtime TTS pattern for half-cascade voice pipelines.
+
+    </Card>
+    <Card title="Inworld Realtime TTS"
+          href="/voice-ai/openai/half-cascade-inworld">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/inworld.png" alt="Inworld logo"/>
+    </span>
+
+        Realtime TTS option for half-cascade voice flows.
+    </Card>
+    <Card title="Google Realtime TTS"
+          href="/reference/voxengine/google">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/google.svg" alt="Google logo"/>
+    </span>
+
+        Google realtime TTS player for low-latency speech output.
+
+    </Card>
+    <Card title="Grok Realtime TTS"
+          href="/voice-ai/speech/grok-tts">
+    <span className="capabilities-vendor-logo-wrap">
+      <img className="capabilities-vendor-logo" src="../../assets/connectors/grok-x.svg" alt="xAI logo"/>
+    </span>
+
+        xAI streaming TTS for low-latency speech output.
+    </Card>
+</CardGroup>
+
+<div className="capabilities-details-header">
+    <h2 id="detailed-capabilities">Detailed capabilities</h2>
+    <div className="capabilities-accordion-controls">
+        <button type="button" className="capabilities-accordion-button" data-capabilities-accordion-action="expand"
+                aria-controls="capabilities-accordion-root">
+            <span aria-hidden="true">▾</span> Expand all
+        </button>
+        <button type="button" className="capabilities-accordion-button" data-capabilities-accordion-action="collapse"
+                aria-controls="capabilities-accordion-root">
+            <span aria-hidden="true">▴</span> Collapse all
+        </button>
+    </div>
+</div>
+
+<div id="capabilities-accordion-root">
+    <AccordionGroup>
+        <div id="voice-ai-orchestration" className="capabilities-anchor-target"></div>
+        <Accordion title="Voice AI Orchestration" defaultOpen={true}>
+            Voximplant AI is a serverless runtime for **Voice AI pipelines** that connects real-time agent/LLM systems
+            and speech engines to **PSTN / SIP / WebRTC / mobile / WhatsApp calling**, with code-driven orchestration
+            and provider flexibility. See [Voximplant AI](https://voximplant.ai/) and the docs [Voice AI connectors
+            section](/voice-ai/client-options).
+
+            **Supported vendors (direct agent / real-time LLM connectors)**
+
+            Native/direct connectivity is positioned for:
+
+            - **OpenAI** (Realtime / agent-style integrations) - [Docs:
+            OpenAI](/voice-ai/openai/overview)
+            - **Google Gemini (Live)** - [Docs:
+            Google](/voice-ai/google/overview)
+            - **Deepgram Voice Agent** - [Docs:
+            Deepgram](/voice-ai/deepgram/overview)
+            - **ElevenLabs Agents / Conversational AI** - [Docs:
+            ElevenLabs](/voice-ai/elevenlabs/overview)
+            - **Ultravox (WebSocket API)** - [Docs:
+            Ultravox](/voice-ai/ultravox/overview)
+            - **Cartesia Line Agents** - [Docs: Cartesia Line
+            Agents](/voice-ai/cartesia/overview)
+            - **xAI (Grok Voice Agent)** - [Docs:
+            xAI](/voice-ai/xai/overview)
+
+            Voximplant AI also explicitly supports connecting to **another WebSocket interface** (for other real-time AI
+            systems) in addition to the vendors above.
+
+            **Supported vendors (speech engines: STT / TTS)**
+
+            Voximplant's platform speech layer (STT/TTS) includes built-in providers such as:
+
+            - **Speech-to-Text (STT)**: Google Speech Cloud, Microsoft Azure STT, Amazon Transcribe
+            - **Text-to-Speech (TTS)**: Google Speech Cloud, Amazon Polly, Microsoft Azure TTS
+
+            For realtime / streaming TTS used in Voice AI scenarios, Voximplant also provides native VoxEngine modules
+            and guides for:
+
+            - **Google Realtime TTS** - [API refs](/reference/voxengine/google)
+            - **Cartesia Realtime TTS** - [Guide: Realtime
+            TTS](/voice-ai/openai/half-cascade-cartesia)
+            and [API refs](/reference/voxengine/cartesia)
+            - **Inworld Realtime TTS** - [Guide: Realtime
+            TTS](/voice-ai/openai/half-cascade-inworld)
+            and [API refs](/reference/voxengine/inworld)
+            - **ElevenLabs Streaming / realtime TTS** - [Guide: ElevenLabs
+            TTS](/voice-ai/openai/half-cascade-elevenlabs)
+            and [API refs](/reference/voxengine/elevenlabs)
+            - **Grok Realtime TTS** - [Guide: Grok TTS](/voice-ai/speech/grok-tts)
+            and [API refs](/reference/voxengine/xai)
+
+            **Pipeline options (architectures you can run)**
+
+            - **Speech-to-speech**: real-time audio in and real-time audio out (agent API handles full duplex loop)
+            - **Speech -> LLM -> TTS**: stream audio directly into a speech LLM and use a different TTS for output
+            - **STT -> LLM -> TTS**: stream audio to STT, pass text to an LLM/toolchain, synthesize response audio
+            - **Hybrid**: combine a real-time agent API for turn-taking with separate best-of-breed STT/TTS components
+            (mix and match)
+
+            **Orchestration primitives (what you control)**
+
+            - **Mix and match providers**: swap STT/TTS/LLM vendors without changing your telephony integration
+            - **Parallel model execution**: run multiple speech/LLM components in parallel when useful (for example,
+            intent extraction + generation)
+            - **Failover paths**: fall back to alternate speech/LLM providers when a step errors or times out
+            - **Wideband audio**: higher fidelity audio path for improved user experience and model comprehension
+            - **Deep SIP support**: SIP trunking + registration interop so agents can operate inside PBX/SBC/carrier
+            environments
+            - **Channel portability**: reuse the same AI pipeline across PSTN numbers, SIP, WebRTC, mobile SDKs, and
+            WhatsApp calling
+
+            **Real-time media integration (streaming)**
+
+            - **WebSocket-based media streaming** for connecting calls to real-time AI systems and custom pipelines
+            (audio + metadata/control messages on the same channel)
+            - **Media gateway abstraction**: avoid building/operating custom streaming gateways when using native
+            connectors/modules
+        </Accordion>
+
+        <div id="voice-telephony" className="capabilities-anchor-target"></div>
+        <Accordion title="Voice telephony">
+            **Connectivity and endpoints**
+
+            - **PSTN calling** (inbound/outbound) via phone numbers and programmable call handling
+            - **Phone numbers API**: automated procurement in **60+ countries** (availability varies by country)
+            - **SIP calling and trunking**: connect carriers / PBXs / SBCs using SIP interop (including
+            registration-based scenarios)
+            - **WebRTC calling** via web/mobile SDKs (VoIP calling in apps and browsers)
+            - **WhatsApp calling**: inbound/outbound voice calls via WhatsApp Business API integration
+
+            **Serverless call control (VoxEngine)**
+
+            - **JavaScript call logic (no XML)** for real-time call routing and application workflows
+            - **Per-call-leg signaling/media control** - granular control over each leg independently
+
+            **Conferencing and bridging**
+
+            - **Single conferencing API** for voice/video; **mix PSTN, SIP, WebRTC, and native mobile endpoints**
+            - **Conferences up to 50 participants**
+
+            **Recording, transcription, and speech processing**
+
+            - **Call recording** via `call.record()` in scenarios (supports stereo and additional options)
+            - **Call transcription** via `record(transcribe=true)` and retrieval via `GetCallHistory` (transcription
+            delivered asynchronously)
+            - **Speaker/channel labeling** in transcripts (for example, "Left"/"Right" labeling pattern described in
+            docs)
+
+            **Speech-to-Text (ASR) modes and features**
+
+            - **Phrase-hint mode** (best for constrained dialogs / IVRs) and **Freeform mode** (open transcription)
+            - **Multiple ASR engines** (for example, Google, Amazon, Microsoft) with selectable profiles
+            - **Intermediate results** support (provider-dependent) for faster partial recognition
+            - **Google Speech v1p1beta1 feature passthrough** (for example, word time offsets, punctuation, diarization
+            config)
+
+            **Answering machine / voicemail / beep detection**
+
+            - **AMD module** for voicemail/answering machine detection in scenarios
+            - **Beep detection** with specified frequency lists and timeouts (scenario-level control)
+            - **AMD event/callback model** available in VoxEngine references
+
+            <a id="automated-outbound-calling-call-lists--dialing-logic"></a>
+            **Automated outbound calling (call lists + dialing logic)**
+
+            - **Call Lists**: upload a **CSV call list** and process it with VoxEngine scenarios (campaign-style
+            calling)
+            - **Management API CallLists**: programmatic call-list upload/append with delimiter support
+            - **Predictive Dialing System (PDS)**: uses agent/load statistics and call-list progression to place calls
+            and connect answered calls to agents
+            - **Predictive and progressive dialing modes** with tunable parameters (for example, allowed failed call
+            percentage)
+        </Accordion>
+
+
+        <div id="tools-and-developer-experience" className="capabilities-anchor-target"></div>
+        <Accordion title="Tools and Developer Experience">
+            **Cloud IDE and debugging**
+
+            - **Cloud IDE + debugger** in the control panel:
+            - **Code verification**
+            - **Autocompletion**
+            - **Diff highlighting**
+            - Built-in troubleshooting workflow
+
+            **Local IDE continuous integration**
+            - CLI tool for CI/CD automation so you can use your own IDE
+            - Type library for local development with autocompletion and type checking
+
+            **SDKs and client libraries**
+
+            - SDKs: **iOS, Android, Web, React Native, Flutter, Unity**
+            - API clients: **curl, Node.js, Python, PHP, Go, .NET, Java**
+
+            **Management API (HTTP)**
+
+            - Control accounts/services programmatically (examples from docs include managing phone numbers, messaging,
+            billing, logs, records, and user access)
+        </Accordion>
+
+        <div id="realtime-media-streaming" className="capabilities-anchor-target"></div>
+        <Accordion title="Real-time Media Streaming (WebSockets / Media Streams)">
+            - **Media Streams**: integrate **live audio streams** into calls via WebSockets for real-time
+            transcription/analysis and AI integrations
+            - WebSocket programming model in VoxEngine:
+            - Create connections via `VoxEngine.createWebSocket(...)`
+            - Stream audio using `WebSocket.sendMediaTo(...)`
+            - Recommended audio chunk duration: **~20ms**
+        </Accordion>
+
+        <div id="network-reliability-and-deployment" className="capabilities-anchor-target"></div>
+        <Accordion title="Network, Reliability, and Deployment">
+            - **Serverless runtime**: no infrastructure to manage for call logic
+            - **CI/CD-friendly deployment path**: CI tool for automated pipelines
+            - **Global footprint**: datacenters in **14** countries
+            - **Status page** for live and historical uptime of subcomponents
+        </Accordion>
+    </AccordionGroup>
+</div>

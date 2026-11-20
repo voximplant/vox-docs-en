@@ -1,0 +1,139 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/voice-ai/network-options/phone-numbers-pstn)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user or SIP registration](/voice-ai/network-options/sip)
+  - [App user](/voice-ai/network-options/web-mobile)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination to this scenario.
+- Store your Inworld API key in Voximplant [Secrets](/platform/storage/secret-storage) under `INWORLD_API_KEY`.
+
+## Tool setup
+
+Function tools are included in the Inworld `session.update` payload.
+The example exposes two client-side tools:
+
+- `get_weather`: returns demo weather data to the model.
+- `hang_up`: returns a tool result, lets Inworld speak a brief goodbye, and hangs up after VoxEngine finishes playing the goodbye audio.
+
+```js title="Tool definition"
+tools: [
+  {
+    type: "function",
+    name: "get_weather",
+    description: "Get current weather for a location.",
+    parameters: {
+      type: "object",
+      properties: {
+        location: { type: "string" },
+      },
+      required: ["location"],
+    },
+  },
+  {
+    type: "function",
+    name: "hang_up",
+    description: "Hang up the current call.",
+    parameters: {
+      type: "object",
+      properties: {},
+      required: [],
+    },
+  },
+],
+tool_choice: "auto",
+```
+
+The rest of the session config stays focused on the tool flow: model, prompt, audio input/output models, and concise TTS delivery settings.
+The system prompt tells the model not to speak before a tool result is available, so the caller does not hear a filler phrase such as "let me check" before the function result is ready.
+Unlike the richer inbound demo, this example does not force `segmenter_strategy: "full_turn"`; that keeps the tool-result answer more responsive once Inworld starts generating the final spoken response.
+For a broader walkthrough of Inworld voice behavior tuning, see [Answering an incoming call](/voice-ai/inworld/inbound).
+
+## Handle tool calls
+
+Inworld emits the function name and `call_id` on the function-call output item, then emits the final JSON arguments with `ResponseFunctionCallArgumentsDone`.
+The example stores the function-call metadata by item id, reads the matching arguments, executes the local function, sends a `function_call_output` conversation item, and creates the follow-up response.
+For `hang_up`, the tool result tells the model to speak the goodbye only after the tool call is complete:
+
+```js title="Track the function call"
+functionCallsByItemId[item.id] = {
+  name: item.name,
+  call_id: item.call_id,
+};
+```
+
+```js title="Read the function arguments"
+const { item_id: itemId, arguments: rawArgs } = payload;
+const functionCall = functionCallsByItemId[itemId];
+```
+
+```js title="Respond to a tool call"
+voiceAIClient.conversationItemCreate({
+  item: {
+    type: "function_call_output",
+    call_id: toolCallId,
+    output: JSON.stringify(result),
+  },
+});
+voiceAIClient.responseCreate({
+  response: {
+    output_modalities: ["audio", "text"],
+  },
+});
+```
+
+```js title="Hang up after playback"
+voiceAIClient.addEventListener(Inworld.Events.WebSocketMediaEnded, () => {
+  if (!pendingHangup) return;
+  pendingHangup = false;
+  call.hangup();
+});
+```
+
+## Connect call audio
+
+The call setup is otherwise the same as the inbound example.
+After `SessionCreated`, send the session config. After `SessionUpdated`, bridge media and seed an initial greeting with `conversationItemCreate` followed by `responseCreate`.
+The caller's spoken turns go through the bridged audio stream; Inworld STT, semantic VAD, and `create_response: true` handle turn completion and response creation.
+
+## Barge-in
+
+The function-calling example keeps the same interruption behavior as the other Inworld examples:
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(Inworld.RealtimeAPIEvents.InputAudioBufferSpeechStarted, () => {
+  voiceAIClient.outputAudioBufferClear({});
+});
+```
+
+## Notes
+
+- `sessionKey` can be any unique string to maintain context for the Inworld session.
+- Keep tool handlers fast in VoxEngine. For slow work, return an acknowledgement and move the long-running workflow outside the call path.
+- Tool responses must use the same `call_id` that Inworld provided.
+- Empty tool argument strings are treated as `{}`; tools without parameters do not need placeholder JSON.
+- Tool-call turns are silent until the function output is sent back and the follow-up response is created.
+- `ResponseOutputAudioDone` means Inworld finished generating the audio. For `hang_up`, this example waits for `WebSocketMediaEnded` so VoxEngine can finish playing the goodbye to the caller before disconnecting.
+- For the full provider event schema, see the [Inworld module reference](/reference/voxengine/inworld/realtime-api-events).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/inworld/voxeengine-inworld-function-calling.js"
+  title="voxeengine-inworld-function-calling.js"
+  language="javascript"
+  maxLines={0}
+/>

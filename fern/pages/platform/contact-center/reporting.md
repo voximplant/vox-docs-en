@@ -26,7 +26,7 @@ These metrics can be ingested by supervisor dashboards, agent desktop status dis
 
 ### Current queue state
 
-To inspect the real-time state of a SmartQueue—including all assigned agents, active statuses, and time spent in status—use the [GetSQState]() method:
+To inspect the real-time state of a SmartQueue—including all assigned agents, active statuses, and time spent in status—use the [GetSQState](/reference/management-api/reference/smartqueue/get-sq-state) method:
 
 ```bash title="Get current queue state"
 curl -X POST "https://api.voximplant.com/platform_api/GetSQState" \
@@ -94,7 +94,7 @@ curl -X POST "https://api.voximplant.com/platform_api/GetSQState" \
 
 ### 30-minute real-time metrics
 
-To query metrics for a queue over the past 30 minutes, use [GetSmartQueueRealtimeMetrics]():
+To query metrics for a queue over the past 30 minutes, use [GetSmartQueueRealtimeMetrics](/reference/management-api/reference/smartqueue/get-smart-queue-realtime-metrics):
 
 ```bash title="Get 30-minute metrics"
 curl -X POST "https://api.voximplant.com/platform_api/GetSmartQueueRealtimeMetrics" \
@@ -126,7 +126,7 @@ curl -X POST "https://api.voximplant.com/platform_api/GetSmartQueueRealtimeMetri
 
 ### 2-day operational history
 
-To retrieve metrics for a queue aggregated over the last 2 days, use [GetSmartQueueDayHistory]():
+To retrieve metrics for a queue aggregated over the last 2 days, use [GetSmartQueueDayHistory](/reference/management-api/reference/smartqueue/get-smart-queue-day-history):
 
 ```bash title="Get 2-day history"
 curl -X POST "https://api.voximplant.com/platform_api/GetSmartQueueDayHistory" \
@@ -156,7 +156,7 @@ curl -X POST "https://api.voximplant.com/platform_api/GetSmartQueueDayHistory" \
 }
 ```
 
-The response JSON structure adapts depending on the `report_type` and `group_by` parameters. For all supported metric keys, refer to the [Management API reference]().
+The response JSON structure adapts depending on the `report_type` and `group_by` parameters. For all supported metric keys, refer to the [Management API reference](/reference/management-api/reference).
 
 ---
 
@@ -169,7 +169,7 @@ Voximplant retains reporting data across the following aggregations:
 * **1-hour intervals** for the past 24 hours
 * **Daily intervals** for the past 6 months
 
-To request a historical report, call [RequestSmartQueueHistory]():
+To request a historical report, call [RequestSmartQueueHistory](/reference/management-api/reference/smartqueue/request-smart-queue-history):
 
 ```bash title="Request historical report"
 curl -X POST "https://api.voximplant.com/platform_api/RequestSmartQueueHistory" \
@@ -184,7 +184,7 @@ curl -X POST "https://api.voximplant.com/platform_api/RequestSmartQueueHistory" 
 }
 ```
 
-This method enqueues report generation and returns a `history_report_id`. Once generated, download the CSV file using [DownloadHistoryReport]():
+This method enqueues report generation and returns a `history_report_id`. Once generated, download the CSV file using [DownloadHistoryReport](/reference/management-api/reference/history/download-history-report):
 
 ```bash title="Download report"
 curl -X POST "https://api.voximplant.com/platform_api/DownloadHistoryReport" \
@@ -193,7 +193,7 @@ curl -X POST "https://api.voximplant.com/platform_api/DownloadHistoryReport" \
 ```
 
 <Info title="Report generation times">
-Generating a large CSV report covering several months may take several minutes depending on call volume. For real-time operational dashboards, we recommend polling [GetSmartQueueRealtimeMetrics]() or [GetSmartQueueDayHistory]() periodically and ingesting the metrics into your own analytics database.
+Generating a large CSV report covering several months may take several minutes depending on call volume. For real-time operational dashboards, we recommend polling [GetSmartQueueRealtimeMetrics](/reference/management-api/reference/smartqueue/get-smart-queue-realtime-metrics) or [GetSmartQueueDayHistory](/reference/management-api/reference/smartqueue/get-smart-queue-day-history) periodically and ingesting the metrics into your own analytics database.
 </Info>
 
 ---
@@ -202,7 +202,7 @@ Generating a large CSV report covering several months may take several minutes d
 
 ### Call metrics by agent
 
-The following metrics are available via [GetSmartQueueRealtimeMetrics](), [GetSmartQueueDayHistory](), and [RequestSmartQueueHistory]() when `group_by` is set to `agent`:
+The following metrics are available via [GetSmartQueueRealtimeMetrics](/reference/management-api/reference/smartqueue/get-smart-queue-realtime-metrics), [GetSmartQueueDayHistory](/reference/management-api/reference/smartqueue/get-smart-queue-day-history), and [RequestSmartQueueHistory](/reference/management-api/reference/smartqueue/request-smart-queue-history) when `group_by` is set to `agent`:
 
 * **Occupancy rate** (`occupancy_rate`): Percentage of logged-in time spent handling calls or wrap-up work. Formula: `(IN_SERVICE + AFTER_SERVICE) / (READY + DIALING + IN_SERVICE + AFTER_SERVICE)`.
 * **Utilization rate** (`agent_utilization_rate`): Percentage of productive agent time relative to total non-offline time. Formula: `(READY + DIALING + IN_SERVICE + AFTER_SERVICE) / (total time excluding OFFLINE)`.

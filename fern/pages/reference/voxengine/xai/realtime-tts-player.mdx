@@ -1,0 +1,419 @@
+---
+title: RealtimeTTSPlayer
+subtitle: Realtime TTS player for xAI Grok speech synthesis in VoxEngine.
+---
+
+XAI provides a real-time Grok TTS player that streams generated audio to calls, WebSockets, and other VoxEngine media units.
+
+Use `XAI.createRealtimeTTSPlayer(...)` to create a `RealtimeTTSPlayer`. Send `text.delta`, `text.done`, and `text.clear` messages to stream utterances and handle barge-in without reconnecting.
+
+VoxEngine uses PCM audio at 16000 Hz. Keep the adapter audio format when configuring the xAI connection.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Grok TTS" icon="fa-duotone fa-waveform-lines" href="/voice-ai/speech/grok-tts">
+    Configure Grok voices, speech tags, streaming text, and barge-in.
+  </Card>
+  <Card title="Grok full cascade" icon="fa-duotone fa-diagram-project" href="/voice-ai/bring-your-own-llm/grok-full-cascade">
+    Use Grok TTS as the speech output layer in a complete Voice AI pipeline.
+  </Card>
+  <Card title="Realtime TTS pattern" icon="fa-duotone fa-bolt" href="/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine">
+    See where realtime speech synthesis fits into VoxEngine call flows.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-sliders" /> [RealtimeTTSPlayerParameters](/reference/voxengine/xai#createrealtimettsplayer): API key, xAI connection options, and WebSocket controls.
+- <Icon icon="fa-duotone fa-cube" /> [RealtimeTTSPlayer](#realtimettsplayer): runtime player object returned by the factory.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): send streaming text and clear the provider buffer.
+- <Icon icon="fa-duotone fa-diagram-project" /> [Inherited Methods](#inherited-methods): playback and media methods inherited from the shared player base.
+- <Icon icon="fa-duotone fa-bolt" /> [PlayerEvents](#playerevents): player event names, payloads, and playback timing.
+
+## RealtimeTTSPlayer
+
+## Methods
+
+### <Icon icon="fa-duotone fa-function" /> clearBuffer
+
+Clears a [XAI.RealtimeTTSPlayer](#realtimettsplayer) buffer.
+
+```ts
+clearBuffer(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+### <Icon icon="fa-duotone fa-function" /> send
+
+Send message object to the xAI provider context.
+
+```ts
+send(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ | Send `text.delta` to append text, `text.done` to finish the current utterance, or `text.clear` to cancel it for barge-in. The WebSocket remains open for subsequent utterances. Preserve spaces and punctuation across text.delta chunks. For VoxEngine barge-in, clearBuffer() cancels the provider utterance and clears queued playback audio.  See the [partner API reference](https://docs.x.ai/developers/model-capabilities/audio/text-to-speech#streaming-tts-websocket). |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+Example `parameters` messages:
+
+**`text.delta`**
+
+```json
+{
+  "type": "text.delta",
+  "delta": "Hello from Grok TTS."
+}
+```
+
+**`text.done`**
+
+```json
+{
+  "type": "text.done"
+}
+```
+
+**`text.clear`**
+
+```json
+{
+  "type": "text.clear"
+}
+```
+
+## Inherited Methods
+
+`XAI.RealtimeTTSPlayer` extends the shared player base (`BasePlayer` in the typings). Those base methods use the same playback contract documented on the public [Player](/reference/voxengine/player) page, and they emit [PlayerEvents](#playerevents).
+
+#### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Inherited from the shared player base. See [Player.addEventListener](/reference/voxengine/player#addeventlistener).
+
+Adds a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: PlayerEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>PlayerEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> id
+
+Inherited from the shared player base. See [Player.id](/reference/voxengine/player#id).
+
+Returns the player's id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+#### <Icon icon="fa-duotone fa-function" /> pause
+
+Inherited from the shared player base. See [Player.pause](/reference/voxengine/player#pause).
+
+Pauses playback. To continue the playback use the `Player.resume` method.
+
+```ts
+pause(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Inherited from the shared player base. See [Player.removeEventListener](/reference/voxengine/player#removeeventlistener).
+
+Removes a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event.
+
+```ts
+removeEventListener(event: PlayerEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>PlayerEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> resume
+
+Inherited from the shared player base. See [Player.resume](/reference/voxengine/player#resume).
+
+Resumes playback after the `Player.pause` method is called.
+
+```ts
+resume(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Inherited from the shared player base. See [Player.sendMediaTo](/reference/voxengine/player#sendmediato).
+
+Starts sending media from the player to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> stop
+
+Inherited from the shared player base. See [Player.stop](/reference/voxengine/player#stop).
+
+Stops playback. The current player's instance is destroyed.
+
+```ts
+stop(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+#### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Inherited from the shared player base. See [Player.stopMediaTo](/reference/voxengine/player#stopmediato).
+
+Stops sending media from the player to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+## PlayerEvents
+
+These are inherited [PlayerEvents](/reference/voxengine/player-events). Event callbacks receive the shared player event object; `player` is the `XAI.RealtimeTTSPlayer` instance that emitted the event. Some events include additional playback fields noted below.
+
+<AccordionGroup>
+<a id="playerevents-created" />
+<a id="-created" />
+<Accordion title="Created">
+
+Triggered when [Player](/reference/voxengine/player) created.
+
+Event constant: `PlayerEvents.Created`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-playbackready" />
+<a id="-playbackready" />
+<Accordion title="PlaybackReady">
+
+Triggers by the `createURLPlayer` and `createTTSPlayer` methods when
+1) the audio file download to the Voximplant cache is finished;
+2) the audio file is found in the cache (i.e., it is in the cache before).
+
+Event constant: `PlayerEvents.PlaybackReady`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-started" />
+<a id="-started" />
+<Accordion title="Started">
+
+Triggered when playback is started. Note that if the `createURLPlayer` method is called with the **onPause** parameter set to true, the event is not triggered; it is triggered after the `Player.resume` method call.
+
+Event constant: `PlayerEvents.Started`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `duration` | `number` | ✓ | Playback duration |
+</Accordion>
+<a id="playerevents-stopped" />
+<a id="-stopped" />
+<Accordion title="Stopped">
+
+Triggers as a result of the `Player.stop` method call.
+
+Event constant: `PlayerEvents.Stopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-playbackfinished" />
+<a id="-playbackfinished" />
+<Accordion title="PlaybackFinished">
+
+Triggered when playback has finished successfully or with an error.
+
+Event constant: `PlayerEvents.PlaybackFinished`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `error` | `string` | ✗ | Error message |
+</Accordion>
+<a id="playerevents-error" />
+<a id="-error" />
+<Accordion title="Error">
+
+Triggered when playback has finished with an error.
+
+Event constant: `PlayerEvents.Error`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `error` | `string` | ✓ | Error message |
+</Accordion>
+<a id="playerevents-playbackmarkerreached" />
+<a id="-playbackmarkerreached" />
+<Accordion title="PlaybackMarkerReached">
+
+Triggered when `Player.addMarker` is reached.
+
+Event constant: `PlayerEvents.PlaybackMarkerReached`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| `offset` | `number` | ✓ | The marker offset |
+</Accordion>
+<a id="playerevents-playbackbuffering" />
+<a id="-playbackbuffering" />
+<Accordion title="PlaybackBuffering">
+
+Triggered when an audio file is playing faster than it is being loaded.
+
+Event constant: `PlayerEvents.PlaybackBuffering`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+</Accordion>
+<a id="playerevents-audiochunksplaybackfinished" />
+<a id="-audiochunksplaybackfinished" />
+<Accordion title="AudioChunksPlaybackFinished">
+
+Triggered when an audio chunk playback is finished. Note that this event is triggered only for RealtimeTTSPlayer instances.
+
+For [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player), the optional **final** field indicates whether the completed flush ends the current phrase or is an intermediate auto-flush.
+
+Event constant: `PlayerEvents.AudioChunksPlaybackFinished`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `player` | <code>RealtimeTTS<wbr />Player</code> | ✓ | The [XAI.RealtimeTTSPlayer](#realtimettsplayer) instance that emitted the event. |
+| <code>timeToFirst<wbr />Byte</code> | `number` | ✓ | Time to first byte (TTFB) in milliseconds. Represents the delay between sending the request and receiving the first byte of audio data. |
+| `final` | `boolean` | ✗ | Whether the completed flush ends the current phrase. Present only for [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player) (`true` or `false`); omitted for other RealtimeTTS providers. - `true` — final (normal) flush; phrase playback is complete. - `false` — intermediate auto-flush; more audio is expected. |
+</Accordion>
+</AccordionGroup>

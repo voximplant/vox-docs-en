@@ -12,14 +12,14 @@ With Voximplant, you can deliver 2FA security codes across two channels:
 
 To place an automated call that dictates an OTP code to your user:
 
-1. Create an [application]().
-2. Rent a [phone number]() to serve as your verified outbound caller ID.
-3. Create a [scenario]() that:
-   * Extracts the destination number and security code from session [custom data]().
-   * Places an outbound call using [callPSTN()]().
-   * Synthesizes and dictates the passcode to the user using [createTTSPlayer()]() or `call.say()`.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to serve as your verified outbound caller ID.
+3. Create a [scenario](/platform/getting-started/create-a-scenario) that:
+   * Extracts the destination number and security code from session [custom data](/platform/storage/custom-data).
+   * Places an outbound call using [callPSTN()](/reference/voxengine/voxengine#callpstn).
+   * Synthesizes and dictates the passcode to the user using [createTTSPlayer()](/reference/voxengine/voxengine#createttsplayer) or `call.say()`.
 
-Your backend initiates the call remotely via the Management API [StartScenarios]() method, passing the destination phone number and OTP code in the `script_custom_data` parameter:
+Your backend initiates the call remotely via the Management API [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method, passing the destination phone number and OTP code in the `script_custom_data` parameter:
 
 ```json title="OTP payload structure"
 {
@@ -66,11 +66,11 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 });
 ```
 
-4. Create a [routing rule]() bound to your scenario.
+4. Create a [routing rule](/platform/getting-started/create-a-routing-rule) bound to your scenario.
 
 ### Trigger the call from your backend
 
-Launch the verification call by invoking the [StartScenarios]() method:
+Launch the verification call by invoking the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method:
 
 ```bash title="Trigger 2FA voice call"
 curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
@@ -95,12 +95,12 @@ curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
 
 Alternatively, you can deliver passcodes via SMS:
 
-1. Rent an SMS-enabled [phone number]().
-2. [Enable SMS functionality]() on the number in the Control Panel.
+1. Rent an SMS-enabled [phone number](/platform/getting-started/buy-a-phone-number).
+2. [Enable SMS functionality](/platform/messaging/sms) on the number in the Control Panel.
 
 ### Send one-way A2P verification SMS
 
-Use the [A2PSendSms]() Management API method to dispatch the one-way OTP message from your backend:
+Use the [A2PSendSms](/reference/management-api/reference/sms/a2p-send-sms) Management API method to dispatch the one-way OTP message from your backend:
 
 * Specify your SMS-enabled number or an approved alphanumeric Sender ID in `src_number` (contact support to register custom Sender IDs).
 * Pass the destination phone number in `dst_numbers`.
@@ -124,4 +124,4 @@ curl -X POST "https://api.voximplant.com/platform_api/A2PSendSms" \
 }
 ```
 
-For two-way interactive messaging where users can reply, refer to the [SMS messaging]() guide.
+For two-way interactive messaging where users can reply, refer to the [SMS messaging](/platform/messaging/sms) guide.

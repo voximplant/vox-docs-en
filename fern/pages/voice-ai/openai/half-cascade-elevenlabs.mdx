@@ -1,0 +1,58 @@
+---
+title: "Example: Half-cascade with ElevenLabs"
+description: "This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to ElevenLabs Realtime TTS."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to ElevenLabs Realtime TTS.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+- (Optional) Update the `ELEVENLABS_VOICE_ID` constant in the example to your preferred voice.
+- (Optional) Store your ElevenLabs API key in Voximplant [Secrets](/platform/storage/secret-storage) under `ELEVENLABS_API_KEY` if you want to use your own ElevenLabs account.
+
+## How it works
+
+- OpenAI runs `gpt-realtime-2.1` in text mode (`output_modalities: ["text"]`).
+- Caller audio is sent to OpenAI: `call.sendMediaTo(voiceAIClient)`.
+- Completed OpenAI text responses are sent to ElevenLabs with `append(text, true)`, and ElevenLabs streams the generated speech to the call.
+- When OpenAI detects caller speech, the scenario clears both the OpenAI and ElevenLabs output buffers.
+
+## Developer notes
+
+- Do not set audio format parameters (for example `ulaw_8000`) in half-cascade connector requests. VoxEngine's WebSocket gateway handles media format negotiation automatically.
+- If no ElevenLabs API key is provided, Voximplant's default account and billing are used.
+- Custom or cloned voices are only available when using your own API key.
+
+## Full VoxEngine scenario
+
+### Notes
+- The example uses `eleven_turbo_v2_5`.
+- The example handles `ResponseOutputTextDone`, so each `append(text, true)` call contains a completed OpenAI text response.
+
+<Note>
+    This example runs `gpt-realtime-2.1` using the Realtime 2.x session shape, with input settings nested under `session.audio.input`.
+</Note>
+
+<Code
+  src="../../../examples/openai/voxeengine-openai-half-cascade-elevenlabs.js"
+  title="voxeengine-openai-half-cascade-elevenlabs.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [OpenAI Realtime inbound example](/voice-ai/openai/inbound)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [VoxEngine ElevenLabs module API reference](/reference/voxengine/elevenlabs)
+- [Speech synthesis guide](/voice-ai/speech/openai-tts)

@@ -1,0 +1,65 @@
+---
+title: VAD
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [Silero.VADEvents](/reference/voxengine/silero/vad-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Silero.VADEvents | T, callback: (event: Silero._VADEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Silero.VADEvents | T" required />
+
+<ParamField path="callback" type="(event: Silero._VADEvents[T]) => any" required />
+
+### close
+
+Closes the VAD connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+### id
+
+Returns the VAD id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [Silero.VADEvents](/reference/voxengine/silero/vad-events) event.
+
+```ts
+removeEventListener(event: Silero.VADEvents | T, callback?: (event: Silero._VADEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Silero.VADEvents | T" required />
+
+<ParamField path="callback" type="(event: Silero._VADEvents[T]) => any" />
+
+### reset
+
+Reset the VAD context.
+
+```ts
+reset(): void
+```
+
+### webSocketId
+
+Returns the VAD WebSocket id.
+
+```ts
+webSocketId(): string
+```

@@ -1,0 +1,59 @@
+---
+title: "Example: Half-cascade with Inworld"
+description: "This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to Inworld Realtime TTS."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to Inworld Realtime TTS.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+- Set a `voiceId` in the Inworld request (`createContextParameters.create.voiceId`) to choose the TTS voice used in this scenario.
+- (Optional) Store your Inworld API key in Voximplant [Secrets](/platform/storage/secret-storage) under `INWORLD_API_KEY` if you want to use your own Inworld account.
+
+
+## How it works
+
+- OpenAI runs `gpt-realtime-2.1` in text mode (`output_modalities: ["text"]`).
+- Caller audio is sent to OpenAI: `call.sendMediaTo(voiceAIClient)`.
+- Completed OpenAI text responses are sent to Inworld with `send({ send_text: { text } })`, followed by `send({ flush_context: {} })`; Inworld streams the generated speech to the call.
+- When OpenAI detects caller speech, the scenario clears both the OpenAI and Inworld output buffers.
+
+## Developer notes
+
+- Do not set audio format parameters in half-cascade connector requests. VoxEngine's WebSocket gateway handles media format negotiation automatically.
+- If no Inworld API key is provided, Voximplant's default account and billing are used.
+- Custom or cloned voices are only available when using your own API key.
+
+## Full VoxEngine scenario
+
+### Notes
+- The example sets `voiceId: "Ashley"` and `modelId: "inworld-tts-1.5-mini"` in `createContextParameters.create`. Change these to any supported Inworld voice or model.
+- The example handles `ResponseOutputTextDone`, so each Inworld request contains a completed OpenAI text response.
+
+<Note>
+    This example runs `gpt-realtime-2.1` using the Realtime 2.x session shape, with input settings nested under `session.audio.input`.
+</Note>
+
+<Code
+  src="../../../examples/openai/voxeengine-openai-half-cascade-inworld.js"
+  title="voxeengine-openai-half-cascade-inworld.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [OpenAI Realtime inbound example](/voice-ai/openai/inbound)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [VoxEngine Inworld module API reference](/reference/voxengine/inworld)
+- [Speech synthesis guide](/voice-ai/speech/openai-tts)

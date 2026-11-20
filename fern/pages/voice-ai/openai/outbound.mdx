@@ -1,0 +1,147 @@
+---
+title: "Example: Placing an outbound call"
+description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to OpenAI Realtime once the callee answers."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to OpenAI Realtime once the callee answers. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+
+**Jump to the [Full VoxEngine scenarios](#full-voxengine-scenarios).**
+
+## Prerequisites
+
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+- Ensure outbound calling is enabled for your Voximplant application and that your caller ID is verified.
+
+## Outbound call parameters
+
+The example expects destination and caller ID in `customData` (read via `VoxEngine.customData()`):
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+## Launch the routing rule
+
+For quick testing, you can start this outbound scenario from the Voximplant Control Panel:
+
+1. Open your Voximplant application and go to the **Routing** tab.
+2. Select the routing rule that has this scenario attached.
+3. Click **Run**.
+4. Provide **Custom data** (max 200 bytes) with `destination` and `callerId`:
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+For production, start the routing rule with the Management API [`startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method. Pass `rule_id` and the same JSON string in `script_custom_data`.
+
+## Alternate outbound destinations
+
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+
+- **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
+- **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
+- **Voximplant users** (`VoxEngine.callUser`): calls another app user inside the same Voximplant application such as web SDK, mobile SDK, or SIP user.
+
+Relevant guides:
+
+- [SIP calling options](/voice-ai/network-options/sip)
+- [Voximplant users calling options](/voice-ai/network-options/web-mobile)
+- [WhatsApp calling options](/voice-ai/network-options/whatsapp)
+
+## Session setup
+
+The outbound call setup is shared between versions. Only the Realtime model and session configuration change.
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    The example configures the OpenAI Realtime session with a short system prompt, enables semantic VAD, and uses low reasoning effort.
+
+```js title="GPT Realtime 2.1 session setup"
+voiceAIClient.sessionUpdate({
+  session: {
+    type: "realtime",
+    model: "gpt-realtime-2.1",
+    instructions: SYSTEM_PROMPT,
+    reasoning: { effort: "low" },
+    output_modalities: ["audio"],
+    audio: {
+      input: {
+        turn_detection: { type: "semantic_vad", interrupt_response: true },
+      },
+      output: {
+        voice: "alloy",
+      },
+    },
+  },
+});
+```
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+    The example configures the OpenAI Realtime session with a short system prompt, a voice, and server VAD.
+
+```js title="GPT Realtime 1.5 session setup"
+voiceAIClient.sessionUpdate({
+  session: {
+    type: "realtime",
+    instructions: SYSTEM_PROMPT,
+    voice: "alloy",
+    output_modalities: ["audio"],
+    turn_detection: { type: "server_vad", interrupt_response: true },
+  },
+});
+```
+  </Tab>
+</Tabs>
+
+## Connect call audio
+
+After the callee answers, the example bridges audio both ways:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+```
+
+## Barge-in
+
+The scenario clears buffered model audio whenever OpenAI detects caller speech:
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechStarted, () => {
+  voiceAIClient.clearMediaBuffer();
+});
+```
+
+## Full VoxEngine scenarios
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-place-outbound-call.js"
+      title="voxeengine-openai-place-outbound-call.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-place-outbound-call-1-5.js"
+      title="voxeengine-openai-place-outbound-call-1-5.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+</Tabs>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [Answering an incoming call with OpenAI Realtime](/voice-ai/openai/inbound)
+- [Function calling with OpenAI Realtime](/voice-ai/openai/function-calling)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [Current OpenAI models](https://developers.openai.com/api/docs/models)
+- [Start scenarios with the Management API](/reference/management-api/reference/scenarios/start-scenarios)

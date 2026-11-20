@@ -2,9 +2,9 @@
 
 Voximplant supports audio and video conferences with up to 100 participants.
 
-Include the [Conference module]() in your scenario. Then use the [createConference]() method to create a conference call.
+Include the [Conference module]() in your scenario. Then use the [createConference](/reference/voxengine/voxengine#createconference) method to create a conference call.
 
-For a **voice conference**, when an incoming call arrives, first, answer it, then add it to the conference via the [sendMediaBetween]() method. See the code example to understand how it works.
+For a **voice conference**, when an incoming call arrives, first, answer it, then add it to the conference via the [sendMediaBetween](/reference/voxengine/voxengine#sendmediabetween) method. See the code example to understand how it works.
 
 ```javascript title="Voice conference scenario"
 require(Modules.Conference);
@@ -42,7 +42,7 @@ function handleCallDisconnected(e) {
 }
 ```
 
-For a **video conference**, answer the incoming call and use the [Conference.add]() method instead. Here is a typical video conference scenario with some extra tools for your convenience. Take a closer look to understand how it works.
+For a **video conference**, answer the incoming call and use the [Conference.add](/reference/voxengine/conference#add) method instead. Here is a typical video conference scenario with some extra tools for your convenience. Take a closer look to understand how it works.
 
 ```javascript title="Video conference scenario"
 require(Modules.Conference);
@@ -97,7 +97,7 @@ function checkForTermination() {
 
 This scenario allows Voximplant SDK users to join the conference call. If you want to have incoming SIP/phone calls into your conference, you need to create another **gateway scenario**.
 
-The gateway scenario accepts incoming calls from SIP PBX and phone numbers and uses the [callConference]() method to call the conference scenario.
+The gateway scenario accepts incoming calls from SIP PBX and phone numbers and uses the [callConference](/reference/voxengine/voxengine#callconference) method to call the conference scenario.
 
 ```javascript title="Gateway scenario"
 // Handle incoming call from PSTN/SIP/SDK
@@ -115,7 +115,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-Create [routing rules]() for the conference and gateway scenarios. The rule pattern for the conference scenario should be the same string you pass to the [callConference]() method. In our example, it is the **conferenceId** string.
+Create [routing rules](/platform/getting-started/create-a-routing-rule) for the conference and gateway scenarios. The rule pattern for the conference scenario should be the same string you pass to the [callConference](/reference/voxengine/voxengine#callconference) method. In our example, it is the **conferenceId** string.
 
 <Warning title="Video conference">
 If you are making a video conference, set the video conference flag to true in the routing rule.
@@ -140,7 +140,7 @@ To stop a viewer call, use the [ViewerCall.hangup()]() method.
 
 ## How to make a call from a conference
 
-To make a call from a conference, simply call a Voximplant user/a phone number/a sip address as explained in the [voice calls]() article, then handle the [Connected]() event. When the event is triggered, use the [sendMediaBetween]() method for a voice conference and the [Conference.add]() method for a video conference to unite the call with the conference.
+To make a call from a conference, simply call a Voximplant user/a phone number/a sip address as explained in the [voice calls](/platform/telephony/calls) article, then handle the [Connected]() event. When the event is triggered, use the [sendMediaBetween](/reference/voxengine/voxengine#sendmediabetween) method for a voice conference and the [Conference.add](/reference/voxengine/conference#add) method for a video conference to unite the call with the conference.
 
 ```javascript title="Call from a conference"
 const call = VoxEngine.callPSTN('first phone number to call', 'rented or verified phone number');
@@ -165,4 +165,4 @@ call.addEventListener(CallEvents.Connected, (e) => {
 **A**: Unfortunately, we do not have any information about such applications.
 
 **Q**: **How do I terminate a conference?**  
-**A**: Use the [VoxEngine.terminate]() to terminate the JS session and the conference. If you need to terminate the session after a certain period, use the SetTimeout function.
+**A**: Use the [VoxEngine.terminate](/reference/voxengine/voxengine#terminate) to terminate the JS session and the conference. If you need to terminate the session after a certain period, use the SetTimeout function.

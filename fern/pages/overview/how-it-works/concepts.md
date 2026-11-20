@@ -4,15 +4,15 @@ Voximplant uses a serverless JavaScript runtime called VoxEngine to execute appl
 
 VoxEngine is built on the [ECMAScript 2022]() standard and powered by the [Firefox 115]() SpiderMonkey engine, supporting all modern JavaScript features native to that engine.
 
-You can develop scenarios directly in the [Cloud IDE]() or use a third-party local IDE. Local setups allow you to leverage tools like TypeScript and bundlers. However, ensure your build output is clean and readable, as heavily obfuscated code makes troubleshooting and debugging difficult for your team and Voximplant support.
+You can develop scenarios directly in the [Cloud IDE](/overview/how-voximplant-works/cloud-ide) or use a third-party local IDE. Local setups allow you to leverage tools like TypeScript and bundlers. However, ensure your build output is clean and readable, as heavily obfuscated code makes troubleshooting and debugging difficult for your team and Voximplant support.
 
-We recommend using [VoxEngine CI]() to automate scenario deployment when developing in external IDEs.
+We recommend using [VoxEngine CI](/overview/how-voximplant-works/vox-engine-ci) to automate scenario deployment when developing in external IDEs.
 
 ## Event-based model
 
 VoxEngine scenarios follow an event-driven architecture, enabling developers to structure application logic by subscribing to and handling platform events.
 
-Some events are **nested**, meaning you must **first subscribe to a parent event** before accessing child events. For example, to handle [CallEvents](), such as [Connected]() or [ToneReceived](), you must first subscribe to the parent [CallAlerting]() event. Handling [CallAlerting]() provides the [Call]() object, which emits its own events:
+Some events are **nested**, meaning you must **first subscribe to a parent event** before accessing child events. For example, to handle [CallEvents](/reference/voxengine/call#callevents), such as [Connected]() or [ToneReceived](/reference/voxengine/call#tonereceived), you must first subscribe to the parent [CallAlerting](/reference/voxengine/app-events#callalerting) event. Handling [CallAlerting](/reference/voxengine/app-events#callalerting) provides the [Call](/reference/voxengine/call) object, which emits its own events:
 
 ```javascript title="Handle nested call events"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -44,10 +44,10 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 ```
 
 <Info title="What is considered an incoming call?">
-When placing a call from a web or mobile SDK, the session consists of two call legs: **SDK → scenario** and **scenario → destination**. The SDK → scenario leg is treated as an incoming call inside the scenario and must be handled using the [CallAlerting]() event. Read [How to process calls in a scenario]() to learn more.
+When placing a call from a web or mobile SDK, the session consists of two call legs: **SDK → scenario** and **scenario → destination**. The SDK → scenario leg is treated as an incoming call inside the scenario and must be handled using the [CallAlerting](/reference/voxengine/app-events#callalerting) event. Read [How to process calls in a scenario]() to learn more.
 </Info>
 
-Some events are **sequential**, meaning one event only fires after a preceding event has completed. For example, the media player's [PlaybackFinished]() event (which indicates that the [media player]() has finished playing audio) can only fire after the player's [Started]() event has occurred.
+Some events are **sequential**, meaning one event only fires after a preceding event has completed. For example, the media player's [PlaybackFinished]() event (which indicates that the [media player](/platform/speech-processing/media-player) has finished playing audio) can only fire after the player's [Started]() event has occurred.
 
 <Warning title="Subscribe to events before processing them">
 Before executing scenario logic (such as sending media between endpoints), ensure you have subscribed to all necessary events.
@@ -58,32 +58,32 @@ Before executing scenario logic (such as sending media between endpoints), ensur
 Every attempt to start a call using Voximplant creates a new independent call session in VoxEngine (with the exception of conferences, where incoming calls join an existing shared session):
 
 * A session begins with the [Started]() event triggered by an incoming call or an HTTP request.
-* The subsequent event depends on how the session was initiated: [CallAlerting]() for incoming calls, or [HttpRequest]() for HTTP requests.
-* During an active session, various [CallEvents]() fire as calls connect, are put on hold, start recording, and more.
+* The subsequent event depends on how the session was initiated: [CallAlerting](/reference/voxengine/app-events#callalerting) for incoming calls, or [HttpRequest]() for HTTP requests.
+* During an active session, various [CallEvents](/reference/voxengine/call#callevents) fire as calls connect, are put on hold, start recording, and more.
 
 Session termination proceeds in the following steps:
 
 1. The [terminate]() method is called, an unhandled error occurs, or the session reaches an idle timeout with no active calls or ACD requests.
-2. The [Terminating]() event fires. Timers and external resources become unavailable, but you can make one final HTTP request inside the event handler (for example, to notify an external backend that the session has finished).
-3. Once that final request completes (or drains), the [Terminated]() event fires.
+2. The [Terminating](/reference/voxengine/app-events#terminating) event fires. Timers and external resources become unavailable, but you can make one final HTTP request inside the event handler (for example, to notify an external backend that the session has finished).
+3. Once that final request completes (or drains), the [Terminated](/reference/voxengine/app-events#terminated) event fires.
 
 <Info title="Idle timeout">
 A session with no active calls and no ACD requests is automatically terminated after 60 seconds.
 </Info>
 
-To learn more about session constraints, refer to [Limits and restrictions]().
+To learn more about session constraints, refer to [Limits and restrictions](/help/troubleshooting/limits-and-restrictions).
 
 ## Standard library
 
-VoxEngine provides standard utility functions such as [setTimeout](), [clearTimeout](), [str2Bytes](), [base64_encode](), [uuidgen](), and a suite of [crypto]() methods.
+VoxEngine provides standard utility functions such as [setTimeout](), [clearTimeout](), [str2Bytes](/reference/voxengine/scenario-globals#str2bytes), [base64_encode](), [uuidgen](), and a suite of [crypto]() methods.
 
-Some functions have naming conventions or behaviors specific to VoxEngine. Consult the [VoxEngine reference]() before implementing them to ensure compatibility.
+Some functions have naming conventions or behaviors specific to VoxEngine. Consult the [VoxEngine reference](/reference/voxengine/overview) before implementing them to ensure compatibility.
 
 ## Logging
 
-Use the [Logger.write]() method to output messages to the session logger.
+Use the [Logger.write](/reference/voxengine/logger#write) method to output messages to the session logger.
 
-When a session terminates, its log is immediately available in Call History. You can access logs via the [Calls]() section in the Control Panel or retrieve them programmatically using the [GetCallHistory]() API method.
+When a session terminates, its log is immediately available in Call History. You can access logs via the [Calls](/platform/telephony/calls) section in the Control Panel or retrieve them programmatically using the [GetCallHistory](/reference/management-api/reference/history/get-call-history) API method.
 
 ### Key features
 

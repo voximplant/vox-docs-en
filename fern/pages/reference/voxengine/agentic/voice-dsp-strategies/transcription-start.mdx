@@ -1,0 +1,27 @@
+---
+title: TranscriptionStart
+subtitle: A start strategy that triggers a user turn start when a transcription is received.
+---
+
+## Properties
+
+<a id="enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+<a id="type" />
+<ParamField path="type" type="'transcription'">
+_readonly_
+
+Reported as **strategy** on `Agentic.VoiceDSPEvents.TurnStarted`.
+</ParamField>
+
+<a id="useinterim" />
+<ParamField path="useInterim" type="boolean">
+_optional_
+
+Optional. Whether to trigger on interim (partial) transcription frames for earlier detection. The default value is **true**.
+</ParamField>

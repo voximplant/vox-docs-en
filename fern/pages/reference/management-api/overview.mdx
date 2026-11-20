@@ -1,0 +1,48 @@
+---
+title: Management API
+subtitle: HTTP API for administering Voximplant accounts and resources
+---
+
+The Voximplant Management API (historically known as **HTTP API**) lets you
+manage everything in a Voximplant account programmatically: applications,
+users, phone numbers, call history, call lists, scenarios, queues, SmartQueue
+agents, secrets, push credentials and more.
+
+## Base URL
+
+All methods live under a single base URL:
+
+```
+https://api.voximplant.com/platform_api
+```
+
+Every method is invoked with `POST`. Parameters are passed as query-string
+values, except for methods that accept file uploads, such as
+[CreateCallList](/reference/management-api/reference/call-lists/create-call-list),
+which use `multipart/form-data`.
+
+## Authorization
+
+The recommended authentication flow uses a signed JWT from a service-account
+private key and sends it as a bearer token:
+
+```http
+Authorization: Bearer <token>
+```
+
+See [Authorization](/reference/management-api/authorization) for
+ready-to-copy snippets that turn your `credentials.json` into a token. Some
+methods additionally require a role; the `x-voximplant-roles` extension in the
+method description lists allowed roles.
+
+## Errors
+
+On error the API returns the same 200 HTTP status with an `error` object in
+the JSON body. The [Errors](/reference/management-api/errors) page lists
+every error code currently emitted.
+
+## Client libraries
+
+Voximplant publishes generated client libraries for Node.js, Python, PHP,
+Java, Go and .NET. See [voximplant/vox-api-clients](https://github.com/orgs/voximplant/repositories?q=vox-api-clients)
+on GitHub.

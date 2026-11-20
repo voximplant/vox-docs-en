@@ -2,7 +2,7 @@
 
 Learn how to implement multi-party audio and video conferences in web applications using the Voximplant Web SDK.
 
-Before getting started, make sure you have imported the Web SDK, connected to the Voximplant Cloud, and authenticated a user. Refer to the [Web SDK quickstart]() to set up your client.
+Before getting started, make sure you have imported the Web SDK, connected to the Voximplant Cloud, and authenticated a user. Refer to the [Web SDK quickstart](/sdk/web) to set up your client.
 
 <Info title="Ready-to-use conference demo">
 Voximplant provides an open-source, production-ready video conference client you can test immediately at [videoconf.voximplant.com]().
@@ -48,7 +48,7 @@ To leave the conference, call `conferenceCall.hangup()`.
 
 ### 2. Cloud routing requirements
 
-When your web client initiates a conference call, Voximplant evaluates your application's [routing rules](). Ensure you have a routing rule whose regex pattern matches the conference `number` passed to `callConference()`, bound to a scenario that initializes a [VoxEngine conference]().
+When your web client initiates a conference call, Voximplant evaluates your application's [routing rules](/platform/getting-started/create-a-routing-rule). Ensure you have a routing rule whose regex pattern matches the conference `number` passed to `callConference()`, bound to a scenario that initializes a [VoxEngine conference]().
 
 ---
 

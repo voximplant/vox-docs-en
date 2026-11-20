@@ -14,18 +14,18 @@ In this guide, we will build a scenario that tracks and announces how many times
 
 ## Prerequisites
 
-1. Create an [application]().
-2. Create a [scenario]().
-3. Create a [routing rule]() and bind it to your scenario.
-4. Create an application [user]() to authenticate your test client.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create a [scenario](/platform/getting-started/create-a-scenario).
+3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) and bind it to your scenario.
+4. Create an application [user](/platform/getting-started/create-users) to authenticate your test client.
 
-You will also need a client application to place test calls (see [Processing voice calls in SDKs]()), or you can place a test call directly using the built-in [web softphone]().
+You will also need a client application to place test calls (see [Processing voice calls in SDKs](/sdk/overview)), or you can place a test call directly using the built-in [web softphone]().
 
 ---
 
 ## Scenario setup
 
-In your scenario, require the `ApplicationStorage` module. Use [ApplicationStorage.put()]() to create or update values, and [ApplicationStorage.get()]() to retrieve them.
+In your scenario, require the `ApplicationStorage` module. Use [ApplicationStorage.put()](/reference/voxengine/application-storage#put) to create or update values, and [ApplicationStorage.get()](/reference/voxengine/application-storage#get) to retrieve them.
 
 Refer to the [ApplicationStorage API reference]() for complete parameter specifications.
 

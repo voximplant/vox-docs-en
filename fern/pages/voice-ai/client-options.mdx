@@ -1,0 +1,127 @@
+---
+title: Connector Options
+subtitle: Compare connector options and jump into runnable examples.
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+Choose a connector based on your preferred model provider and feature set. Every connector page includes an overview, architecture notes, and code-first VoxEngine examples.
+
+<llms-only>
+## Connector directory
+
+- [OpenAI](/voice-ai/openai/overview): direct realtime, full-cascade, and half-cascade voice pipelines.
+- [Gemini Live](/voice-ai/google/overview): direct Gemini API or Vertex AI credentials with translation support.
+- [Ultravox](/voice-ai/ultravox/overview): speech-native voice AI with inbound, outbound, and function calling examples.
+- [ElevenLabs Agents](/voice-ai/elevenlabs/overview): conversational agents for PSTN, SIP, WebRTC, and WhatsApp flows.
+- [Cartesia Line Agents](/voice-ai/cartesia/overview): line-agent runtime pattern for real-time calls and tool handling.
+- [Inworld Realtime](/voice-ai/inworld/overview): speech-to-speech sessions with Inworld STT, an LLM, and TTS-2 output.
+- [Deepgram Agents](/voice-ai/deepgram/overview): Deepgram Voice Agent integration with context history support.
+- [Grok Voice Agent](/voice-ai/xai/overview): xAI Grok realtime voice integration with feature-control examples.
+- [Qwen Cloud](/voice-ai/qwen/overview): direct realtime speech-to-speech with qwen-audio-3.1-realtime-plus.
+- [Jev](/voice-ai/jev/overview): TypeSafe System One structured decisions over text. Not a realtime voice pipeline.
+</llms-only>
+
+<div className="card-grid">
+  <a className="voice-connector-card" href="/voice-ai/openai/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/openai.svg" alt="OpenAI logo" />
+    </span>
+    <h3>OpenAI</h3>
+    <p>OpenAI and OpenAI-compatible APIs with direct realtime, full-cascade, and half-cascade voice pipelines.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling | <wbr /> Full-cascade | Half-cascade</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/google/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/gemini.svg" alt="Google Gemini logo" />
+    </span>
+    <h3>Gemini Live</h3>
+    <p>Gemini live audio sessions with support for direct Gemini API or Vertex AI credentials.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling | <wbr /> Vertex | Speech translation</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/ultravox/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/ultravox.svg" alt="Ultravox logo" />
+    </span>
+    <h3>Ultravox</h3>
+    <p>Speech-native voice AI with examples for inbound, outbound, and tool-driven interactions.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/elevenlabs/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/elevenlabs.svg" alt="ElevenLabs logo" />
+    </span>
+    <h3>ElevenLabs Agents</h3>
+    <p>Connect ElevenLabs conversational agents to PSTN, SIP, WebRTC, and WhatsApp call flows.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/cartesia/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/cartesia.png" alt="Cartesia logo" />
+    </span>
+    <h3>Cartesia Line Agents</h3>
+    <p>Line-agent runtime pattern for real-time calls, tool handling, and external business logic.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/inworld/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/inworld.png" alt="Inworld logo" />
+    </span>
+    <h3>Inworld Realtime</h3>
+    <p>Speech-to-speech sessions with Inworld speech recognition, an LLM, and TTS-2 output.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/deepgram/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/deepgram.svg" alt="Deepgram logo" />
+    </span>
+    <h3>Deepgram Agents</h3>
+    <p>Deepgram Voice Agent integration with support for context history in ApplicationStorage.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/xai/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/grok-x.svg" alt="xAI logo" />
+    </span>
+    <h3>Grok Voice Agent</h3>
+    <p>xAI Grok real-time voice integration with examples for core calls and connector-specific features.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Feature controls</span>
+  </a>
+
+  <a className="voice-connector-card" href="/voice-ai/qwen/overview">
+    <span className="voice-connector-logo-wrap">
+      <img className="voice-connector-logo" src="../../assets/connectors/qwen.svg" alt="Qwen" />
+    </span>
+    <h3>Qwen Cloud</h3>
+    <p>Direct realtime speech-to-speech with the Qwen audio model, including inbound, outbound, and function calling.</p>
+    <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+  </a>
+</div>
+
+## Structured decisions
+
+Jev is not a realtime voice connector. It returns typed answers from text you send in a request, and it does not take call audio.
+
+<div className="card-grid compact">
+  <a className="voice-connector-card compact" href="/voice-ai/jev/overview">
+    <h3>Jev</h3>
+    <p>TypeSafe System One decisions for routing, triage, and scoring.</p>
+  </a>
+</div>
+
+## Common capabilities across connectors
+
+- Route calls from PSTN, SIP, WebRTC, or WhatsApp through VoxEngine.
+- Bridge call media to a provider connector in real time.
+- Handle barge-in by clearing connector output when user speech starts.
+- Implement tool/function execution for CRM actions, transfers, scheduling, or custom workflows.
+- Store provider API keys in Voximplant [Secrets](/platform/storage/secret-storage) and keep examples production-safe.

@@ -1,16 +1,16 @@
 # Video contact center
 
-In addition to a traditional [voice contact center](), you can use SmartQueue to build a full-featured video contact center for your customers.
+In addition to a traditional [voice contact center](/platform/contact-center/voice), you can use SmartQueue to build a full-featured video contact center for your customers.
 
 ## Set up agents and queues
 
-Agents and queues for a video contact center are configured in the same way as for a [voice contact center]().
+Agents and queues for a video contact center are configured in the same way as for a [voice contact center](/platform/contact-center/voice).
 
-Create one or more [agents]() and configure [agent skills]() as needed. Then, create at least one [queue]() and bind your agents to the queue, as described in the [voice contact center]() guide.
+Create one or more [agents]() and configure [agent skills](/platform/contact-center/agent-skills) as needed. Then, create at least one [queue]() and bind your agents to the queue, as described in the [voice contact center](/platform/contact-center/voice) guide.
 
 ## Set up an agent workspace
 
-An agent workspace is the client application where agents manage and participate in video calls. You can build an agent workspace using any Voximplant client [SDK]().
+An agent workspace is the client application where agents manage and participate in video calls. You can build an agent workspace using any Voximplant client [SDK](/sdk/overview).
 
 When initializing the Web SDK, pass `queueType` set to `SmartQueue`:
 
@@ -25,20 +25,20 @@ At a minimum, an agent workspace for video calls requires:
 * Video rendering elements and controls to send and receive video streams
 * Controls to manage the agent's operational status
 
-Refer to [Processing video calls in SDKs]() to learn how to render and manage video streams in client applications.
+Refer to [Processing video calls in SDKs](/sdk/overview) to learn how to render and manage video streams in client applications.
 
 Review [SmartQueue agent statuses]() to understand how agent availability and call dispatching work.
 
 ## Set up a VoxEngine scenario
 
-To learn how to create and manage cloud scenarios, see [Create a scenario]().
+To learn how to create and manage cloud scenarios, see [Create a scenario](/platform/getting-started/create-a-scenario).
 
-Similar to voice workflows, the primary goal of the scenario is to handle incoming calls and place them into the appropriate SmartQueue. You can use different [routing rules]() or custom logic to distribute calls across queues.
+Similar to voice workflows, the primary goal of the scenario is to handle incoming calls and place them into the appropriate SmartQueue. You can use different [routing rules](/platform/getting-started/create-a-routing-rule) or custom logic to distribute calls across queues.
 
-To process incoming video calls, handle the [CallAlerting]() event and enqueue the call using the [enqueueTask]() method.
+To process incoming video calls, handle the [CallAlerting](/reference/voxengine/app-events#callalerting) event and enqueue the call using the [enqueueTask](/reference/voxengine/voxengine#enqueuetask) method.
 
 <Warning title="Call scheme parameter">
-For video contact centers, you must specify the call scheme (`CallScheme.Video`) when invoking the [enqueueTask]() method.
+For video contact centers, you must specify the call scheme (`CallScheme.Video`) when invoking the [enqueueTask](/reference/voxengine/voxengine#enqueuetask) method.
 </Warning>
 
 ```javascript title="Video contact center scenario"

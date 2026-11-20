@@ -1,0 +1,285 @@
+---
+title: Scenario globals
+subtitle: Top-level functions and type aliases available in every VoxEngine scenario.
+---
+
+## Functions
+
+<a id="base64decode" />
+### <Icon icon="fa-duotone fa-function" /> base64_decode
+
+Decodes the data in the Base64 encoding.
+
+```ts
+base64_decode(data: string): number[]
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+<a id="base64encode" />
+### <Icon icon="fa-duotone fa-function" /> base64_encode
+
+Encodes a string or array of integers from 0 to 255 to the Base64 encoding.
+
+```ts
+base64_encode(data: string | number[]): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="string | number[]" required />
+
+<a id="bytes2hex" />
+### <Icon icon="fa-duotone fa-function" /> bytes2hex
+
+Creates a hex string from given bytes array.
+
+```ts
+bytes2hex(data: number[], toUpperCase: boolean): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="number[]" required />
+
+<ParamField path="toUpperCase" type="boolean" required />
+
+<a id="bytes2str" />
+### <Icon icon="fa-duotone fa-function" /> bytes2str
+
+Creates a string from an array of numbers with specified encoding.
+
+```ts
+bytes2str(data: number[], encoding: string): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="number[]" required />
+
+<ParamField path="encoding" type="string" required />
+
+<a id="clearinterval" />
+### <Icon icon="fa-duotone fa-function" /> clearInterval
+
+Cancels a timed, repeating action which is previously established by a call to setInterval().
+
+```ts
+clearInterval(intervalID: number): void
+```
+
+**Parameters**
+
+<ParamField path="intervalID" type="number" required />
+
+<a id="cleartimeout" />
+### <Icon icon="fa-duotone fa-function" /> clearTimeout
+
+Cancels a timeout previously established by calling setTimeout().
+
+```ts
+clearTimeout(timeoutID: number): void
+```
+
+**Parameters**
+
+<ParamField path="timeoutID" type="number" required />
+
+<a id="getlocaltime" />
+### <Icon icon="fa-duotone fa-function" /> getLocalTime
+
+Converts the date to the specified local timezone. Note that `new Date()` always returns time in the UTC+0 timezone.
+
+```ts
+getLocalTime(timezone: string, date: Date): Date
+```
+
+**Parameters**
+
+<ParamField path="timezone" type="string" required />
+
+<ParamField path="date" type="Date" required />
+
+<a id="hex2bytes" />
+### <Icon icon="fa-duotone fa-function" /> hex2bytes
+
+Creates an array of numbers from parsing a hex string.
+
+```ts
+hex2bytes(data: string): number[]
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+<a id="levenshteindistance" />
+### <Icon icon="fa-duotone fa-function" /> levenshtein_distance
+
+Count the number of deletions, insertions, or substitutions required to transform str1 into str2. The number shows a measure of the similarity between two strings. It is also known as edit distance.
+
+```ts
+levenshtein_distance(str1: string, str2: string): number
+```
+
+**Parameters**
+
+<ParamField path="str1" type="string" required />
+
+<ParamField path="str2" type="string" required />
+
+<a id="require" />
+### <Icon icon="fa-duotone fa-function" /> require
+
+```ts
+require(module: Modules): void
+```
+
+**Parameters**
+
+<ParamField path="module" type="Modules" required />
+
+<a id="setinterval" />
+### <Icon icon="fa-duotone fa-function" /> setInterval
+
+Repeatedly calls a function or executes a code snippet, with a fixed time delay between each call.
+
+```ts
+setInterval(callback: () => any, timeout?: number): number
+```
+
+**Parameters**
+
+<ParamField path="callback" type="() => any" required />
+
+<ParamField path="timeout" type="number" />
+
+<a id="settimeout" />
+### <Icon icon="fa-duotone fa-function" /> setTimeout
+
+Sets a timer which executes a function or specified piece of code once after the timer expires.
+
+```ts
+setTimeout(callback: () => any, timeout?: number): number
+```
+
+**Parameters**
+
+<ParamField path="callback" type="() => any" required />
+
+<ParamField path="timeout" type="number" />
+
+<a id="str2bytes" />
+### <Icon icon="fa-duotone fa-function" /> str2bytes
+
+Creates an array of numbers from parsing a string in the specified codepage.
+
+```ts
+str2bytes(data: string, encoding: string): number[]
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+<ParamField path="encoding" type="string" required />
+
+<a id="trace" />
+### <Icon icon="fa-duotone fa-function" /> trace
+
+```ts
+trace(data: string): void
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+<a id="uuidgen" />
+### <Icon icon="fa-duotone fa-function" /> uuidgen
+
+Generates unique identifier and returns it is string representation.
+
+```ts
+uuidgen(): string
+```
+
+## Type aliases
+
+<a id="playbackparameters" />
+### <Icon icon="fa-duotone fa-code" /> PlaybackParameters
+
+Avatar voice channel playback parameters. Can be passed via the `VoiceChannelParameters.playback` parameter.
+
+```ts
+type PlaybackParameters = TTSPlaybackParameters | URLPlaybackParameters | SequencePlaybackParameters
+```
+
+<a id="recorderlayoutpriority" />
+### <Icon icon="fa-duotone fa-code" /> RecorderLayoutPriority
+
+An object that specifies video frame layout priority. Can be passed via the `CallRecordParameters.videoParameters` and `RecorderParameters.videoParameters` parameter.
+Add the following line to your scenario code to use the type:
+```
+require(Modules.Recorder);
+```
+
+```ts
+type RecorderLayoutPriority = 'vad' | string[]
+```
+
+<a id="sequenceplaybacksegment" />
+### <Icon icon="fa-duotone fa-code" /> SequencePlaybackSegment
+
+Sequence of the voice channel TTS and URL playback segments. Can be passed via the `SequencePlaybackParameters.segments` parameter.
+
+```ts
+type SequencePlaybackSegment = TTSPlaybackParameters | URLPlaybackParameters
+```
+
+<a id="sequenceplayersegment" />
+### <Icon icon="fa-duotone fa-code" /> SequencePlayerSegment
+
+Sequence player segment, represented by TTS or URL [Player](/reference/voxengine/player). Can be passed via the `SequencePlayerParameters.segments` parameter.
+
+```ts
+type SequencePlayerSegment = TTSPlayerSegment | URLPlayerSegment
+```
+
+<a id="smartqueue" />
+### <Icon icon="fa-duotone fa-code" /> SmartQueue
+
+Represents an instance of a Smart Queue. Queue identifier or queue name must be provided.
+
+```ts
+type SmartQueue = {
+      /**
+       * Queue's identification number.
+       */
+      id: number;
+
+      /**
+       * Queue's name.
+       */
+      name?: string;
+    } | {
+      /**
+       * Queue's identification number.
+       */
+      id?: number;
+
+      /**
+       * Queue's name.
+       */
+      name: string;
+    }
+```
+
+<a id="voxmediaunit" />
+### <Icon icon="fa-duotone fa-code" /> VoxMediaUnit
+
+```ts
+type VoxMediaUnit = VoxMediaUnitMap[keyof VoxMediaUnitMap]
+```

@@ -6,10 +6,10 @@ Understanding how Voximplant manages your balance, subscriptions, and automated 
 
 Your account balance is the central pool for all Voximplant services:
 
-* **Pricing reference**: Review live rates on the [pricing page]() or in the [control panel]().
+* **Pricing reference**: Review live rates on the [pricing page](/overview/how-billing-works) or in the [control panel](https://manage.voximplant.com).
 * **Low balance alerts**: By default, notifications are sent when your balance reaches **$5.00**. You can customize this threshold in your [notification settings]().
 * **Negative balance**: If a call is active when your balance hits $0, it may continue, resulting in a negative balance. Outbound services resume once your account is topped up.
-* **Auto top-up**: Link a payment card via [Make a payment]() and contact [Technical support]() to set your custom balance threshold and recharge amount.
+* **Auto top-up**: Link a payment card via [Make a payment]() and contact [Technical support](/help/support) to set your custom balance threshold and recharge amount.
 
 ## Instant Messages & Monthly Active Users (MAU)
 
@@ -31,15 +31,15 @@ The counter triggers on `sendMessage`, `editMessage`, and `removeMessage`. All a
 </Warning>
 
 <Warning title="MAU tracking">
-An **active user** is defined by a unique credential logging in at least once a month. One user logging in from multiple devices counts as **one MAU**. Active users of [child accounts]() are billed to the **parent account**.
+An **active user** is defined by a unique credential logging in at least once a month. One user logging in from multiple devices counts as **one MAU**. Active users of [child accounts](/overview/how-voximplant-works/management-api) are billed to the **parent account**.
 </Warning>
 
 ### Plan changes & management
 
-You can scale your subscription tier directly through the **[Billing section]()** or via the [ChangeAccountPlan]() Management API method:
+You can scale your subscription tier directly through the **[Billing section](/overview/how-billing-works)** or via the [ChangeAccountPlan](/reference/management-api/reference/accounts/change-account-plan) Management API method:
 
 * **Upgrading**: Can be done manually at any time.
-* **Downgrading**: Requires submitting a request to **[Technical support]()**.
+* **Downgrading**: Requires submitting a request to **[Technical support](/help/support)**.
 * **Prorated adjustments**: If you change plans mid-cycle, we refund the reserved amount for the old plan (minus usage) and apply the new plan's rate for the remaining days of the month.
 
 ## Grace period (USD and EUR accounts)
@@ -51,7 +51,7 @@ The grace period is a safety net enabled by default to prevent service interrupt
 * **Restrictions**: While in a grace period, you can spend remaining cash on calls, but you cannot purchase **new** plans until the credit is cleared.
 
 <Info title="API check">
-Use [GetAccountInfo]() to check your `grace_credit` status. A positive value indicates an active credit.
+Use [GetAccountInfo](/reference/management-api/reference/accounts/get-account-info) to check your `grace_credit` status. A positive value indicates an active credit.
 </Info>
 
 ## Phone number subscriptions
@@ -76,13 +76,13 @@ Taxes are calculated based on your total spending and registered billing address
 
 * **Calculation**: Final tax rates are determined at the end of each month to account for any address updates or rate changes.
 * **Availability**: Invoices are generated and sent on the **first day of every month**.
-* **Reports**: Access and download all historical invoices in the **[Billing section]()** of the control panel.
+* **Reports**: Access and download all historical invoices in the **[Billing section](/overview/how-billing-works)** of the control panel.
 
 ## Notifications
 
 You can receive notifications about low balances, rate changes, account updates, and developer notices.
 
-To configure notifications, navigate to the [control panel]() → **Settings** → **Notifications**, and enable the alerts you want to receive.
+To configure notifications, navigate to the [control panel](https://manage.voximplant.com) → **Settings** → **Notifications**, and enable the alerts you want to receive.
 
 ## Regional differences
 
@@ -93,8 +93,8 @@ The billing experience varies slightly depending on your account currency:
 * **Address requirement**: You **cannot** add funds to your account without a valid billing address or VAT number.
 * **Variable rates**: Tax rates vary based on your specific location and the services consumed.
 * **API management**:
-  * Use [GetAccountInvoices]() to list all invoices.
-  * Use [DownloadInvoice]() to programmatically retrieve PDF copies.
+  * Use [GetAccountInvoices](/reference/management-api/reference/invoices/get-account-invoices) to list all invoices.
+  * Use [DownloadInvoice](/reference/management-api/reference/invoices/download-invoice) to programmatically retrieve PDF copies.
 
 ### RUB accounts
 

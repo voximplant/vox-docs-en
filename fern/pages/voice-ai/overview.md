@@ -23,6 +23,6 @@ We integrate with top frontier models and voice infrastructure so you can pick t
 
 ## Where to start
 
-- **[Getting started with Voice AI orchestration]()**
+- **[Getting started with Voice AI orchestration](/voice-ai/getting-started)**
 
 Stop wrestling with WebSockets and audio buffers—build conversational agents that sound human, react in milliseconds, and actually get work done.

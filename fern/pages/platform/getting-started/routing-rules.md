@@ -1,6 +1,6 @@
 # Create a routing rule
 
-Routing rules act as the switchboard for your Voximplant application. Whenever an incoming phone call, SIP connection, or SDK session reaches the platform, routing rules evaluate the destination and decide which [scenario]() or scenarios to execute.
+Routing rules act as the switchboard for your Voximplant application. Whenever an incoming phone call, SIP connection, or SDK session reaches the platform, routing rules evaluate the destination and decide which [scenario](/platform/getting-started/create-a-scenario) or scenarios to execute.
 
 Without an active routing rule, you cannot make or receive calls, start conferences, or execute any scenario logic.
 
@@ -10,7 +10,7 @@ Without an active routing rule, you cannot make or receive calls, start conferen
 
 To create a routing rule in the Voximplant Control Panel:
 
-1. Open your application in the [Voximplant Control Panel]().
+1. Open your application in the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the application sidebar, navigate to the **Routing** tab.
 3. Click **New rule** (or the **+** icon).
 4. Configure the rule settings:
@@ -42,7 +42,7 @@ When traffic reaches your application, Voximplant evaluates your routing rules t
 You can test and verify your routing configuration directly in the control panel without placing external calls:
 
 * **Rule checker**: Click **Testing tools** in the top navigation bar and select **Rule checker**. Enter a target phone number or username and click **Test** to preview which rule and scenario will trigger.
-* **Integrated softphone**: Access the built-in browser softphone under **Testing tools** → **Softphone**. Authenticate with an application [user]() to place live test calls directly into your application scenarios.
+* **Integrated softphone**: Access the built-in browser softphone under **Testing tools** → **Softphone**. Authenticate with an application [user](/platform/getting-started/create-users) to place live test calls directly into your application scenarios.
 
 ---
 
@@ -53,7 +53,7 @@ A routing rule can be triggered through several channels:
 * **Inbound PSTN calls**: An incoming call to a rented number attached to the application matches a rule's pattern and executes its assigned scenarios.
 * **Inbound SIP calls**: SIP requests sent to your application domain evaluate the user portion of the SIP URI against rule patterns.
 * **SDK client calls**: Initiating a call from a Web, iOS, Android, React Native, or Flutter SDK generates an inbound call leg (`SDK → scenario`) whose destination string matches against your routing rules.
-* **Management API**: Launch scenarios programmatically from your backend using the [StartScenarios]() method (for standard voice/video calls) or [StartConference]() (for multi-party video rooms).
+* **Management API**: Launch scenarios programmatically from your backend using the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method (for standard voice/video calls) or [StartConference](/reference/management-api/reference/scenarios/start-conference) (for multi-party video rooms).
 * **Manual execution**: Test scenarios on demand from the **Routing** tab in the control panel by selecting your rule and clicking **Run**.
 
 <Info title="Passing custom data">

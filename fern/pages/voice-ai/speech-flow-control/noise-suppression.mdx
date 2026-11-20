@@ -1,0 +1,126 @@
+---
+title: Noise Suppression
+subtitle: Reduce background noise in VoxEngine call audio with Hush
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+## Overview
+
+Hush noise suppression processes call audio and sends enhanced audio to a destination such as a caller or recorder. It can be useful in regular calls and in Voice AI flows, where background noise can affect recognition and cause false interruptions. For speech boundaries, combine it with [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection) or [Turn Detection](/voice-ai/speech-flow-control/turn-detection) as needed.
+
+For one connector that combines Hush with VAD and turn detection, see [Agentic VoiceDSP](/voice-ai/speech-flow-control/agentic-voicedsp), which enables noise suppression with optional `noiseSuppressionParameters`. This guide covers the separate Hush media unit.
+
+Create a session with [`Hush.createNoiseSuppression`](/reference/voxengine/hush) and pass parameters such as `attenLimDb`. Bridge audio with [`sendMediaTo`](/reference/voxengine/hush/noise-suppression) and [`stopMediaTo`](/reference/voxengine/hush/noise-suppression). Listen for [`NoiseSuppressionEvents`](/reference/voxengine/hush/noise-suppression-events) such as `ConnectorInformation`, `Error`, and `Reset`.
+
+> **Beta:** Hush noise suppression is currently in beta and temporarily not billed. Billing will apply automatically when the feature officially launches.
+
+## Route call audio through Hush
+
+Load the Hush module and create a noise suppression instance. Send call media to Hush, then send the processed media back to the call as PCM16 audio at 16 kHz.
+
+```js
+require(Modules.Hush);
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
+  call.answer();
+  call.addEventListener(CallEvents.Connected, async () => {
+    const noiseSuppression = await Hush.createNoiseSuppression({
+      attenLimDb: 0,
+    });
+
+    call.sendMediaTo(noiseSuppression);
+    noiseSuppression.sendMediaTo(call, { encoding: 'PCM16' });
+
+    noiseSuppression.addEventListener(
+      Hush.NoiseSuppressionEvents.ConnectorInformation,
+      () => Logger.write('Hush connector ready')
+    );
+
+    noiseSuppression.addEventListener(Hush.NoiseSuppressionEvents.Error, (event) => {
+      Logger.write(JSON.stringify(event));
+    });
+  });
+});
+```
+
+The example listens for connector information and errors so the scenario can log readiness and failures.
+
+## Test with an audio clip
+
+It can be difficult to evaluate noise suppression during a live conversation because microphone audio and enhanced playback overlap. To compare the processed audio with the original, route a noisy clip into Hush without sending the live microphone to it, and record the processed output.
+
+Use an audio clip with background noise, such as office, street, or cafe noise. A 16 kHz mono clip can be used directly; MediaServer can also resample an MP3. After the recorder stops, copy its URL from the scenario logs and compare it with the original in an audio editor. If replaying the same clip in one session, call [`reset()`](/reference/voxengine/hush/noise-suppression#reset) between replays.
+
+```js
+require(Modules.Hush);
+require(Modules.Recorder);
+
+const TEST_AUDIO_URL = 'https://cdn.voximplant.com/voice-test.mp3'; // Replace with your noisy sample.
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, async ({ call }) => {
+  let noiseSuppression;
+
+  const cleanup = () => {
+    if (noiseSuppression) noiseSuppression.close();
+    VoxEngine.terminate();
+  };
+
+  call.answer();
+  call.addEventListener(CallEvents.Disconnected, cleanup);
+  call.addEventListener(CallEvents.Failed, cleanup);
+
+  try {
+    noiseSuppression = await Hush.createNoiseSuppression({ attenLimDb: 0 });
+
+    const enhancedRecorder = VoxEngine.createRecorder({});
+    enhancedRecorder.addEventListener(RecorderEvents.Stopped, (event) => {
+      Logger.write('======');
+      Logger.write(JSON.stringify(event));
+    });
+
+    noiseSuppression.addEventListener(Hush.NoiseSuppressionEvents.Error, (event) => {
+      Logger.write('===Hush.NoiseSuppressionEvents.Error===');
+      Logger.write(JSON.stringify(event));
+      cleanup();
+    });
+
+    noiseSuppression.addEventListener(
+      Hush.NoiseSuppressionEvents.ConnectorInformation,
+      (event) => {
+        Logger.write('===Hush.NoiseSuppressionEvents.ConnectorInformation===');
+        Logger.write(JSON.stringify(event));
+      }
+    );
+
+    const player = VoxEngine.createURLPlayer({ url: TEST_AUDIO_URL });
+    player.sendMediaTo(noiseSuppression);
+
+    noiseSuppression.sendMediaTo(call);
+    noiseSuppression.sendMediaTo(enhancedRecorder);
+
+    player.addEventListener(PlayerEvents.PlaybackFinished, () => {
+      Logger.write('===TEST_CLIP_FINISHED===');
+      enhancedRecorder.stop();
+      setTimeout(cleanup, 2000);
+    });
+  } catch (error) {
+    Logger.write('===SOMETHING_WENT_WRONG===');
+    Logger.write(String(error));
+    cleanup();
+  }
+});
+```
+
+Keep the caller silent or muted while the clip plays. Do not send the live call media to Hush in this test; doing so mixes microphone audio into the recording and makes an offline comparison unreliable.
+
+## Links
+
+### Voximplant
+
+- [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection)
+- [Turn Detection](/voice-ai/speech-flow-control/turn-detection)
+- [Hush module API reference](/reference/voxengine/hush)
+- [NoiseSuppression](/reference/voxengine/hush/noise-suppression)
+- [NoiseSuppressionEvents](/reference/voxengine/hush/noise-suppression-events)

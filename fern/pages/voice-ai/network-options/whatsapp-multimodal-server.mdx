@@ -1,0 +1,48 @@
+---
+title: WhatsApp Multi-modal Proxy Server
+subtitle: Node.js webhook bridge for WhatsApp text + Voximplant voice sessions
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This page embeds the server code used in the WhatsApp multi-modal flow.
+
+See this video for more information: [Inbound WhatsApp calling demo](https://www.youtube.com/watch?v=aPw7_aqZBhE).
+
+## Prerequisites
+
+- Node.js 18+ runtime.
+- A WhatsApp Business number connected to WhatsApp Cloud API in Meta.
+- A Meta access token with permission to read webhook events and send WhatsApp messages.
+- A Voximplant application with scenario logic that stores callback URLs in ApplicationStorage as `WAB_<caller_number>`.
+- Voximplant service account credentials file available as `voximplant_service_account.json` (or update `pathToCredentials` in code).
+- Public HTTPS endpoint for `/webhook` (for Meta webhook delivery) and `/health` (optional health checks).
+- NPM dependencies installed:
+
+```bash
+npm install express body-parser axios dotenv @voximplant/apiclient-nodejs
+```
+
+Required environment variables:
+
+```bash
+WHATSAPP_TOKEN=...
+WHATSAPP_PHONE_NUMBER_ID=...
+WHATSAPP_WEBHOOK_VERIFY_TOKEN=...
+VOXIMPLANT_APP_ID=...
+```
+
+Optional environment variables:
+
+```bash
+API_VERSION=v18.0
+PORT=3000
+```
+
+<Code
+  src="../../../examples/whatsapp/server.js"
+  title="server.js"
+  language="javascript"
+/>

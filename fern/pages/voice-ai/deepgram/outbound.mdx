@@ -1,0 +1,119 @@
+---
+title: "Example: Placing an outbound call"
+description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Deepgram Voice Agent once the callee answers."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Deepgram Voice Agent once the callee answers.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) with this scenario attached (outgoing calls don’t use patterns) so you can run it from the Control Panel or trigger it via API.
+- Have a PSTN `destination` number you can dial (E.164 format), for example your mobile number.
+- Configure a valid outbound `callerId` (for example, a rented Voximplant number or a verified caller ID); see [phone numbers](/platform/getting-started/buy-a-phone-number).
+- Pass `destination` and `callerId` as routing rule custom data (this example reads them from `VoxEngine.customData()`): `{"destination":"+15551234567","callerId":"+15557654321"}`.
+- Store your Deepgram API key in Voximplant [Secrets](/platform/storage/secret-storage) under `DEEPGRAM_API_KEY`.
+
+<Info title="About outbound Caller ID">
+  `VoxEngine.callPSTN(...)` requires a valid callback-capable caller ID (for example, a rented Voximplant number or a verified caller ID). See [phone numbers](/platform/getting-started/buy-a-phone-number).
+</Info>
+
+## Launch the routing rule
+
+For quick testing, you can start this outbound scenario from the Voximplant Control Panel:
+
+1. Open your Voximplant application and go to the **Routing** tab.
+2. Select the routing rule that has this scenario attached.
+3. Click **Run**.
+4. Provide **Custom data** (max 200 bytes) with `destination` and `callerId`:
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+For production, start the routing rule via the Management API [`startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method (pass `rule_id`, and pass the same JSON string in `script_custom_data`).
+
+## Place the outbound call
+
+Outbound calls are placed with `VoxEngine.callPSTN(number, callerid, parameters?)`.
+
+In the full example, see `VoxEngine.customData()`, the `destination` / `callerId` parse, and the `AppEvents.Started` handler:
+
+```js title="Place the call"
+call = VoxEngine.callPSTN(destination, callerId);
+call.addEventListener(CallEvents.Connected, async () => {
+  // ...
+});
+```
+
+## Alternate outbound destinations
+
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+
+- **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
+- **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
+- **Voximplant users** (`VoxEngine.callUser`): calls another app user inside the same Voximplant application such as web SDK, mobile SDK, or SIP user.
+
+Relevant guides:
+
+- [SIP calling options](/voice-ai/network-options/sip)
+- [Voximplant users calling options](/voice-ai/network-options/web-mobile)
+- [WhatsApp calling options](/voice-ai/network-options/whatsapp)
+
+## Session setup
+
+As in the inbound example, the Deepgram Voice Agent session is configured via a `settingsOptions` object passed to `Deepgram.createVoiceAgentClient(...)`.
+
+In the full example, see `SETTINGS_OPTIONS.agent`:
+
+- `listen`: speech-to-text provider
+- `think`: LLM provider + prompt
+- `speak`: text-to-speech provider
+
+## Connect call audio
+
+For outbound, it’s typically best to create the Voice Agent and bridge audio only after the callee answers (so the agent doesn’t speak into ringback).
+
+In the example, the `CallEvents.Connected` handler does:
+
+```js title="Create the client and bridge audio"
+voiceAgentClient = await Deepgram.createVoiceAgentClient({ apiKey, settingsOptions: SETTINGS_OPTIONS });
+VoxEngine.sendMediaBetween(call, voiceAgentClient);
+```
+
+## Barge-in
+
+To keep the conversation interruption-friendly, the example listens for `Deepgram.VoiceAgentEvents.UserStartedSpeaking` and clears the media buffer:
+
+```js title="Barge-in"
+voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.UserStartedSpeaking, () => {
+  voiceAgentClient.clearMediaBuffer();
+});
+```
+
+## Events
+
+The scenario logs a transcript example via `Deepgram.VoiceAgentEvents.ConversationText` and also logs a small set of lifecycle/debug events.
+
+Available events are documented in the Voximplant references:
+
+- [Voice Agent events](/reference/voxengine/deepgram#voiceagentevents)
+- [WebSocket media events](/reference/voxengine/deepgram#events)
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/deepgram).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/deepgram/voxeengine-deepgram-place-outbound-call.js"
+  title="voxeengine-deepgram-place-outbound-call.js"
+  language="javascript"
+  maxLines={0}
+/>

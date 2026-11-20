@@ -1,0 +1,69 @@
+---
+title: Build with AI coding agents
+subtitle: Build and test Voximplant voice apps using coding agents
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+Voximplant AI Agent Skills give coding agents current, task-specific instructions for writing VoxEngine scenarios and managing Voximplant resources. Describe the call experience you want, review the proposed changes, and let the coding agent build, deploy, and test the first version with you.
+
+<CardGroup cols={2}>
+  <Card
+    title="Build with Claude Code"
+    icon="fa-brands fa-claude"
+    href="/voice-ai/vibe-coding/claude"
+  >
+    Use Claude Code and Voximplant skills to connect an existing ElevenLabs agent to inbound calls and test it in a browser.
+  </Card>
+  <Card
+    title="Get the skills"
+    icon="fa-brands fa-github"
+    href="https://github.com/voximplant/ai-agent-skills"
+  >
+    View installation options, source files, security guidance, and example prompts.
+  </Card>
+</CardGroup>
+
+<Info>
+  Each coding agent has its own installation process, permission model, and testing workflow. See the [Voximplant AI Agent Skills repository](https://github.com/voximplant/ai-agent-skills) for [Cursor](https://github.com/voximplant/ai-agent-skills#install-in-cursor) and [Codex](https://github.com/voximplant/ai-agent-skills#install-in-codex) installation instructions. More detailed guides are coming soon.
+</Info>
+
+## How the skills work together
+
+Most complete Voximplant workflows use both skills:
+
+- `voximplant-voxengine-dev` writes and reviews the VoxEngine scenario, verifies platform APIs, and fixes code-level call behavior.
+- `voximplant-management-api` creates applications, scenarios, routing rules, secrets, and test users. It also retrieves call logs and recordings for debugging.
+
+The skills use progressive disclosure: your coding agent loads the detailed instructions only when your task needs them. This keeps the working context focused while grounding generated code in Voximplant documentation instead of relying on model training data.
+
+## What the coding agent can do
+
+For a first project, the agent can guide you through this loop:
+
+<Steps>
+  <Step title="Describe the call">
+    Explain the inbound or outbound experience you want in plain language.
+  </Step>
+  <Step title="Review the plan">
+    Confirm the target account, application, resources, and credentials before the agent changes the platform.
+  </Step>
+  <Step title="Build and deploy">
+    The agent writes the [VoxEngine scenario](/platform/getting-started/create-a-scenario), configures Voximplant resources, and uploads provider credentials to [Voximplant Secrets](/platform/storage/secret-storage).
+  </Step>
+  <Step title="Place a test call">
+    Test without buying a phone number by using a Voximplant application user and the [browser phone](https://phone.voximplant.com/).
+  </Step>
+  <Step title="Debug from evidence">
+    If the call fails, the agent can retrieve the latest [call logs](/help/troubleshooting/vox-engine-scenarios), identify the failure, update the scenario, and repeat the test.
+  </Step>
+</Steps>
+
+<Warning>
+  Generated code and platform changes still require review. Keep service account files and provider credentials out of source control, and approve account-changing operations only after checking the proposed resources.
+</Warning>
+
+<Button href="/voice-ai/vibe-coding/claude" intent="success" large full>
+  Build your first voice agent with Claude Code
+</Button>

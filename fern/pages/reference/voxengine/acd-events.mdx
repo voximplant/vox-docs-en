@@ -1,0 +1,46 @@
+---
+title: ACDEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.ACD); ```'
+---
+
+## Values
+
+<a id="operatorreached" />
+<ParamField path="OperatorReached" type="'ACD.OperatorReached'">
+Triggered when an agent is reached.
+</ParamField>
+
+<a id="operatorcallattempt" />
+<ParamField path="OperatorCallAttempt" type="'ACD.OperatorCallAttempt'">
+Triggered when an ACD makes a call to a user via the `callUser` method.
+</ParamField>
+
+<a id="operatorfailed" />
+<ParamField path="OperatorFailed" type="'ACD.OperatorFailed'">
+Triggered when an ACD request tries to reach an agent, but the agent declines the call. Note that this is just a notification, the request processing does not stop. The ACD request automatically redirects to the next free agent.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'ACD.Error'">
+Triggers if the ACD service returns an internal error. The JS scenarios are not able to cause internal errors because these errors depend on internal and network issues.
+</ParamField>
+
+<a id="waiting" />
+<ParamField path="Waiting" type="'ACD.Waiting'">
+Triggers as a result of the `ACDRequest.getStatus` method call.
+</ParamField>
+
+<a id="queued" />
+<ParamField path="Queued" type="'ACD.Queued'">
+Triggered when an [ACDRequest](/reference/voxengine/acd-request) is put to the queue.
+</ParamField>
+
+<a id="offline" />
+<ParamField path="Offline" type="'ACD.Offline'">
+Triggers if all agents that can handle a request in the specified queue are offline. In this case, the request is not queued.
+</ParamField>
+
+<a id="queuefull" />
+<ParamField path="QueueFull" type="'ACD.QueueFull'">
+Triggered when we have one more request to put in the queue but the maximum number of requests (max_queue_size) is already reached. In this case, the new request is not queued. The max_queue_size and max_waiting_time default values are “unlimited”, you can change these values for every new or existing queue in the [control panel](https://manage.voximplant.com/applications).
+</ParamField>

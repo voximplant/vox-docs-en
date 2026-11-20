@@ -1,0 +1,98 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound call, connects it to Qwen Cloud, and handles function calls inside VoxEngine."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+This example answers an inbound call, connects it to Qwen Cloud, and handles function calls inside VoxEngine.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/voice-ai/network-options/phone-numbers-pstn)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user or SIP registration](/voice-ai/network-options/sip)
+  - [App user](/voice-ai/network-options/web-mobile)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination to this scenario.
+- Store your Qwen Cloud API key in Voximplant [Secrets](/platform/storage/secret-storage) under `QWEN_API_KEY`.
+
+## Tool setup
+
+Qwen tools are nested under `function`. This is not the flat `{type, name, description, parameters}` shape used by some other realtime clients.
+
+The example exposes two client-side tools:
+
+- `get_weather`: returns demo weather data to the model.
+- `hangup_call`: returns a tool result, lets Qwen speak a brief goodbye, and hangs up after playback ends.
+
+```js title="Tool definition"
+tools: [
+  {
+    type: "function",
+    function: {
+      name: "get_weather",
+      description: "Get the current weather for a city.",
+      parameters: {
+        type: "object",
+        properties: {
+          city: {type: "string", description: "City name."},
+        },
+        required: ["city"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "hangup_call",
+      description: "Hang up the current call.",
+    },
+  },
+],
+```
+
+<Note>
+`tools` and `enable_search` cannot be enabled in the same session.
+</Note>
+
+## Handle tool calls
+
+`ResponseFunctionCallArgumentsDone` carries `name`, `call_id`, and `arguments`.
+Execute the tool, send a `function_call_output` item, then call `responseCreate` so Qwen speaks the result.
+
+```js title="Return the tool result"
+voiceAIClient.conversationItemCreate({
+  item: {
+    type: "function_call_output",
+    call_id: callId,
+    output: JSON.stringify(output),
+  },
+});
+voiceAIClient.responseCreate({});
+```
+
+For `hangup_call`, the scenario waits for `WebSocketMediaEnded` after the goodbye audio, then closes the call.
+
+## Try it
+
+Suggested test prompts:
+
+- "What's the weather in Berlin?"
+- "Goodbye."
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/qwen-cloud).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/qwen/voxeengine-qwen-function-calling.js"
+  title="voxeengine-qwen-function-calling.js"
+  language="javascript"
+  maxLines={0}
+/>

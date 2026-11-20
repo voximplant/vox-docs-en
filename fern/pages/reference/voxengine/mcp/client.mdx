@@ -1,0 +1,82 @@
+---
+title: Client
+subtitle: 'Note that the MCP.Client uses the [Model Context Protocol Go SDK v1.5.0](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0).'
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [MCP.ServerEvents](/reference/voxengine/mcp/server-events) or `MCP.Events` event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: MCP.Events | MCP.ServerEvents | T, callback: (event: MCP._ClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="MCP.Events | MCP.ServerEvents | T" required />
+
+<ParamField path="callback" type="(event: MCP._ClientEvents[T]) => any" required />
+
+### callTool
+
+Call a tool from the MCP server. [https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#CallToolParams](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#CallToolParams)
+
+```ts
+callTool(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### close
+
+Closes the connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+### id
+
+Returns the Client id.
+
+```ts
+id(): string
+```
+
+### listTools
+
+List the tools available from the MCP server. [https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#ListToolsParams](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0/mcp#ListToolsParams)
+
+```ts
+listTools(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### removeEventListener
+
+Removes a handler for the specified [MCP.ServerEvents](/reference/voxengine/mcp/server-events) or `MCP.Events` event.
+
+```ts
+removeEventListener(event: MCP.Events | MCP.ServerEvents | T, callback?: (event: MCP._ClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="MCP.Events | MCP.ServerEvents | T" required />
+
+<ParamField path="callback" type="(event: MCP._ClientEvents[T]) => any" />
+
+### webSocketId
+
+Returns the WebSocket id.
+
+```ts
+webSocketId(): string
+```

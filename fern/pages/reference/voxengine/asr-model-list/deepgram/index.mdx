@@ -1,0 +1,42 @@
+---
+title: Deepgram
+subtitle: List of Deepgram ASR models.
+---
+
+List of Deepgram ASR models. Can be passed via the `ASRParameters.model` parameter.
+Add the following line to your scenario code to use the enum:
+```
+require(Modules.ASR);
+```
+
+## Constants
+
+| Name | Type | Description |
+| --- | --- | --- |
+| <a id="default" /> `DEFAULT` | `ASRModel` | The default **General** model. |
+| <a id="general" /> `general` | `ASRModel` | Optimized for everyday audio processing. |
+| <a id="generalenhanced" /> `general_enhanced` | `ASRModel` | Optimized for everyday audio processing. Applies the newest ASR module with higher accuracy. |
+| <a id="meeting" /> `meeting` | `ASRModel` | Optimized for conference room settings, which include multiple speakers with a single microphone. |
+| <a id="meetingenhanced" /> `meeting_enhanced` | `ASRModel` | Optimized for conference room settings, which include multiple speakers with a single microphone. Applies the newest ASR module with higher accuracy. |
+| <a id="phonecall" /> `phonecall` | `ASRModel` | Optimized for low-bandwidth audio phone calls. |
+| <a id="phonecallenhanced" /> `phonecall_enhanced` | `ASRModel` | Optimized for low-bandwidth audio phone calls. Applies the newest ASR module with higher accuracy. |
+| <a id="voicemail" /> `voicemail` | `ASRModel` | Optimized for low-bandwidth audio clips with a single speaker. Derived from the phonecall model. |
+| <a id="finance" /> `finance` | `ASRModel` | Optimized for multiple speakers with varying audio quality, such as might be found on a typical earnings call. Vocabulary is heavily finance oriented. |
+| <a id="financeenhanced" /> `finance_enhanced` | `ASRModel` | Optimized for multiple speakers with varying audio quality, such as might be found on a typical earnings call. Vocabulary is heavily finance oriented. Applies the newest ASR module with higher accuracy. |
+| <a id="conversational" /> `conversational` | `ASRModel` | Optimized to allow artificial intelligence technologies, such as chatbots, to interact with people in a human-like way. |
+| <a id="video" /> `video` | `ASRModel` | Optimized for audio sourced from videos. |
+| <a id="novageneral" /> `nova_general` | `ASRModel` | Optimized for everyday audio processing. |
+| <a id="novaphonecall" /> `nova_phonecall` | `ASRModel` | Optimized for low-bandwidth audio phone calls. |
+| <a id="nova2general" /> `nova2_general` | `ASRModel` | Optimized for everyday audio processing. |
+| <a id="nova2meeting" /> `nova2_meeting` | `ASRModel` | Optimized for conference room settings, which include multiple speakers with a single microphone. |
+| <a id="nova2phonecall" /> `nova2_phonecall` | `ASRModel` | Optimized for low-bandwidth audio phone calls. |
+| <a id="nova2voicemail" /> `nova2_voicemail` | `ASRModel` | Optimized for low-bandwidth audio clips with a single speaker. Derived from the phonecall model. |
+| <a id="nova2finance" /> `nova2_finance` | `ASRModel` | Optimized for multiple speakers with varying audio quality, such as might be found on a typical earnings call. Vocabulary is heavily finance oriented. |
+| <a id="nova2conversationalai" /> `nova2_conversationalai` | `ASRModel` | Optimized for use cases in which a human is talking to an automated bot, such as IVR, a voice assistant, or an automated kiosk. |
+| <a id="nova2video" /> `nova2_video` | `ASRModel` | Optimized for audio sourced from videos. |
+| <a id="nova2medical" /> `nova2_medical` | `ASRModel` | Optimized for audio with medical oriented vocabulary. |
+| <a id="nova2drivethru" /> `nova2_drivethru` | `ASRModel` | Optimized for audio sources from drivethrus. |
+| <a id="nova2automotive" /> `nova2_automotive` | `ASRModel` | Optimized for audio with automative oriented vocabulary. |
+| <a id="nova2atc" /> `nova2_atc` | `ASRModel` | Optimized for audio from air traffic control. |
+| <a id="nova3general" /> `nova3_general` | `ASRModel` | Optimized for everyday audio processing. |
+| <a id="nova3medical" /> `nova3_medical` | `ASRModel` | Optimized for audio with medical oriented vocabulary. |

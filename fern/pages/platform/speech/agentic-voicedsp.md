@@ -1,6 +1,6 @@
 # Agentic VoiceDSP module
 
-Agentic VoiceDSP combines [Silero VAD]() (voice activity detection), [Pipecat turn detection](), and [Hush noise suppression]() into a single VoxEngine module for voice AI applications.
+Agentic VoiceDSP combines [Silero VAD](/voice-ai/speech-flow-control/voice-activity-detection) (voice activity detection), [Pipecat turn detection](/voice-ai/speech-flow-control/turn-detection), and [Hush noise suppression](/voice-ai/speech-flow-control/noise-suppression) into a single VoxEngine module for voice AI applications.
 
 While you can import and wire these modules individually in your scenario, Agentic VoiceDSP provides an all-in-one unified pipeline.
 
@@ -21,13 +21,13 @@ This module is designed for [building your own LLM applications](), but it is eq
 
 ## How it works
 
-Agentic VoiceDSP combines [Silero VAD](), [Pipecat turn detection](), and optional [Hush noise suppression]() directly on the Voximplant platform. When you route call audio to `Agentic.VoiceDSP`, the module processes the stream and emits high-level user-turn events for your scenario.
+Agentic VoiceDSP combines [Silero VAD](/voice-ai/speech-flow-control/voice-activity-detection), [Pipecat turn detection](/voice-ai/speech-flow-control/turn-detection), and optional [Hush noise suppression](/voice-ai/speech-flow-control/noise-suppression) directly on the Voximplant platform. When you route call audio to `Agentic.VoiceDSP`, the module processes the stream and emits high-level user-turn events for your scenario.
 
 | Component | Scenario configuration |
 | :--- | :--- |
-| **VAD** | `vadParameters` ([Agentic.VADParameters]()) |
-| **Turn detector** | `turnDetectorParameters` ([Agentic.TurnDetectorParameters]()) |
-| **Noise suppression** | `noiseSuppressionParameters` ([Agentic.NoiseSuppressionParameters]()) — *optional; disabled unless provided* |
+| **VAD** | `vadParameters` ([Agentic.VADParameters](/reference/voxengine/agentic#vadparameters)) |
+| **Turn detector** | `turnDetectorParameters` ([Agentic.TurnDetectorParameters](/reference/voxengine/agentic#turndetectorparameters)) |
+| **Noise suppression** | `noiseSuppressionParameters` ([Agentic.NoiseSuppressionParameters](/reference/voxengine/agentic#noisesuppressionparameters)) — *optional; disabled unless provided* |
 
 The turn lifecycle follows [Pipecat UserTurnProcessor]() and [TurnAnalyzerUserTurnStopStrategy]().
 
@@ -87,10 +87,10 @@ Mirrors Pipecat's `UserIdleController` (independent of Smart Turn `stopSecs`):
 
 ### Noise suppression (Hush)
 
-Pass `noiseSuppressionParameters` to [Agentic.createVoiceDSP]() to enable **Hush** noise suppression directly within VoiceDSP (same parameter structure as standalone [Hush.NoiseSuppression]()).
+Pass `noiseSuppressionParameters` to [Agentic.createVoiceDSP](/reference/voxengine/agentic#createvoicedsp) to enable **Hush** noise suppression directly within VoiceDSP (same parameter structure as standalone [Hush.NoiseSuppression](/reference/voxengine/hush/noise-suppression)).
 
 * **Opt-in only**: Omit `noiseSuppressionParameters` to leave noise suppression disabled.
-* Parameter structure matches [Hush.NoiseSuppressionParameters]() (`attenLimDb`).
+* Parameter structure matches [Hush.NoiseSuppressionParameters](/reference/voxengine/hush#noisesuppressionparameters) (`attenLimDb`).
 * Do not call `require(Modules.Hush)` for this path—Hush runs as an integrated component of VoiceDSP server-side processing rather than as an independent media unit. Standalone Hush remains available when you require an explicit duplex noise suppression unit.
 * Scenarios send call media exclusively to `Agentic.VoiceDSP`; denoised audio is processed internally before reaching VAD and turn detection.
 
@@ -106,7 +106,7 @@ To use Agentic VoiceDSP in your scenario:
 4. Configure `turnDetectorParameters.stopSecs` (default **3.0**).
 5. Optionally configure `asrGraceTimeout`, `userTurnStopTimeout`, and `userTurnIdleTimeout`.
 6. Connect `signalAssistantTurnStarted()` and `signalAssistantTurnEnded()` to your TTS/LLM playback lifecycle.
-7. Configure **start strategies** and **stop strategies** using [Agentic.VoiceDSPStrategies]() factories.
+7. Configure **start strategies** and **stop strategies** using [Agentic.VoiceDSPStrategies](/reference/voxengine/agentic/voice-dsp-strategies) factories.
 8. Subscribe to `Agentic.VoiceDSPEvents` to implement your application business logic.
 
 <Info title="Internal pipeline signals">

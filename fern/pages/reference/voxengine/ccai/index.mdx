@@ -1,0 +1,109 @@
+---
+title: CCAI
+---
+
+## Classes
+
+- [Agent](/reference/voxengine/ccai/agent) — Represents a CCAI Agent instance.
+- [Conversation](/reference/voxengine/ccai/conversation) — Represents a CCAI conversation instance.
+- [Participant](/reference/voxengine/ccai/participant) — Represents a CCAI participant instance.
+## Sub-namespaces
+
+- [Events](/reference/voxengine/ccai/events/overview)
+- [Vendor](/reference/voxengine/ccai/vendor/overview)
+## Types
+
+### ConversationSettings
+
+`Conversation` settings.
+
+<a id="conversationsettings-agent" />
+<ParamField path="agent" type="CCAI.Agent">
+CCAI agent to use in the Dialogflow conversation.
+</ParamField>
+
+<a id="conversationsettings-profile" />
+<ParamField path="profile" type="CCAI.Vendor.ConversationProfile">
+Service to connect to the incoming Dialogflow conversation.
+</ParamField>
+
+<a id="conversationsettings-project" />
+<ParamField path="project" type="string">
+Name of the Dialogflow conversation.
+</ParamField>
+
+### GetConversationProfileResult
+
+`CCAI.Agent.getConversationProfile` method result.
+
+<a id="getconversationprofileresult-id" />
+<ParamField path="id" type="string">
+Event ID.
+</ParamField>
+
+<a id="getconversationprofileresult-name" />
+<ParamField path="name" type="string">
+Event name — 'AI.Events.CcaiGetConversationProfileResponse'.
+</ParamField>
+
+<a id="getconversationprofileresult-response" />
+<ParamField path="response" type="Object">
+Dialogflow [response data](https://cloud.google.com/dialogflow/es/docs/reference/rpc/google.cloud.dialogflow.v2beta1#conversationprofile).
+</ParamField>
+
+### GetProfilesListResult
+
+`CCAI.Agent.getProfilesList` method result.
+
+<a id="getprofileslistresult-id" />
+<ParamField path="id" type="string">
+Event ID.
+</ParamField>
+
+<a id="getprofileslistresult-name" />
+<ParamField path="name" type="string">
+Event name — 'AI.Events.CcaiListConversationProfilesResponse'.
+</ParamField>
+
+<a id="getprofileslistresult-response" />
+<ParamField path="response" type="Object">
+Dialogflow [response data](https://cloud.google.com/dialogflow/es/docs/reference/rpc/google.cloud.dialogflow.v2beta1#listconversationsresponse).
+</ParamField>
+
+### ParticipantSettings
+
+`Participant` settings.
+
+<a id="participantsettings-call" />
+<ParamField path="call" type="Call">
+Current call object.
+</ParamField>
+
+<a id="participantsettings-dialogflowsettings" />
+<ParamField path="dialogflowSettings" type="any">
+Settings for a new CCAI Dialogflow participant instance setup.
+</ParamField>
+
+<a id="participantsettings-options" />
+<ParamField path="options" type="CCAI.Vendor.Participant">
+Options of a single side of the conversation.
+</ParamField>
+
+### UpdateConversationProfileResult
+
+`CCAI.Agent.updateConversationProfile` method result.
+
+<a id="updateconversationprofileresult-id" />
+<ParamField path="id" type="string">
+Event ID.
+</ParamField>
+
+<a id="updateconversationprofileresult-name" />
+<ParamField path="name" type="string">
+Event name — 'AI.Events.CcaiUpdateConversationProfileResponse'.
+</ParamField>
+
+<a id="updateconversationprofileresult-response" />
+<ParamField path="response" type="Object">
+Dialogflow [response data](https://cloud.google.com/dialogflow/es/docs/reference/rpc/google.cloud.dialogflow.v2beta1#conversationprofile).
+</ParamField>

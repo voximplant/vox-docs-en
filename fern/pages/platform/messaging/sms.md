@@ -20,14 +20,14 @@ Before you can send or receive SMS messages, you must have a phone number with S
 
 ### Check SMS support in the Control Panel
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. Navigate to **Numbers** → **Buy phone number**.
 3. Select your desired country and phone category (e.g., `Mobile`).
 4. Select a number to view its details. If a number does not support SMS, a warning message will state that SMS is unavailable for that specific pool.
 
 ### Check SMS support via the Management API
 
-You can check which regions and number pools support SMS by calling the [GetPhoneNumberRegions]() Management API method:
+You can check which regions and number pools support SMS by calling the [GetPhoneNumberRegions](/reference/management-api/reference/phone-numbers/get-phone-number-regions) Management API method:
 
 ```bash title="Check SMS support by region"
 curl -X POST "https://api.voximplant.com/platform_api/GetPhoneNumberRegions" \
@@ -61,14 +61,14 @@ SMS capabilities are disabled by default when you purchase a number. You must en
 
 ### Enable SMS in the Control Panel
 
-1. In the [Control Panel](), go to **Numbers** → **My phone numbers**.
+1. In the [Control Panel](https://manage.voximplant.com), go to **Numbers** → **My phone numbers**.
 2. Locate your number, click the actions menu (**⋮**), and select **Edit**.
 3. Toggle the **Enable SMS** switch to the active position.
 4. Click **Save**.
 
 ### Enable or disable SMS via the Management API
 
-Use the [ControlSms]() method to toggle SMS functionality programmatically:
+Use the [ControlSms](/reference/management-api/reference/sms/control-sms) method to toggle SMS functionality programmatically:
 
 ```bash title="Enable SMS"
 curl -X POST "https://api.voximplant.com/platform_api/ControlSms" \
@@ -91,7 +91,7 @@ curl -X POST "https://api.voximplant.com/platform_api/ControlSms" \
 ```
 
 <Info title="Storing message history">
-To log message bodies in your account history for compliance or debugging, navigate to **Settings** → [SMS configuration]() in the Control Panel and enable **Always save the text of outgoing messages** and **Always save the text of incoming messages**.
+To log message bodies in your account history for compliance or debugging, navigate to **Settings** → [SMS configuration](/platform/messaging/sms) in the Control Panel and enable **Always save the text of outgoing messages** and **Always save the text of incoming messages**.
 </Info>
 
 ---
@@ -102,9 +102,9 @@ Voximplant supports both one-way application-to-person (A2P) broadcasts and two-
 
 ### One-way A2P SMS
 
-Use the [A2PSendSms]() method to send one-way notifications, alerts, or OTP verification codes:
+Use the [A2PSendSms](/reference/management-api/reference/sms/a2p-send-sms) method to send one-way notifications, alerts, or OTP verification codes:
 
-* **`src_number`**: An SMS-enabled number or an approved alphanumeric Sender ID (contact [support]() to register custom Sender IDs).
+* **`src_number`**: An SMS-enabled number or an approved alphanumeric Sender ID (contact [support](/help/support) to register custom Sender IDs).
 * **`dst_numbers`**: One or more destination phone numbers separated by semicolons (`;`).
 * **`text`**: Message body up to 1,600 characters.
 
@@ -135,7 +135,7 @@ curl -X POST "https://api.voximplant.com/platform_api/A2PSendSms" \
 
 ### Two-way conversational SMS
 
-For two-way conversations where customers can reply directly to your number, use the [SendSmsMessage]() method:
+For two-way conversations where customers can reply directly to your number, use the [SendSmsMessage](/reference/management-api/reference/sms/send-sms-message) method:
 
 * **`source`**: The sending phone number registered on your account.
 * **`destination`**: The recipient's phone number.
@@ -168,13 +168,13 @@ The callback payload contains an `IncomingSmsCallbackItem` with the following de
 
 ### Configure your webhook endpoint
 
-1. In the [Control Panel](), navigate to the **Webhooks** section.
+1. In the [Control Panel](https://manage.voximplant.com), navigate to the **Webhooks** section.
 2. Click **Add**.
 3. In the **Callback URL** field, enter your public backend HTTPS URL.
 4. Optionally specify a **Security salt** to verify callback authenticity.
 5. Click **Save**.
 
-Your backend can now receive incoming SMS events, trigger automated follow-ups, or route the text to your CRM. Refer to the [Management API callbacks guide]() for webhook security and payload parsing examples.
+Your backend can now receive incoming SMS events, trigger automated follow-ups, or route the text to your CRM. Refer to the [Management API callbacks guide](/platform/management-api/callbacks) for webhook security and payload parsing examples.
 
 ---
 
@@ -191,4 +191,4 @@ When a message exceeds the single-segment limit:
 * Multi-part UCS-2 segments hold **67 characters** each.
 * The `fragments_count` field in API responses reports how many billable segments the message was divided into.
 
-Review per-segment inbound and outbound rates on the [pricing page]().
+Review per-segment inbound and outbound rates on the [pricing page](/overview/how-billing-works).

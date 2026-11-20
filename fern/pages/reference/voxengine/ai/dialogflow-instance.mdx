@@ -1,0 +1,158 @@
+---
+title: DialogflowInstance
+subtitle: 'Represents a Dialogflow instance. Add the following line to your scenario code to use the class: ``` require(Modules.AI); ```'
+---
+
+## Constructor
+
+```ts
+new DialogflowInstance(id: string, parameters: Object)
+```
+
+**Parameters**
+
+<ParamField path="id" type="string" required />
+
+<ParamField path="parameters" type="Object" required />
+
+```ts
+new DialogflowInstance(id: string, parameters: Object)
+```
+
+**Parameters**
+
+<ParamField path="id" type="string" required />
+
+<ParamField path="parameters" type="Object" required />
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [AI.Events](/reference/voxengine/ai/events). Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: AI.Events | T, callback: (event: AI._Events[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AI.Events | T" required />
+
+<ParamField path="callback" type="(event: AI._Events[T]) => any" required />
+
+### addMarker
+
+Add a Dialogflow speech synthesis playback marker. The [AI.Events.DialogflowPlaybackMarkerReached](/reference/voxengine/ai/events#dialogflowplaybackmarkerreached) event is triggered when the marker is reached.
+
+```ts
+addMarker(offset: number): void
+```
+
+**Parameters**
+
+<ParamField path="offset" type="number" required />
+
+### id
+
+Returns the dialogflow instance's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [AI.Events](/reference/voxengine/ai/events) event.
+
+```ts
+removeEventListener(event: AI.Events | T, callback?: (event: AI._Events[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AI.Events | T" required />
+
+<ParamField path="callback" type="(event: AI._Events[T]) => any" />
+
+### sendMediaTo
+
+Starts sending media (voice) from a Dialogflow participant to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### sendQuery
+
+Send a query to the DialogFlow instance. You can send either a text string up to **256 characters** or an event object with the event name and additional data.
+
+```ts
+sendQuery(dialogflowQuery: DialogflowQueryInput): void
+```
+
+**Parameters**
+
+<ParamField path="dialogflowQuery" type="DialogflowQueryInput" required />
+
+### setOutputAudioConfig
+
+Update the audio output configuration.
+
+```ts
+setOutputAudioConfig(outputAudioConfig: DialogflowOutputAudioConfig): void
+```
+
+**Parameters**
+
+<ParamField path="outputAudioConfig" type="DialogflowOutputAudioConfig" required />
+
+### setPhraseHints
+
+Set a collection of phrase hints for the intents.
+
+```ts
+setPhraseHints(phraseHints: { [id: string]: string }): void
+```
+
+**Parameters**
+
+<ParamField path="phraseHints" type="{ [id: string]: string }" required />
+
+### setQueryParameters
+
+Set parameters for the intents.
+
+```ts
+setQueryParameters(queryParameters: DialogflowQueryParameters): void
+```
+
+**Parameters**
+
+<ParamField path="queryParameters" type="DialogflowQueryParameters" required />
+
+### stop
+
+Stop and destroy the current Dialogflow instance.
+
+```ts
+stop(): void
+```
+
+### stopMediaTo
+
+Stops sending media (voice) from a Dialogflow participant to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />

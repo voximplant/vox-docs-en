@@ -1,0 +1,211 @@
+---
+title: RealtimeAPIEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.Inworld); ```'
+---
+
+## Values
+
+<a id="unknown" />
+<ParamField path="Unknown" type="'Inworld.RealtimeAPI.Unknown'">
+The unknown event.
+</ParamField>
+
+<a id="httpresponse" />
+<ParamField path="HTTPResponse" type="'Inworld.RealtimeAPI.HTTPResponse'">
+The HTTP response event.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'Inworld.RealtimeAPI.Error'">
+Indicates an error occurred. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="sessioncreated" />
+<ParamField path="SessionCreated" type="'Inworld.RealtimeAPI.SessionCreated'">
+Sent by the server immediately when the WebSocket connection is established, carrying the session's default configuration. Send a session.update to configure the session. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="sessionupdated" />
+<ParamField path="SessionUpdated" type="'Inworld.RealtimeAPI.SessionUpdated'">
+Confirms a session.update was applied. The server responds with a session.updated event. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsespeakacknowledged" />
+<ParamField path="ResponseSpeakAcknowledged" type="'Inworld.RealtimeAPI.ResponseSpeakAcknowledged'">
+Inworld extension: assistant acknowledged speak request (`response.speak.acknowledged`).
+</ParamField>
+
+<a id="inputaudiobufferturnsuggestion" />
+<ParamField path="InputAudioBufferTurnSuggestion" type="'Inworld.RealtimeAPI.InputAudioBufferTurnSuggestion'">
+Inworld extension: turn-taking suggestion while user speaks.
+</ParamField>
+
+<a id="inputaudiobufferturnsuggestionrevoked" />
+<ParamField path="InputAudioBufferTurnSuggestionRevoked" type="'Inworld.RealtimeAPI.InputAudioBufferTurnSuggestionRevoked'">
+Inworld extension: turn suggestion revoked.
+</ParamField>
+
+<a id="responsebackchannelaudiodone" />
+<ParamField path="ResponseBackchannelAudioDone" type="'Inworld.RealtimeAPI.ResponseBackchannelAudioDone'">
+Inworld extension: backchannel audio segment finished.
+</ParamField>
+
+<a id="responsebackchannelskipped" />
+<ParamField path="ResponseBackchannelSkipped" type="'Inworld.RealtimeAPI.ResponseBackchannelSkipped'">
+Inworld extension: backchannel was skipped (e.g. min gap).
+</ParamField>
+
+<a id="conversationitemadded" />
+<ParamField path="ConversationItemAdded" type="'Inworld.RealtimeAPI.ConversationItemAdded'">
+A new item was added to the conversation. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationitemdone" />
+<ParamField path="ConversationItemDone" type="'Inworld.RealtimeAPI.ConversationItemDone'">
+An item finished being populated. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationitemdeleted" />
+<ParamField path="ConversationItemDeleted" type="'Inworld.RealtimeAPI.ConversationItemDeleted'">
+An item was deleted from the conversation. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationitemretrieved" />
+<ParamField path="ConversationItemRetrieved" type="'Inworld.RealtimeAPI.ConversationItemRetrieved'">
+Response to conversation.item.retrieve. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationitemtruncated" />
+<ParamField path="ConversationItemTruncated" type="'Inworld.RealtimeAPI.ConversationItemTruncated'">
+An assistant audio item was truncated. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationiteminputaudiotranscriptiondelta" />
+<ParamField path="ConversationItemInputAudioTranscriptionDelta" type="'Inworld.RealtimeAPI.ConversationItemInputAudioTranscriptionDelta'">
+Streaming partial transcription for user audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="conversationiteminputaudiotranscriptioncompleted" />
+<ParamField path="ConversationItemInputAudioTranscriptionCompleted" type="'Inworld.RealtimeAPI.ConversationItemInputAudioTranscriptionCompleted'">
+Final transcription for a user audio item. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsecreated" />
+<ParamField path="ResponseCreated" type="'Inworld.RealtimeAPI.ResponseCreated'">
+A new response was created. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsedone" />
+<ParamField path="ResponseDone" type="'Inworld.RealtimeAPI.ResponseDone'">
+The response finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputitemadded" />
+<ParamField path="ResponseOutputItemAdded" type="'Inworld.RealtimeAPI.ResponseOutputItemAdded'">
+An output item was added to the response. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputitemdone" />
+<ParamField path="ResponseOutputItemDone" type="'Inworld.RealtimeAPI.ResponseOutputItemDone'">
+An output item finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsecontentpartadded" />
+<ParamField path="ResponseContentPartAdded" type="'Inworld.RealtimeAPI.ResponseContentPartAdded'">
+A content part was added to an output item. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsecontentpartdone" />
+<ParamField path="ResponseContentPartDone" type="'Inworld.RealtimeAPI.ResponseContentPartDone'">
+A content part finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputtextdelta" />
+<ParamField path="ResponseOutputTextDelta" type="'Inworld.RealtimeAPI.ResponseOutputTextDelta'">
+Streaming text chunk from the model. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputtextdone" />
+<ParamField path="ResponseOutputTextDone" type="'Inworld.RealtimeAPI.ResponseOutputTextDone'">
+Text output finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputaudiodone" />
+<ParamField path="ResponseOutputAudioDone" type="'Inworld.RealtimeAPI.ResponseOutputAudioDone'">
+Audio output for a content part finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputaudiotranscriptdelta" />
+<ParamField path="ResponseOutputAudioTranscriptDelta" type="'Inworld.RealtimeAPI.ResponseOutputAudioTranscriptDelta'">
+Streaming transcript for generated audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responseoutputaudiotranscriptdone" />
+<ParamField path="ResponseOutputAudioTranscriptDone" type="'Inworld.RealtimeAPI.ResponseOutputAudioTranscriptDone'">
+Final transcript for generated audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsefunctioncallargumentsdelta" />
+<ParamField path="ResponseFunctionCallArgumentsDelta" type="'Inworld.RealtimeAPI.ResponseFunctionCallArgumentsDelta'">
+Streaming function call arguments. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="responsefunctioncallargumentsdone" />
+<ParamField path="ResponseFunctionCallArgumentsDone" type="'Inworld.RealtimeAPI.ResponseFunctionCallArgumentsDone'">
+Function call arguments finished. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="inputaudiobufferspeechstarted" />
+<ParamField path="InputAudioBufferSpeechStarted" type="'Inworld.RealtimeAPI.InputAudioBufferSpeechStarted'">
+Voice activity detected: user started speaking. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="inputaudiobufferspeechstopped" />
+<ParamField path="InputAudioBufferSpeechStopped" type="'Inworld.RealtimeAPI.InputAudioBufferSpeechStopped'">
+Voice activity ended: user stopped speaking. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="inputaudiobuffercommitted" />
+<ParamField path="InputAudioBufferCommitted" type="'Inworld.RealtimeAPI.InputAudioBufferCommitted'">
+Buffered audio was committed as a conversation item. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="inputaudiobuffercleared" />
+<ParamField path="InputAudioBufferCleared" type="'Inworld.RealtimeAPI.InputAudioBufferCleared'">
+Input audio buffer was cleared. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="inputaudiobuffertimeouttriggered" />
+<ParamField path="InputAudioBufferTimeoutTriggered" type="'Inworld.RealtimeAPI.InputAudioBufferTimeoutTriggered'">
+An idle timeout was triggered on the input buffer. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="outputaudiobufferstarted" />
+<ParamField path="OutputAudioBufferStarted" type="'Inworld.RealtimeAPI.OutputAudioBufferStarted'">
+Server started sending output audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="outputaudiobufferstopped" />
+<ParamField path="OutputAudioBufferStopped" type="'Inworld.RealtimeAPI.OutputAudioBufferStopped'">
+Server stopped sending output audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+</ParamField>
+
+<a id="outputaudiobuffercleared" />
+<ParamField path="OutputAudioBufferCleared" type="'Inworld.RealtimeAPI.OutputAudioBufferCleared'">
+Output audio buffer was cleared.
+</ParamField>
+
+<a id="ratelimitsupdated" />
+<ParamField path="RateLimitsUpdated" type="'Inworld.RealtimeAPI.RateLimitsUpdated'">
+Reports current rate limit state.
+</ParamField>
+
+<a id="websocketerror" />
+<ParamField path="WebSocketError" type="'Inworld.RealtimeAPI.WebSocketError'">
+The WebSocket error response event.
+</ParamField>
+
+<a id="connectorinformation" />
+<ParamField path="ConnectorInformation" type="'Inworld.RealtimeAPI.ConnectorInformation'">
+Contains Voice AI integration session information.
+</ParamField>

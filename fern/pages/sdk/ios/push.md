@@ -46,7 +46,7 @@ The Voximplant platform supports two Apple credential types for VoIP push notifi
 ### Add a .p8 key
 
 1. Create a private key with APNs enabled in your Apple Developer account (see Apple's [Create a private key]() guide). Download the resulting `.p8` file.
-2. Log in to the [Voximplant Control Panel]().
+2. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 3. Open your application and navigate to the **Push certificates** tab.
 4. Click **Add certificate** in the upper-right corner.
 5. In the **Platform** dropdown, select `Apple Key`.
@@ -63,7 +63,7 @@ The Voximplant platform supports two Apple credential types for VoIP push notifi
 1. Generate a VoIP Push Services certificate in your Apple Developer account.
 2. Download and double-click the certificate file to import it into your Mac's Keychain Access.
 3. In Keychain Access, find the imported certificate, right-click, and select **Export**. Save it as a password-protected `.p12` file.
-4. Log in to the [Voximplant Control Panel]().
+4. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 5. Open your application and navigate to the **Push certificates** tab.
 6. Click **Add certificate** in the upper-right corner.
 7. In the **Platform** dropdown, select `Apple VoIP`.
@@ -77,7 +77,7 @@ The Voximplant platform supports two Apple credential types for VoIP push notifi
 1. Add your `.p8` key in the Voximplant Control Panel following [Add a .p8 key](#add-a-p8-key). Keep your `.p12` certificate active.
 2. Test incoming call push notifications. When both are present, Voximplant automatically prioritizes the `.p8` key.
 3. Once verified, delete the legacy `.p12` certificate.
-4. If push delivery fails, check the session debug logs in Call History (see [Push troubleshooting]()). Remove the `.p8` key to fall back to the `.p12` certificate while diagnosing the issue.
+4. If push delivery fails, check the session debug logs in Call History (see [Push troubleshooting](/help/troubleshooting/push-troubleshooting)). Remove the `.p8` key to fall back to the `.p12` certificate while diagnosing the issue.
 
 ### Additional settings
 
@@ -114,7 +114,7 @@ To allow the Voximplant cloud to dispatch push notifications when calling a user
 require(Modules.PushService);
 ```
 
-When your scenario calls a user using [VoxEngine.callUser](), the platform automatically checks for registered push tokens and dispatches an APNs VoIP push to wake the device.
+When your scenario calls a user using [VoxEngine.callUser](/reference/voxengine/voxengine#calluser), the platform automatically checks for registered push tokens and dispatches an APNs VoIP push to wake the device.
 
 ---
 

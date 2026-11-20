@@ -1,0 +1,111 @@
+---
+title: MCP
+subtitle: Model Context Protocol client for real-time communication with an MCP server over WebSocket.
+---
+
+Model Context Protocol client for real-time communication with an MCP server over WebSocket.
+Add the following line to your scenario code to use the namespace:
+```
+require(Modules.MCP);
+```
+
+## Classes
+
+- [Client](/reference/voxengine/mcp/client) — Note that the MCP.Client uses the [Model Context Protocol Go SDK v1.5.0](https://pkg.go.dev/github.com/modelcontextprotocol/go-sdk@v1.5.0).
+## Enums
+
+- [ServerEvents](/reference/voxengine/mcp/server-events) — Add the following line to your scenario code to use the events: ``` require(Modules.MCP); ```
+## Functions
+
+### createClient
+
+Creates a new [MCP.Client](/reference/voxengine/mcp/client) instance.
+
+```ts
+createClient(parameters: ClientParameters): Promise<Client>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ClientParameters" required />
+
+## Types
+
+### ClientParameters
+
+*Extends:* `_VoiceAIClientParameters`
+
+[MCP.Client](/reference/voxengine/mcp/client) parameters. Can be passed as arguments to the `MCP.createClient` method.
+
+<a id="clientparameters-mcpserverconnectionconfig" />
+<ParamField path="mcpServerConnectionConfig" type="MCPServerConnectionConfig">
+The MCP server connection configuration.
+</ParamField>
+
+#### Inherited fields
+
+<a id="clientparameters-onwebsocketclose" />
+<ParamField path="onWebSocketClose" type="(event: _WebSocketCloseEvent) => void">
+_optional, inherited from _VoiceAIClientParameters_
+
+Optional. A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed.
+</ParamField>
+
+<a id="clientparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="clientparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="clientparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>
+
+### MCPServerConnectionConfig
+
+MCP server connection configuration.
+
+<a id="mcpserverconnectionconfig-clientname" />
+<ParamField path="clientName" type="string">
+ClientName and ClientVersion identify this MCP client in the protocol handshake.
+</ParamField>
+
+<a id="mcpserverconnectionconfig-clientversion" />
+<ParamField path="clientVersion" type="string">
+ClientVersion identify this MCP client in the protocol handshake.
+</ParamField>
+
+<a id="mcpserverconnectionconfig-endpoint" />
+<ParamField path="endpoint" type="string">
+Endpoint is the server URL for "http" or "sse" transport.
+</ParamField>
+
+<a id="mcpserverconnectionconfig-headers" />
+<ParamField path="headers" type="Object">
+Headers to send to the MCP server on HTTP/SSE requests (e.g. Authorization, API keys).
+You can use it to pass authentication headers to the MCP server.
+</ParamField>
+
+<a id="mcpserverconnectionconfig-transport" />
+<ParamField path="transport" type="string">
+Transport is "http", or "sse".
+</ParamField>

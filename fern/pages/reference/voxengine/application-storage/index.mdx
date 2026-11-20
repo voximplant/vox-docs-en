@@ -1,0 +1,67 @@
+---
+title: ApplicationStorage
+subtitle: Represents an application storage object to manipulate key-value pairs.
+---
+
+Represents an application storage object to manipulate key-value pairs.
+Add the following line to your scenario code to use the class:
+```
+require(Modules.ApplicationStorage);
+```
+
+## Functions
+
+### get
+
+Retrieves a value of the specified key.
+
+```ts
+get(key: string): Promise<StorageKey | null>
+```
+
+**Parameters**
+
+<ParamField path="key" type="string" required />
+
+### keys
+
+Retrieves all the keys assigned to a Voximplant application.
+
+```ts
+keys(pattern?: string, count?: number): Promise<StoragePage>
+```
+
+**Parameters**
+
+<ParamField path="pattern" type="string" />
+
+<ParamField path="count" type="number" />
+
+### put
+
+Creates a key-value pair. If an already existing **key** is passed, the method updates its **value**.
+The keys should be unique within a Voximplant application.
+
+```ts
+put(key: string, value: string, ttl: number): Promise<StorageKey>
+```
+
+**Parameters**
+
+<ParamField path="key" type="string" required />
+
+<ParamField path="value" type="string" required />
+
+<ParamField path="ttl" type="number" required />
+
+### remove
+
+Removes the specified key. Note that the returned **StorageKey** always has zero **ttl**.
+
+```ts
+remove(key: string): Promise<StorageKey>
+```
+
+**Parameters**
+
+<ParamField path="key" type="string" required />

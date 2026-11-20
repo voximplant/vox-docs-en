@@ -1,0 +1,20 @@
+---
+title: VADStart
+subtitle: A start strategy that triggers a user turn start based on Voice Activity Detection.
+---
+
+## Properties
+
+<a id="enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+<a id="type" />
+<ParamField path="type" type="'vad'">
+_readonly_
+
+Reported as **strategy** on `Agentic.VoiceDSPEvents.TurnStarted`.
+</ParamField>

@@ -43,7 +43,7 @@ sdk.on(VoxImplant.Events.PlaybackError, (event) => {
 
 ## Microphone and camera access errors
 
-To initiate or receive calls and conferences, users must grant browser permissions to access their microphone and camera. When initializing the SDK or calling [call()]() and [callConference()](), the browser triggers a native permission prompt.
+To initiate or receive calls and conferences, users must grant browser permissions to access their microphone and camera. When initializing the SDK or calling [call()]() and [callConference()](/reference/voxengine/voxengine#callconference), the browser triggers a native permission prompt.
 
 In the Web SDK, *users cannot join a call or conference without granting microphone access*. If a user denies the microphone prompt, the call fails immediately with the [CallEvents.Failed]() event.
 
