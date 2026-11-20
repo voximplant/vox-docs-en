@@ -30,7 +30,6 @@ Voximplant runs on **VoxEngine**, a serverless JavaScript runtime executing dire
 
 <Steps>
   <Step title="Create an account">
-    ### 1. Create your account
     
     All platform resources are managed via the [Voximplant Control Panel](https://manage.voximplant.com):
     
@@ -40,7 +39,6 @@ Voximplant runs on **VoxEngine**, a serverless JavaScript runtime executing dire
   </Step>
 
   <Step title="Create an application">
-    ### 2. Create an application
     
     An application groups and isolates all resources for a specific project:
     
@@ -56,7 +54,6 @@ Voximplant runs on **VoxEngine**, a serverless JavaScript runtime executing dire
   </Step>
 
   <Step title="Create a scenario">
-    ### 3. Create a scenario
     
     Scenarios are JavaScript files executed by VoxEngine in the cloud when a call triggers a routing rule:
     
@@ -93,7 +90,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   </Step>
 
   <Step title="Configure routing rules">
-    ### 4. Configure routing rules
     
     Routing rules determine which scenario executes when traffic reaches the platform. They evaluate the destination string (dialed phone number, SIP address, or username) against a regular expression pattern:
     
@@ -112,7 +108,6 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   </Step>
 
   <Step title="Configure Secrets and Application Storage">
-    ### 5. Store API keys and configuration
     
     Voximplant provides two separate storage mechanisms inside every application:
     
@@ -133,7 +128,6 @@ const calleeDestination = (await ApplicationStorage.get("CALLEE_DESTINATION")).v
   </Step>
 
   <Step title="Attach a phone number (optional)">
-    ### 6. Attach a phone number
     
     If callers need to reach your Voice AI agent from a standard mobile phone or landline:
     

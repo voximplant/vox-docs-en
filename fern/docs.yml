@@ -78,10 +78,17 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
+      - section: Build with AI coding agents
+        contents:
+          - page: Overview
+            path: ./pages/voice-ai/vibe-coding/overview.mdx
+            icon: fa-duotone fa-wand-magic-sparkles
+          - page: Build with Claude Code
+            path: ./pages/voice-ai/vibe-coding/claude.mdx
+            icon: fa-brands fa-claude
       - section: Voice AI connectors
         contents:
           - page: Client Options
-            slug: client-options
             path: ./pages/voice-ai/client-options.mdx
             icon: fa-duotone fa-circle-info
           - section: Bring Your Own LLM
@@ -328,53 +335,50 @@ navigation:
                 slug: cx
                 path: ./pages/voice-ai/dialogflow/cx.mdx
                 icon: fa-duotone fa-comments
-      - section: Build with AI coding agents
-        slug: vibe-coding
+      - section: MCP Client
+        path: ./pages/voice-ai/mcp-client/introduction.md
         contents:
           - page: Overview
-            slug: overview
-            path: ./pages/voice-ai/vibe-coding/overview.mdx
-            icon: fa-duotone fa-wand-magic-sparkles
-          - page: Build with Claude Code
-            slug: claude
-            path: ./pages/voice-ai/vibe-coding/claude.mdx
-            icon: fa-brands fa-claude
-      - section: Network options
-        slug: network-options
+            path: ./pages/voice-ai/mcp-client/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: Gemini-Zapier-MCP example
+            path: ./pages/voice-ai/mcp-client/gemini-zapier-mcp-example.mdx
+            icon: fa-duotone fa-code
+      - section: Jev
         contents:
-          - page: Phone Numbers & PSTN
-            slug: phone-numbers-pstn
+          - page: Overview
+            path: ./pages/voice-ai/jev/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: System One client
+            path: ./pages/voice-ai/jev/system-one-client.mdx
+            icon: fa-duotone fa-list-check
+      - section: Network options
+        contents:
+          - page: Phone numbers & PSTN
             path: ./pages/voice-ai/network-options/phone-numbers-pstn.mdx
             icon: fa-duotone fa-phone
           - page: SIP
-            slug: sip
             path: ./pages/voice-ai/network-options/sip.mdx
             icon: fa-duotone fa-phone-office
           - page: WhatsApp
-            slug: whatsapp
             path: ./pages/voice-ai/network-options/whatsapp.mdx
             icon: fa-brands fa-whatsapp
           - page: WhatsApp Multi-modal Proxy Server
-            slug: whatsapp-multimodal-server
             path: ./pages/voice-ai/network-options/whatsapp-multimodal-server.mdx
             hidden: true
             icon: fa-duotone fa-server
           - page: Web & Mobile
-            slug: web-mobile
             path: ./pages/voice-ai/network-options/web-mobile.mdx
             icon: fa-duotone fa-user
-      - section: Inbound vs. Outbound calling
-        slug: inbound-vs-outbound
+      - section: Incoming vs outgoing calls
         contents:
           - page: Inbound calls
-            slug: inbound-calls
             path: ./pages/voice-ai/inbound-vs-outbound/inbound-calls.mdx
             icon: fa-duotone fa-phone-arrow-down-left
           - page: Outbound calls
-            slug: outbound-calls
             path: ./pages/voice-ai/inbound-vs-outbound/outbound-calls.mdx
             icon: fa-duotone fa-phone-arrow-up-right
-      - section: What's next?
+      - section: What is next?
         slug: enhance-and-deploy
         contents:
           - page: Enhance and deploy
@@ -389,29 +393,6 @@ navigation:
             slug: build-and-deploy
             path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
             icon: fa-duotone fa-rocket-launch
-      - section: Jev
-        slug: jev
-        contents:
-          - page: Overview
-            slug: overview
-            path: ./pages/voice-ai/jev/overview.mdx
-            icon: fa-duotone fa-circle-info
-          - page: System One client
-            slug: system-one-client
-            path: ./pages/voice-ai/jev/system-one-client.mdx
-            icon: fa-duotone fa-list-check
-      - section: MCP Client
-        slug: mcp-client
-        path: ./pages/voice-ai/mcp-client/introduction.md
-        contents:
-          - page: Overview
-            slug: overview
-            path: ./pages/voice-ai/mcp-client/overview.mdx
-            icon: fa-duotone fa-circle-info
-          - page: Gemini-Zapier-MCP Example
-            slug: gemini-zapier-mcp-example
-            path: ./pages/voice-ai/mcp-client/gemini-zapier-mcp-example.mdx
-            icon: fa-duotone fa-code
       - section: Speech Flow Control
         slug: speech-flow-control
         contents:
