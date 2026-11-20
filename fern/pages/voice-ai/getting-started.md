@@ -4,7 +4,7 @@ VoxEngine setup is centered on three components:
 - `Scenarios`: JavaScript programs that control calls
 - `Routing rules`: destination patterns that trigger scenarios
 
-![Basic inbound routing model](../../../assets/getting-started/voxengine-structure.png)
+![Basic inbound routing model](../../assets/getting-started/voxengine-structure.png)
 
 For your first project, we recommend configuring one application first, adding one scenario, and attaching a single routing rule that can receive test traffic.
 you can start by doing this via Voximplant's Control Panel (`manage.voximplant.com`) and later use the management API to do this programmatically.
@@ -42,7 +42,7 @@ Use `manage.voximplant.com` to configure applications, scenarios, routing, chann
 </Button>
 
 <a id="create-an-application"></a>
-## <Icon icon="../../../assets/getting-started/icon-application-grid.svg" /> Create an application
+## <Icon icon="../../assets/getting-started/icon-application-grid.svg" /> Create an application
 
 A Voximplant application is the top-level container for a task or environment. It holds scenarios, users, routing rules, and attached numbers.
 
@@ -52,7 +52,7 @@ A Voximplant application is the top-level container for a task or environment. I
   </Step>
   <Step title="Create a new application">
     Click **New application** (or **Create** from the empty state).
-    ![Create an application](../../../assets/getting-started/manage-create-application.png)
+    ![Create an application](../../assets/getting-started/manage-create-application.png)
   </Step>
   <Step title="Name and save the application">
     Set the application name (for example `voice-ai-staging`) and create it.
@@ -79,7 +79,7 @@ Scenarios are JavaScript documents inside an application. VoxEngine executes the
   </Step>
   <Step title="Create a scenario">
     Click the plus button to create a scenario.
-    ![Create a scenario](../../../assets/getting-started/manage-create-scenario.png)
+    ![Create a scenario](../../assets/getting-started/manage-create-scenario.png)
   </Step>
   <Step title="Name and paste code">
     Name the scenario and paste your example code.
@@ -94,7 +94,7 @@ name elsewhere (like with SIP routing).
 - [Scenarios HTTP API reference](/reference/management-api/reference/scenarios)
 
 <a id="setup-routing"></a>
-## <Icon icon="../../../assets/getting-started/icon-routing-split.svg" /> Setup routing
+## <Icon icon="../../assets/getting-started/icon-routing-split.svg" /> Setup routing
 
 Routing rules decide which scenario starts for an incoming destination or a manually triggered outbound flow. For example,
 `^(\+91)\d{10}$` could go to an India-specific voice AI scenario, while `^(\+1)\d{10}$` could go to a US-specific one.
@@ -102,11 +102,11 @@ Routing rules decide which scenario starts for an incoming destination or a manu
 <Steps>
   <Step title="Open Routing">
     Open your application and go to **Routing**.
-    ![Create a routing rule](../../../assets/getting-started/manage-routing-create-rule.png)
+    ![Create a routing rule](../../assets/getting-started/manage-routing-create-rule.png)
   </Step>
   <Step title="Create a rule">
     Click **Create** / **New rule**.
-    ![Attach scenarios to a routing rule](../../../assets/getting-started/manage-routing-attach-scenario.png)
+    ![Attach scenarios to a routing rule](../../assets/getting-started/manage-routing-attach-scenario.png)
   </Step>
   <Step title="Set rule and pattern">
     Set a rule name and a destination pattern.
@@ -138,14 +138,14 @@ As you get more advanced with more unique situations, you can consider patterns 
 - One fallback global rule (`.*`) below it
 
 Voximplant also includes a rule check that will help verify  your patterns.
-![Validate routing with rule checker](../../../assets/getting-started/manage-routing-rule-checker.png)
+![Validate routing with rule checker](../../assets/getting-started/manage-routing-rule-checker.png)
 
 #### <icon icon="fa-duotone fa-solid fa-link" /> More information:
 - [Routing rules setup guide](/platform/getting-started/create-a-routing-rule)
 - [Routing rules HTTP API reference](/reference/management-api/reference/rules)
 
 <a id="application-storage"></a>
-## <Icon icon="../../../assets/getting-started/icon-application-storage.svg" /> Application Storage and Secrets
+## <Icon icon="../../assets/getting-started/icon-application-storage.svg" /> Application Storage and Secrets
 
 Voximplant provides two separate stores for every application:
 
@@ -154,7 +154,7 @@ Voximplant provides two separate stores for every application:
 
 The examples in this guide use **Secrets** to hold API keys for external services (for example `OPENAI_API_KEY`) and `ApplicationStorage` for non-sensitive config.
 
-![Application Storage and Secrets in manage.voximplant.com](../../../assets/getting-started/manage-app-storage-and-secrets.png)
+![Application Storage and Secrets in manage.voximplant.com](../../assets/getting-started/manage-app-storage-and-secrets.png)
 
 
 Example:
