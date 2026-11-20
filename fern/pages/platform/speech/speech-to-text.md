@@ -31,7 +31,7 @@ The **Phrase hint** mode is supported by the Google profile only. Google does no
 
 To set up speech-to-text in your scenario:
 
-1. Import the ASR module into your scenario:
+1. Import the `ASR` module into your scenario:
 
 ```javascript
 require(Modules.ASR);
@@ -551,7 +551,7 @@ The xAI Speech-to-Text API supports realtime recognition over WebSockets. See th
 
 To use xAI realtime speech-to-text in your application:
 
-1. Import the ASR module into your [scenario](/platform/getting-started/create-a-scenario) via `require(Modules.ASR)` (see [Speech-to-text usage](#speech-to-text-usage)).
+1. Import the `ASR` module into your [scenario](/platform/getting-started/create-a-scenario) via `require(Modules.ASR)` (see [Speech-to-text usage](#speech-to-text-usage)).
 2. Create an STT object with [VoxEngine.createASR](/reference/voxengine/voxengine#createasr) and set [profile]() to an [ASRProfileList.XAI]() entry (for example, `ASRProfileList.XAI.en`, another language profile, or `ASRProfileList.XAI.auto` to omit `language` from the provider query).
 3. Optionally set [model]() (for example, `ASRModelList.XAI.grok_voice_transcribe_2_0`; defaults to **grok-voice-transcribe-2.0**).
 4. Send call audio to the STT object with [Call.sendMediaTo](/reference/voxengine/call#sendmediato).
@@ -621,7 +621,7 @@ To pass xAI-specific options in the provider’s native format, use the [request
 ```javascript title="Request parameter usage"
 /*
  * Description:
- * xAI ASR with provider request object.
+ * xAI STT with provider request object.
  */
 
 require(Modules.ASR);

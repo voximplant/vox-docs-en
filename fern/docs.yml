@@ -3,14 +3,6 @@ instances:
 
 title: Voximplant Documentation
 
-redirects:
-  - source: /reference/voxengine
-    destination: /reference/voxengine/overview
-  - source: /reference/management-api
-    destination: /reference/management-api/reference
-  - source: /voice-ai/dialogflow/overview
-    destination: /voice-ai/dialogflow/es
-
 layout:
   tabs-placement: header
   searchbar-placement: header
@@ -131,11 +123,13 @@ navigation:
             icon: fa-duotone fa-user-plus
           - link: Create an application
             href: /voice-ai/configure-voximplant/overview#create-an-application
+            icon: fa-duotone fa-grid-2-plus
           - link: Create a scenario
             href: /voice-ai/configure-voximplant/overview#create-a-scenario
             icon: fa-duotone fa-code
           - link: Setup routing
             href: /voice-ai/configure-voximplant/overview#setup-routing
+            icon: fa-duotone fa-route
           - link: Application Storage
             href: /voice-ai/configure-voximplant/overview#application-storage
       - section: Network options
@@ -742,13 +736,13 @@ navigation:
         path: ./pages/reference/overview.md
         icon: fa-duotone fa-list-check
       - section: VoxEngine
-        slug: voxengine
-        collapsed: true
         contents:
           - page: Overview
             path: ./pages/reference/voxengine/overview.mdx
+            icon: fa-brands fa-js
           - section: Runtime and modules
             slug: runtime-and-modules
+            icon: fa-duotone fa-cubes
             contents:
               - page: VoxEngine
                 path: ./pages/reference/voxengine/voxengine/index.mdx
@@ -786,6 +780,7 @@ navigation:
             skip-slug: true
           - section: Calls and telephony
             slug: calls-and-telephony
+            icon: fa-duotone fa-phone-volume
             contents:
               - page: Call
                 path: ./pages/reference/voxengine/call.mdx
@@ -811,6 +806,7 @@ navigation:
             skip-slug: true
           - section: Media playback and recording
             slug: media-playback-and-recording
+            icon: fa-duotone fa-circle-play
             contents:
               - page: Player
                 path: ./pages/reference/voxengine/player.mdx
@@ -847,8 +843,9 @@ navigation:
               - page: URLPlayerRequestMethod
                 path: ./pages/reference/voxengine/url-player-request-method.mdx
             skip-slug: true
-          - section: Speech, ASR, and TTS
+          - section: Speech, STT, and TTS
             slug: speech-asr-and-tts
+            icon: fa-duotone fa-waveform-lines
             contents:
               - page: ASR
                 path: ./pages/reference/voxengine/asr.mdx
@@ -994,6 +991,7 @@ navigation:
             skip-slug: true
           - section: Voice AI
             slug: voice-ai
+            icon: fa-duotone fa-sparkles
             contents:
               - section: AI
                 slug: ai
@@ -1154,6 +1152,7 @@ navigation:
             skip-slug: true
           - section: WebSocket and protocol integrations
             slug: websocket-and-protocol-integrations
+            icon: fa-duotone fa-plug
             contents:
               - page: WebSocket
                 path: ./pages/reference/voxengine/websocket.mdx
@@ -1173,6 +1172,7 @@ navigation:
             skip-slug: true
           - section: Queues and routing
             slug: queues-and-routing
+            icon: fa-duotone fa-route
             contents:
               - page: CallList
                 path: ./pages/reference/voxengine/call-list/index.mdx
@@ -1191,10 +1191,10 @@ navigation:
                 path: ./pages/reference/voxengine/task-waiting-code.mdx
             skip-slug: true
       - section: Management API
-        slug: management-api
         contents:
           - api: Reference
             api-name: management-api
+            icon: fa-duotone fa-sliders
             display-errors: true
             summary: ./pages/reference/management-api/overview.mdx
             layout:
@@ -1244,8 +1244,10 @@ navigation:
           - page: Authorization
             path: ./pages/reference/management-api/authorization.mdx
             slug: authorization
+            icon: fa-duotone fa-key
           - page: Errors
             path: ./pages/reference/management-api/errors.mdx
+            icon: fa-duotone fa-triangle-exclamation
       - section: Web SDK
         contents:
           - page: Overview

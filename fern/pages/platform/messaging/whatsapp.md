@@ -114,7 +114,7 @@ When a customer calls your WhatsApp Business account from their WhatsApp applica
 
 1. Create a [scenario](/platform/getting-started/create-a-scenario) that answers the call and executes your media or IVR logic:
 
-```javascript title="Inbound WhatsApp call scenario"
+```javascript title="Incoming WhatsApp call scenario"
 let call;
 let player;
 
@@ -134,7 +134,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-2. Create a [routing rule](/platform/getting-started/create-a-routing-rule) with the pattern `.*` and bind it to your inbound scenario.
+2. Create a [routing rule](/platform/getting-started/create-a-routing-rule) with the pattern `.*` and bind it to your incoming scenario.
 
 ---
 
@@ -145,7 +145,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 According to Meta policies, businesses cannot place unsolicited outbound calls to WhatsApp users without prior user consent. You can obtain call permissions through two mechanisms:
 
 1. **Permission request template**: Send an interactive WhatsApp message template asking the user to approve calls from your business.
-2. **Inbound call window (7-day temporary permission)**: If a customer calls your WhatsApp Business number first, your business automatically receives a 7-day window to place return calls to that user.
+2. **Incoming call window (7-day temporary permission)**: If a customer calls your WhatsApp Business number first, your business automatically receives a 7-day window to place return calls to that user.
 
 Users can also manage call permissions directly from your business profile in their WhatsApp application. For detailed compliance rules, refer to Meta's [Business-initiated calling documentation]().
 

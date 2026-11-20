@@ -105,7 +105,7 @@ Once authenticated, the SIP client can place and receive calls through your appl
 
 ## How to work with SIP registrations
 
-A **SIP registration** allows Voximplant to register as an extension (client) on an external PBX or SIP provider. This enables your external PBX to forward inbound calls directly into Voximplant without requiring dedicated SIP trunks or static IP whitelisting.
+A **SIP registration** allows Voximplant to register as an extension (client) on an external PBX or SIP provider. This enables your external PBX to forward incoming calls directly into Voximplant without requiring dedicated SIP trunks or static IP whitelisting.
 
 ### Create a SIP registration
 
@@ -145,7 +145,7 @@ You can obtain the `regId` from the control panel or via the [GetSipRegistration
 
 ### Processing incoming calls from a SIP registration
 
-To route inbound calls arriving through a SIP registration:
+To route incoming calls arriving through a SIP registration:
 
 1. Open your application in the control panel.
 2. Navigate to **SIP registrations** and click **Attach registration**.

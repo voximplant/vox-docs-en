@@ -16,7 +16,7 @@ Build a scalable, cloud-based Private Branch Exchange (PBX) for your organizatio
 
 ## What is a cloud PBX
 
-A Private Branch Exchange (PBX) is an organizational telephony system that routes internal calls between extensions and manages inbound and outbound connections with the public telephone network (PSTN).
+A Private Branch Exchange (PBX) is an organizational telephony system that routes internal calls between extensions and manages incoming and outbound connections with the public telephone network (PSTN).
 
 With Voximplant, you can build a software-defined cloud PBX featuring:
 
@@ -36,9 +36,9 @@ To set up a cloud PBX in Voximplant:
 1. Create an [application](/platform/getting-started/create-an-application).
 2. Create [users](/platform/getting-started/create-users) for each employee or extension in your PBX (you can automate user provisioning in bulk using the [AddUser](/reference/management-api/reference/users/add-user) Management API method).
 3. Create three distinct [scenarios](/platform/getting-started/create-a-scenario) to handle the core call flows:
-   * **Inbound calls**: Handles business hours logic, greetings, extension routing, and hunt groups.
+   * **Incoming calls**: Handles business hours logic, greetings, extension routing, and hunt groups.
    * **Internal extension calls**: Manages internal calling between employees and records sessions.
-   * **Outbound PSTN calls**: Connects internal users to external mobile and landline numbers.
+   * **Outgoing PSTN calls**: Connects internal users to external mobile and landline numbers.
 
 ### Scenario 1: Incoming calls and business hours
 
@@ -46,7 +46,7 @@ This scenario evaluates whether a call arrives during operating hours:
 * **During business hours**: Plays a greeting and prompts the caller to dial an extension number or wait to be routed to all available extensions.
 * **Outside business hours**: Plays an after-hours prompt and directs the caller to leave a voicemail.
 
-```javascript title="Inbound PBX scenario"
+```javascript title="Incoming PBX scenario"
 // String used to store DTMF input
 let input = '';
 // used to store Caller ID
@@ -249,10 +249,10 @@ Because Voximplant evaluates routing rules sequentially from top to bottom and s
 1. **Local extension rule (Top priority)**:
    * Pattern: `^1[0-9]{2}$` (matches 3-digit extensions starting with `1`, like `101`–`199`).
    * Scenario: Bind the internal extension scenario.
-2. **Outbound PSTN rule (Medium priority)**:
+2. **Outgoing PSTN rule (Medium priority)**:
    * Pattern: `^[0-9]{10,}$` (matches standard external phone numbers).
    * Scenario: Bind the outbound PSTN scenario.
-3. **Inbound public calls rule (Lowest priority)**:
+3. **Incoming public calls rule (Lowest priority)**:
    * Pattern: `.*` (or your rented phone number).
    * Scenario: Bind the incoming calls scenario.
 

@@ -675,12 +675,12 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 
   Logger.write(`Calling ${storage.firstName} ${storage.lastName} on ${storage.phoneNumber}`);
 
-  // Create an ASR instance
+  // Create an STT instance
   storage.asr = VoxEngine.createASR({
     profile: ASRProfileList.Google.en_US,
     phraseHints: ['One', 'Two', 'Three', 'Four', 'Five']
   });
-  // Add asr event listeners
+  // Add STT event listeners
   storage.asr.addEventListener(ASREvents.Result, handleAsrResult);
   storage.asr.addEventListener(ASREvents.SpeechCaptured, handleAsrSpeechCaptured);
 

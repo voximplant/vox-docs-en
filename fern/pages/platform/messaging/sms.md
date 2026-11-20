@@ -191,4 +191,4 @@ When a message exceeds the single-segment limit:
 * Multi-part UCS-2 segments hold **67 characters** each.
 * The `fragments_count` field in API responses reports how many billable segments the message was divided into.
 
-Review per-segment inbound and outbound rates on the [pricing page](/overview/how-billing-works).
+Review per-segment incoming and outgoing rates on the [pricing page](/overview/how-billing-works).

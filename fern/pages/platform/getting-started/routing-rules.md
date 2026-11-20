@@ -14,7 +14,7 @@ To create a routing rule in the Voximplant Control Panel:
 2. In the application sidebar, navigate to the **Routing** tab.
 3. Click **New rule** (or the **+** icon).
 4. Configure the rule settings:
-   * **Rule name**: A descriptive identifier for your rule (for example, `inbound-support` or `outbound-dialer`).
+   * **Rule name**: A descriptive identifier for your rule (for example, `incoming-support` or `outgoing-dialer`).
    * **Pattern**: A regular expression matched against the destination string (such as the dialed phone number, SIP URI, or SDK user). Use `.*` to match all destinations.
    * **Assigned scenarios**: Drag or select the scenario(s) you want to execute when this rule is triggered.
    * **Assigned phone numbers** (optional): Bind rented phone numbers directly to this rule so calls to those numbers route immediately to your chosen scenarios.
@@ -50,9 +50,9 @@ You can test and verify your routing configuration directly in the control panel
 
 A routing rule can be triggered through several channels:
 
-* **Inbound PSTN calls**: An incoming call to a rented number attached to the application matches a rule's pattern and executes its assigned scenarios.
-* **Inbound SIP calls**: SIP requests sent to your application domain evaluate the user portion of the SIP URI against rule patterns.
-* **SDK client calls**: Initiating a call from a Web, iOS, Android, React Native, or Flutter SDK generates an inbound call leg (`SDK → scenario`) whose destination string matches against your routing rules.
+* **Incoming PSTN calls**: An incoming call to a rented number attached to the application matches a rule's pattern and executes its assigned scenarios.
+* **Incoming SIP calls**: SIP requests sent to your application domain evaluate the user portion of the SIP URI against rule patterns.
+* **SDK client calls**: Initiating a call from a Web, iOS, Android, React Native, or Flutter SDK generates an incoming call leg (`SDK → scenario`) whose destination string matches against your routing rules.
 * **Management API**: Launch scenarios programmatically from your backend using the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method (for standard voice/video calls) or [StartConference](/reference/management-api/reference/scenarios/start-conference) (for multi-party video rooms).
 * **Manual execution**: Test scenarios on demand from the **Routing** tab in the control panel by selecting your rule and clicking **Run**.
 
@@ -65,7 +65,7 @@ When launching scenarios via the Management API, use the `script_custom_data` pa
 ## Frequently asked questions
 
 **Q**: **Can I execute a scenario without a routing rule?**  
-**A**: No. Every scenario execution—whether inbound, outbound, or API-triggered—requires a routing rule to provide an execution context.
+**A**: No. Every scenario execution—whether incoming, outgoing, or API-triggered—requires a routing rule to provide an execution context.
 
 **Q**: **Can I attach more than one scenario to a routing rule?**  
 **A**: Yes. If you attach multiple scenarios to a single rule, they execute in the same global JavaScript context. This allows you to split logic across modular files while sharing variables and functions.

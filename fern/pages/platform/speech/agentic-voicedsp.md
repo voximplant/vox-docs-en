@@ -66,7 +66,7 @@ When an **STT** instance is passed to `Agentic.createVoiceDSP`:
 * After `TurnStopped`, late STT interim/final results for the closed utterance are ignored until a new speech segment (VAD speech start) or new turn starts, preventing ghost `TurnStarted` events or text bleeding into subsequent turns.
 
 <Info title="Required for transcription and min_words">
-Pass the same ASR instance to which you send call media:
+Pass the same STT instance to which you send call media:
 `Agentic.createVoiceDSP({ asr, startStrategies: [Agentic.VoiceDSPStrategies.createMinWordsStart({ minWords: 3 })] })`. Without `asr`, these start strategies will never fire. VoiceDSP accepts any STT-like object implementing the required event listeners.
 </Info>
 

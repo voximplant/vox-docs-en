@@ -20,7 +20,7 @@ Phone numbers are required only when bridging calls between the public telecom n
 
 Voximplant offers two types of numbers:
 
-* **Real numbers**: Commercial virtual numbers (local geographic, mobile, or national toll-free) across 60+ countries. Real numbers accept direct inbound calls from any phone network and can be used as outbound Caller IDs.
+* **Real numbers**: Commercial virtual numbers (local geographic, mobile, or national toll-free) across 60+ countries. Real numbers accept direct incoming calls from any phone network and can be used as outbound Caller IDs.
 * **Test numbers**: Free sandboxed numbers designed for development and testing. To reach a test number, callers dial a regional Voximplant access number and enter the test number as an extension.
 
 <Warning title="Test number restrictions">
@@ -70,7 +70,7 @@ Incoming calls to this phone number will now trigger the scenario assigned to yo
 **A**: This usually means the number is not attached to an application, or it is not assigned to an active routing rule. Ensure the number is linked under your application's **Numbers** tab and attached to a rule in the **Routing** tab.
 
 **Q**: **Can I forward incoming calls from a landline number to a mobile phone?**  
-**A**: Yes. Rent a phone number, attach it to your application, and use a simple VoxEngine scenario that answers the inbound call and uses `VoxEngine.callPSTN()` and `VoxEngine.sendMediaBetween()` to bridge the caller to your mobile destination.
+**A**: Yes. Rent a phone number, attach it to your application, and use a simple VoxEngine scenario that answers the incoming call and uses `VoxEngine.callPSTN()` and `VoxEngine.sendMediaBetween()` to bridge the caller to your mobile destination.
 
 **Q**: **What types of phone numbers can I purchase?**  
 **A**: Depending on the country, Voximplant offers **local geographic numbers** (tied to specific cities), **mobile numbers** (capable of receiving voice and SMS), and **toll-free numbers** (such as 800/888 numbers where the caller is not charged).

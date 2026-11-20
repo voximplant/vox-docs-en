@@ -68,7 +68,7 @@ The Cloud IDE includes a WebRTC softphone that allows you to place and receive l
 3. Allow browser microphone permissions when prompted.
 4. Log in using your application user credentials (`username@appname.accountname.voximplant.com`).
 5. In the **Debug parameters** dialog, verify your settings and enter any required custom data.
-6. Click **Debug** to connect the session. You can now place outbound test calls using the on-screen dial pad or receive inbound calls directed to your user.
+6. Click **Debug** to connect the session. You can now place outbound test calls using the on-screen dial pad or receive incoming calls directed to your user.
 
 ---
 

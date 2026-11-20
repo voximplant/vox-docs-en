@@ -84,4 +84,4 @@ Because all scenarios assigned to a single routing rule share the same global sc
 **A**: No. If multiple scenarios are bound to the same routing rule, they share a single JavaScript context. Importing a module once in any scenario makes it available to all others in that rule.
 
 **Q**: **Should I create a separate scenario for each call type, or combine them into one?**  
-**A**: For most projects, starting with a single scenario that handles both incoming and outgoing logic is the best practice. You can split logic into multiple scenarios as your requirements expand (for example, separating inbound IVR routing from outbound queue dispatchers).
+**A**: For most projects, starting with a single scenario that handles both incoming and outgoing logic is the best practice. You can split logic into multiple scenarios as your requirements expand (for example, separating incoming IVR routing from outbound queue dispatchers).

@@ -268,7 +268,7 @@ function addToQueue(call) {
 }
 ```
 
-<Info title="Inbound numbers">
+<Info title="Incoming phone numbers">
 To receive incoming phone calls, you must [buy a phone number](/platform/getting-started/buy-a-phone-number) and bind it to your application's routing rule.
 </Info>
 

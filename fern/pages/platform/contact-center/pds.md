@@ -60,7 +60,7 @@ Configure your agents and queues as described in the [voice contact center](/pla
 
 ### 2. Deploy the PDS VoxEngine scenario
 
-Unlike inbound queue scenarios, PDS scenarios handle outbound dialing and bridge answered calls into SmartQueue:
+Unlike incoming queue scenarios, PDS scenarios handle outbound dialing and bridge answered calls into SmartQueue:
 
 ```javascript title="PDS VoxEngine scenario"
 require(Modules.SmartQueue);
