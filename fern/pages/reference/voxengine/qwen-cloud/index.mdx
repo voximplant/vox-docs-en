@@ -1,0 +1,91 @@
+---
+title: QwenCloud
+subtitle: 'Qwen Cloud realtime voice agent API integration. Add the following line to your scenario code to use the namespace: ``` require(Modules.QwenCloud); ```'
+---
+
+## Classes
+
+- [VoiceAgentAPIClient](/reference/voxengine/qwen-cloud/voice-agent-api-client)
+## Enums
+
+- [Events](/reference/voxengine/qwen-cloud/events) — Add the following line to your scenario code to use the events: ``` require(Modules.QwenCloud); ```
+- [VoiceAgentAPIEvents](/reference/voxengine/qwen-cloud/voice-agent-api-events) — Add the following line to your scenario code to use the events: ``` require(Modules.QwenCloud); ```
+## Functions
+
+### createVoiceAgentAPIClient
+
+Creates a new [QwenCloud.VoiceAgentAPIClient](/reference/voxengine/qwen-cloud/voice-agent-api-client) instance.
+
+```ts
+createVoiceAgentAPIClient(parameters: VoiceAgentAPIClientParameters): Promise<QwenCloud.VoiceAgentAPIClient>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="VoiceAgentAPIClientParameters" required />
+
+## Types
+
+### VoiceAgentAPIClientParameters
+
+*Extends:* `_VoiceAIClientParameters`
+
+[QwenCloud.VoiceAgentAPIClient](/reference/voxengine/qwen-cloud/voice-agent-api-client) parameters. Can be passed as arguments to the `QwenCloud.createVoiceAgentAPIClient` method.
+
+<a id="voiceagentapiclientparameters-apikey" />
+<ParamField path="apiKey" type="string">
+The Qwen Cloud API key. Sent as `Authorization: Bearer`.
+</ParamField>
+
+<a id="voiceagentapiclientparameters-model" />
+<ParamField path="model" type="string">
+_optional_
+
+Optional. The realtime model. [https://www.qwencloud.com/models/qwen-audio-3.1-realtime-plus](https://www.qwencloud.com/models/qwen-audio-3.1-realtime-plus).
+Note: The default value is **qwen-audio-3.1-realtime-plus**.
+</ParamField>
+
+<a id="voiceagentapiclientparameters-workspace" />
+<ParamField path="workspace" type="string">
+_optional_
+
+Optional. Qwen Cloud workspace id. Sent as the `X-DashScope-WorkSpace` header.
+</ParamField>
+
+#### Inherited fields
+
+<a id="voiceagentapiclientparameters-onwebsocketclose" />
+<ParamField path="onWebSocketClose" type="(event: _WebSocketCloseEvent) => void">
+_optional, inherited from _VoiceAIClientParameters_
+
+Optional. A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed.
+</ParamField>
+
+<a id="voiceagentapiclientparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="voiceagentapiclientparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="voiceagentapiclientparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>

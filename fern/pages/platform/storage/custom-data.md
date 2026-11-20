@@ -25,9 +25,9 @@ Logger.write(VoxEngine.customData());
 
 You can initialize session custom data through several channels:
 
-* **Control Panel manual launch**: When running a [routing rule]() manually from the Control Panel, enter custom data in the prompt dialog.
-* **Management API**: When triggering scenarios via [StartScenarios](), pass your payload in the `script_custom_data` parameter. Access this payload inside your scenario using `VoxEngine.customData()`.
-* **Searching Call History**: Filter historical sessions by custom data by supplying the `call_session_history_custom_data` parameter to the [GetCallHistory]() Management API method.
+* **Control Panel manual launch**: When running a [routing rule](/platform/getting-started/create-a-routing-rule) manually from the Control Panel, enter custom data in the prompt dialog.
+* **Management API**: When triggering scenarios via [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios), pass your payload in the `script_custom_data` parameter. Access this payload inside your scenario using `VoxEngine.customData()`.
+* **Searching Call History**: Filter historical sessions by custom data by supplying the `call_session_history_custom_data` parameter to the [GetCallHistory](/reference/management-api/reference/history/get-call-history) Management API method.
 
 ---
 
@@ -43,4 +43,4 @@ call.customData('Hello world!');
 Logger.write(call.customData());
 ```
 
-You can also pass custom data through call settings from [Web and Mobile SDKs]() to transfer contextual parameters (such as user IDs or routing metadata) directly between client applications and cloud scenarios.
+You can also pass custom data through call settings from [Web and Mobile SDKs](/sdk/overview) to transfer contextual parameters (such as user IDs or routing metadata) directly between client applications and cloud scenarios.

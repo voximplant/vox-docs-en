@@ -1,0 +1,62 @@
+---
+title: Recorder
+subtitle: 'Represents an audio and video recorder. Add the following line to your scenario code to use the class: ``` require(Modules.Recorder); ```'
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [RecorderEvents](/reference/voxengine/recorder-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: RecorderEvents | T, callback: (event: _RecorderEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="RecorderEvents | T" required />
+
+<ParamField path="callback" type="(event: _RecorderEvents[T]) => any" required />
+
+### id
+
+Returns the recorder's id.
+
+```ts
+id(): string
+```
+
+### mute
+
+Whether to mute whole record without detaching media sources from it.
+
+```ts
+mute(doMute: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="doMute" type="boolean" required />
+
+### removeEventListener
+
+Removes a handler for the specified [RecorderEvents](/reference/voxengine/recorder-events) event.
+
+```ts
+removeEventListener(event: RecorderEvents | T, callback?: (event: _RecorderEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="RecorderEvents | T" required />
+
+<ParamField path="callback" type="(event: _RecorderEvents[T]) => any" />
+
+### stop
+
+Stops recording and triggers the `RecorderEvents.Stopped` event.
+
+```ts
+stop(): void
+```

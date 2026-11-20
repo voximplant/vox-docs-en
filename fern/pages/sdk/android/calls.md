@@ -2,13 +2,13 @@
 
 Learn how to implement outbound and inbound voice and video calls in native Android applications using the Voximplant Android SDK.
 
-Before getting started, ensure you have initialized `VICore` in your `Application` class, connected to the cloud, and authenticated a user. Refer to the [Android SDK quickstart]() and [Android permissions guide]().
+Before getting started, ensure you have initialized `VICore` in your `Application` class, connected to the cloud, and authenticated a user. Refer to the [Android SDK quickstart](/sdk/android) and [Android permissions guide]().
 
 ---
 
 ## Cloud scenario requirements
 
-Every call made or received by the Android SDK interacts with a VoxEngine cloud scenario through a [routing rule]().
+Every call made or received by the Android SDK interacts with a VoxEngine cloud scenario through a [routing rule](/platform/getting-started/create-a-routing-rule).
 
 Calls initiated from the SDK consist of two call legs:
 1. **SDK → VoxEngine scenario**: Treated as an incoming call inside your cloud scenario, handled via the `AppEvents.CallAlerting` event.

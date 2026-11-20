@@ -1,0 +1,310 @@
+---
+title: Agentic
+subtitle: 'Composed voice pipeline helpers, including Agentic.VoiceDSP.'
+---
+
+Composed voice pipeline helpers, including [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp).
+Add the following line to your scenario code to use the namespace:
+```
+require(Modules.Agentic);
+```
+
+## Classes
+
+- [VoiceDSP](/reference/voxengine/agentic/voice-dsp) — Agentic voice DSP is a composite Voice AI integration working with underlying Silero.VAD and Pipecat.TurnDetector.
+## Enums
+
+- [VoiceDSPEvents](/reference/voxengine/agentic/voice-dsp-events) — Add the following line to your scenario code to use the events: ``` require(Modules.Agentic); ```
+## Sub-namespaces
+
+- [VoiceDSPStrategies](/reference/voxengine/agentic/voice-dsp-strategies/overview)
+## Functions
+
+### createVoiceDSP
+
+Creates an [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp) instance.
+
+```ts
+createVoiceDSP(parameters: VoiceDSPParameters): Promise<Agentic.VoiceDSP>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="VoiceDSPParameters" required />
+
+## Types
+
+### NoiseSuppressionParameters
+
+*Extends:* `Hush.NoiseSuppressionParameters`
+
+`Hush.NoiseSuppressionParameters` based. Can be passed as `Agentic.VoiceDSPParameters.noiseSuppressionParameters` to `Agentic.createVoiceDSP`. Omit this field to keep noise suppression disabled.
+
+#### Inherited fields
+
+<a id="noisesuppressionparameters-attenlimdb" />
+<ParamField path="attenLimDb" type="number">
+_optional, inherited from Hush.NoiseSuppressionParameters_
+
+Optional. Attenuation limit in dB. **0** means no limit. The default value is **0**.
+</ParamField>
+
+<a id="noisesuppressionparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="noisesuppressionparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="noisesuppressionparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>
+
+### TurnDetectorParameters
+
+*Extends:* `Pipecat.TurnDetectorParameters`
+
+`Pipecat.TurnDetectorParameters` based. Can be passed as `Agentic.VoiceDSPParameters.turnDetectorParameters` to `Agentic.createVoiceDSP`.
+
+<a id="turndetectorparameters-stopsecs" />
+<ParamField path="stopSecs" type="number">
+_optional_
+
+Optional. Mirrors [Pipecat SmartTurnParams.stop_secs](https://docs.pipecat.ai/api-reference/server/utilities/turn-detection/smart-turn-overview#param-stop-secs) parameter. If the turn analyzer classifies the turn as incomplete, silence must continue for this many seconds before the turn is finalized. The default value is **3.0**.
+</ParamField>
+
+#### Inherited fields
+
+<a id="turndetectorparameters-maxdurationsecs" />
+<ParamField path="maxDurationSecs" type="number">
+_optional, inherited from Pipecat.TurnDetectorParameters_
+
+Optional. Maximum segment duration in seconds. The default value is **8**.
+</ParamField>
+
+<a id="turndetectorparameters-prespeechms" />
+<ParamField path="preSpeechMs" type="number">
+_optional, inherited from Pipecat.TurnDetectorParameters_
+
+Optional. Milliseconds of audio to include before speech starts. The default value is **0**.
+</ParamField>
+
+<a id="turndetectorparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="turndetectorparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="turndetectorparameters-threshold" />
+<ParamField path="threshold" type="number">
+_optional, inherited from Pipecat.TurnDetectorParameters_
+
+Optional. The probability threshold above which we detect the end of the turn (in the range [0.0, 1.0]). The default value is **0.5**.
+</ParamField>
+
+<a id="turndetectorparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>
+
+### VADParameters
+
+*Extends:* `Silero.VADParameters`
+
+`Silero.VADParameters` forwarded to the bundled [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp) integration (server-side VAD). Can be passed as `Agentic.VoiceDSPParameters.vadParameters` to `Agentic.createVoiceDSP`.
+
+#### Inherited fields
+
+<a id="vadparameters-minsilencedurationms" />
+<ParamField path="minSilenceDurationMs" type="number">
+_optional, inherited from Silero.VADParameters_
+
+Optional. The duration of silence (in milliseconds) to wait for each speech segment before separating it. The default value is **300**.
+</ParamField>
+
+<a id="vadparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="vadparameters-speechpadms" />
+<ParamField path="speechPadMs" type="number">
+_optional, inherited from Silero.VADParameters_
+
+Optional. The padding to add to speech segments to avoid aggressive cutting. The default value is **0**.
+</ParamField>
+
+<a id="vadparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="vadparameters-threshold" />
+<ParamField path="threshold" type="number">
+_optional, inherited from Silero.VADParameters_
+
+Optional. The probability threshold above which we detect speech. The default value is **0.5**.
+</ParamField>
+
+<a id="vadparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>
+
+### VoiceDSPParameters
+
+*Extends:* `_VoiceAIClientParameters`
+
+[Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp) parameters. Can be passed as arguments to the `Agentic.createVoiceDSP` method.
+
+<a id="voicedspparameters-asr" />
+<ParamField path="asr" type="ASR">
+_optional_
+
+Optional. [ASR](/reference/voxengine/asr) instance used internally for transcription-based start strategies; the latest transcript snapshot is included on `Agentic.VoiceDSPEvents.TurnStopped`. Live transcription should be handled via [ASREvents](/reference/voxengine/asr-events) on the scenario ASR instance.
+</ParamField>
+
+<a id="voicedspparameters-asrgracetimeout" />
+<ParamField path="asrGraceTimeout" type="number">
+_optional_
+
+Optional. ASR grace period in seconds after `Agentic.VoiceDSPEvents.TurnInferenceTriggered`. When `Agentic.VoiceDSPParameters.asr` is configured, `Agentic.VoiceDSPEvents.TurnStopped` waits up to this duration for a final transcript; a final transcript ends the wait immediately. Default **0.3** - shorter than typical ASR final latency, so `Agentic.VoiceDSPEvents.TurnStopped` does not wait for ASR final by default. Start LLM inference on `Agentic.VoiceDSPEvents.TurnInferenceTriggered`. When the timer expires, `Agentic.VoiceDSPEvents.TurnStopped` uses the latest snapshot (including interim text).
+</ParamField>
+
+<a id="voicedspparameters-noisesuppressionparameters" />
+<ParamField path="noiseSuppressionParameters" type="NoiseSuppressionParameters">
+_optional_
+
+Optional. [Hush](/reference/voxengine/hush) noise suppression configuration forwarded to the bundled VoiceDSP integration (server-side processing). Same parameter shape as `Hush.NoiseSuppressionParameters`. NOTE: if this field is omitted, the integration does **not** run noise suppression.
+</ParamField>
+
+<a id="voicedspparameters-startstrategies" />
+<ParamField path="startStrategies" type="VoiceDSPStrategies.Start[]">
+_optional_
+
+Optional. Strategies that determine when a user's turn starts. Multiple strategies can be provided; the first one to trigger signals the start. Use [Agentic.VoiceDSPStrategies](/reference/voxengine/agentic/voice-dsp-strategies) factories (for example `Agentic.VoiceDSPStrategies.createVADStart`).
+</ParamField>
+
+<a id="voicedspparameters-stopstrategies" />
+<ParamField path="stopStrategies" type="VoiceDSPStrategies.Stop[]">
+_optional_
+
+Optional. Strategies that determine when a user's turn ends. Use [Agentic.VoiceDSPStrategies](/reference/voxengine/agentic/voice-dsp-strategies) factories (for example `Agentic.VoiceDSPStrategies.createTurnDetectorStop`). If [Agentic.VoiceDSPStrategies.TurnDetectorStop](/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop) is configured, it is authoritative; [Agentic.VoiceDSPStrategies.SpeechTimeoutStop](/reference/voxengine/agentic/voice-dsp-strategies/speech-timeout-stop) does not pre-empt it. One turn always finalizes with a single strategy.
+NOTE: If no stop strategies are provided, `Agentic.VoiceDSPStrategies.createTurnDetectorStop` is used as the default. Omit [Agentic.VoiceDSPStrategies.TurnDetectorStop](/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop) to disable ML Predict (for tests or ASR-only stop logic); `Agentic.VoiceDSPEvents.TurnInferenceTriggered` and `Agentic.VoiceDSPEvents.TurnStopped` then never report **strategy** **'turn_detector'**.
+</ParamField>
+
+<a id="voicedspparameters-turndetectorparameters" />
+<ParamField path="turnDetectorParameters" type="TurnDetectorParameters">
+_optional_
+
+Optional. Turn detector configuration forwarded to the bundled VoiceDSP integration (server-side processing).
+</ParamField>
+
+<a id="voicedspparameters-userturnidletimeout" />
+<ParamField path="userTurnIdleTimeout" type="number">
+_optional_
+
+Optional. User idle timeout in seconds (mirrors Pipecat `UserIdleController.user_idle_timeout`). After `Agentic.VoiceDSP.signalAssistantTurnEnded`, if the user remains inactive for this duration, `Agentic.VoiceDSPEvents.TurnIdle` is emitted. **0** disables idle detection. The default value is **0**.
+</ParamField>
+
+<a id="voicedspparameters-userturnstoptimeout" />
+<ParamField path="userTurnStopTimeout" type="number">
+_optional_
+
+Optional. Pipecat `user_turn_stop_timeout` (seconds). Counts silence while a user turn is active; the timer resets on new speech and on ASR updates. If no stop strategy finalizes the turn within this silence, `Agentic.VoiceDSPEvents.TurnStopTimeout` is emitted with **reason** **controller_timeout**, then `Agentic.VoiceDSPEvents.TurnStopped`. **strategy** on `Agentic.VoiceDSPEvents.TurnInferenceTriggered` and `Agentic.VoiceDSPEvents.TurnStopped` is the pending stop strategy, or the configured fallback if none is pending (never **'turn_detector'** unless [Agentic.VoiceDSPStrategies.TurnDetectorStop](/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop) is configured). Default **5.0**. Set **0** to disable.
+</ParamField>
+
+<a id="voicedspparameters-vadparameters" />
+<ParamField path="vadParameters" type="VADParameters">
+_optional_
+
+Optional. VAD configuration forwarded to the bundled VoiceDSP integration (server-side processing).
+</ParamField>
+
+#### Inherited fields
+
+<a id="voicedspparameters-onwebsocketclose" />
+<ParamField path="onWebSocketClose" type="(event: _WebSocketCloseEvent) => void">
+_optional, inherited from _VoiceAIClientParameters_
+
+Optional. A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed.
+</ParamField>
+
+<a id="voicedspparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="voicedspparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="voicedspparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>

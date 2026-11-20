@@ -128,7 +128,7 @@ Key mechanisms:
   - [UserInitiated]() — Disconnected intentionally via a [Client.disconnect()]() call.
 - [Client.state]() — A read-only watchable that reflects the current [ClientState](): `Connecting`, `Connected`, `LoggingIn`, `LoggedIn`, `Disconnecting`, `Disconnected`, or `Reconnecting`.
 
-Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
+Subscribe to events with [Client.addEventListener()](/reference/voxengine/mcp/client#addeventlistener) and to state changes with the [Watchable.watch()]() API:
 
 ```javascript title="Listen to connection events and state"
 import {

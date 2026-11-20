@@ -1,0 +1,166 @@
+---
+title: "Example: Using Grok features"
+subtitle: Connect an inbound call to a Grok voice agent
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+This inbound example showcases Grok tools (function calling, file_search, web_search, x_search) with barge-in for telephony use. The same tool configuration applies to outbound calls—reuse the tools and prompt in your outbound scenario and swap the call entrypoint.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your xAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `XAI_API_KEY`.
+- If you use `file_search`, upload documents and set `COLLECTION_ID` accordingly.
+
+
+## Usage highlights
+
+- Create a `VoiceAgentAPIClient` with `XAI.createVoiceAgentAPIClient(...)`.
+- Select the Grok voice model with the optional `model` parameter.
+- Configure the session with `voice`, `turn_detection`, `instructions`, and tools.
+- Bridge audio with `VoxEngine.sendMediaBetween(call, client)`.
+- Handle function calls with `ResponseFunctionCallArgumentsDone`.
+
+### Feature summary
+
+- **Function calling**: Let Grok request server-side actions, then respond with structured outputs. See [Function calling](#function-calling). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#function-calling
+- **RAG with file_search**: Ground responses in your uploaded documents using vector search. See [RAG with file_search](#rag-with-file_search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#file-search
+- **Web search**: Allow Grok to fetch current public information when needed. See [Web search](#web-search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#web-search
+- **X/Twitter search**: Constrain Grok to specific X handles for social lookups. See [X/Twitter search](#xtwitter-search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#x-search
+
+### Model selection
+
+The VoxEngine examples explicitly pass `model: "grok-voice-latest"` when creating the client. Use the optional `model` parameter when you need to pin a specific xAI Voice Agent model instead of relying on the provider default:
+
+```js
+const voiceAgentAPIClient = await XAI.createVoiceAgentAPIClient({
+  xAIApiKey: VoxEngine.getSecretValue("XAI_API_KEY"),
+  model: "grok-voice-latest",
+});
+```
+
+For the xAI model list and lifecycle notes, see https://docs.x.ai/developers/model-capabilities/audio/speech-to-speech.
+
+### Turn detection & barge-in
+
+When `InputAudioBufferSpeechStarted` fires, clear the media buffer so the caller can interrupt the agent:
+
+```js
+voiceAgentAPIClient.addEventListener(
+  XAI.VoiceAgentAPIEvents.InputAudioBufferSpeechStarted,
+  () => voiceAgentAPIClient.clearMediaBuffer()
+);
+```
+
+## Function calling
+
+Function calling lets Grok request actions from VoxEngine (transfer, hang up, fetch data) and receive a structured response. For official Grok tool guidance, see https://docs.x.ai/docs/guides/tools/overview#function-calling.
+
+```js
+{
+  type: "function",
+  name: "forward_to_agent",
+  description: "Forward the user to a live agent",
+  parameters: {
+    type: "object",
+    properties: {},
+    required: [],
+  },
+}
+```
+
+Handle tool calls and return outputs to the agent:
+
+```js
+voiceAgentAPIClient.addEventListener(
+  XAI.VoiceAgentAPIEvents.ResponseFunctionCallArgumentsDone,
+  (event) => {
+    const { name, call_id } = event?.data?.payload || {};
+    if (name !== "forward_to_agent" && name !== "hangup_call") return;
+
+    const output =
+      name === "forward_to_agent"
+        ? { result: "Forwarding your call to a live agent. Please hold on." }
+        : { result: "Have a great day, goodbye!" };
+
+    voiceAgentAPIClient.conversationItemCreate({
+      item: {
+        type: "function_call_output",
+        call_id,
+        output: JSON.stringify(output),
+      },
+    });
+    voiceAgentAPIClient.responseCreate({});
+  }
+);
+```
+
+## RAG with file_search
+
+Use `file_search` to ground responses in your documents. Upload files to Grok, then reference the collection (vector store) ID in your session tools. For official Grok tool guidance, see https://docs.x.ai/docs/guides/tools/overview#file-search.
+
+```js
+{
+  type: "file_search",
+  vector_store_ids: [COLLECTION_ID],
+  max_num_results: 5,
+}
+```
+
+- Keep your collection focused on the topics the agent should answer.
+- Tune `max_num_results` to balance relevance and speed.
+
+## Web search
+
+Enable `web_search` when you want Grok to fetch public web information at runtime. For official Grok tool guidance, see https://docs.x.ai/docs/guides/tools/overview#web-search.
+
+```js
+{ type: "web_search" }
+```
+
+## X/Twitter search
+
+Use `x_search` to limit Grok's social search to specific X handles. For official Grok tool guidance, see https://docs.x.ai/docs/guides/tools/overview#x-search.
+
+```js
+{
+  type: "x_search",
+  allowed_x_handles: ["voximplant", "aylarov"],
+}
+```
+
+## Configure before you run
+
+- Set `XAI_API_KEY` in Voximplant [Secrets](/platform/storage/secret-storage).
+- Set `GROK_MODEL` in the example code if you want to use a different Grok voice model.
+- Update `COLLECTION_ID` to point at your uploaded documents (or remove `file_search`).
+- Adjust the `SYSTEM_PROMPT` to match your brand voice and escalation rules.
+
+## Try it
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/xai).
+
+## Full VoxEngine scenario
+
+This scenario includes barge-in handling, function calling, file search, web search, and X search.
+
+<Code
+  src="../../../examples/grok/voxeengine-grok-features.js"
+  title="voxeengine-grok-features.js"
+  language="javascript"
+  maxLines={0}
+/>

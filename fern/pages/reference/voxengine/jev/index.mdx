@@ -1,0 +1,381 @@
+---
+title: Jev
+subtitle: TypeSafe System One client for structured decisions over text.
+---
+
+Jev provides a VoxEngine client for the TypeSafe System One API. A scenario sends text, and optional images, and receives typed answers for routing, triage, or scoring.
+
+This client does not take call audio. Use `Jev.createSystemOneClient(...)` to keep one connection open, then call `systemOne` for each decision.
+
+Build questions with `noul`, `choice`, `score`, and `box`. Use the `jev-preview` model when a request includes `box`.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Jev overview" icon="fa-duotone fa-circle-info" href="/voice-ai/jev/overview">
+    See how System One fits a scenario that needs structured decisions instead of a realtime voice pipeline.
+  </Card>
+  <Card title="System One client" icon="fa-duotone fa-code" href="/voice-ai/jev/system-one-client">
+    Create the client, send a request, and handle the result.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory and question helpers](#factory-and-question-helpers): create the client and build System One questions.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): send a System One request and manage the connection.
+- <Icon icon="fa-duotone fa-bolt" /> [SystemOneEvents](#systemoneevents): result, error, and connector information events.
+- <Icon icon="fa-duotone fa-sliders" /> [Parameter types](#parameter-types): client and request parameters.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.Jev);
+```
+
+Create the client, wait for ConnectorInformation, then send systemOne requests on the same connection. A failed request does not close the client.
+
+## Factory and question helpers
+
+<a id="box" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> box
+
+Creates a question that locates what its instructions describe in the request image.
+Use the `jev-preview` model for this question.
+The arguments and the returned question are described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+```ts
+box(instructions?: Object): Object
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `instructions` | `Object` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `Object` | The requested `Object` value. |
+
+<a id="choice" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> choice
+
+Creates a question that selects between named alternatives.
+The arguments and the returned question are described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+```ts
+choice(instructions: Object, criteria: Object): Object
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `instructions` | `Object` | ✓ |  |
+| `criteria` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `Object` | The requested `Object` value. |
+
+<a id="createsystemoneclient" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createSystemOneClient
+
+Creates a [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) that keeps one connection open for many System One requests.
+
+```ts
+createSystemOneClient(parameters: SystemOneClientParameters): Promise<SystemOneClient>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>SystemOne<wbr />Client<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;SystemOneClient&gt;</code> | Resolves to the [`Jev.SystemOneClient`](#systemoneclient) instance. |
+
+<a id="noul" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> noul
+
+Creates a yes/no question.
+When `instructions` is omitted or `null`, `criteria` must describe the yes outcome or the no outcome.
+The arguments and the returned question are described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+```ts
+noul(instructions?: Object, criteria?: Object): Object
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `instructions` | `Object` | ✗ |  |
+| `criteria` | `Object` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `Object` | The requested `Object` value. |
+
+<a id="score" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> score
+
+Creates a question that assigns a score using an ordered rubric.
+A list of fewer than two entries is rejected when the request is sent.
+The arguments and the returned question are described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+```ts
+score(instructions: Object, criteria: Object): Object
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `instructions` | `Object` | ✓ |  |
+| `criteria` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `Object` | The requested `Object` value. |
+
+## SystemOneClient
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [Jev.SystemOneEvents](/reference/voxengine/jev#systemoneevents) or `Jev.Events` event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Jev.Events | Jev.SystemOneEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Jev.Events \| Jev.<wbr />SystemOne<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="close" />
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the connection or the connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the client id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [Jev.SystemOneEvents](/reference/voxengine/jev#systemoneevents) or `Jev.Events` event.
+
+```ts
+removeEventListener(event: Jev.Events | Jev.SystemOneEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Jev.Events \| Jev.<wbr />SystemOne<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="systemone" />
+### <Icon icon="fa-duotone fa-function" /> systemOne
+
+Sends one System One request on the open connection.
+The promise resolves with the TypeSafe result. The matching `Jev.SystemOneEvents.Result` or `Jev.SystemOneEvents.Error` is also dispatched. A failed request does not close the client.
+`parameters.body` and the resolved value are described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+```ts
+systemOne(parameters: SystemOneRequest): Promise<Object>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>SystemOne<wbr />Request</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;Object&gt;</code> | Resolves to the `Object` value. |
+
+<a id="websocketid" />
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## SystemOneEvents
+
+These events report each System One result or failure, plus connector session information. The `data` field contains the provider payload.
+
+<AccordionGroup>
+<a id="systemoneevents-unknown" />
+<a id="unknown" />
+<a id="-unknown" />
+<Accordion title="Unknown">
+
+The unknown event.
+
+Event constant: `SystemOneEvents.Unknown`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>SystemOne<wbr />Client</code> | ✓ | The [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The event data. `payload` holds the integration payload for that custom event. |
+</Accordion>
+<a id="systemoneevents-result" />
+<a id="result" />
+<a id="-result" />
+<Accordion title="Result">
+
+The System One response. `data.payload` is `{ requestId?, body }`. `body` is described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one). `Jev.SystemOneClient.systemOne` resolves with that same body.
+
+Event constant: `SystemOneEvents.Result`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>SystemOne<wbr />Client</code> | ✓ | The [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: &#123; request<wbr />Id?: string; body?: Object; &#125;; &#125;</code> | ✗ | The event data. `payload.body` is the TypeSafe result. |
+</Accordion>
+<a id="systemoneevents-error" />
+<a id="error" />
+<a id="-error" />
+<Accordion title="Error">
+
+A System One request failed. The client stays open. `data.payload` is `{ requestId?, statusCode?, text }`. `Jev.SystemOneClient.systemOne` rejects with this failure.
+
+Event constant: `SystemOneEvents.Error`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>SystemOne<wbr />Client</code> | ✓ | The [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: &#123; request<wbr />Id?: string; status<wbr />Code?: number; text?: string; &#125;; &#125;</code> | ✗ | The event data. `payload.text` describes the failure. |
+</Accordion>
+<a id="systemoneevents-connectorinformation" />
+<a id="connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `SystemOneEvents.ConnectorInformation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>SystemOne<wbr />Client</code> | ✓ | The [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The event data. `payload` holds the integration payload for that custom event. |
+</Accordion>
+</AccordionGroup>
+
+## Parameter types
+
+<a id="systemoneclientparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> SystemOneClientParameters
+[Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) parameters. Can be passed as arguments to the `Jev.createSystemOneClient` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="systemoneclientparameters-apikey" /> `apiKey` | `string` | ✓ | The TypeSafe API key. Sent as `Authorization: Bearer` on each System One request. |
+| <a id="systemoneclientparameters-baseurl" /> `baseUrl` | `string` | ✗ | Overrides the TypeSafe API host. The default host is `https://api.typesafe.ai`. |
+| <a id="systemoneclientparameters-longcontext" /> `longContext` | `boolean` | ✗ | When true, each request sends `TypeSafe-Danger-Zone-Long-Context: true` unless a call overrides it. |
+| <a id="systemoneclientparameters-onwebsocketclose" /> <code>onWebSocket<wbr />Close</code> | <code>(event: object) => void</code> | ✗ | _inherited from _VoiceAIClientParameters_ A callback function that is called when the [WebSocket](/reference/voxengine/websocket) connection is closed. |
+| <a id="systemoneclientparameters-privacy" /> `privacy` | `boolean` | ✗ | _inherited from _WebSocketBasedClientParameters_ Whether to enable the privacy functionality. If privacy is enabled, the logging for the WebSocket connection is disabled. NOTE: the default value is **false**. |
+| <a id="systemoneclientparameters-statistics" /> `statistics` | `boolean` | ✗ | _inherited from _WebSocketBasedClientParameters_ Enables statistics functionality. |
+| <a id="systemoneclientparameters-trace" /> `trace` | `boolean` | ✗ | _inherited from _WebSocketBasedClientParameters_ Whether to enable the tracing functionality. If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage. NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues. |
+
+<a id="systemonerequest" />
+### <Icon icon="fa-duotone fa-sliders" /> SystemOneRequest
+One System One evaluation sent on the open [Jev.SystemOneClient](/reference/voxengine/jev#systemoneclient) connection.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="systemonerequest-body" /> `body` | `Object` | ✓ | The TypeSafe request object (`state`, `questions`, optional `model` and `assets`). Described in the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one). |
+| <a id="systemonerequest-longcontext" /> `longContext` | `boolean` | ✗ | Overrides the session `longContext` value for this request. |
+| <a id="systemonerequest-requestid" /> `requestId` | `string` | ✗ | Echoed on `Jev.SystemOneEvents.Result` and `Jev.SystemOneEvents.Error`. Not sent upstream. When omitted, the client assigns an id so the result can be matched to this call. |

@@ -48,7 +48,7 @@ To stop sharing, call [setSendVideo()]():
 Broadcast screen sharing captures the complete system screen.
 
 <Warning title="Conference requirement">
-Broadcast screen sharing on iOS is supported exclusively in multi-party [conferences]() because Apple renders and processes broadcast frames inside an independent operating system extension process.
+Broadcast screen sharing on iOS is supported exclusively in multi-party [conferences](/platform/telephony/conferences) because Apple renders and processes broadcast frames inside an independent operating system extension process.
 </Warning>
 
 ### 1. Add a Broadcast Upload Extension in Xcode

@@ -1,0 +1,61 @@
+---
+title: StreamingAgentEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.StreamingAgent); ```'
+---
+
+## Values
+
+<a id="connected" />
+<ParamField path="Connected" type="'StreamingAgent.Connected'">
+Triggered when a streaming object is connected to a streaming platform.
+</ParamField>
+
+<a id="connectionfailed" />
+<ParamField path="ConnectionFailed" type="'StreamingAgent.ConnectionFailed'">
+Triggered when connection to a streaming platform is failed.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'StreamingAgent.Error'">
+Triggers if a streaming object cannot be created, *e.g., due to incorrect server url*.
+</ParamField>
+
+<a id="disconnected" />
+<ParamField path="Disconnected" type="'StreamingAgent.Disconnected'">
+Triggered when a streaming object is disconnected from a streaming platform.
+</ParamField>
+
+<a id="streamstarted" />
+<ParamField path="StreamStarted" type="'StreamingAgent.Stream.Started'">
+Triggered when a stream is successfully started.
+</ParamField>
+
+<a id="streamstopped" />
+<ParamField path="StreamStopped" type="'StreamingAgent.Stream.Stopped'">
+Triggered when a stream is stopped.
+</ParamField>
+
+<a id="streamerror" />
+<ParamField path="StreamError" type="'StreamingAgent.Stream.Error'">
+Triggered when a streaming object caused an error, *e.g., due to a codec mismatch*.
+</ParamField>
+
+<a id="audiostreamcreated" />
+<ParamField path="AudioStreamCreated" type="'StreamingAgent.Stream.AudioStarted'">
+Triggered when there is audio data in the stream.
+</ParamField>
+
+<a id="videostreamcreated" />
+<ParamField path="VideoStreamCreated" type="'StreamingAgent.Stream.VideoStarted'">
+Triggered when there is video data in the stream.
+</ParamField>
+
+<a id="audioswitched" />
+<ParamField path="AudioSwitched" type="'StreamingAgent.Stream.AudioSwitched'">
+Triggered when the audio stream is switched.
+</ParamField>
+
+<a id="videoswitched" />
+<ParamField path="VideoSwitched" type="'StreamingAgent.Stream.VideoSwitched'">
+Triggered when the video stream is switched.
+</ParamField>

@@ -1,0 +1,178 @@
+---
+title: "Example: GPT Live"
+description: "Answer an incoming call with OpenAI GPT Live and delegate tool work to a backend model."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+GPT Live (`gpt-live-1`) is OpenAI's full-duplex voice model. It listens and speaks at the same time, so a caller can interrupt, add a detail, or acknowledge the assistant while it is still talking. GPT Live is the voice layer: it handles the call, the tone, and interruptions. Lookups, tool calls, and longer reasoning go to a separate backend model, so the audio keeps moving while that work runs. The result comes back into the same call.
+
+OpenAI describes GPT Live as a model for live conversation: it handles interruptions, detects turns on its own, and picks up alphanumeric detail such as order numbers and confirmation codes. The voice session and the backend model are billed separately.
+
+On Voximplant, open GPT Live with `OpenAI.createLiveAPIClient`. It returns an `OpenAI.LiveAPIClient`.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## How a session works
+
+- `session.model` is the voice model, `gpt-live-1`. The backend model is `session.delegation.responses.model`.
+- Put conversation style in `session.instructions`. Put business rules and tool schemas on the backend, under `session.delegation.responses`.
+- Call `sessionStart()` as the first session command. Wait for `OpenAI.LiveAPIEvents.SessionStarted` before you bridge audio or send another command.
+- Stream call audio continuously. GPT Live decides when to speak.
+- `responseCreate()` continues delegated backend work.
+- Function calls arrive on `OpenAI.LiveAPIEvents.ResponseEvent`. Unwrap `data.payload.event` (for example an inner `response.output_item.done`) and keep the outer `delegation_id`.
+- Return a tool result with `responseItemCreate()` (`function_call_output`), then call `responseCreate()` so the backend can continue.
+- When you append instructions, thinking, or commentary, always include `delegation_id`. Use `null` for context that applies to the whole session. Each appended string is at most 500 tokens.
+- Captions arrive as `SessionInputTranscriptDelta` and `SessionOutputTranscriptDelta`. Append each fragment in order.
+- Call `sessionClose()` when the conversation ends, then wait for `SessionClosed` before you close the client.
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users) - also see the [Web & Mobile](/voice-ai/network-options/web-mobile) client SDK options
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+
+## Create the client
+
+```js title="Create a GPT Live client"
+const voiceAIClient = await OpenAI.createLiveAPIClient({
+  apiKey: VoxEngine.getSecretValue("OPENAI_API_KEY"),
+});
+```
+
+## Start the session
+
+`session.model` selects the voice model. `delegation.responses` selects the backend model, its instructions, and its tools. This example uses Responses delegation: OpenAI runs the backend and passes conversation context between it and GPT Live. Your scenario still runs the function when the backend calls it.
+
+```js title="Start a GPT Live session"
+voiceAIClient.sessionStart({
+  session: {
+    model: "gpt-live-1",
+    instructions: SYSTEM_PROMPT,
+    audio: {
+      output: {
+        voice: "marin",
+      },
+    },
+    delegation: {
+      type: "responses",
+      responses: {
+        model: "gpt-5.6-luna",
+        instructions: BACKEND_PROMPT,
+        tools: [
+          {
+            type: "function",
+            name: "get_order_status",
+            description: "Look up the shipping status of an order by its order id.",
+            parameters: {
+              type: "object",
+              properties: {
+                order_id: {
+                  type: "string",
+                  description: "Order id, for example A0042.",
+                },
+              },
+              required: ["order_id"],
+            },
+          },
+        ],
+        tool_choice: "auto",
+      },
+    },
+  },
+});
+```
+
+## Bridge call audio
+
+Bridge audio only after the session has started. From the same handler, append a short greeting instruction. `delegation_id: null` applies the instruction to the whole session.
+
+```js title="Bridge audio and greet"
+voiceAIClient.addEventListener(OpenAI.LiveAPIEvents.SessionStarted, () => {
+  VoxEngine.sendMediaBetween(call, voiceAIClient);
+  voiceAIClient.sessionInstructionsAppend({
+    content: "Greet the caller immediately in English. After the greeting, pause and listen.",
+    delegation_id: null,
+  });
+});
+```
+
+When that instruction is in place, tell the model to begin:
+
+```js title="Ask the model to begin"
+voiceAIClient.addEventListener(OpenAI.LiveAPIEvents.SessionInstructionsAppended, () => {
+  voiceAIClient.sessionCommentaryAppend({
+    content: "Begin the conversation now, following the instructions provided.",
+    delegation_id: null,
+  });
+});
+```
+
+## Return a tool result
+
+```js title="Return a tool result"
+const payload = event.data?.payload || {};
+const nestedEvent = payload.event;
+if (nestedEvent?.type === "response.output_item.done") {
+  const item = nestedEvent.item;
+  voiceAIClient.responseItemCreate({
+    item: {
+      type: "function_call_output",
+      call_id: item.call_id,
+      output: JSON.stringify({ status: "ok", detail: "Order A0042 shipped today." }),
+    },
+  });
+  voiceAIClient.responseCreate({});
+}
+```
+
+Keep `payload.delegation_id` when you append instructions, thinking, or commentary for that specific delegation.
+
+## Detect assistant speech
+
+AI Connector emits `OpenAI.LiveAPIEvents.AgentStartedSpeaking` and `OpenAI.LiveAPIEvents.AgentStoppedSpeaking` from the output PCM. Speech starts after 100 ms of continuous sound above a peak threshold of 20, and stops after 350 ms of silence, or after 3 seconds without a new audio chunk. The events mark when audio enters the media path, before the caller hears it. Mute or buffer playback in your scenario when you need to hold the audio.
+
+If you use [VoiceDSP](/reference/voxengine/agentic/voice-dsp), call [`signalAssistantTurnStarted()`](/reference/voxengine/agentic/voice-dsp#signalassistantturnstarted) and [`signalAssistantTurnEnded()`](/reference/voxengine/agentic/voice-dsp#signalassistantturnended) from these events. VoiceDSP does not receive them on its own.
+
+```js title="Assistant speech edges"
+voiceAIClient.addEventListener(OpenAI.LiveAPIEvents.AgentStartedSpeaking, () => {
+  Logger.write("===AGENT_STARTED_SPEAKING===");
+});
+
+voiceAIClient.addEventListener(OpenAI.LiveAPIEvents.AgentStoppedSpeaking, () => {
+  Logger.write("===AGENT_STOPPED_SPEAKING===");
+});
+```
+
+## Close the session
+
+```js title="Close the session"
+voiceAIClient.sessionClose();
+voiceAIClient.addEventListener(OpenAI.LiveAPIEvents.SessionClosed, () => {
+  voiceAIClient.close();
+});
+```
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/openai/voxeengine-openai-gpt-live.js"
+  title="voxeengine-openai-gpt-live.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [Answering an incoming call with the Realtime API](/voice-ai/openai/inbound)
+- [OpenAI module API reference](/reference/voxengine/openai)
+- [GPT-Live-1 model](https://developers.openai.com/api/docs/models/gpt-live-1)
+- [Getting started with GPT-Live](https://developers.openai.com/api/docs/guides/live)
+- [Primary WebSocket events](https://developers.openai.com/api/reference/resources/live/primary-websocket)

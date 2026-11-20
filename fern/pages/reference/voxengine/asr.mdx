@@ -1,0 +1,98 @@
+---
+title: ASR
+subtitle: Represents an ASR object provides speech recognition capabilities.
+---
+
+Represents an ASR object provides speech recognition capabilities. Audio stream can be sent to an ASR instance from [Call](/reference/voxengine/call), [Player](/reference/voxengine/player) or [Conference](/reference/voxengine/conference) instances. Parameters **language** or **dictionary** should be passed to the `VoxEngine.createASR` function.
+Add the following line to your scenario code to use the class:
+```
+require(Modules.ASR);
+```
+
+## Constructor
+
+```ts
+new ASR(id: string, language: string, dictionary: string)
+```
+
+**Parameters**
+
+<ParamField path="id" type="string" required />
+
+<ParamField path="language" type="string" required />
+
+<ParamField path="dictionary" type="string" required />
+
+```ts
+new ASR(id: string, language: string, dictionary: string)
+```
+
+**Parameters**
+
+<ParamField path="id" type="string" required />
+
+<ParamField path="language" type="string" required />
+
+<ParamField path="dictionary" type="string" required />
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [ASREvents](/reference/voxengine/asr-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: ASREvents | T, callback: (event: _ASREvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ASREvents | T" required />
+
+<ParamField path="callback" type="(event: _ASREvents[T]) => any" required />
+
+### dictionary
+
+Returns the asr's dictionary.
+
+```ts
+dictionary(): string[]
+```
+
+### id
+
+Returns the asr's id.
+
+```ts
+id(): string
+```
+
+### language
+
+Returns the asr's language.
+
+```ts
+language(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [ASREvents](/reference/voxengine/asr-events) event.
+
+```ts
+removeEventListener(event: ASREvents | T, callback?: (event: _ASREvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ASREvents | T" required />
+
+<ParamField path="callback" type="(event: _ASREvents[T]) => any" />
+
+### stop
+
+Stops recognition. Triggers the `ASREvents.Stopped` event. Do not call any other ASR functions/handlers after the **ASR.stop** call.
+
+```ts
+stop(): void
+```

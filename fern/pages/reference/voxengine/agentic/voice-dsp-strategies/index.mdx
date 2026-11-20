@@ -1,0 +1,151 @@
+---
+title: VoiceDSPStrategies
+---
+
+## Classes
+
+- [MinWordsStart](/reference/voxengine/agentic/voice-dsp-strategies/min-words-start) — A start strategy that requires the user to speak a minimum number of words before triggering a turn start.
+- [SpeechTimeoutStop](/reference/voxengine/agentic/voice-dsp-strategies/speech-timeout-stop) — A stop strategy that uses a configurable timeout to determine if the user is done speaking.
+- [TranscriptionStart](/reference/voxengine/agentic/voice-dsp-strategies/transcription-start) — A start strategy that triggers a user turn start when a transcription is received.
+- [TurnDetectorStop](/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop) — A stop strategy that uses the AI-powered turn detection model to determine if the user is done speaking.
+- [VADStart](/reference/voxengine/agentic/voice-dsp-strategies/vad-start) — A start strategy that triggers a user turn start based on Voice Activity Detection.
+## Functions
+
+### createMinWordsStart
+
+Creates a [Agentic.VoiceDSPStrategies.MinWordsStart](/reference/voxengine/agentic/voice-dsp-strategies/min-words-start) strategy.
+
+```ts
+createMinWordsStart(parameters: MinWordsStartParameters): MinWordsStart
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="MinWordsStartParameters" required />
+
+### createSpeechTimeout
+
+Creates a [Agentic.VoiceDSPStrategies.SpeechTimeoutStop](/reference/voxengine/agentic/voice-dsp-strategies/speech-timeout-stop) strategy.
+
+```ts
+createSpeechTimeout(parameters?: SpeechTimeoutStopParameters): SpeechTimeoutStop
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="SpeechTimeoutStopParameters" />
+
+### createTranscriptionStart
+
+Creates a [Agentic.VoiceDSPStrategies.TranscriptionStart](/reference/voxengine/agentic/voice-dsp-strategies/transcription-start) strategy.
+
+```ts
+createTranscriptionStart(parameters?: TranscriptionStartParameters): TranscriptionStart
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="TranscriptionStartParameters" />
+
+### createTurnDetectorStop
+
+Creates a [Agentic.VoiceDSPStrategies.TurnDetectorStop](/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop) strategy.
+
+```ts
+createTurnDetectorStop(): TurnDetectorStop
+```
+
+### createVADStart
+
+Creates a [Agentic.VoiceDSPStrategies.VADStart](/reference/voxengine/agentic/voice-dsp-strategies/vad-start) strategy.
+
+```ts
+createVADStart(parameters?: VADStartParameters): VADStart
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="VADStartParameters" />
+
+## Types
+
+### MinWordsStartParameters
+
+Parameters for `Agentic.VoiceDSPStrategies.createMinWordsStart`.
+
+<a id="minwordsstartparameters-enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+<a id="minwordsstartparameters-minwords" />
+<ParamField path="minWords" type="number">
+Minimum number of spoken words required to trigger the start of a user turn.
+</ParamField>
+
+<a id="minwordsstartparameters-useinterim" />
+<ParamField path="useInterim" type="boolean">
+_optional_
+
+Optional. Whether to trigger on interim (partial) transcription frames for earlier detection. The default value is **true**.
+</ParamField>
+
+### SpeechTimeoutStopParameters
+
+Optional parameters for `Agentic.VoiceDSPStrategies.createSpeechTimeout`.
+
+<a id="speechtimeoutstopparameters-speechtimeout" />
+<ParamField path="speechTimeout" type="number">
+_optional_
+
+Optional. Time to wait (in seconds) after VAD detects silence before finalizing the user turn. The default value is **0.6**.
+</ParamField>
+
+### TranscriptionStartParameters
+
+Optional parameters for `Agentic.VoiceDSPStrategies.createTranscriptionStart`.
+
+<a id="transcriptionstartparameters-enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+<a id="transcriptionstartparameters-useinterim" />
+<ParamField path="useInterim" type="boolean">
+_optional_
+
+Optional. Whether to trigger on interim (partial) transcription frames for earlier detection. The default value is **true**.
+</ParamField>
+
+### VADStartParameters
+
+Optional parameters for `Agentic.VoiceDSPStrategies.createVADStart`.
+
+<a id="vadstartparameters-enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+## Type aliases
+
+### Start
+
+A start strategy configuration for the [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp). Can be passed via `Agentic.VoiceDSPParameters.startStrategies` to `Agentic.createVoiceDSP`.
+
+```ts
+type Start = VADStart | TranscriptionStart | MinWordsStart
+```
+
+### Stop
+
+A stop strategy configuration for the [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp). Can be passed via `Agentic.VoiceDSPParameters.stopStrategies` to `Agentic.createVoiceDSP`.
+
+```ts
+type Stop = TurnDetectorStop | SpeechTimeoutStop
+```

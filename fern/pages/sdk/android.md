@@ -81,7 +81,7 @@ You can request these permissions in your Activity or Fragment using standard An
 
 Before using any Voximplant features, initialize the SDK core system by calling [VICore.initialize(context)]().
 
-While you can initialize the SDK anywhere in your application (for example, in your `MainActivity` or a custom manager class) as long as you pass a valid [Context](), we recommend doing it once in a custom [Application]() class. This ensures the SDK is fully initialized and globally available as soon as your application starts:
+While you can initialize the SDK anywhere in your application (for example, in your `MainActivity` or a custom manager class) as long as you pass a valid [Context](), we recommend doing it once in a custom [Application](/platform/getting-started/create-an-application) class. This ensures the SDK is fully initialized and globally available as soon as your application starts:
 
 ```kotlin title="Initialize VICore in Application class"
 import android.app.Application

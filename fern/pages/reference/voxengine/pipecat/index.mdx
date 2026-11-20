@@ -1,0 +1,268 @@
+---
+title: Pipecat
+subtitle: Turn detector client for Pipecat Cloud WebSocket turn prediction.
+---
+
+Pipecat provides a VoxEngine client for streaming audio to Pipecat Cloud and receiving turn-taking predictions.
+
+Use `Pipecat.createTurnDetector(...)` to create a `TurnDetector` for the current scenario.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Pipecat turn detection guide" icon="fa-duotone fa-circle-info" href="/voice-ai/speech-flow-control/turn-detection">
+    Learn how turn detection fits into a VoxEngine call flow.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the Pipecat turn detector.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): reset, predict, and WebSocket lifecycle methods.
+- <Icon icon="fa-duotone fa-bolt" /> [TurnEvents](#turnevents): Pipecat turn detector event names and payload fields.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.Pipecat);
+```
+
+Create the detector, stream audio, and listen for turn prediction events.
+
+## Factory functions
+
+<a id="createturndetector" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createTurnDetector
+
+Creates a [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) instance.
+
+```ts
+createTurnDetector(parameters: TurnDetectorParameters): Promise<Pipecat.TurnDetector>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>TurnDetector<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;Pipecat.TurnDetector&gt;</code> | Resolves to the [`Pipecat.TurnDetector`](#turndetector) value. |
+
+## TurnDetector
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [Pipecat.TurnEvents](/reference/voxengine/pipecat#turnevents) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Pipecat.TurnEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Pipecat.<wbr />TurnEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="close" />
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the TurnDetector connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the TurnDetector id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="predict" />
+### <Icon icon="fa-duotone fa-function" /> predict
+
+Triggers the TurnDetector to analyze the current audio and make a prediction. The result is returned in the `Pipecat.TurnEvents.Result` event.
+
+```ts
+predict(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [Pipecat.TurnEvents](/reference/voxengine/pipecat#turnevents) event.
+
+```ts
+removeEventListener(event: Pipecat.TurnEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Pipecat.<wbr />TurnEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="reset" />
+### <Icon icon="fa-duotone fa-function" /> reset
+
+Reset the TurnDetector context.
+
+```ts
+reset(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="websocketid" />
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the TurnDetector WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## TurnEvents
+
+These events describe Pipecat Cloud turn detector responses.
+
+<AccordionGroup>
+<a id="turnevents-result" />
+<a id="result" />
+<a id="-result" />
+<Accordion title="Result">
+
+The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) result.
+
+Event constant: `TurnEvents.Result`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `turnDetector` | `TurnDetector` | ✓ | The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) instance. |
+| `endOfTurn` | `boolean` | ✓ | Indicates whether the event is emitted at the end of the turn. Is **true** when the model predicts the end of the turn. |
+| `probability` | `number` | ✓ | The probability of the result, in the range [0.0, 1.0]. |
+</Accordion>
+<a id="turnevents-reset" />
+<Accordion title="Reset">
+
+The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) is reset.
+
+Event constant: `TurnEvents.Reset`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `turnDetector` | `TurnDetector` | ✓ | The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) instance. |
+</Accordion>
+<a id="turnevents-error" />
+<a id="error" />
+<a id="-error" />
+<Accordion title="Error">
+
+The error response event.
+
+Event constant: `TurnEvents.Error`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `turnDetector` | `TurnDetector` | ✓ | The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) instance. |
+| `reason` | `string` | ✓ | The error reason. |
+</Accordion>
+<a id="turnevents-connectorinformation" />
+<a id="connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `TurnEvents.ConnectorInformation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `turnDetector` | `TurnDetector` | ✓ | The [Pipecat.TurnDetector](/reference/voxengine/pipecat#turndetector) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+</AccordionGroup>

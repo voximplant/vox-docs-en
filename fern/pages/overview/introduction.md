@@ -20,5 +20,5 @@ Choose your path to get started:
 
 ### Need something else?
 
-- **[API Reference]()** — Explore the VoxEngine runtime, Management REST API, and client SDK references.
+- **[API Reference](/reference/overview)** — Explore the VoxEngine runtime, Management REST API, and client SDK references.
 - **[Create a free account]()** — Sign up to get your testing credentials and starting balance.

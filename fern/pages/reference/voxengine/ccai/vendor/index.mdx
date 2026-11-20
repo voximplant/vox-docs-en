@@ -1,0 +1,119 @@
+---
+title: Vendor
+---
+
+## Enums
+
+- [Role](/reference/voxengine/ccai/vendor/role) — Enumeration of the roles a participant can play in a conversation.
+## Types
+
+### ConversationProfile
+
+Defines the services to connect to the incoming Dialogflow conversations.
+
+<a id="conversationprofile-displayname" />
+<ParamField path="display_name" type="string">
+_optional_
+
+Optional. A human-readable name for this profile. Max length is **1024 bytes**.
+</ParamField>
+
+<a id="conversationprofile-name" />
+<ParamField path="name" type="string">
+The unique identifier of this conversation profile. Format: projects/&lt;Project ID>/conversationProfiles/&lt;Conversation Profile ID>.
+</ParamField>
+
+### EventInput
+
+Events allow matching intents by event name instead of the natural language input. For instance, the  input can trigger a personalized welcome response. The parameter `name` may be used by the agent in the response: `"Hello #welcome_event.name! What can I do for you today?"`.
+
+<a id="eventinput-languagecode" />
+<ParamField path="language_code" type="string">
+The language of this query. See [Language Support](https://cloud.google.com/dialogflow/docs/reference/language) for a list of the currently supported language codes. Note that queries in the same session do not necessarily need to have the same language.
+</ParamField>
+
+<a id="eventinput-name" />
+<ParamField path="name" type="string">
+The unique identifier of the event.
+</ParamField>
+
+<a id="eventinput-parameters" />
+<ParamField path="parameters" type="{ [key: string]: any }">
+_optional_
+
+Optional. The collection of parameters associated with the event.
+Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs:
+* MapKey type: string
+* MapKey value: parameter name
+* MapValue type:
+* If parameter's entity type is a composite entity: map
+* Else: string or number, depending on the parameter value type
+* MapValue value:
+* If parameter's entity type is a composite entity: map from composite entity property names to property values
+* Else: parameter value
+</ParamField>
+
+### Participant
+
+Represents a single side of the conversation.
+
+<a id="participant-documentsmetadatafilters" />
+<ParamField path="documents_metadata_filters" type="{ [key: string]: string }">
+_optional_
+
+Optional. Key-value filters on the metadata of documents returned by article suggestion. If specified, article suggestion only returns suggested documents that match all filters in their **Document.metadata**. Multiple values for a metadata key should be concatenated by a comma. For example, filters to match all documents that have 'US' or 'CA' in their market metadata values and 'agent' in their user metadata values are documents_metadata_filters \{ key: "market" value: "US,CA" \} documents_metadata_filters \{ key: "user" value: "agent" \}.
+</ParamField>
+
+<a id="participant-name" />
+<ParamField path="name" type="string">
+_optional_
+
+Optional. The unique identifier of this participant. Format: `projects/<Project ID>/conversations/<Conversation ID>/participants/<Participant ID>`.
+</ParamField>
+
+<a id="participant-obfuscatedexternaluserid" />
+<ParamField path="obfuscated_external_user_id" type="string">
+_optional_
+
+Optional. Obfuscated user id that should be associated with the created participant.
+You can specify a user id as follows:
+* If you set this field in `CreateParticipantRequest` or `UpdateParticipantRequest`, Dialogflow adds the obfuscated user id with the participant.
+* If you set this field in `AnalyzeContent` or `StreamingAnalyzeContent`, Dialogflow updates `Participant.obfuscated_external_user_id`.
+Dialogflow returns an error if you try to add a user id for a non-`END_USER` participant.
+Dialogflow uses this user id for billing and measurement purposes. For example, Dialogflow determines whether a user in one conversation returned in a later conversation.
+NOTE:
+* Never pass raw user ids to Dialogflow. Always obfuscate your user id first.
+* Dialogflow only accepts a UTF-8 encoded string, e.g., a hex digest of a hash function like SHA-512.
+* The length of the user id must be &lt;= 256 characters.
+</ParamField>
+
+<a id="participant-role" />
+<ParamField path="role" type="Role">
+Immutable. The role this participant plays in the conversation. This field can only be set during creation.
+</ParamField>
+
+<a id="participant-siprecordingmedialabel" />
+<ParamField path="sip_recording_media_label" type="string">
+_optional_
+
+Optional. Label applied to streams representing this participant in SIPREC XML metadata and SDP. Use it to assign transcriptions from that media stream to this participant. This field can be updated.
+</ParamField>
+
+### TextInput
+
+Represents a natural language text to be processed.
+
+<a id="textinput-enablesplittingtext" />
+<ParamField path="enable_splitting_text" type="boolean">
+Whether to split the text into single sentence text entries at serving time. This provides a way for a user to input email content as text input.
+</ParamField>
+
+<a id="textinput-languagecodes" />
+<ParamField path="language_codes" type="string">
+The language of this conversational query. See [Language Support](https://cloud.google.com/dialogflow/docs/reference/language) for a list of the currently supported language codes. Note that queries in the same session do not necessarily need to have the same language.
+</ParamField>
+
+<a id="textinput-text" />
+<ParamField path="text" type="string">
+The UTF-8 encoded natural language text to be processed. Text length must not exceed **256 characters**.
+</ParamField>

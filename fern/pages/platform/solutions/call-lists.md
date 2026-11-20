@@ -28,10 +28,10 @@ Common use cases include appointment reminders, service notifications, customer 
 
 Before launching a call list campaign:
 
-1. Create an [application]().
-2. Create a [scenario]().
-3. Create a [routing rule]() and bind it to your scenario.
-4. Rent a [phone number]() to use as your verified outbound caller ID.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create a [scenario](/platform/getting-started/create-a-scenario).
+3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) and bind it to your scenario.
+4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to use as your verified outbound caller ID.
 5. Prepare a CSV file containing your contact records.
 
 ---
@@ -98,7 +98,7 @@ By default, the call list engine processes tasks with a baseline priority of `50
 
 In your VoxEngine scenario, require the `CallList` module. The scenario processes each CSV row sequentially. Variables corresponding to your CSV column headers are populated automatically.
 
-The following scenario answers the call, uses [voicemail detection]() to filter answering machines, and announces an appointment date using [text-to-speech]():
+The following scenario answers the call, uses [voicemail detection](/platform/telephony/voicemail-detection) to filter answering machines, and announces an appointment date using [text-to-speech](/platform/speech-processing/text-to-speech):
 
 ```javascript title="Call list scenario example"
 require(Modules.AI);
@@ -229,7 +229,7 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 
 ## Launching campaigns via Management API
 
-Call lists are created and started using the [CreateCallList]() Management API method.
+Call lists are created and started using the [CreateCallList](/reference/management-api/reference/call-lists/create-call-list) Management API method.
 
 Key request parameters:
 
@@ -248,7 +248,7 @@ Call lists require an account balance of at least $1.00 USD. If your balance dro
 
 ### Inspecting campaign progress
 
-Retrieve real-time task statuses and execution results using the [GetCallListDetails]() method:
+Retrieve real-time task statuses and execution results using the [GetCallListDetails](/reference/management-api/reference/call-lists/get-call-list-details) method:
 
 ```csv title="Call list execution details response"
 "appointment_date";"last_name";"phone_number";"first_name";"__end_execution_time";"__start_execution_time";"result_data";"last_attempt";"attempts_left";"status_id";status
@@ -280,7 +280,7 @@ Using `CallList.requestNextAttempt()`, you can modify parameters for the **curre
 
 You can specify a target retry date in three ways:
 
-1. **Via Management API**: Pass `next_attempt_time` to [EditCallListTask]().
+1. **Via Management API**: Pass `next_attempt_time` to [EditCallListTask](/reference/management-api/reference/call-lists/edit-call-list-task).
 2. **In the initial CSV file**: Include a `next_attempt_time` column with ISO 8601 timestamps.
 3. **In the VoxEngine scenario**: Pass `next_attempt_time` to `CallList.requestNextAttempt()`.
 
@@ -475,7 +475,7 @@ You can collect survey responses, confirmations, and user input through keypad t
 
 ### Handle DTMF keypad input
 
-Prompt the user to press a key (e.g., rate service quality from 1 to 5) and handle the [ToneReceived]() event:
+Prompt the user to press a key (e.g., rate service quality from 1 to 5) and handle the [ToneReceived](/reference/voxengine/call#tonereceived) event:
 
 ```javascript title="Handle DTMF feedback"
 // The storage for the scenario data
@@ -705,7 +705,7 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 });
 ```
 
-Capture results in the `ASREvents.Result` handler and forward the data to your backend in real time using HTTP requests, or save responses to session custom data for retrieval via [GetCallHistory]().
+Capture results in the `ASREvents.Result` handler and forward the data to your backend in real time using HTTP requests, or save responses to session custom data for retrieval via [GetCallHistory](/reference/management-api/reference/history/get-call-history).
 
 ---
 
@@ -718,4 +718,4 @@ Capture results in the `ASREvents.Result` handler and forward the data to your b
 **A**: An active call list cannot be deleted while running. You must pause the list or wait until all records complete before deleting it.
 
 **Q**: **Can I add new records to an existing call list?**  
-**A**: To add new contacts to a running campaign, use the [AppendToCallList]() Management API method or upload a new CSV file.
+**A**: To add new contacts to a running campaign, use the [AppendToCallList](/reference/management-api/reference/call-lists/append-to-call-list) Management API method or upload a new CSV file.

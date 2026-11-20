@@ -14,7 +14,7 @@ Voximplant enables developers to detect voicemails and automated prompts on outb
 The AMD module uses machine learning to determine whether an outgoing call was answered by a live human, an automated voicemail greeting, or an interactive bot. Depending on the detection result, your scenario can adjust its flow dynamically—such as waiting for the tone to leave a pre-recorded message or hanging up immediately to save call costs.
 
 <Info title="Supported countries">
-The machine learning voicemail detection model is currently optimized for Brazil, Colombia, Kazakhstan, Mexico, and Russia. If you require answering machine detection for another country, contact [support]() to request model activation.
+The machine learning voicemail detection model is currently optimized for Brazil, Colombia, Kazakhstan, Mexico, and Russia. If you require answering machine detection for another country, contact [support](/help/support) to request model activation.
 </Info>
 
 ### Outbound PSTN calls
@@ -194,17 +194,17 @@ The beep detector allows scenarios to listen for audio tones at specific frequen
 
 ### Methods
 
-* [enableBeepDetection()](): Activates tone detection on the current call. Accepts a configuration object:
+* [enableBeepDetection()](/reference/voxengine/call#enablebeepdetection): Activates tone detection on the current call. Accepts a configuration object:
   * `frequencies`: An array of target frequencies in Hertz (Hz).
   * `timeout`: The maximum detection window in milliseconds.
-* [disableBeepDetection()](): Deactivates tone detection on the active call.
+* [disableBeepDetection()](/reference/voxengine/call#disablebeepdetection): Deactivates tone detection on the active call.
 
 ### Events
 
-* [BeepDetectionComplete](): Fires when a tone matching one of the target frequencies is detected or when the detection timeout expires:
+* [BeepDetectionComplete](/reference/voxengine/call#beepdetectioncomplete): Fires when a tone matching one of the target frequencies is detected or when the detection timeout expires:
   * `frequencies`: An array containing the detected frequency values.
   * `timeout`: A boolean indicating whether the operation timed out (`undefined` if a beep was successfully detected, `true` if the timeout elapsed, or `false` if detection was manually disabled).
-* [BeepDetectionError](): Fires if an error occurs during detection. The event payload includes a `reason` property describing the failure.
+* [BeepDetectionError](/reference/voxengine/call#beepdetectionerror): Fires if an error occurs during detection. The event payload includes a `reason` property describing the failure.
 
 ```javascript title="Beep detection scenario"
 const params = { frequencies: [915, 1371, 1777], timeout: 6000 };

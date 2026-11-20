@@ -26,7 +26,7 @@ For a complete visual walkthrough covering Meta developer account setup and Voxi
 Before configuring WhatsApp calling, ensure you have:
 * A verified **Meta Business Account** with access to the **WhatsApp Manager**.
 * A dedicated phone number not currently registered with any personal or business WhatsApp mobile app.
-* A Voximplant account with an active [application]().
+* A Voximplant account with an active [application](/platform/getting-started/create-an-application).
 
 <Info title="Regional availability for outbound calls">
 Business-initiated WhatsApp calling is available in all regions supported by the WhatsApp Cloud API, except the following countries: **United States, Canada, Turkey, Egypt, Vietnam, and Nigeria**.
@@ -99,20 +99,20 @@ Refresh the phone numbers view in WhatsApp Manager to confirm your number status
 
 Once your number is connected to the Cloud API:
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the main navigation, go to **Settings** → **WhatsApp phone numbers**.
 3. Click **Add a WhatsApp phone number**.
 4. Follow the on-screen instructions to run the two required Meta Graph API commands to generate your SIP credentials.
 5. Enter your WhatsApp phone number and the SIP password returned by the API commands, then click **Save**.
-6. Open your Voximplant [application](), navigate to the **WhatsApp numbers** tab, and attach the newly added number.
+6. Open your Voximplant [application](/platform/getting-started/create-an-application), navigate to the **WhatsApp numbers** tab, and attach the newly added number.
 
 ---
 
 ## Handle incoming WhatsApp calls
 
-When a customer calls your WhatsApp Business account from their WhatsApp application, Voximplant routes the call to your application's [routing rule]().
+When a customer calls your WhatsApp Business account from their WhatsApp application, Voximplant routes the call to your application's [routing rule](/platform/getting-started/create-a-routing-rule).
 
-1. Create a [scenario]() that answers the call and executes your media or IVR logic:
+1. Create a [scenario](/platform/getting-started/create-a-scenario) that answers the call and executes your media or IVR logic:
 
 ```javascript title="Inbound WhatsApp call scenario"
 let call;
@@ -134,7 +134,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-2. Create a [routing rule]() with the pattern `.*` and bind it to your inbound scenario.
+2. Create a [routing rule](/platform/getting-started/create-a-routing-rule) with the pattern `.*` and bind it to your inbound scenario.
 
 ---
 

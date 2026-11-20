@@ -1,0 +1,118 @@
+---
+title: "Example: Speech-to-speech translation"
+description: "This example answers an inbound English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+<Info title="Gemini 3.8 Live">
+  This page reflects the current `gemini-3.8-live` flow from Google’s Live API docs:
+  https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live
+</Info>
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Gemini API key in Voximplant [Secrets](/platform/storage/secret-storage) under `GEMINI_API_KEY`.
+- Store the following non-sensitive values in Voximplant `ApplicationStorage`:
+  - `CALLEE_DESTINATION` (Spanish-speaking callee, e.g. `+34911222333`)
+  - `PSTN_CALLER_ID` (verified caller ID / purchased Voximplant number)
+
+## Demo video
+
+Video link: [Gemini Live speech-to-speech translation demo](https://www.youtube.com/watch?v=B9zjcMIF7eM)
+
+<llms-ignore>
+<iframe
+  width="100%"
+  height="360"
+  src="https://www.youtube.com/embed/B9zjcMIF7eM"
+  title="Gemini Live speech-to-speech translation demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowFullScreen
+/>
+</llms-ignore>
+
+## Session setup
+
+The Gemini Live API session is configured via `connectConfig`, passed into `Gemini.createLiveAPIClient(...)`.
+
+In the full scenario, see `GEMINI_CONNECT_CONFIG`:
+
+- `responseModalities: ["AUDIO"]` asks Gemini to speak back in real time.
+- `realtimeInputConfig.automaticActivityDetection` tunes barge-in behavior.
+- `speechConfig` selects a prebuilt voice for the translated audio.
+- `systemInstruction` enforces the English → Spanish translation behavior.
+- `inputAudioTranscription` and `outputAudioTranscription` are enabled so you can log translated text during the session.
+
+## Translation pipeline (one-way)
+
+This example uses a one-way pipeline:
+
+```
+English caller -> Gemini Live API -> Spanish callee
+```
+
+The code wires the audio like this:
+
+```js title="Connect audio"
+call.sendMediaTo(geminiLiveAPIClient);
+geminiLiveAPIClient.sendMediaTo(calleeCall);
+```
+
+## Barge-in
+
+Gemini includes an `interrupted` flag in `ServerContent` when the caller speaks over TTS. The example clears the media buffer so Gemini stops speaking immediately:
+
+```js title="Barge-in handling"
+if (payload.interrupted !== undefined) {
+  geminiLiveAPIClient.clearMediaBuffer();
+}
+```
+
+## Events
+
+The scenario listens for `Gemini.LiveAPIEvents.ServerContent`. If transcripts are enabled, the example logs both languages:
+
+```js title="Transcripts"
+if (payload.inputTranscription?.text) Logger.write(`===EN=== ${payload.inputTranscription.text}`);
+if (payload.outputTranscription?.text) Logger.write(`===ES=== ${payload.outputTranscription.text}`);
+```
+
+For illustration, it also logs these events:
+
+- `Gemini.LiveAPIEvents`: `SetupComplete`, `ServerContent`, `ConnectorInformation`, `Unknown`
+- `Gemini.Events`: `WebSocketMediaStarted`, `WebSocketMediaEnded`
+
+## Notes
+
+- This example uses the Gemini Developer API (`Gemini.Backend.GEMINI_API`).
+- The current sample uses `gemini-3.8-live`. `gemini-3.8-live` does not accept `thinkingLevel`; omit `thinkingConfig`.
+- Translation is one-way (English → Spanish). For bidirectional translation, run two Gemini sessions with opposite instructions.
+- The example includes short prompts (`call.say` / `calleeCall.say`) to make recordings easier to follow. Remove them for production.
+
+<Warning title="Older Live models">
+  `gemini-3.1-flash-live-preview` translation samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples used `thinkingBudget`. This example sends a short `sendRealtimeInput(...)` startup instruction on `SetupComplete` so the live interpretation session begins reliably.
+</Warning>
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/gemini-live/voxeengine-gemini-s2s-translate.js"
+  title="voxeengine-gemini-s2s-translate.js"
+  language="javascript"
+  maxLines={0}
+/>

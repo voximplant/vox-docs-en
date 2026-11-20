@@ -12,9 +12,9 @@ Before troubleshooting, verify that your scenario adheres to the architecture de
 
 ## Built-in Logger
 
-In addition to standard [console.log()](), Voximplant provides the [Logger.write()]() method to record diagnostic messages directly to the cloud session log.
+In addition to standard [console.log()](), Voximplant provides the [Logger.write()](/reference/voxengine/logger#write) method to record diagnostic messages directly to the cloud session log.
 
-Session logs are saved automatically and can be inspected anytime in the [Call history]() section of the Control Panel. Like native console logging, you can pass strings or serializable objects to [Logger.write()]() to inspect session state:
+Session logs are saved automatically and can be inspected anytime in the [Call history](/reference/management-api/reference/history) section of the Control Panel. Like native console logging, you can pass strings or serializable objects to [Logger.write()](/reference/voxengine/logger#write) to inspect session state:
 
 ```javascript title="Logger example"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -31,7 +31,7 @@ The Cloud IDE includes an integrated real-time debugger that allows you to step 
 
 To access the debugger:
 
-1. Open your application in the [Applications]() section of the Control Panel.
+1. Open your application in the [Applications](/platform/getting-started/create-an-application) section of the Control Panel.
 2. Go to the **Scenarios** tab and select the scenario you want to test.
 3. In the upper-right corner, click **Debug** to open the debug parameters dialog.
 

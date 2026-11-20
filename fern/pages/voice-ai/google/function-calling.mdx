@@ -1,0 +1,87 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound call, enables Gemini tool calling, and sends tool responses back to the model."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound call, enables Gemini tool calling, and sends tool responses back to the model.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+<Info title="Gemini 3.8 Live">
+  This page reflects the current `gemini-3.8-live` flow from Google’s Live API docs:
+  https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live
+</Info>
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Gemini API key in Voximplant [Secrets](/platform/storage/secret-storage) under `GEMINI_API_KEY`.
+
+## Tool definitions
+
+The example registers tools in `connectConfig.tools` using `functionDeclarations` and JSON Schema parameters. `gemini-3.8-live` does not accept `thinkingLevel`, so the sample omits `thinkingConfig`.
+
+```js
+const TOOLS = [
+  {
+    functionDeclarations: [
+      {
+        name: "get_weather",
+        description: "Get current weather for a location (demo stub)",
+        parametersJsonSchema: {
+          type: "object",
+          properties: {
+            location: { type: "string" },
+          },
+          required: ["location"],
+        },
+      },
+    ],
+  },
+];
+```
+
+## Handling tool calls
+
+Gemini sends tool calls via `Gemini.LiveAPIEvents.ToolCall`. Respond with `sendToolResponse`:
+
+```js
+geminiLiveAPIClient.addEventListener(Gemini.LiveAPIEvents.ToolCall, (event) => {
+  const functionCalls = event?.data?.payload?.functionCalls || [];
+  const responses = functionCalls.map((fn) => ({
+    id: fn.id,
+    name: fn.name,
+    response: { output: { ok: true } },
+  }));
+  geminiLiveAPIClient.sendToolResponse({ functionResponses: responses });
+});
+```
+
+## Notes
+
+- The example uses the Gemini Developer API (`Gemini.Backend.GEMINI_API`), not Vertex AI.
+- The current sample uses `gemini-3.8-live`.
+- Tool implementations in the example are stubs. Replace with real integrations as needed.
+
+<Warning title="Older Live models">
+  `gemini-3.1-flash-live-preview` function-calling samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples used `sendClientContent(...)` for the startup prompt and `thinkingBudget` instead of the `3.1` `thinkingLevel` field.
+</Warning>
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/gemini-live/voxeengine-gemini-function-calling.js"
+  title="voxeengine-gemini-function-calling.js"
+  language="javascript"
+  maxLines={0}
+/>

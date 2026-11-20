@@ -1,0 +1,103 @@
+---
+title: StreamingAgent
+subtitle: Represents a streaming object to interact with streaming platforms.
+---
+
+Represents a streaming object to interact with streaming platforms.
+Add the following line to your scenario code to use the class:
+```
+require(Modules.StreamingAgent);
+```
+
+## Methods
+
+### activeAudioTrack
+
+Gets the track ID of an active audio track or -1 if there is none.
+
+```ts
+activeAudioTrack(): number
+```
+
+### activeVideoTrack
+
+Gets the track ID of an active video track or -1 if there is none.
+
+```ts
+activeVideoTrack(): number
+```
+
+### addEventListener
+
+Adds a handler for the specified [StreamingAgentEvents](/reference/voxengine/streaming-agent-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: StreamingAgentEvents | T, callback: (event: _StreamingAgentEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="StreamingAgentEvents | T" required />
+
+<ParamField path="callback" type="(event: _StreamingAgentEvents[T]) => any" required />
+
+### audioTracks
+
+Gets the list of all current audio tracks.
+
+```ts
+audioTracks(): StreamingAgentTrack[]
+```
+
+### id
+
+Returns the StreamingAgent's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [StreamingAgentEvents](/reference/voxengine/streaming-agent-events) event.
+
+```ts
+removeEventListener(event: StreamingAgentEvents | T, callback?: (event: _StreamingAgentEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="StreamingAgentEvents | T" required />
+
+<ParamField path="callback" type="(event: _StreamingAgentEvents[T]) => any" />
+
+### setActiveTrack
+
+Sets a certain audio and/or video track as active.
+If an active video track is set, it is not replaced by the new one unlike in the default mode.
+Default mode: The active video track is the one that started sending data last. The active audio track is always the first one.
+To return to the default mode, set the track IDs equal to -1.
+
+```ts
+setActiveTrack(tracks: { audioTrack?: number; videoTrack?: number }): void
+```
+
+**Parameters**
+
+<ParamField path="tracks" type="{ audioTrack?: number; videoTrack?: number }" required />
+
+### stop
+
+Stops streaming. Triggers the StreamStopped event. Do not call any other streaming methods after a `StreamingAgent.stop` call.
+
+```ts
+stop(): void
+```
+
+### videoTracks
+
+Gets the list of all current video tracks.
+
+```ts
+videoTracks(): StreamingAgentTrack[]
+```

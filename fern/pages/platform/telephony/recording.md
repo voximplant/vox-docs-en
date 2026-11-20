@@ -2,7 +2,7 @@
 
 Learn how to record one-on-one audio and video calls, as well as composite multi-party video conferences into single video files in Voximplant.
 
-Recordings can be stored in the Voximplant Cloud or exported directly to your own [custom S3-compatible storage]().
+Recordings can be stored in the Voximplant Cloud or exported directly to your own [custom S3-compatible storage](/platform/storage/s-3-compatible-storage).
 
 ---
 
@@ -84,7 +84,7 @@ call.addEventListener(CallEvents.RecordStarted, (event) => {
 });
 ```
 
-Recordings are also accessible via the [GetCallHistory]() Management API method and the **Call history** section of the Control Panel.
+Recordings are also accessible via the [GetCallHistory](/reference/management-api/reference/history/get-call-history) Management API method and the **Call history** section of the Control Panel.
 
 ---
 
@@ -394,7 +394,7 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 
 By default, recordings are saved in the Voximplant Cloud. You can automatically export completed recordings directly to your own Amazon S3 or S3-compatible storage bucket (such as Google Cloud Storage or MinIO).
 
-To configure custom storage buckets, refer to the [S3-compatible storage guide]().
+To configure custom storage buckets, refer to the [S3-compatible storage guide](/platform/storage/s-3-compatible-storage).
 
 ---
 
@@ -415,7 +415,7 @@ When recording a conference, charges consist of:
 1. Video recording runtime
 2. Video composition and cloud storage retention
 
-Composition and storage pricing depends on your selected **video quality profile** and cloud **storage retention duration** (`expire`). Review current rates in the **Billing** section of the [Control Panel]().
+Composition and storage pricing depends on your selected **video quality profile** and cloud **storage retention duration** (`expire`). Review current rates in the **Billing** section of the [Control Panel](https://manage.voximplant.com).
 
 ---
 
@@ -464,20 +464,20 @@ To broadcast across multiple social destinations simultaneously via Restream:
 
 Before setting up streaming in code:
 
-1. Create an [application]().
-2. Create a [scenario]().
-3. Create a [routing rule]() and bind it to the scenario.
-4. Create an application [user]() to authenticate your client SDK.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create a [scenario](/platform/getting-started/create-a-scenario).
+3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) and bind it to the scenario.
+4. Create an application [user](/platform/getting-started/create-users) to authenticate your client SDK.
 
-You also need a working client application capable of transmitting video. Refer to [Processing video calls in SDKs]() for client implementation details.
+You also need a working client application capable of transmitting video. Refer to [Processing video calls in SDKs](/sdk/overview) for client implementation details.
 
 ### Scenario setup
 
-In your VoxEngine scenario, require the `StreamingAgent` module and create a streaming instance using [VoxEngine.createStreamingAgent]():
+In your VoxEngine scenario, require the `StreamingAgent` module and create a streaming instance using [VoxEngine.createStreamingAgent](/reference/voxengine/voxengine#createstreamingagent):
 
 * Pass your RTMP server URL and stream key to the streaming agent configuration.
 * Specify `H264` as your video codec. RTMP streaming requires the **H.264** codec.
-* Send audio and video from the call to the streaming agent using [call.sendMediaTo()]().
+* Send audio and video from the call to the streaming agent using [call.sendMediaTo()](/reference/voxengine/call#sendmediato).
 
 ```javascript title="Streaming scenario example"
 require(Modules.StreamingAgent);

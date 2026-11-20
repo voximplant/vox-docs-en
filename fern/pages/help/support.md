@@ -10,8 +10,8 @@ Our technical support team works alongside the engineers who build the platform.
 
 Depending on your plan and workflow, choose the channel that works best for you:
 
-* **Support ticket (Recommended)**: Open a ticket directly inside the [Voximplant Control Panel](). Submitting via the control panel automatically associates your ticket with your account and assigned infrastructure node.
-* **Email**: Drop us a line at [support@voximplant.com](). Please send from the email address linked to your Voximplant account.
+* **Support ticket (Recommended)**: Open a ticket directly inside the [Voximplant Control Panel](https://manage.voximplant.com). Submitting via the control panel automatically associates your ticket with your account and assigned infrastructure node.
+* **Email**: Drop us a line at [support@voximplant.com](mailto:support@voximplant.com). Please send from the email address linked to your Voximplant account.
 * **Premium & Slack support**: Enterprise tier customers have access to dedicated Slack or Microsoft Teams channels and 24/7 emergency phone lines for critical production incidents.
 
 <Info title="How to get your issue resolved on the first reply">

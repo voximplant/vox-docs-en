@@ -1,0 +1,551 @@
+---
+title: VoxEngine
+---
+
+## Functions
+
+### addEventListener
+
+Adds a handler for the specified [AppEvents](/reference/voxengine/app-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: AppEvents | T, callback: (event: _AppEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AppEvents | T" required />
+
+<ParamField path="callback" type="(event: _AppEvents[T]) => any" required />
+
+### allowWebSocketConnections
+
+Allows accepting incoming connections to ensure WebSocket bidirectional exchange.
+
+```ts
+allowWebSocketConnections(): void
+```
+
+### callConference
+
+Makes a call to a conference via Conference module. If there is no such conference, it is created in the first method's call. The method is designed to be called in a simple incoming scenario, then it can trigger another special scenario which contains logic of the conference.
+The method can trigger the Failed event in 60 sec, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details.
+
+```ts
+callConference(conferenceId: string, callerid: string, displayName: string, headers?: { [header: string]: string }, scheme?: Scheme): Call
+```
+
+**Parameters**
+
+<ParamField path="conferenceId" type="string" required />
+
+<ParamField path="callerid" type="string" required />
+
+<ParamField path="displayName" type="string" required />
+
+<ParamField path="headers" type="{ [header: string]: string }" />
+
+<ParamField path="scheme" type="Scheme" />
+
+### callPSTN
+
+Starts an outgoing call to the specified phone number. Calls that are more expensive than 20 cents per minute and calls to Africa are blocked by default for security reasons.
+The method can trigger the `CallEvents.Failed` event in 60 sec, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details.
+
+```ts
+callPSTN(number: string, callerid: string, parameters?: CallPSTNParameters): Call
+```
+
+**Parameters**
+
+<ParamField path="number" type="string" required />
+
+<ParamField path="callerid" type="string" required />
+
+<ParamField path="parameters" type="CallPSTNParameters" />
+
+### callSIP
+
+Starts an outgoing call to the external SIP system or to another user of the same application. Supported codecs are: [G.729](https://www.itu.int/rec/T-REC-G.729), [G.722](https://www.itu.int/rec/T-REC-G.722), [G.711 (u-law and a-law)](https://www.itu.int/rec/T-REC-G.711), [Opus](https://opus-codec.org/), [ILBC](https://webrtc.github.io/webrtc-org/license/ilbc-freeware/), [H.264](https://www.itu.int/rec/T-REC-H.264), [VP8](https://tools.ietf.org/html/rfc6386). The method can trigger the `CallEvents.Failed` event in 60 sec, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details.
+
+```ts
+callSIP(to: string, parameters?: CallSIPParameters): Call
+```
+
+**Parameters**
+
+<ParamField path="to" type="string" required />
+
+<ParamField path="parameters" type="CallSIPParameters" />
+
+### callUser
+
+Starts an outgoing call to the specified Voximplant user. The JavaScript scenario that uses this method and user being called should be both associated with the same Voximplant application.
+The method can trigger the `CallEvents.Failed` event in 60 sec, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details.
+
+```ts
+callUser(parameters: CallUserParameters): Call
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="CallUserParameters" required />
+
+### callUserDirect
+
+Start an outgoing call to the specified Voximplant user in peer-to-peer mode.
+The JavaScript scenario with this method and the destination user should be both within the same Voximplant application.
+Audio playback and recording does not work. P2P mode is available only for calls between SDKs.
+The method can trigger the `CallEvents.Failed` event in 60 sec, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details. **IMPORTANT**: calling this method makes impossible to use the non-P2P mode for a new call and specified incomingCall.
+So the following methods cannot be used: `Call.say`, `Call.sendDigits`, `Call.sendMediaTo`, `Call.stopMediaTo`.
+
+```ts
+callUserDirect(incomingCall: Call, username: string, parameters: CallUserDirectParameters): Call
+```
+
+**Parameters**
+
+<ParamField path="incomingCall" type="Call" required />
+
+<ParamField path="username" type="string" required />
+
+<ParamField path="parameters" type="CallUserDirectParameters" required />
+
+### callWhatsappUser
+
+Starts an outgoing call to the specified WhatsApp user.
+This method requires a WhatsApp Business account. Read more in the [WhatsApp Business-initiated calls](/voice-ai/network-options/whatsapp) article.
+
+```ts
+callWhatsappUser(parameters: CallWhatsappUserParameters): Call
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="CallWhatsappUserParameters" required />
+
+### createASR
+
+Creates a new [ASR](/reference/voxengine/asr) instance and starts recognition. You can attach sources later via the [VoxMediaUnit](/reference/voxengine/scenario-globals#voxmediaunit) **sendMediaTo** method.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.ASR);
+```
+
+```ts
+createASR(parameters: ASRParameters): ASR
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ASRParameters" required />
+
+### createConference
+
+Creates a new [Conference](/reference/voxengine/conference) instance. You can attach media streams later via the `Conference.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.Conference);
+```
+
+```ts
+createConference(parameters: ConferenceParameters): Conference
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ConferenceParameters" required />
+
+### createRecorder
+
+Creates a new [Recorder](/reference/voxengine/recorder) or [ConferenceRecorder](/reference/voxengine/conference-recorder) instance. You can attach sources later via the [VoxMediaUnit](/reference/voxengine/scenario-globals#voxmediaunit) **sendMediaTo** method.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.Recorder);
+```
+
+```ts
+createRecorder(parameters?: RecorderParameters): Recorder | ConferenceRecorder
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="RecorderParameters" />
+
+### createSequencePlayer
+
+Creates a new [SequencePlayer](/reference/voxengine/sequence-player) instance. You can attach media streams later via the `SequencePlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createSequencePlayer(parameters: SequencePlayerParameters): SequencePlayer
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="SequencePlayerParameters" required />
+
+### createStreamingAgent
+
+Creates a new [StreamingAgent](/reference/voxengine/streaming-agent) instance. You can attach sources later via the [VoxMediaUnit](/reference/voxengine/scenario-globals#voxmediaunit) **sendMediaTo** method.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.StreamingAgent);
+```
+
+```ts
+createStreamingAgent(parameters: StreamingAgentParameters): StreamingAgent
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="StreamingAgentParameters" required />
+
+### createToneScriptPlayer
+
+Creates a new [Player](/reference/voxengine/player) instance with the specified [ToneScript](https://en.wikipedia.org/wiki/ToneScript) sequence. You can attach media streams later via the `Player.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createToneScriptPlayer(script: string, parameters?: ToneScriptPlayerParameters): Player
+```
+
+**Parameters**
+
+<ParamField path="script" type="string" required />
+
+<ParamField path="parameters" type="ToneScriptPlayerParameters" />
+
+### createTTSPlayer
+
+Creates a new [Player](/reference/voxengine/player) instance with the specified text (TTS is used to play the text). You can attach media streams later via the `Player.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+If the text length exceeds 1500 characters, the `PlayerEvents.PlaybackFinished` event is triggered with error description. After the very first playing, a phrase is cached; each createTTSPlayer instance stores the cache data up to 2 weeks. Note that cache addresses only the URL, without additional headers. The cached phrase is available for all applications and further sessions.
+
+```ts
+createTTSPlayer(text: string, parameters?: TTSPlayerParameters): Player
+```
+
+**Parameters**
+
+<ParamField path="text" type="string" required />
+
+<ParamField path="parameters" type="TTSPlayerParameters" />
+
+### createURLPlayer
+
+Creates a new [Player](/reference/voxengine/player) instance with specified audio file URL. You can attach media streams later via the `Player.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+After the very first playback, a file is cached; each
+'createURLPlayer' instance stores the cache data up to 2 weeks.
+Note that cache addresses only the URL, without additional headers.
+The cached file is available for all applications and further sessions.
+
+File download has a timeout of 12 seconds. Reaching this timeout causes the "Timeout is reached" error.
+The supported file formats are: mp3, ogg, flac, and wav (mp3, speex, vorbis, flac, and wav codecs respectively). Maximum file size is 10 Mb.
+
+You can attach media streams later via the `Player.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+method etc. IMPORTANT: each call object can send media to any number of other calls (media units), but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+createURLPlayer(request: URLPlayerRequest, parameters?: URLPlayerParameters): Player
+```
+
+**Parameters**
+
+<ParamField path="request" type="URLPlayerRequest" required />
+
+<ParamField path="parameters" type="URLPlayerParameters" />
+
+### createWebSocket
+
+Creates a new [WebSocket](/reference/voxengine/websocket) instance. You can attach media streams later via the `WebSocket.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createWebSocket(url: string, parameters?: WebSocketParameters): WebSocket
+```
+
+**Parameters**
+
+<ParamField path="url" type="string" required />
+
+<ParamField path="parameters" type="WebSocketParameters" />
+
+### customData
+
+Set or get custom string associated with current JavaScript session.
+There are two kinds of the customData values: one is for JavaScript session (i.e., VoxEngine object), another is for the particular call (i.e., Call.customData and web SDK parameter of the method).
+It is possible to use them at the same time because they are independent entities. Remember that if you receive some value from web SDK, it does not overwrite the VoxEngine's value. Any of customData's type values can be later obtained from call history via management API or control panel.
+
+```ts
+customData(customData?: string): string
+```
+
+**Parameters**
+
+<ParamField path="customData" type="string" />
+
+### destroyConference
+
+Destroys an existing conference.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.Conference);
+```
+
+```ts
+destroyConference(conference: Conference): void
+```
+
+**Parameters**
+
+<ParamField path="conference" type="Conference" required />
+
+### disableEventListenersExtendedLogging
+
+Disables extended session logging for custom event listeners.
+After this call, add, remove, and invocation lines are not written.
+The session log records that extended logging was disabled.
+
+```ts
+disableEventListenersExtendedLogging(): void
+```
+
+### disableStatisticsForIncomingWebsockets
+
+Disables statistics for incoming WebSockets.
+
+```ts
+disableStatisticsForIncomingWebsockets(): void
+```
+
+### disableTraceForIncomingWebsockets
+
+Disables trace for incoming WebSockets.
+
+```ts
+disableTraceForIncomingWebsockets(): void
+```
+
+### easyProcess
+
+Adds all default event listeners to pass signaling information between two calls. The source code of the method is available on [GitHub](https://github.com/voximplant/easyprocess).
+
+```ts
+easyProcess(call1: Call, call2: Call, onEstablishedCallback?: (call1: Call, call2: Call) => void, direct?: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="call1" type="Call" required />
+
+<ParamField path="call2" type="Call" required />
+
+<ParamField path="onEstablishedCallback" type="(call1: Call, call2: Call) => void" />
+
+<ParamField path="direct" type="boolean" />
+
+### enableEventListenersExtendedLogging
+
+Enables extended session logging for custom event listeners.
+Until this method is called, add, remove, and invocation lines are not written.
+After the call, each add and remove writes the listener id, the event name, and the owner.
+Each invocation writes the same id and a stack trace.
+The stack is taken from `addEventListener` when this method was already called. Otherwise, it is taken at invocation.
+The session log records that extended logging was enabled.
+
+```ts
+enableEventListenersExtendedLogging(): void
+```
+
+### enableStatisticsForIncomingWebsockets
+
+Enables statistics for incoming WebSockets.
+
+```ts
+enableStatisticsForIncomingWebsockets(): void
+```
+
+### enableTraceForIncomingWebsockets
+
+Enables trace for incoming WebSockets.
+
+```ts
+enableTraceForIncomingWebsockets(): void
+```
+
+### enqueueACDRequest
+
+Adds a new request to the specified queue. The request is dispatched to the free agent according to the agent's status (must be "Ready") and skills.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.ACD);
+```
+
+```ts
+enqueueACDRequest(queueName: string, callerid: string, parameters?: ACDEnqueueParameters): ACDRequest
+```
+
+**Parameters**
+
+<ParamField path="queueName" type="string" required />
+
+<ParamField path="callerid" type="string" required />
+
+<ParamField path="parameters" type="ACDEnqueueParameters" />
+
+### enqueueTask
+
+Appends the task to the [SmartQueue](/reference/voxengine/scenario-globals#smartqueue).
+
+```ts
+enqueueTask(parameters: SmartQueueTaskParameters): SmartQueueTask
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="SmartQueueTaskParameters" required />
+
+### forwardCallToPSTN
+
+Helper function to forward an incoming call to PSTN. The method handles numbers only in the E.164 format by default. If you need to handle a number in another format, pass an additional function (as a parameter) to the method. For more details see the [GitHub repo](https://github.com/voximplant/easyprocess).
+
+```ts
+forwardCallToPSTN(numberTransform?: (number: string) => string, onEstablishedCallback?: (call1: Call, call2: Call) => void, options?: { callerid: string }): void
+```
+
+**Parameters**
+
+<ParamField path="numberTransform" type="(number: string) => string" />
+
+<ParamField path="onEstablishedCallback" type="(call1: Call, call2: Call) => void" />
+
+<ParamField path="options" type="{ callerid: string }" />
+
+### forwardCallToSIP
+
+Helper function to forward an incoming call to a dialed SIP URI. For more details see the [GitHub repo](https://github.com/voximplant/easyprocess).
+
+```ts
+forwardCallToSIP(onEstablishedCallback?: (call1: Call, call2: Call) => void, video?: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="onEstablishedCallback" type="(call1: Call, call2: Call) => void" />
+
+<ParamField path="video" type="boolean" />
+
+### forwardCallToUser
+
+Helper function to forward an incoming call to a user of the current application. Dialed number is considered as username. For more details see the [GitHub repo](https://github.com/voximplant/easyprocess).
+
+```ts
+forwardCallToUser(onEstablishedCallback?: (call1: Call, call2: Call) => void, video?: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="onEstablishedCallback" type="(call1: Call, call2: Call) => void" />
+
+<ParamField path="video" type="boolean" />
+
+### forwardCallToUserDirect
+
+Helper function to forward an incoming call to a user of the current application in the P2P mode. Dialed number is considered as username. Due to the P2P mode, media player and recording do not work. For more details see the [GitHub repo](https://github.com/voximplant/easyprocess).
+
+```ts
+forwardCallToUserDirect(onEstablishedCallback?: (call1: Call, call2: Call) => void): void
+```
+
+**Parameters**
+
+<ParamField path="onEstablishedCallback" type="(call1: Call, call2: Call) => void" />
+
+### getSecretValue
+
+Gets a value of the secret stored in the Voximplant panel.
+
+```ts
+getSecretValue(name: string): string | undefined
+```
+
+**Parameters**
+
+<ParamField path="name" type="string" required />
+
+### playSoundAndHangup
+
+Helper function to play sound to incoming call. It terminates a call in three cases:
+1) playback is finished
+2) call failed
+3) call disconnected
+
+```ts
+playSoundAndHangup(fileURL: string): void
+```
+
+**Parameters**
+
+<ParamField path="fileURL" type="string" required />
+
+### removeEventListener
+
+Removes a handler for the specified [AppEvents](/reference/voxengine/app-events) event.
+
+```ts
+removeEventListener(event: AppEvents | T, callback?: (event: _AppEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="AppEvents | T" required />
+
+<ParamField path="callback" type="(event: _AppEvents[T]) => any" />
+
+### sendMediaBetween
+
+Start sending media between mediaUnit1 and mediaUnit2. This method binds two audio/video streams.
+
+```ts
+sendMediaBetween(mediaUnit1: VoxMediaUnit, mediaUnit2: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit1" type="VoxMediaUnit" required />
+
+<ParamField path="mediaUnit2" type="VoxMediaUnit" required />
+
+### setVideoCodec
+
+Sets the default video codec for the application session.
+
+```ts
+setVideoCodec(codec: VideoCodecs): void
+```
+
+**Parameters**
+
+<ParamField path="codec" type="VideoCodecs" required />
+
+### stopMediaBetween
+
+Stops sending media between mediaUnit1 and mediaUnit2.
+
+```ts
+stopMediaBetween(mediaUnit1: VoxMediaUnit, mediaUnit2: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit1" type="VoxMediaUnit" required />
+
+<ParamField path="mediaUnit2" type="VoxMediaUnit" required />
+
+### terminate
+
+Terminates the current JavaScript session. All audio/video streams are disconnected and scenario execution stops. Note that after this function, only the `AppEvents.Terminating` and `AppEvents.Terminated` events are triggered.
+
+NOTE: if you are using this method inside a code block (e.g., an "if" block), it does not stop the execution of the current block. Use `return;` after using this method to exit the current code block.
+
+```ts
+terminate(): void
+```

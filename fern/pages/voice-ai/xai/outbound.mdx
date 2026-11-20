@@ -1,0 +1,64 @@
+---
+title: "Example: Placing an outbound call"
+description: "This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to a Grok voice agent when the media WebSocket is ready."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to a Grok voice agent when the media WebSocket is ready.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- An xAI API key stored in Voximplant [Secrets](/platform/storage/secret-storage) under `XAI_API_KEY`.
+- A Grok voice model selected in the example code. The default sample explicitly uses `grok-voice-latest`; change `GROK_MODEL` if your xAI account should use another Voice Agent model.
+- A verified or rented caller ID that can place outbound PSTN calls.
+- Start this scenario via a routing rule (for production use the Management API to start the rule).
+
+## Custom data
+
+Pass the destination and caller ID when starting the scenario:
+
+```json
+{"destination":"+15551234567","callerId":"+13322776633"}
+```
+
+## Alternate outbound destinations
+
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+
+- **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
+- **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
+- **Voximplant users** (`VoxEngine.callUser`): calls another app user inside the same Voximplant application such as web SDK, mobile SDK, or SIP user.
+
+Relevant guides:
+
+- [SIP calling options](/voice-ai/network-options/sip)
+- [Voximplant users calling options](/voice-ai/network-options/web-mobile)
+- [WhatsApp calling options](/voice-ai/network-options/whatsapp)
+
+## Connect call audio
+
+Bridge the PSTN call to Grok once the WebSocket media session is live:
+
+```js
+VoxEngine.sendMediaBetween(call, voiceAgentAPIClient);
+```
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/xai).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/grok/voxeengine-grok-place-outbound-call.js"
+  title="voxeengine-grok-place-outbound-call.js"
+  language="javascript"
+  maxLines={0}
+/>

@@ -1,0 +1,41 @@
+---
+title: Participant
+subtitle: Events related to CCAI participants.
+---
+
+## Values
+
+<a id="created" />
+<ParamField path="Created" type="'AI.Events.CcaiParticipantCreated'">
+Triggers after the [CCAI.Participant](/reference/voxengine/ccai/participant) instance is created.
+</ParamField>
+
+<a id="response" />
+<ParamField path="Response" type="'AI.Events.CcaiParticipantResponse'">
+Triggered when a [CCAI.Participant](/reference/voxengine/ccai/participant) instance returns an intent response.
+</ParamField>
+
+<a id="playbackfinished" />
+<ParamField path="PlaybackFinished" type="'AI.Events.CcaiParticipantPlaybackFinished'">
+Triggered when playback of a single phrase has finished successfully or in case of a playback error.
+</ParamField>
+
+<a id="playbackstarted" />
+<ParamField path="PlaybackStarted" type="'AI.Events.CcaiParticipantPlaybackStarted'">
+Triggered when playback of a single phrase has started.
+</ParamField>
+
+<a id="playbackstopped" />
+<ParamField path="PlaybackStopped" type="'AI.Events.CcaiParticipantPlaybackStopped'">
+Triggered when playback of a single phrase has stoped.
+</ParamField>
+
+<a id="playbackready" />
+<ParamField path="PlaybackReady" type="'AI.Events.CcaiParticipantPlaybackReady'">
+Triggered when **audio_segments** from Google are ready to be played.
+</ParamField>
+
+<a id="markerreached" />
+<ParamField path="MarkerReached" type="'AI.Events.CcaiParticipantMarkerReached'">
+Triggered when `CCAI.Participant.addPlaybackMarker` is reached.
+</ParamField>

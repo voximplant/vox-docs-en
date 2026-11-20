@@ -1,0 +1,67 @@
+---
+title: AMD
+subtitle: Answering Machine Detection provides methods that allow developers to recognize voicemail prompts with the help of artificial intelligence.
+---
+
+Answering Machine Detection provides methods that allow developers to recognize voicemail prompts with the help of artificial intelligence.
+Read more about the topic in the Voicemail detection article.
+
+## Classes
+
+- [AnsweringMachineDetector](/reference/voxengine/amd/answering-machine-detector) — Answering machine or voicemail detector class.
+## Enums
+
+- [Events](/reference/voxengine/amd/events)
+- [Model](/reference/voxengine/amd/model) — Answering machine or voicemail detector model.
+- [ResultClass](/reference/voxengine/amd/result-class) — Answering machine result class, such as human, voicemail, timeout or call termination.
+- [ResultSubtype](/reference/voxengine/amd/result-subtype) — Answering machine result subtype, such as mimic, silence or none.
+## Functions
+
+### create
+
+Creates a new [AMD.AnsweringMachineDetector](/reference/voxengine/amd/answering-machine-detector) instance. You can attach sources later via the [VoxMediaUnit](/reference/voxengine/scenario-globals#voxmediaunit) **sendMediaTo** method.
+
+```ts
+create(parameters: AMD.Parameters): AMD.AnsweringMachineDetector
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="AMD.Parameters" required />
+
+## Types
+
+### Parameters
+
+Parameters for the `AMD.create` method.
+
+<a id="parameters-model" />
+<ParamField path="model" type="AMD.Model">
+Recognition model - [AMD.Model](/reference/voxengine/amd/model).
+</ParamField>
+
+<a id="parameters-timeout" />
+<ParamField path="timeout" type="number">
+_optional_
+
+Optional. Detection timeout in milliseconds. Note that the timeout is only triggered after the `CallEvents.Connected` event. The default value is **6500**. Must not be less than **0** or greater than **20000**.
+</ParamField>
+
+### Thresholds
+
+Detection threshold in the range **0.0** - **1.0**.
+
+<a id="thresholds-human" />
+<ParamField path="human" type="number">
+_optional_
+</ParamField>
+
+<a id="thresholds-mimic" />
+<ParamField path="mimic" type="number">
+_optional_
+</ParamField>
+
+<a id="thresholds-voicemail" />
+<ParamField path="voicemail" type="number">
+_optional_
+</ParamField>

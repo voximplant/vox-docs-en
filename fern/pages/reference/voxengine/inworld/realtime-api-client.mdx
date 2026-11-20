@@ -1,0 +1,239 @@
+---
+title: RealtimeAPIClient
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [Inworld.RealtimeAPIEvents](/reference/voxengine/inworld/realtime-api-events) or [Inworld.Events](/reference/voxengine/inworld/events) event.
+
+```ts
+addEventListener(event: Inworld.Events | Inworld.RealtimeAPIEvents | T, callback: (event: Inworld._RealtimeAPIClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Inworld.Events | Inworld.RealtimeAPIEvents | T" required />
+
+<ParamField path="callback" type="(event: Inworld._RealtimeAPIClientEvents[T]) => any" required />
+
+### clearMediaBuffer
+
+Clears the Inworld WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ClearMediaBufferParameters" />
+
+### close
+
+Closes the Inworld connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+### conversationItemCreate
+
+Add a conversation item (message, function call result, etc.). [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+conversationItemCreate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### conversationItemDelete
+
+Delete a conversation item by ID. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+conversationItemDelete(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### conversationItemRetrieve
+
+Retrieve a conversation item by ID. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+conversationItemRetrieve(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### conversationItemTruncate
+
+Truncate an assistant message's audio. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+conversationItemTruncate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### id
+
+Returns the RealtimeAPIClient id.
+
+```ts
+id(): string
+```
+
+### inputAudioBufferAppend
+
+Append audio bytes to the input buffer. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+inputAudioBufferAppend(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### inputAudioBufferClear
+
+Discard all audio in the input buffer. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+inputAudioBufferClear(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### inputAudioBufferCommit
+
+Commit the buffered audio as a user message. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+inputAudioBufferCommit(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### outputAudioBufferClear
+
+Clear the server's output audio buffer, stopping playback. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+outputAudioBufferClear(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### removeEventListener
+
+Removes a handler for the specified [Inworld.RealtimeAPIEvents](/reference/voxengine/inworld/realtime-api-events) or [Inworld.Events](/reference/voxengine/inworld/events) event.
+
+```ts
+removeEventListener(event: Inworld.Events | Inworld.RealtimeAPIEvents | T, callback?: (event: Inworld._RealtimeAPIClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Inworld.Events | Inworld.RealtimeAPIEvents | T" required />
+
+<ParamField path="callback" type="(event: Inworld._RealtimeAPIClientEvents[T]) => any" />
+
+### responseCancel
+
+Cancel an in-progress response. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+responseCancel(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### responseCreate
+
+Trigger a model response. The server streams back response events. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+responseCreate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### responseSpeak
+
+Speak the supplied text verbatim as the next assistant response, without calling the LLM. The server responds with `Inworld.RealtimeAPIEvents.ResponseSpeakAcknowledged`, then streams the usual response events. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+responseSpeak(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### sendMediaTo
+
+Starts sending media from the Inworld (via WebSocket) to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### sessionUpdate
+
+Update the session configuration. The server responds with a session.updated event. [https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket)
+
+```ts
+sessionUpdate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### stopMediaTo
+
+Stops sending media from the Inworld (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+### webSocketId
+
+Returns the Inworld WebSocket id.
+
+```ts
+webSocketId(): string
+```

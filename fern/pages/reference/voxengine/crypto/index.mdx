@@ -1,0 +1,55 @@
+---
+title: Crypto
+---
+
+## Functions
+
+### hmac_sha256
+
+Calculates HMAC-SHA256 hash of the specified data.
+
+```ts
+hmac_sha256(key: string, data: string): string
+```
+
+**Parameters**
+
+<ParamField path="key" type="string" required />
+
+<ParamField path="data" type="string" required />
+
+### md5
+
+Calculates MD5 hash. Can be used with HTTP requests that require hash.
+
+```ts
+md5(data: string | string[]): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="string | string[]" required />
+
+### sha1
+
+Calculates SHA1 hash. Can be used with HTTP requests that require hash.
+
+```ts
+sha1(data: string): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+### sha256
+
+Calculates SHA256 hash of the specified data.
+
+```ts
+sha256(data: string): string
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />

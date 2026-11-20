@@ -1,0 +1,30 @@
+---
+title: DialogflowModelVariant
+subtitle: 'Add the following line to your scenario code to use the enum: ``` require(Modules.AI); ```'
+---
+
+## Values
+
+<a id="speechmodelvariantunspecified" />
+<ParamField path="SPEECH_MODEL_VARIANT_UNSPECIFIED" type="'SPEECH_MODEL_VARIANT_UNSPECIFIED'">
+No model variant specified. In this case Dialogflow defaults to USE_BEST_AVAILABLE.
+</ParamField>
+
+<a id="usebestavailable" />
+<ParamField path="USE_BEST_AVAILABLE" type="'USE_BEST_AVAILABLE'">
+Use the best available variant of the Speech model that the caller is eligible for.
+Please see the Dialogflow docs for how to make your project eligible for enhanced models.
+</ParamField>
+
+<a id="usestandard" />
+<ParamField path="USE_STANDARD" type="'USE_STANDARD'">
+Use standard model variant even if an enhanced model is available. See the Cloud Speech documentation for details about enhanced models.
+</ParamField>
+
+<a id="useenhanced" />
+<ParamField path="USE_ENHANCED" type="'USE_ENHANCED'">
+Use an enhanced model variant:
+ - If an enhanced variant does not exist for the given model and request language, Dialogflow falls back to the standard variant.
+ The Cloud Speech documentation describes which models have enhanced variants.
+ - If the API caller is not eligible for enhanced models, Dialogflow returns an error. Please see the Dialogflow docs for how to make your project eligible.
+</ParamField>

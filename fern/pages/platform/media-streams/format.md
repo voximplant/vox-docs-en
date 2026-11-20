@@ -160,7 +160,7 @@ webSocket.sendMediaTo(recorder, {
 
 The first message sent across the media stream must be a `StartEvent` specifying the stream codec in `StartEvent.mediaFormat`.
 
-When Voximplant successfully processes a valid `StartEvent`, the [WebSocketEvents.MEDIA_STARTED]() event fires in your scenario. The `tag`, `customParameters`, and `mediaFormat` properties are mapped to the event's `tag`, `customParameters`, and `encoding` fields.
+When Voximplant successfully processes a valid `StartEvent`, the [WebSocketEvents.MEDIA_STARTED](/reference/voxengine/websocket-events#mediastarted) event fires in your scenario. The `tag`, `customParameters`, and `mediaFormat` properties are mapped to the event's `tag`, `customParameters`, and `encoding` fields.
 
 ### Sending MediaInfo events
 
@@ -188,7 +188,7 @@ When streaming multiple audio tracks over a single connection, set `MediaInfo.ta
 
 When media transmission finishes, send a `StopEvent`. The `StopEvent.tag` must match the `StartEvent.tag` of the completed stream.
 
-Upon receiving a valid `StopEvent`, the scenario triggers the [WebSocketEvents.MEDIA_ENDED]() event.
+Upon receiving a valid `StopEvent`, the scenario triggers the [WebSocketEvents.MEDIA_ENDED](/reference/voxengine/websocket-events#mediaended) event.
 
 ### Changing the media codec
 

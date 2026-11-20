@@ -80,7 +80,7 @@ operatorCall.sendMediaTo(clientCall);
 
 ## Conference mode
 
-In conference mode, the supervisor, agent, and client participate in a full three-way conversation where everyone can hear and speak to one another as in a standard [conference]():
+In conference mode, the supervisor, agent, and client participate in a full three-way conversation where everyone can hear and speak to one another as in a standard [conference](/platform/telephony/conferences):
 
 ```javascript title="Conference mode"
 VoxEngine.sendMediaBetween(operatorCall, conf);

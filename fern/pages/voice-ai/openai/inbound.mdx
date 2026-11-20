@@ -1,0 +1,123 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to OpenAI Realtime for speech‑to‑speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to OpenAI Realtime for speech-to-speech conversations. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+
+**Jump to the [Full VoxEngine scenarios](#full-voxengine-scenarios).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users) - also see the [Web & Mobile](/voice-ai/network-options/web-mobile) client SDK options
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+
+## Session setup
+
+<Info>
+    `gpt-realtime-2` and above introduced some breaking changes to the `gpt-realtime-1.x` session configuration object.
+    Make sure to select the appropriate version in the examples below.
+</Info>
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    The example configures the OpenAI Realtime session with a system prompt, enables semantic VAD, and uses low reasoning effort.
+
+```js title="GPT Realtime 2.1 session setup"
+voiceAIClient.sessionUpdate({
+  session: {
+    type: "realtime",
+    model: "gpt-realtime-2.1",
+    instructions: SYSTEM_PROMPT,
+    reasoning: { effort: "low" },
+    output_modalities: ["audio"],
+    audio: {
+      input: {
+        turn_detection: {
+          type: "semantic_vad",
+          eagerness: "auto",
+          create_response: true,
+          interrupt_response: true,
+        },
+      },
+      output: {
+        voice: "alloy",
+      },
+    },
+  },
+});
+```
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+      The example configures the OpenAI Realtime session with a short system prompt, a voice, and server VAD.
+
+```js title="GPT Realtime 1.5 session setup"
+voiceAIClient.sessionUpdate({
+  session: {
+    type: "realtime",
+    instructions: SYSTEM_PROMPT,
+    voice: "alloy",
+    output_modalities: ["audio"],
+    turn_detection: { type: "server_vad", interrupt_response: true },
+  },
+});
+```
+  </Tab>
+</Tabs>
+
+## Connect call audio
+
+Once the session is ready, bridge audio both ways between the call and OpenAI:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+```
+
+## Barge-in
+
+The scenario clears buffered model audio whenever OpenAI detects caller speech:
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechStarted, () => {
+  voiceAIClient.clearMediaBuffer();
+});
+```
+
+## Full VoxEngine scenarios
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-answer-incoming-call.js"
+      title="voxeengine-openai-answer-incoming-call.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-inbound-1-5.js"
+      title="voxeengine-openai-inbound-1-5.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+</Tabs>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [Placing an outbound call with OpenAI Realtime](/voice-ai/openai/outbound)
+- [Function calling with OpenAI Realtime](/voice-ai/openai/function-calling)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [Current OpenAI models](https://developers.openai.com/api/docs/models)
+- [OpenAI Realtime API reference](https://developers.openai.com/api/docs/api-reference/realtime)

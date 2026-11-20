@@ -1,0 +1,102 @@
+---
+title: Participant
+subtitle: Represents a CCAI participant instance.
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [CCAI.Events.Participant](/reference/voxengine/ccai/events/participant) event. Use only functions as handlers; anything except a function leads to an error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: CCAI.Events.Participant | T, callback: (event: CCAI.Events._ParticipantEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Participant | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._ParticipantEvents[T]) => any" required />
+
+### addPlaybackMarker
+
+Adds a Dialogflow speech synthesis playback marker. The `CCAI.Events.Participant.MarkerReached` event is triggered when the marker is reached.
+
+```ts
+addPlaybackMarker(offset: number, playbackId?: string): void
+```
+
+**Parameters**
+
+<ParamField path="offset" type="number" required />
+
+<ParamField path="playbackId" type="string" />
+
+### analyzeContent
+
+Adds a message from a participant into the Dialogflow CCAI.
+
+```ts
+analyzeContent(query: CCAI.Vendor.EventInput | CCAI.Vendor.TextInput): void
+```
+
+**Parameters**
+
+<ParamField path="query" type="CCAI.Vendor.EventInput | CCAI.Vendor.TextInput" required />
+
+### call
+
+Returns the call associated with the participant.
+
+```ts
+call(): Call
+```
+
+### id
+
+Returns the participant's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [CCAI.Events.Participant](/reference/voxengine/ccai/events/participant) event.
+
+```ts
+removeEventListener(event: CCAI.Events.Participant | T, callback?: (event: CCAI.Events._ParticipantEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Participant | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._ParticipantEvents[T]) => any" />
+
+### sendMediaTo
+
+Starts sending media (voice) from the Dialogflow participant to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stopMediaTo
+
+Stops sending voice from the Dialogflow participant to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />

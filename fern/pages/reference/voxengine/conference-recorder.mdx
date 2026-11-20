@@ -1,0 +1,120 @@
+---
+title: ConferenceRecorder
+subtitle: 'Represents a conference recorder. Add the following line to your scenario code to use the class: ``` require(Modules.Recorder); ```'
+---
+
+**Extends:** `Recorder`
+
+## Methods
+
+### getPriority
+
+Gets an endpoint's priority.
+
+```ts
+getPriority(): Endpoint[]
+```
+
+### setConference
+
+Conference object to record.
+
+```ts
+setConference(conference: Conference): void
+```
+
+**Parameters**
+
+<ParamField path="conference" type="Conference" required />
+
+### setPriority
+
+Sets an endpoint's priority.
+
+```ts
+setPriority(priority: Endpoint[]): Promise<void>
+```
+
+**Parameters**
+
+<ParamField path="priority" type="Endpoint[]" required />
+
+### update
+
+Updates the current video recorder parameters.
+
+```ts
+update(parameters: UpdateRecorderVideoParameters): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="UpdateRecorderVideoParameters" required />
+
+## Inherited Methods
+
+### addEventListener
+
+*Inherited from `Recorder`.*
+
+Adds a handler for the specified [RecorderEvents](/reference/voxengine/recorder-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: RecorderEvents | T, callback: (event: _RecorderEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="RecorderEvents | T" required />
+
+<ParamField path="callback" type="(event: _RecorderEvents[T]) => any" required />
+
+### id
+
+*Inherited from `Recorder`.*
+
+Returns the recorder's id.
+
+```ts
+id(): string
+```
+
+### mute
+
+*Inherited from `Recorder`.*
+
+Whether to mute whole record without detaching media sources from it.
+
+```ts
+mute(doMute: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="doMute" type="boolean" required />
+
+### removeEventListener
+
+*Inherited from `Recorder`.*
+
+Removes a handler for the specified [RecorderEvents](/reference/voxengine/recorder-events) event.
+
+```ts
+removeEventListener(event: RecorderEvents | T, callback?: (event: _RecorderEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="RecorderEvents | T" required />
+
+<ParamField path="callback" type="(event: _RecorderEvents[T]) => any" />
+
+### stop
+
+*Inherited from `Recorder`.*
+
+Stops recording and triggers the `RecorderEvents.Stopped` event.
+
+```ts
+stop(): void
+```

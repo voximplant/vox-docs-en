@@ -1,6 +1,6 @@
 # Create an application
 
-A Voximplant application is the central container for your project. Similar to a project workspace in other developer platforms, an application bundles your serverless JavaScript code ([scenarios]()), [routing rules](), [users](), [phone numbers](), and third-party integrations into an isolated environment.
+A Voximplant application is the central container for your project. Similar to a project workspace in other developer platforms, an application bundles your serverless JavaScript code ([scenarios](/platform/getting-started/create-a-scenario)), [routing rules](/platform/getting-started/create-a-routing-rule), [users](/platform/getting-started/create-users), [phone numbers](/platform/getting-started/buy-a-phone-number), and third-party integrations into an isolated environment.
 
 **Before you write code, purchase numbers, or handle your first call, you must create an application.**
 
@@ -10,7 +10,7 @@ A Voximplant application is the central container for your project. Similar to a
 
 To create an application in the Voximplant Control Panel:
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the left navigation menu, click **Applications**.
 3. Click **Create application** (or the **+** icon).
 4. Enter a descriptive name for your application (for example, `customer-support` or `voice-assistant`). Application names must be unique within your account.
@@ -55,4 +55,4 @@ Inside an application workspace, you will find dedicated sections to manage all 
 
 ## Next steps
 
-Once your application is created, you are ready to write your first scenario. Proceed to [Create a scenario]() to start building your call logic.
+Once your application is created, you are ready to write your first scenario. Proceed to [Create a scenario](/platform/getting-started/create-a-scenario) to start building your call logic.

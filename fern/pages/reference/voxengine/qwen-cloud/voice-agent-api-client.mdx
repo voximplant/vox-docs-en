@@ -1,0 +1,191 @@
+---
+title: VoiceAgentAPIClient
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [QwenCloud.VoiceAgentAPIEvents](/reference/voxengine/qwen-cloud/voice-agent-api-events) or [QwenCloud.Events](/reference/voxengine/qwen-cloud/events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: QwenCloud.Events | QwenCloud.VoiceAgentAPIEvents | T, callback: (event: QwenCloud._VoiceAgentAPIClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="QwenCloud.Events | QwenCloud.VoiceAgentAPIEvents | T" required />
+
+<ParamField path="callback" type="(event: QwenCloud._VoiceAgentAPIClientEvents[T]) => any" required />
+
+### clearMediaBuffer
+
+Clears the Qwen Cloud WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ClearMediaBufferParameters" />
+
+### close
+
+Closes the Qwen Cloud connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+### conversationItemCreate
+
+Inserts a conversation item (message, function_call, or function_call_output). [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-create](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-create)
+
+```ts
+conversationItemCreate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### conversationItemDelete
+
+Deletes a conversation item. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-delete](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-delete)
+
+```ts
+conversationItemDelete(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### conversationItemRetrieve
+
+Retrieves a conversation item. Audio content is returned as a transcript. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-retrieve](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#conversation-item-retrieve)
+
+```ts
+conversationItemRetrieve(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### id
+
+Returns the VoiceAgentAPIClient id.
+
+```ts
+id(): string
+```
+
+### inputAudioBufferClear
+
+Clears uncommitted input audio. Push-to-talk mode only. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#input-audio-buffer-clear](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#input-audio-buffer-clear)
+
+```ts
+inputAudioBufferClear(parameters?: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" />
+
+### inputAudioBufferCommit
+
+Commits the input audio buffer. Push-to-talk mode only. Does not start a response; call `QwenCloud.VoiceAgentAPIClient.responseCreate` after this. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#input-audio-buffer-commit](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#input-audio-buffer-commit)
+
+```ts
+inputAudioBufferCommit(parameters?: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" />
+
+### removeEventListener
+
+Removes a handler for the specified [QwenCloud.VoiceAgentAPIEvents](/reference/voxengine/qwen-cloud/voice-agent-api-events) or [QwenCloud.Events](/reference/voxengine/qwen-cloud/events) event.
+
+```ts
+removeEventListener(event: QwenCloud.Events | QwenCloud.VoiceAgentAPIEvents | T, callback?: (event: QwenCloud._VoiceAgentAPIClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="QwenCloud.Events | QwenCloud.VoiceAgentAPIEvents | T" required />
+
+<ParamField path="callback" type="(event: QwenCloud._VoiceAgentAPIClientEvents[T]) => any" />
+
+### responseCancel
+
+Cancels the response currently being generated. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#response-cancel](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#response-cancel)
+
+```ts
+responseCancel(parameters?: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" />
+
+### responseCreate
+
+Starts a response. Required in push-to-talk mode and after a function_call_output. Optional overrides: response.modalities, response.voice. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#response-create](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#response-create)
+
+```ts
+responseCreate(parameters?: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" />
+
+### sendMediaTo
+
+Starts sending media from Qwen Cloud (via WebSocket) to the media unit. Qwen Cloud works in real time.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### sessionUpdate
+
+Updates the session configuration. Send this before the first audio frame. `turn_detection: null` selects push-to-talk. [https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#session-update](https://docs.qwencloud.com/api-reference/qwen-audio-realtime/client-events#session-update)
+
+```ts
+sessionUpdate(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### stopMediaTo
+
+Stops sending media from Qwen Cloud (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+### webSocketId
+
+Returns the Qwen Cloud WebSocket id.
+
+```ts
+webSocketId(): string
+```

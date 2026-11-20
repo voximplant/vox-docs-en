@@ -1,0 +1,92 @@
+---
+title: VoiceDSP
+subtitle: Agentic voice DSP is a composite Voice AI integration working with underlying Silero.VAD and Pipecat.TurnDetector.
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for [Agentic.VoiceDSPEvents](/reference/voxengine/agentic/voice-dsp-events).
+Use only functions as handlers; anything except a function leads to the error and scenario
+termination when a handler is called.
+
+```ts
+addEventListener(event: Agentic.VoiceDSPEvents | T, callback: (event: Agentic._VoiceDSPEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Agentic.VoiceDSPEvents | T" required />
+
+<ParamField path="callback" type="(event: Agentic._VoiceDSPEvents[T]) => any" required />
+
+### close
+
+Closes the VoiceDSP WebSocket connection.
+
+```ts
+close(): void
+```
+
+### id
+
+Returns the VoiceDSP id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified event.
+
+```ts
+removeEventListener(event: Agentic.VoiceDSPEvents | T, callback?: (event: Agentic._VoiceDSPEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Agentic.VoiceDSPEvents | T" required />
+
+<ParamField path="callback" type="(event: Agentic._VoiceDSPEvents[T]) => any" />
+
+### reset
+
+Reset the VoiceDSP context (sends a **Reset** message over the WebSocket).
+
+```ts
+reset(): void
+```
+
+### signalAssistantTurnEnded
+
+Signals that the assistant has finished speaking. Clears the assistant-speaking state used for `Agentic.VoiceDSPEvents.TurnStarted` **interrupted** and starts the `Agentic.VoiceDSPParameters.userTurnIdleTimeout` idle timer when no user turn is in progress (mirrors Pipecat `BotStoppedSpeakingFrame`).
+
+```ts
+signalAssistantTurnEnded(): void
+```
+
+### signalAssistantTurnStarted
+
+Signals that the assistant has started speaking. Marks the assistant as speaking for `Agentic.VoiceDSPEvents.TurnStarted` **interrupted** and cancels the `Agentic.VoiceDSPParameters.userTurnIdleTimeout` idle timer (mirrors Pipecat `BotStartedSpeakingFrame`).
+
+```ts
+signalAssistantTurnStarted(): void
+```
+
+### stop
+
+Stops the VoiceDSP (sends **Stop** over the WebSocket, then closes the connection).
+
+```ts
+stop(): void
+```
+
+### webSocketId
+
+Returns the VoiceDSP WebSocket id.
+
+```ts
+webSocketId(): string
+```

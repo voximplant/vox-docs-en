@@ -1,0 +1,78 @@
+---
+title: "Example: Half-cascade with Cartesia"
+description: "This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to Cartesia Realtime TTS."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+This half-cascade example uses OpenAI Realtime for speech‑to‑text and reasoning, then sends OpenAI text responses to Cartesia Realtime TTS.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Demo video
+
+OpenAI + Cartesia demo:
+
+Video link: [OpenAI + Cartesia demo](https://www.youtube.com/watch?v=Rg97CLWatqo)
+
+<llms-ignore>
+<iframe
+  width="100%"
+  height="360"
+  src="https://www.youtube.com/embed/Rg97CLWatqo"
+  title="OpenAI + Cartesia demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowFullScreen
+/>
+</llms-ignore>
+
+## Prerequisites
+
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+- (Optional) Update the `CARTESIA_VOICE_ID` constant in the example to your preferred voice.
+- (Optional) Store your Cartesia API key in Voximplant [Secrets](/platform/storage/secret-storage) under `CARTESIA_API_KEY` if you want to use your own Cartesia account.
+
+
+## How it works
+
+- OpenAI runs `gpt-realtime-2.1` in text mode (`output_modalities: ["text"]`).
+- Caller audio is sent to OpenAI: `call.sendMediaTo(voiceAIClient)`.
+- The first completed OpenAI text response initializes the Cartesia player; later responses use `generationRequest(...)`. Cartesia streams the generated speech to the call.
+- When OpenAI detects caller speech, the scenario clears both the OpenAI and Cartesia output buffers.
+
+## Developer notes
+
+- Do not set audio format parameters in half-cascade connector requests. VoxEngine's WebSocket gateway handles media format negotiation automatically.
+- If no Cartesia API key is provided, Voximplant's default account and billing are used.
+- Custom or cloned voices are only available when using your own API key.
+- Cartesia TTS requires real text when initializing the player; do not pass `""` or `" "`.
+- Subsequent turns use `generationRequest(...)` with the same `voice`, `model_id`, and `language`.
+
+## Full VoxEngine scenario
+
+### Notes
+- The example uses the `sonic-2` model. Adjust the voice or output settings to match your telephony requirements.
+
+<Note>
+    This example runs `gpt-realtime-2.1` using the Realtime 2.x session shape, with input settings nested under `session.audio.input`.
+</Note>
+
+<Code
+  src="../../../examples/openai/voxeengine-openai-half-cascade-cartesia.js"
+  title="voxeengine-openai-half-cascade-cartesia.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [OpenAI Realtime inbound example](/voice-ai/openai/inbound)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [VoxEngine Cartesia module API reference](/reference/voxengine/cartesia)
+- [Speech synthesis guide](/voice-ai/speech/openai-tts)

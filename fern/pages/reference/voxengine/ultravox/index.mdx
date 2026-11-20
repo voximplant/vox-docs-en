@@ -1,0 +1,582 @@
+---
+title: Ultravox
+subtitle: WebSocket API client for Ultravox real-time agent scenarios.
+---
+
+Ultravox provides a VoxEngine client for connecting a call or media unit to the Ultravox WebSocket API.
+
+Use `Ultravox.createWebSocketAPIClient(...)` to create a `WebSocketAPIClient` for the current scenario.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Ultravox connector overview" icon="fa-duotone fa-circle-info" href="/voice-ai/ultravox/overview">
+    Learn how Ultravox fits into a VoxEngine call flow.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the Ultravox WebSocket API client.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): client-to-server data messages and media helpers.
+- <Icon icon="fa-duotone fa-waveform-lines" /> [Events](#events): WebSocket media bridge events.
+- <Icon icon="fa-duotone fa-bolt" /> [WebSocketAPIEvents](#websocketapievents): Ultravox WebSocket API event names and payload fields.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.Ultravox);
+```
+
+Create the client, bridge media, and listen for Ultravox WebSocket API events.
+
+## Factory functions
+
+<a id="createwebsocketapiclient" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createWebSocketAPIClient
+
+Creates a new [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance.
+
+```ts
+createWebSocketAPIClient(parameters: WebSocketAPIClientParameters): Promise<Ultravox.WebSocketAPIClient>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>WebSocketAPI<wbr />Client<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;Ultravox.WebSocketAPIClient&gt;</code> | Resolves to the [`Ultravox.WebSocketAPIClient`](#websocketapiclient) instance. |
+
+## WebSocketAPIClient
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [Ultravox.WebSocketAPIEvents](/reference/voxengine/ultravox#websocketapievents) or [Ultravox.Events](/reference/voxengine/ultravox#events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Ultravox.Events | Ultravox.WebSocketAPIEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Ultravox.<wbr />Events \| Ultravox.<wbr />WebSocketAPI<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="clearmediabuffer" />
+### <Icon icon="fa-duotone fa-function" /> clearMediaBuffer
+
+Clears the Ultravox WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>ClearMedia<wbr />Buffer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="clienttoolresult" />
+### <Icon icon="fa-duotone fa-function" /> clientToolResult
+
+Contains the result of a client tool invocation. [https://docs.ultravox.ai/apps/datamessages#clienttoolresult-and-dataconnectiontoolresult](https://docs.ultravox.ai/apps/datamessages#clienttoolresult-and-dataconnectiontoolresult)
+
+```ts
+clientToolResult(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="close" />
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the Ultravox connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="dataconnectiontoolresult" />
+### <Icon icon="fa-duotone fa-function" /> dataConnectionToolResult
+
+Contains the result of a client tool invocation. [https://docs.ultravox.ai/apps/datamessages#clienttoolresult-and-dataconnectiontoolresult](https://docs.ultravox.ai/apps/datamessages#clienttoolresult-and-dataconnectiontoolresult)
+
+```ts
+dataConnectionToolResult(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="forcedagentmessage" />
+### <Icon icon="fa-duotone fa-function" /> forcedAgentMessage
+
+Forces the agent to say a specific message or invoke tools. [https://docs.ultravox.ai/apps/datamessages#forcedagentmessage](https://docs.ultravox.ai/apps/datamessages#forcedagentmessage)
+
+```ts
+forcedAgentMessage(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="hangup" />
+### <Icon icon="fa-duotone fa-function" /> hangUp
+
+Instructs the agent to end the call with an optional farewell message. [https://docs.ultravox.ai/apps/datamessages#hangup](https://docs.ultravox.ai/apps/datamessages#hangup)
+
+```ts
+hangUp(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the WebSocketAPIClient id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="inputtextmessage" />
+### <Icon icon="fa-duotone fa-function" /> inputTextMessage
+
+<Warning title="Deprecated">
+Used to send a user message to the agent via text.
+NOTE: this method is deprecated, use **userTextMessage** instead.
+</Warning>
+
+```ts
+inputTextMessage(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [Ultravox.WebSocketAPIEvents](/reference/voxengine/ultravox#websocketapievents) or [Ultravox.Events](/reference/voxengine/ultravox#events) event.
+
+```ts
+removeEventListener(event: Ultravox.Events | Ultravox.WebSocketAPIEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Ultravox.<wbr />Events \| Ultravox.<wbr />WebSocketAPI<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmediato" />
+### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Starts sending media from the Ultravox (via WebSocket) to the media unit. Ultravox works in real time.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="setoutputmedium" />
+### <Icon icon="fa-duotone fa-function" /> setOutputMedium
+
+Sets server’s output medium to text or voice. [https://docs.ultravox.ai/apps/datamessages#setoutputmedium](https://docs.ultravox.ai/apps/datamessages#setoutputmedium)
+
+```ts
+setOutputMedium(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stopmediato" />
+### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Stops sending media from the Ultravox (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="usertextmessage" />
+### <Icon icon="fa-duotone fa-function" /> userTextMessage
+
+A user message sent via text. The message appears to the agent as if it came from the user. [https://docs.ultravox.ai/apps/datamessages#usertextmessage](https://docs.ultravox.ai/apps/datamessages#usertextmessage)
+
+```ts
+userTextMessage(parameters: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="websocketid" />
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the Ultravox WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## Events
+
+These events describe audio received through the Ultravox WebSocket media bridge.
+
+<a id="events-websocketmediastarted" />
+<a id="websocketmediastarted" />
+<a id="-websocketmediastarted" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaStarted
+
+Triggered when the audio stream sent by a third party through an Ultravox WebSocket starts playing.
+
+Event constant: `Events.WebSocketMediaStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `encoding` | `string` | ✗ | Audio encoding formats. |
+| <code>custom<wbr />Parameters</code> | <code>&#123; [key: string]: string &#125;</code> | ✗ | Custom parameters. |
+
+<a id="events-websocketmediaended" />
+<a id="websocketmediaended" />
+<a id="-websocketmediaended" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaEnded
+
+Triggered after the end of the audio stream sent by a third party through an Ultravox WebSocket (**1 second of silence**).
+
+Event constant: `Events.WebSocketMediaEnded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `mediaInfo` | <code>WebSocket<wbr />MediaInfo</code> | ✗ | Information about the audio stream that can be obtained after the stream stops or pauses (**1 second of silence**). |
+
+## WebSocketAPIEvents
+
+These events mirror server messages from the Ultravox WebSocket API. The `data` field contains the provider event payload.
+
+<AccordionGroup>
+<a id="websocketapievents-unknown" />
+<a id="unknown" />
+<a id="-unknown" />
+<Accordion title="Unknown">
+
+The unknown event.
+
+Event constant: `WebSocketAPIEvents.Unknown`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://docs.ultravox.ai/apps/datamessages) for the full payload shape. |
+</Accordion>
+<a id="websocketapievents-httpresponse" />
+<a id="httpresponse" />
+<a id="-httpresponse" />
+<Accordion title="HTTPResponse">
+
+The HTTP response event.
+
+Event constant: `WebSocketAPIEvents.HTTPResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://docs.ultravox.ai/apps/datamessages) for the full payload shape. |
+</Accordion>
+<a id="websocketapievents-state" />
+<a id="state" />
+<a id="-state" />
+<Accordion title="State">
+
+Indicates the server’s current state. [https://docs.ultravox.ai/apps/datamessages#state](https://docs.ultravox.ai/apps/datamessages#state)
+
+Event constant: `WebSocketAPIEvents.State`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://docs.ultravox.ai/apps/datamessages#state) for the full payload shape. |
+</Accordion>
+<a id="websocketapievents-transcript" />
+<a id="transcript" />
+<a id="-transcript" />
+<Accordion title="Transcript">
+
+Contains text for an utterance made during the call. [https://docs.ultravox.ai/apps/datamessages#transcript](https://docs.ultravox.ai/apps/datamessages#transcript)
+
+Event constant: `WebSocketAPIEvents.Transcript`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://docs.ultravox.ai/apps/datamessages#transcript) for the full payload shape. |
+</Accordion>
+<a id="websocketapievents-clienttoolinvocation" />
+<a id="clienttoolinvocation" />
+<a id="-clienttoolinvocation" />
+<Accordion title="ClientToolInvocation">
+
+Sent by the server to ask the client or data connection to invoke a tool with the given parameters. [https://docs.ultravox.ai/apps/datamessages#clienttoolinvocation-and-dataconnectiontoolinvocation](https://docs.ultravox.ai/apps/datamessages#clienttoolinvocation-and-dataconnectiontoolinvocation)
+
+Event constant: `WebSocketAPIEvents.ClientToolInvocation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://docs.ultravox.ai/apps/datamessages) for the full payload shape. |
+</Accordion>
+<a id="websocketapievents-dataconnectiontoolinvocation" />
+<a id="dataconnectiontoolinvocation" />
+<a id="-dataconnectiontoolinvocation" />
+<Accordion title="DataConnectionToolInvocation">
+
+Sent by the server to ask the client or data connection to invoke a tool with the given parameters. [https://docs.ultravox.ai/apps/datamessages#clienttoolinvocation-and-dataconnectiontoolinvocation](https://docs.ultravox.ai/apps/datamessages#clienttoolinvocation-and-dataconnectiontoolinvocation)
+
+Event constant: `WebSocketAPIEvents.DataConnectionToolInvocation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="websocketapievents-debug" />
+<a id="debug" />
+<a id="-debug" />
+<Accordion title="Debug">
+
+Useful for application debugging. [https://docs.ultravox.ai/apps/datamessages#debug](https://docs.ultravox.ai/apps/datamessages#debug)
+
+Event constant: `WebSocketAPIEvents.Debug`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="websocketapievents-playbackclearbuffer" />
+<a id="playbackclearbuffer" />
+<a id="-playbackclearbuffer" />
+<Accordion title="PlaybackClearBuffer">
+
+Used to clear buffered output audio. WebSocket only. [https://docs.ultravox.ai/apps/datamessages#playbackclearbuffer](https://docs.ultravox.ai/apps/datamessages#playbackclearbuffer)
+
+Event constant: `WebSocketAPIEvents.PlaybackClearBuffer`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="websocketapievents-websocketerror" />
+<a id="websocketerror" />
+<a id="-websocketerror" />
+<Accordion title="WebSocketError">
+
+The WebSocket error response event.
+
+Event constant: `WebSocketAPIEvents.WebSocketError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="websocketapievents-connectorinformation" />
+<a id="connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `WebSocketAPIEvents.ConnectorInformation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>WebSocketAPI<wbr />Client</code> | ✓ | The [Ultravox.WebSocketAPIClient](/reference/voxengine/ultravox#websocketapiclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+</AccordionGroup>

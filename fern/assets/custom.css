@@ -1,0 +1,336 @@
+:root {
+  --connector-card-border: rgba(99, 97, 103, 0.35);
+  --connector-card-bg: #ffffff;
+  --connector-card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  --connector-logo-tile-border: rgba(99, 97, 103, 0.22);
+  --connector-logo-tile-bg: #ffffff;
+  --connector-chip-bg: rgba(74, 40, 232, 0.12);
+  --accordion-button-border: rgba(99, 97, 103, 0.24);
+  --accordion-button-hover-bg: rgba(74, 40, 232, 0.08);
+}
+
+html.light {
+  --connector-card-border: rgba(99, 97, 103, 0.35);
+  --connector-card-bg: #ffffff;
+  --connector-card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  --connector-logo-tile-border: rgba(99, 97, 103, 0.22);
+  --connector-logo-tile-bg: #ffffff;
+  --connector-chip-bg: rgba(74, 40, 232, 0.12);
+  --accordion-button-border: rgba(99, 97, 103, 0.24);
+  --accordion-button-hover-bg: rgba(74, 40, 232, 0.08);
+}
+
+html.dark {
+  --connector-card-border: rgba(230, 234, 242, 0.35);
+  --connector-card-bg: #1a1a20;
+  --connector-card-hover-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+  --connector-logo-tile-border: rgba(230, 234, 242, 0.35);
+  --connector-logo-tile-bg: #ffffff;
+  --connector-chip-bg: rgba(5, 180, 147, 0.2);
+  --accordion-button-border: rgba(230, 234, 242, 0.3);
+  --accordion-button-hover-bg: rgba(5, 180, 147, 0.16);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
+  justify-content: start;
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+
+.card-grid-fluid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+
+.agent-directive {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.agent-directive:focus,
+.agent-directive:focus-within {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+[role="tabpanel"][hidden]:has(:target),
+[role="tabpanel"][data-state="inactive"]:has(:target) {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+}
+
+.voice-connector-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 230px;
+  padding: 16px;
+  border: 1px solid var(--connector-card-border);
+  border-radius: 14px;
+  background: var(--connector-card-bg);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.voice-connector-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--connector-card-hover-shadow);
+}
+
+.voice-connector-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.voice-connector-card p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.45;
+}
+
+.card-grid.compact,
+.card-grid-fluid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
+  justify-content: start;
+  gap: 12px;
+  margin: 16px 0 18px;
+}
+
+.voice-connector-card.compact {
+  min-height: 0;
+  gap: 8px;
+  padding: 12px;
+}
+
+.voice-connector-card.compact h3 {
+  font-size: 0.96rem;
+  line-height: 1.3;
+}
+
+.voice-connector-card.compact .voice-connector-logo-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.voice-connector-card.compact .voice-connector-logo {
+  width: 24px;
+  height: 24px;
+}
+
+.voice-connector-logo-wrap {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--connector-logo-tile-border);
+  background: var(--connector-logo-tile-bg);
+}
+
+.voice-connector-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.voice-connector-chip {
+  margin-top: auto;
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--connector-chip-bg);
+}
+
+.capabilities-vendor-logo-wrap {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--connector-logo-tile-border);
+  background: var(--connector-logo-tile-bg);
+}
+
+.capabilities-vendor-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+}
+
+.capabilities-vendor-cards :is(h2, h3, h4, h5, h6) {
+  min-height: 2.8em;
+}
+
+.capabilities-anchor-target {
+  position: relative;
+  top: -6px;
+}
+
+.capabilities-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 10px;
+}
+
+.capabilities-details-header h2 {
+  margin: 0;
+}
+
+.capabilities-accordion-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.capabilities-accordion-button {
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid var(--accordion-button-border);
+  background: transparent;
+  color: inherit;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 4px 8px;
+  opacity: 0.88;
+  transition: border-color 0.12s ease, opacity 0.12s ease, background-color 0.12s ease;
+}
+
+.capabilities-accordion-button:hover {
+  border-color: var(--accent);
+  background: var(--accordion-button-hover-bg);
+  opacity: 1;
+}
+
+.capabilities-accordion-button span {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 1rem;
+  line-height: 0.9;
+  transform: translateY(1px);
+}
+
+@media (max-width: 780px) {
+  .capabilities-details-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.themed-figure {
+  margin: 18px 0 22px;
+}
+
+.themed-figure img {
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+}
+
+/* Clip the visible UI inside the baked shadow of these two screenshots.
+   Source bounds are inset 11px at top/left and 19px at right/bottom. */
+.themed-figure img.dialogflow-es-speech-screenshot {
+  clip-path: inset(0.761246% 1.009028% 1.314879% 0.584174% round 18px);
+}
+
+.themed-figure img.dialogflow-es-agent-screenshot {
+  clip-path: inset(1.341463% 1.039387% 2.317073% 0.601751% round 18px);
+}
+
+.theme-dark-asset {
+  display: none !important;
+}
+
+html.dark .theme-light-asset {
+  display: none !important;
+}
+
+html.dark #fern-sidebar img[src*="/docs/assets/connectors/dialogflow-nav.svg"] {
+  background: #ffffff;
+  border: 1px solid rgba(217, 224, 234, 0.9);
+  border-radius: 5px;
+  padding: 2px;
+  box-sizing: content-box;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  object-fit: contain;
+  display: block;
+  filter: none !important;
+}
+
+html.dark .theme-dark-asset {
+  display: block !important;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 18px 0 22px;
+}
+
+.detail-card {
+  border: 1px solid var(--connector-card-border);
+  border-radius: 14px;
+  background: var(--connector-card-bg);
+  padding: 16px 18px;
+}
+
+.detail-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.detail-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+@media (max-width: 780px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid,
+  .card-grid-fluid,
+  .card-grid.compact,
+  .card-grid-fluid.compact {
+    grid-template-columns: 1fr;
+  }
+}

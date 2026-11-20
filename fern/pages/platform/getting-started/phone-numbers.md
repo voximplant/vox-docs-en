@@ -33,7 +33,7 @@ Test numbers cannot be used as outbound Caller IDs and are subject to platform l
 
 To purchase a number in the Voximplant Control Panel:
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the main navigation menu, select **Numbers**.
 3. In the top-left corner, click **Buy phone number** (or the **+** icon).
 4. Choose between **Real** and **Test** numbers.
@@ -42,7 +42,7 @@ To purchase a number in the Voximplant Control Panel:
 7. Select your preferred number from the available list and click **Buy**.
 
 <Info title="Telecom regulations and verification (KYC)">
-Depending on the country, local telecom regulations may require identity verification or proof of a local address before a number is activated. If verification is required, you will be prompted to submit the necessary documents in the control panel after purchase. If a country or city is not available for self-service purchase, contact [support]() to reserve numbers through our carrier team.
+Depending on the country, local telecom regulations may require identity verification or proof of a local address before a number is activated. If verification is required, you will be prompted to submit the necessary documents in the control panel after purchase. If a country or city is not available for self-service purchase, contact [support](/help/support) to reserve numbers through our carrier team.
 </Info>
 
 ---
@@ -57,7 +57,7 @@ To attach a number:
 2. Select the **Numbers** tab.
 3. Click **Attach number**.
 4. Select your purchased number from the list.
-5. Under **Routing rule**, choose which [routing rule]() should process incoming calls to this number (you can also bind it later under the application's **Routing** tab).
+5. Under **Routing rule**, choose which [routing rule](/platform/getting-started/create-a-routing-rule) should process incoming calls to this number (you can also bind it later under the application's **Routing** tab).
 6. Click **Attach**.
 
 Incoming calls to this phone number will now trigger the scenario assigned to your routing rule.
@@ -79,4 +79,4 @@ Incoming calls to this phone number will now trigger the scenario assigned to yo
 **A**: Phone numbers incur a one-time setup fee upon purchase and a recurring monthly subscription fee reserved on the purchase anniversary date. For detailed billing and cancellation rules, refer to [Phone number subscriptions]().
 
 **Q**: **Can I use my existing phone numbers with Voximplant?**  
-**A**: Yes. You can port existing phone numbers to Voximplant or connect your existing telecom carrier and PBX via [SIP integration]().
+**A**: Yes. You can port existing phone numbers to Voximplant or connect your existing telecom carrier and PBX via [SIP integration](/platform/telephony/sip-calls-and-registrations).

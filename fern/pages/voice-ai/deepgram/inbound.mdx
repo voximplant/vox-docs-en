@@ -1,0 +1,130 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Deepgram API key in Voximplant [Secrets](/platform/storage/secret-storage) under `DEEPGRAM_API_KEY`.
+
+## Session setup
+
+The Deepgram Voice Agent session is configured via a `settingsOptions` object that’s passed directly to `Deepgram.createVoiceAgentClient(...)`.
+
+In the full example, see `SETTINGS_OPTIONS.agent`:
+
+- `listen`: speech-to-text provider (for example `type: "deepgram"`)
+- `think`: LLM provider + prompt
+- `speak`: text-to-speech provider
+
+<Info title="Don’t set audio settings">
+  When using the VoxEngine connector, do not include `audio` settings in the Deepgram settings object — audio is handled by the connector for optimal telephony quality.
+</Info>
+
+## Connect call audio
+
+Once you’ve created the `Deepgram.VoiceAgentClient`, you need to connect audio both ways between the phone call and the agent.
+
+In the example, this is done with:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAgentClient);
+```
+
+This bridges media between a `Call` and a `Deepgram.VoiceAgentClient`. You can also do the same thing explicitly, one direction at a time, using `sendMediaTo`:
+
+```js title="Equivalent using sendMediaTo"
+call.sendMediaTo(voiceAgentClient);
+voiceAgentClient.sendMediaTo(call);
+```
+
+## Mid-session updates
+
+After the client is created (see `voiceAgentClient` in the scenario), you can update the agent mid-call without reconnecting using `Deepgram.VoiceAgentClient` methods.
+
+These methods are documented in the Voximplant reference:
+
+- [Deepgram VoiceAgentClient API reference](/reference/voxengine/deepgram#voiceagentclient)
+
+```js title="Mid-session updates"
+// Update the agent’s system prompt mid-call (sendUpdatePrompt)
+voiceAgentClient.sendUpdatePrompt({
+  type: "UpdatePrompt",
+  prompt: "You are now a helpful travel assistant. Keep responses to 1 sentence.",
+});
+
+// Change the TTS voice/model mid-call (sendUpdateSpeak)
+voiceAgentClient.sendUpdateSpeak({
+  type: "UpdateSpeak",
+  speak: {
+    provider: {
+      type: "deepgram",
+      model: "aura-2-luna-en",
+    },
+  },
+});
+
+// Inject text messages for deterministic flows (sendInjectUserMessage / sendInjectAgentMessage)
+voiceAgentClient.sendInjectUserMessage({
+  type: "InjectUserMessage",
+  content: "Before we continue, ask the caller for their order number.",
+});
+
+voiceAgentClient.sendInjectAgentMessage({
+  type: "InjectAgentMessage",
+  message: "Sure — what is your order number?",
+});
+```
+
+## Barge-in
+
+To keep the conversation interruption-friendly, the example listens for `Deepgram.VoiceAgentEvents.UserStartedSpeaking` and clears the media buffer so any in-progress TTS audio is canceled when the caller starts talking:
+
+```js title="Barge-in"
+voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.UserStartedSpeaking, () => {
+  voiceAgentClient.clearMediaBuffer();
+});
+```
+
+## Events
+
+In the scenario, a focused handler captures the transcript via `Deepgram.VoiceAgentEvents.ConversationText`, and a second handler logs a set of lifecycle/debug events:
+
+```js title="Events (example from the scenario)"
+voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.ConversationText, (event) => {
+  const { role, text } = event?.data?.payload || {};
+  if (role && text) Logger.write(`${role}: ${text}`);
+});
+```
+
+The client supports both **Deepgram Voice Agent events** and **Deepgram WebSocket media events** (see `addEventListener` / `removeEventListener` in the VoiceAgentClient reference):
+
+- `Deepgram.VoiceAgentEvents`: `Welcome`, `SettingsApplied`, `AgentThinking`, `ConversationText`, `UserStartedSpeaking`, `AgentAudioDone`, `FunctionCallRequest`, `FunctionCallResponse`, `PromptUpdated`, `SpeakUpdated`, `History`, `HTTPResponse`, `ConnectorInformation`, `Warning`, `Error`, `WebSocketError`, `Unknown`
+- `Deepgram.Events`: `WebSocketMediaStarted`, `WebSocketMediaEnded`
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/deepgram).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/deepgram/voxeengine-deepgram-answer-incoming-call.js"
+  title="voxeengine-deepgram-answer-incoming-call.js"
+  language="javascript"
+  maxLines={0}
+/>

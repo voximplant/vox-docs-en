@@ -1,0 +1,118 @@
+---
+title: "Example: Using Vertex AI"
+description: "This example answers an inbound Voximplant call and connects Gemini Live API through Vertex AI."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and connects Gemini Live API through Vertex AI.
+It reads Vertex service account credentials from Voximplant Secrets through a shared credentials scenario.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Vertex parameters in Voximplant `ApplicationStorage`:
+  - `GCP_PROJECT_ID`
+  - `GCP_REGION`
+- Create a `GOOGLE_CREDENTIALS` [Secret](/platform/storage/secret-storage) containing the complete service account JSON as a string.
+
+For full Vertex setup details, use the rest of this guide.
+To create a service account key (JSON), see: https://docs.cloud.google.com/iam/docs/keys-create-delete
+
+## Credentials scenario (separate route entry)
+
+Include the credentials scenario **before** the main scenario in your routing rule. It reads the JSON string from `GOOGLE_CREDENTIALS` and stops immediately if the Secret is missing.
+
+Routing rule scenario order:
+
+```
+gemini-vertex-credentials → gemini-using-vertex-ai
+```
+
+<Info title="Why a separate scenario?">
+  VoxEngine shares global scope across scenarios in the same routing rule, so the credentials scenario sets `GEMINI_VERTEX_CREDENTIALS` for the main scenario. Keep non-secret project and region values in ApplicationStorage.
+</Info>
+
+Example credentials scenario:
+
+<Code
+  src="../../../examples/gemini-live/voxeengine-gemini-vertex-credentials.js"
+  title="voxeengine-gemini-vertex-credentials.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+<Info title="JSON string">
+  `VoxEngine.getSecretValue("GOOGLE_CREDENTIALS")` returns the JSON string expected by the connector. Pass it directly as `credentials`.
+</Info>
+
+## Session setup
+
+The Gemini Live API session is configured via `connectConfig`, passed into `Gemini.createLiveAPIClient(...)`.
+
+In the full scenario, see `GEMINI_CONNECT_CONFIG`:
+
+- `responseModalities: ["AUDIO"]` asks Gemini to speak back in real time.
+- `apiVersion: "v1alpha"` matches the Vertex Live API endpoint.
+- `speechConfig` selects a prebuilt voice.
+- `systemInstruction` defines the assistant behavior.
+- `tools` and `toolConfig` enable function calling.
+
+The Vertex-specific parameters are passed directly to `Gemini.createLiveAPIClient(...)`:
+
+- `backend: Gemini.Backend.VERTEX_AI`
+- `project` → `GCP_PROJECT_ID`
+- `location` → `GCP_REGION`
+- `credentials` → the JSON string set by the credentials scenario
+
+## Connect call audio
+
+After `Gemini.LiveAPIEvents.SetupComplete`, bridge audio between the call and Gemini:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, geminiLiveAPIClient);
+```
+
+The same handler sends a starter message to trigger the greeting:
+
+```js title="Trigger the greeting"
+geminiLiveAPIClient.sendClientContent({
+  turns: [{ role: "user", parts: [{ text: "Say hello and ask how you can help." }] }],
+  turnComplete: true,
+});
+```
+
+## Events
+
+The scenario logs Gemini events for debugging:
+
+- `Gemini.LiveAPIEvents`: `SetupComplete`, `ServerContent`, `ToolCall`, `ToolCallCancellation`, `ConnectorInformation`, `Unknown`
+- `Gemini.Events`: `WebSocketMediaStarted`, `WebSocketMediaEnded`
+
+## Notes
+
+- This example uses the Vertex AI backend (`Gemini.Backend.VERTEX_AI`).
+- The credentials scenario only sets `GEMINI_VERTEX_CREDENTIALS` in the shared global scope and does not start any calls.
+
+<Warning title="Gemini 3.8 Live on Vertex AI">
+  `gemini-3.8-live` is not available on Vertex AI unless the Google Cloud project has Gemini Enterprise early access. This example keeps the Vertex-supported model `gemini-live-2.5-flash-preview-native-audio-09-17`. Developer API examples use `gemini-3.8-live`.
+</Warning>
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/gemini-live/voxeengine-gemini-using-vertex-ai.js"
+  title="voxeengine-gemini-using-vertex-ai.js"
+  language="javascript"
+  maxLines={0}
+/>

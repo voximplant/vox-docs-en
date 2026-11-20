@@ -1,0 +1,41 @@
+---
+title: WebSocketEvents
+subtitle: 7 values
+---
+
+## Values
+
+<a id="open" />
+<ParamField path="OPEN" type="'WebSocket.Open'">
+Triggered when the WebSocket connection is opened. `WebSocket.onopen` is called right before any other handlers.
+</ParamField>
+
+<a id="close" />
+<ParamField path="CLOSE" type="'WebSocket.Close'">
+Triggered when the WebSocket connection is closed. `WebSocket.onclose` is called right before any other handlers.
+</ParamField>
+
+<a id="message" />
+<ParamField path="MESSAGE" type="'WebSocket.Message'">
+Triggered when a message is received by a target object. `WebSocket.onmessage` is called right before any other handlers.
+</ParamField>
+
+<a id="error" />
+<ParamField path="ERROR" type="'WebSocket.Error'">
+Triggers when an error occurs during the WebSocket connection. `WebSocket.onerror` is called right before any other handlers.
+</ParamField>
+
+<a id="created" />
+<ParamField path="CREATED" type="'WebSocket.Created'">
+Triggered when the WebSocket connection is created. `WebSocket.oncreated` is called right before any other handlers.
+</ParamField>
+
+<a id="mediastarted" />
+<ParamField path="MEDIA_STARTED" type="'WebSocket.MediaEventStarted'">
+Triggered when the audio stream sent by a third party through a WebSocket starts playing.
+</ParamField>
+
+<a id="mediaended" />
+<ParamField path="MEDIA_ENDED" type="'WebSocket.MediaEventEnded'">
+Triggered after the end of the audio stream sent by a third party through a WebSocket (**1 second of silence**).
+</ParamField>

@@ -1,0 +1,46 @@
+---
+title: VoiceDSPEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.Agentic); ```'
+---
+
+## Values
+
+<a id="turnstarted" />
+<ParamField path="TurnStarted" type="'Agentic.VoiceDSP.TurnStarted'">
+Triggered when the user's turn starts (mirrors Pipecat `on_user_turn_started`). Only fires when `Agentic.VoiceDSPParameters.startStrategies` are configured via `Agentic.createVoiceDSP`.
+</ParamField>
+
+<a id="turninferencetriggered" />
+<ParamField path="TurnInferenceTriggered" type="'Agentic.VoiceDSP.TurnInferenceTriggered'">
+Triggered when a stop strategy has enough signal to start LLM inference for the current turn (mirrors Pipecat `on_user_turn_inference_triggered`). Fires before `Agentic.VoiceDSPEvents.TurnStopped` when `Agentic.VoiceDSPParameters.asr` is configured and the turn analyzer completes before the final transcript arrives. `Agentic.VoiceDSPParameters.asrGraceTimeout` starts from this event.
+</ParamField>
+
+<a id="turnstopped" />
+<ParamField path="TurnStopped" type="'Agentic.VoiceDSP.TurnStopped'">
+Triggered when the user's turn ends with the accumulated transcript (mirrors Pipecat `on_user_turn_stopped`).
+</ParamField>
+
+<a id="turnstoptimeout" />
+<ParamField path="TurnStopTimeout" type="'Agentic.VoiceDSP.TurnStopTimeout'">
+Triggered before `Agentic.VoiceDSPEvents.TurnStopped` when a turn stop timeout fires. **reason** is **stop_secs** when the turn analyzer classified the turn as incomplete and silence exceeded `Agentic.TurnDetectorParameters.stopSecs`, or **controller_timeout** when no stop strategy finalized the turn within `Agentic.VoiceDSPParameters.userTurnStopTimeout`.
+</ParamField>
+
+<a id="turnidle" />
+<ParamField path="TurnIdle" type="'Agentic.VoiceDSP.TurnIdle'">
+Triggered when the user has been idle for `Agentic.VoiceDSPParameters.userTurnIdleTimeout` after `Agentic.VoiceDSP.signalAssistantTurnEnded` (mirrors Pipecat `on_user_turn_idle`). Can fire multiple times if the scenario calls `Agentic.VoiceDSP.signalAssistantTurnEnded` again after handling each idle event.
+</ParamField>
+
+<a id="reset" />
+<ParamField path="Reset" type="'Agentic.VoiceDSP.Reset'">
+The [Agentic.VoiceDSP](/reference/voxengine/agentic/voice-dsp) is reset.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'Agentic.VoiceDSP.Error'">
+The error response event.
+</ParamField>
+
+<a id="connectorinformation" />
+<ParamField path="ConnectorInformation" type="'Agentic.VoiceDSP.ConnectorInformation'">
+Contains Voice AI integration session information.
+</ParamField>

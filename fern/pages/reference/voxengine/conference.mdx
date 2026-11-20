@@ -1,0 +1,133 @@
+---
+title: Conference
+subtitle: 'Represents audio or video conference. Add the following line to your scenario code to use the class: ``` require(Modules.Conference); ```'
+---
+
+## Methods
+
+### add
+
+Creates a new [Endpoint](/reference/voxengine/endpoint) instance and adds it to the specified conference. ***IMPORTANT!*** You can only use this function for a conference with the “video conference” option checked in the routing rule.
+Otherwise, you receive the `ConferenceEvents.ConferenceError` event with code **102**. The maximum number of endpoints is **100**.
+
+```ts
+add(parameters: EndpointParameters): Endpoint
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="EndpointParameters" required />
+
+<ParamField path="parameters.receiveParameters" type="ReceiveParameters">
+_optional_
+
+Optional. Endpoints and their streams (audio and/or video) to receive. These settings apply to the target endpoint right after adding it to a conference.
+</ParamField>
+
+<ParamField path="parameters.receiveParameters[remoteParticipantId]" type="ParticipantReceiveParameters">
+_index signature_
+
+Substitute one of the available keys from the description.
+</ParamField>
+
+<ParamField path="parameters.receiveParameters[remoteParticipantId].video" type="Array<'default' | string>">
+_optional_
+
+Optional. Video streams to receive.
+</ParamField>
+
+<ParamField path="parameters.receiveParameters[remoteParticipantId].audio" type="Array<'default' | string>">
+_optional_
+
+Optional. Audio streams to receive.
+</ParamField>
+
+### addEventListener
+
+Adds a handler for the specified [ConferenceEvents](/reference/voxengine/conference-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: ConferenceEvents | T, callback: (event: _ConferenceEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ConferenceEvents | T" required />
+
+<ParamField path="callback" type="(event: _ConferenceEvents[T]) => any" required />
+
+### get
+
+Gets the endpoint by the id.
+
+```ts
+get(id: string): Endpoint
+```
+
+**Parameters**
+
+<ParamField path="id" type="string" required />
+
+### getList
+
+Gets the endpoint list for current conference.
+
+```ts
+getList(): Endpoint[]
+```
+
+### id
+
+Returns the conference's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [ConferenceEvents](/reference/voxengine/conference-events) event.
+
+```ts
+removeEventListener(event: ConferenceEvents | T, callback?: (event: _ConferenceEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="ConferenceEvents | T" required />
+
+<ParamField path="callback" type="(event: _ConferenceEvents[T]) => any" />
+
+### sendMediaTo
+
+Starts sending media (voice and video) from the conference to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stop
+
+Stops the conference. Triggers the `ConferenceEvents.Stopped` event.
+
+```ts
+stop(): void
+```
+
+### stopMediaTo
+
+Stops sending media (voice and video) from the conference to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />

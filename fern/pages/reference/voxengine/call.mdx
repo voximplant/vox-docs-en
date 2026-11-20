@@ -1,0 +1,1731 @@
+---
+title: Call
+subtitle: Represents an audio or video call.
+---
+
+The `Call` object represents one audio or video call leg in a VoxEngine scenario. It is typically received from call events or returned by dialing APIs, then methods such as `answer`, `sendMediaTo`, `record`, and `addEventListener` are called on that call instance. Related event names, event payloads, and parameter objects are documented on this page because they describe the same call lifecycle.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Calls and sessions" icon="fa-duotone fa-phone-volume" href="/platform/telephony/calls">
+    Understand call legs, sessions, and media units in VoxEngine.
+  </Card>
+  <Card title="Inbound calls" icon="fa-duotone fa-phone-arrow-down-left" href="/voice-ai/inbound-vs-outbound/inbound-calls">
+    Start from the standard inbound call pattern.
+  </Card>
+  <Card title="Outbound calls" icon="fa-duotone fa-phone-arrow-up-right" href="/voice-ai/inbound-vs-outbound/outbound-calls">
+    Start from the standard outbound call pattern.
+  </Card>
+  <Card title="SIP calling" icon="fa-duotone fa-signal-stream" href="/voice-ai/network-options/sip">
+    Route calls through SIP trunks, SIP users, and SIP registrations.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): answer, reject, bridge media, record, play audio, and control call state.
+- <Icon icon="fa-duotone fa-bolt" /> [CallEvents](#callevents): event names and callback payload fields for the call lifecycle.
+- <Icon icon="fa-duotone fa-sliders" /> [Parameter types](#parameter-types): option objects used by Call methods.
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [CallEvents](/reference/voxengine/call#callevents) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: CallEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>CallEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="answer" />
+### <Icon icon="fa-duotone fa-function" /> answer
+
+Answers the incoming call. Use it only for non-P2P call legs connection. Remember that you can use the `Call.startEarlyMedia` method before answering a call.
+
+```ts
+answer(extraHeaders?: { [header: string]: string }, parameters?: CallAnswerParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+| `parameters` | <code>CallAnswer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="answerdirect" />
+### <Icon icon="fa-duotone fa-function" /> answerDirect
+
+Answer the incoming call in the peer-to-peer mode. Use it only for P2P call legs connection.
+
+```ts
+answerDirect(peerCall: Call, extraHeaders?: { [header: string]: string }, parameters?: CallAnswerParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `peerCall` | `Call` | ✓ |  |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+| `parameters` | <code>CallAnswer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="callerid" />
+### <Icon icon="fa-duotone fa-function" /> callerid
+
+Returns the callerID of the caller, which is displayed to the callee. Normally it is some phone number that can be used for callback. IMPORTANT: test numbers rented from Voximplant cannot be used as CallerIDs, the values can be only real numbers.
+
+```ts
+callerid(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="clienttype" />
+### <Icon icon="fa-duotone fa-function" /> clientType
+
+Returns a type of the client. The possible values are: 'pstn', 'sip', 'user', 'wab'.
+
+```ts
+clientType(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="customdata" />
+### <Icon icon="fa-duotone fa-function" /> customData
+
+Sets or gets a custom string associated with the particular call (the Call object). The **customData** value could be sent from WEB/iOS/Android SDKs, and then it becomes the **customData** value in the [Call](/reference/voxengine/call) instance. Note that if you receive a value from an SDK, you can always replace it manually.
+SDKs can pass customData in two ways:
+1) when SDK calls the Voximplant cloud
+2) when SDK answers the call from the Voximplant cloud. See the syntax and details in the corresponding references: [WEB SDK call()](/reference/web-sdk/overview) / [WEB SDK answer()](/reference/web-sdk/overview) / [iOS call:settings:](/reference/i-os-and-mac-os-sdk/overview) / [iOS answerWithSettings](/reference/i-os-and-mac-os-sdk/overview) / [Android call()](/reference/android-sdk/overview) / [Android answer()](/reference/android-sdk/overview)
+
+```ts
+customData(customData?: string): string
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `customData` | `string` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="decline" />
+### <Icon icon="fa-duotone fa-function" /> decline
+
+<Warning title="Deprecated">
+Use `Call.reject` instead
+</Warning>
+
+Rejects the incoming call.
+
+```ts
+decline(code: number, extraHeaders?: { [header: string]: string }): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `code` | `number` | ✓ |  |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="disablebeepdetection" />
+### <Icon icon="fa-duotone fa-function" /> disableBeepDetection
+
+Disables beep detection in a call.
+
+```ts
+disableBeepDetection(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="displayname" />
+### <Icon icon="fa-duotone fa-function" /> displayName
+
+Returns the name of the caller, which is displayed to the callee. Normally it is a human-readable version of `Call.callerid`, e.g. a person's name.
+
+```ts
+displayName(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="enablebeepdetection" />
+### <Icon icon="fa-duotone fa-function" /> enableBeepDetection
+
+Enables beep detection in a call. The beep detection is used to detect beeps in the call audio stream.
+
+```ts
+enableBeepDetection(parameters: CallEnableBeepDetectionParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>CallEnable<wbr />Beep<wbr />Detection<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="handleblindtransfer" />
+### <Icon icon="fa-duotone fa-function" /> handleBlindTransfer
+
+Whether to enable blind transfers. When enabled, the `CallEvents.BlindTransferRequested` event is triggered to request for the third call leg within an existing session and notify the transfer initiator of the result.
+
+```ts
+handleBlindTransfer(handle: boolean): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `handle` | `boolean` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="handlemicstatus" />
+### <Icon icon="fa-duotone fa-function" /> handleMicStatus
+
+Whether to enable detection of microphone status in the call. If detection is enabled, the `CallEvents.MicStatusChange` event is triggered at each status' change.
+
+```ts
+handleMicStatus(handle: boolean): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `handle` | `boolean` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="handletones" />
+### <Icon icon="fa-duotone fa-function" /> handleTones
+
+Changes DTMF processing mode (in-band DTMF, RFC 2833 DTMF and DTMF over SIP INFO) telephony signals. If true, each received DTMF signal triggers the `CallEvents.ToneReceived` and removes from audio stream.
+
+```ts
+handleTones(doHandle: boolean, supportedDtmfTypes?: DTMFType): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `doHandle` | `boolean` | ✓ |  |
+| <code>supported<wbr />DtmfTypes</code> | `DTMFType` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="hangup" />
+### <Icon icon="fa-duotone fa-function" /> hangup
+
+Attempts finishing the current call. Triggers one of the following events:
+1. `CallEvents.Disconnected` if the call is active before hangup.
+2. `CallEvents.Failed` if it is an outgoing call that is not connected previously.
+If there are no other active calls and/or SmartQueue requests in the call session, the `AppEvents.Terminating` and `AppEvents.Terminated` events are triggered in 60 seconds (see the [session limits](/help/troubleshooting/limits-and-restrictions) for details).
+
+```ts
+hangup(extraHeaders?: { [header: string]: string }): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the call's id. Each call in a JavaScript session has its own unique id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="incoming" />
+### <Icon icon="fa-duotone fa-function" /> incoming
+
+Whether the call is incoming.
+
+```ts
+incoming(): boolean
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `boolean` | The requested `boolean` value. |
+
+<a id="monitormediastatistics" />
+### <Icon icon="fa-duotone fa-function" /> monitorMediaStatistics
+
+Enables the retrieval of multimedia statistics during a call. When enabled, the `CallEvents.MediaStatisticsReceived` event is triggered and retrieves multimedia statistics during a call.
+
+```ts
+monitorMediaStatistics(parameters: MonitorMediaStatisticsParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>MonitorMedia<wbr />Statistics<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="notifyblindtransferfailed" />
+### <Icon icon="fa-duotone fa-function" /> notifyBlindTransferFailed
+
+Sends a notification about a failed call transfer with an error code and reason.
+
+```ts
+notifyBlindTransferFailed(code: number, reason: string): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `code` | `number` | ✓ |  |
+| `reason` | `string` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="notifyblindtransfersuccess" />
+### <Icon icon="fa-duotone fa-function" /> notifyBlindTransferSuccess
+
+Sends a notification of a successful call transfer with the **200 OK** message.
+
+```ts
+notifyBlindTransferSuccess(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="number" />
+### <Icon icon="fa-duotone fa-function" /> number
+
+Returns a dialed number of the incoming or outgoing call.
+
+```ts
+number(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="playprogresstone" />
+### <Icon icon="fa-duotone fa-function" /> playProgressTone
+
+Provides country-specific dial tones. The method sends a command to the Voximplant cloud to start playing dial tones in the call. The dial tones fully depend on the Voximplant cloud. Note that in order to work properly in a call that is not connected yet, you need to call the `Call.startEarlyMedia` method before using this function. IMPORTANT: each call object can send media to any number of other calls (media units), but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+playProgressTone(country: string): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `country` | `string` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="record" />
+### <Icon icon="fa-duotone fa-function" /> record
+
+Starts recording the incoming and outgoing audio for this call.
+This method triggers the `CallEvents.RecordStarted` event.
+The default quality is **8kHz / 32kbps**; the format is **mp3**.
+
+```ts
+record(parameters: CallRecordParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>CallRecord<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="reject" />
+### <Icon icon="fa-duotone fa-function" /> reject
+
+Rejects the incoming call. First it triggers the `CallEvents.Disconnected` event immediately. The `AppEvents.Terminating` and `AppEvents.Terminated` events are triggered in 60 seconds.
+
+```ts
+reject(code: number, extraHeaders?: { [header: string]: string }): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `code` | `number` | ✓ |  |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [CallEvents](/reference/voxengine/call#callevents) event.
+
+```ts
+removeEventListener(event: CallEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>CallEvents \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="ring" />
+### <Icon icon="fa-duotone fa-function" /> ring
+
+Plays dial tones for the incoming call. The method sends a low-level command to the endpoint device to start playing dial tones for the call. So the dial tones depend on endpoint device's behavior rather than on the Voximplant cloud. IMPORTANT: each call object can send media to any number of other calls (media units), but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+ring(extraHeaders?: { [header: string]: string }): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="say" />
+### <Icon icon="fa-duotone fa-function" /> say
+
+Say some text to the `CallEvents.Connected` call. If text length exceeds 1500 characters the `PlayerEvents.PlaybackFinished` event is triggered with error description.
+IMPORTANT: each call object can send media to any number of other calls (media units), but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+say(text: string, parameters?: CallSayParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `text` | `string` | ✓ |  |
+| `parameters` | <code>CallSay<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="senddigits" />
+### <Icon icon="fa-duotone fa-function" /> sendDigits
+
+Sends DTMF digits to the remote peer.
+
+```ts
+sendDigits(digits: string): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `digits` | `string` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendinfo" />
+### <Icon icon="fa-duotone fa-function" /> sendInfo
+
+Sends info (SIP INFO) message to the call.
+
+```ts
+sendInfo(mimeType: string, body: string, headers?: { [header: string]: string }): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mimeType` | `string` | ✓ |  |
+| `body` | `string` | ✓ |  |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmediato" />
+### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Starts sending media (voice and video) from the call to the media unit. The target call has to be `CallEvents.Connected` earlier. IMPORTANT: each call object can send media to any number of the media units, but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmessage" />
+### <Icon icon="fa-duotone fa-function" /> sendMessage
+
+Sends a text message to the call.
+
+```ts
+sendMessage(text: string): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `text` | `string` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="startearlymedia" />
+### <Icon icon="fa-duotone fa-function" /> startEarlyMedia
+
+Informs the call endpoint that early media is sent before accepting the call. It allows playing voicemail prompt or music before establishing the connection. It does not allow to listen to call endpoint. Note that unanswered call can be in "early media" state only for 60 seconds, see the [session limits](/help/troubleshooting/limits-and-restrictions) for details.
+
+```ts
+startEarlyMedia(extraHeaders?: { [header: string]: string }, scheme?: Scheme, maxVideoBitrate?: number, audioLevelExtension?: boolean, conferenceCall?: boolean, disableDtxForAudio?: boolean): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `extraHeaders` | <code>&#123; [header: string]: string &#125;</code> | ✗ |  |
+| `scheme` | `Scheme` | ✗ |  |
+| <code>maxVideo<wbr />Bitrate</code> | `number` | ✗ |  |
+| <code>audioLevel<wbr />Extension</code> | `boolean` | ✗ |  |
+| <code>conference<wbr />Call</code> | `boolean` | ✗ |  |
+| <code>disableDtx<wbr />ForAudio</code> | `boolean` | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="startplayback" />
+### <Icon icon="fa-duotone fa-function" /> startPlayback
+
+Starts to play an audio file to the answered call. You can stop playback manually via the `Call.stopPlayback` method. You can attach media streams later via the `Call.sendMediaTo` method etc. IMPORTANT: each call object can send media to any number of other calls (media units), but can receive only one audio stream. A new incoming stream always replaces the previous one.
+
+```ts
+startPlayback(url: string, parameters?: StartPlaybackParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `url` | `string` | ✓ |  |
+| `parameters` | <code>Start<wbr />Playback<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="state" />
+### <Icon icon="fa-duotone fa-function" /> state
+
+Returns the current state of the call. Possible values are: **TERMINATED** | **CONNECTED** | **PROGRESSING** | **ALERTING**.
+
+```ts
+state(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="stopmediato" />
+### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Stops sending media (voice and video) from the call to media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stopplayback" />
+### <Icon icon="fa-duotone fa-function" /> stopPlayback
+
+Stops audio playback started before via the `Call.startPlayback` method.
+
+```ts
+stopPlayback(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="tostring" />
+### <Icon icon="fa-duotone fa-function" /> toString
+
+Returns the human-readable description of the call's status.
+
+```ts
+toString(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="transferto" />
+### <Icon icon="fa-duotone fa-function" /> transferTo
+
+Transfers a SIP call to a 3rd party provider which supports the REFER command. If the transfer is successful, Voximplant disconnects from handling this call and the `CallEvents.TransferComplete` event is triggered. Otherwise, the `CallEvents.TransferFailed` event is triggered.
+
+```ts
+transferTo(parameters: TransferToParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>TransferTo<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="vad" />
+### <Icon icon="fa-duotone fa-function" /> vad
+
+Returns VAD (Voice Activity Detection) status. The including of the ASR also activates VAD so in that case vad() returns true.
+
+```ts
+vad(): boolean
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `boolean` | The requested `boolean` value. |
+
+## CallEvents
+
+Subscribe with `Call.addEventListener`. Each event callback receives an object with the fields documented below.
+
+<AccordionGroup>
+<a id="callevents-audiostarted" />
+<a id="audiostarted" />
+<a id="-audiostarted" />
+<Accordion title="AudioStarted">
+
+Triggers after remote peer answered the call or set the call into the `Call.startEarlyMedia` state. Note that event is not triggered in P2P mode.
+
+This event occurs after receiving the 183 Session Progress SIP message regardless of receiving actual media packets.
+
+Event constant: `CallEvents.AudioStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `scheme` | `Scheme` | ✗ | Internal information about codecs. Pass the value as-is to `Call.startEarlyMedia`. Do not inspect or modify the object. Reconstructing or mutating the payload can break codec negotiation. |
+</Accordion>
+<a id="callevents-audioidentificationstarted" />
+<a id="audioidentificationstarted" />
+<a id="-audioidentificationstarted" />
+<Accordion title="AudioIdentificationStarted">
+
+Triggers when voicemail detection system connects to the VMD/AMD server and starts detecting voicemail.
+
+Event constant: `CallEvents.AudioIdentificationStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-audioidentificationresult" />
+<a id="audioidentificationresult" />
+<a id="-audioidentificationresult" />
+<Accordion title="AudioIdentificationResult">
+
+Triggers when voicemail detection ends detecting voicemail and the audio identification result is received.
+
+Event constant: `CallEvents.AudioIdentificationResult`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `audioType` | <code>AMD.<wbr />ResultClass</code> | ✓ |  |
+| `audioSubType` | <code>AMD.<wbr />Result<wbr />Subtype</code> | ✓ |  |
+| `confidence` | `number` | ✓ |  |
+</Accordion>
+<a id="callevents-audioidentificationstopped" />
+<a id="audioidentificationstopped" />
+<a id="-audioidentificationstopped" />
+<Accordion title="AudioIdentificationStopped">
+
+Triggers when voicemail detection stops detecting voicemail.
+
+Event constant: `CallEvents.AudioIdentificationStopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-audioidentificationerror" />
+<a id="audioidentificationerror" />
+<a id="-audioidentificationerror" />
+<Accordion title="AudioIdentificationError">
+
+Triggers when voicemail detection occurs an error.
+
+Event constant: `CallEvents.AudioIdentificationError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-blindtransferrequested" />
+<a id="blindtransferrequested" />
+<a id="-blindtransferrequested" />
+<Accordion title="BlindTransferRequested">
+
+Triggered when blind transfers are enabled by `Call.handleBlindTransfer`.
+
+Event constant: `CallEvents.BlindTransferRequested`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `transferTo` | `string` | ✓ | Username |
+</Accordion>
+<a id="callevents-connected" />
+<a id="connected" />
+<a id="-connected" />
+<Accordion title="Connected">
+
+Triggers after an incoming/outgoing call is connected. For incoming call, it happens after the `Call.answer` is called. For outgoing call, it happens when a remote peer answers the call.
+
+Event constant: `CallEvents.Connected`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `customData` | `string` | ✗ | Custom data that was passed from the client with call accept command |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `scheme` | `Scheme` | ✓ | Internal information about codecs. Pass the value as-is to `Call.answer`, `Call.answerDirect`, or `Call.startEarlyMedia`. Do not inspect or modify the object. Reconstructing or mutating the payload can break codec negotiation. |
+</Accordion>
+<a id="callevents-forwarding" />
+<a id="forwarding" />
+<a id="-forwarding" />
+<Accordion title="Forwarding">
+
+Triggers on an incoming/outgoing call forwarding.
+
+Event constant: `CallEvents.Forwarding`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-disconnected" />
+<a id="disconnected" />
+<a id="-disconnected" />
+<Accordion title="Disconnected">
+
+Triggered when a call is terminated.
+
+Most frequent status codes (returned when a call is terminated before being answered):
+
+- `408`: Call is not answered within 60 seconds
+- `603`: Call is rejected
+- `486`: Destination number is busy
+- `487`: Request terminated
+
+You can find the complete list of rfc3261 response codes [on Wikipedia](https://en.wikipedia.org/wiki/List_of_SIP_response_codes).
+
+Note that this event does not mean the end of the JavaScript session.
+The session without calls and/or ACD requests are automatically terminated after some time (see the [session limits](/help/troubleshooting/limits-and-restrictions) for details).
+It is a good idea to explicitly terminate the session with [VoxEngine.terminate](/reference/voxengine/voxengine#terminate) after it is no longer needed.
+
+Event constant: `CallEvents.Disconnected`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `internalCode` | `number` | ✓ | Status code of the call (i.e., 486) |
+| `reason` | `string` | ✓ | Reason of the call failure |
+| `duration` | `number` | ✓ | Total call duration in seconds |
+| `cost` | `number` | ✓ | Call cost in account currency |
+| `direction` | `string` | ✓ | Call direction type according to billing |
+</Accordion>
+<a id="callevents-failed" />
+<a id="failed" />
+<a id="-failed" />
+<Accordion title="Failed">
+
+Triggered when an outgoing call is terminated before connection.
+Most frequent status codes:
+- `486`: Destination number is busy
+- `487`: Request terminated
+- `404`: Invalid number
+- `480`: Destination number is unavailable
+- `402`: Insufficient funds
+- `603`: Call was rejected
+- `408`: Call was not answered within 60 seconds
+
+Event constant: `CallEvents.Failed`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `code` | `number` | ✓ | Status code of the call (i.e., 486) |
+| `reason` | `string` | ✓ | Status message of call failure |
+</Accordion>
+<a id="callevents-inforeceived" />
+<a id="inforeceived" />
+<a id="-inforeceived" />
+<Accordion title="InfoReceived">
+
+Triggered when an INFO message is received.
+
+Event constant: `CallEvents.InfoReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `mimeType` | `string` | ✓ | MIME type of INFO message |
+| `body` | `string` | ✓ | Content of the message |
+</Accordion>
+<a id="callevents-messagereceived" />
+<a id="messagereceived" />
+<a id="-messagereceived" />
+<Accordion title="MessageReceived">
+
+Triggered when a text message is received.
+
+Event constant: `CallEvents.MessageReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `text` | `string` | ✓ | Content of the message |
+</Accordion>
+<a id="callevents-micstatuschange" />
+<a id="micstatuschange" />
+<a id="-micstatuschange" />
+<Accordion title="MicStatusChange">
+
+Triggers each time when microphone status changes. There is the method for enabling status analyzing - `Call.handleMicStatus`.
+
+Event constant: `CallEvents.MicStatusChange`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `active` | `boolean` | ✓ | Whether the microphone is active |
+</Accordion>
+<a id="callevents-offhold" />
+<a id="offhold" />
+<a id="-offhold" />
+<Accordion title="OffHold">
+
+Triggered when a call is taken off hold.
+
+Event constant: `CallEvents.OffHold`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-onhold" />
+<a id="onhold" />
+<a id="-onhold" />
+<Accordion title="OnHold">
+
+Triggered when a call is put on hold.
+
+Event constant: `CallEvents.OnHold`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-playbackfinished" />
+<a id="playbackfinished" />
+<a id="-playbackfinished" />
+<Accordion title="PlaybackFinished">
+
+Triggered when the audio/voice playback is completed.
+Note that the `Call.stopPlayback` method finishes any media**, so the `CallEvents.PlaybackFinished` event is not triggered. The playback may be started by the `Call.say` or `Call.startPlayback` methods.
+
+Event constant: `CallEvents.PlaybackFinished`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `error` | `string` | ✗ | Error that occurred during the playback |
+</Accordion>
+<a id="callevents-playbackready" />
+<a id="playbackready" />
+<a id="-playbackready" />
+<Accordion title="PlaybackReady">
+
+Triggers by the `Call.startPlayback` and `Call.say` methods when:
+1) the audio file download to the Voximplant cache is finished;
+2) the audio file is found in the cache (i.e., it is in the cache before).
+
+Event constant: `CallEvents.PlaybackReady`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-playbackstarted" />
+<a id="playbackstarted" />
+<a id="-playbackstarted" />
+<Accordion title="PlaybackStarted">
+
+Triggers by the `Call.startPlayback` and `Call.say` methods when audio/voice playback is started.
+
+Event constant: `CallEvents.PlaybackStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `duration` | `number` | ✓ | Playback duration |
+</Accordion>
+<a id="callevents-pushsent" />
+<a id="pushsent" />
+<a id="-pushsent" />
+<Accordion title="PushSent">
+
+Triggered when a push notification is sent.
+
+Event constant: `CallEvents.PushSent`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `result` | `string` | ✓ |  |
+</Accordion>
+<a id="callevents-reinviteaccepted" />
+<a id="reinviteaccepted" />
+<a id="-reinviteaccepted" />
+<Accordion title="ReInviteAccepted">
+
+Triggered when the Voximplant cloud receives the **ReInviteAccepted** message. This message means that a call received video from the other participant.
+
+Event constant: `CallEvents.ReInviteAccepted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `mimeType` | `string` | ✓ | MIME type of INFO message |
+| `body` | `string` | ✓ | Content of the message |
+</Accordion>
+<a id="callevents-reinvitereceived" />
+<a id="reinvitereceived" />
+<a id="-reinvitereceived" />
+<Accordion title="ReInviteReceived">
+
+Triggered when the Voximplant cloud receives the **ReInviteReceived** message. This message means that a caller:
+1) started sending video;
+2) started/stopped screensharing;
+3) put a call on hold / took a call off hold.
+
+Event constant: `CallEvents.ReInviteReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `mimeType` | `string` | ✓ | MIME type of INFO message |
+| `body` | `string` | ✓ | Content of the message |
+</Accordion>
+<a id="callevents-reinviterejected" />
+<a id="reinviterejected" />
+<a id="-reinviterejected" />
+<Accordion title="ReInviteRejected">
+
+Triggered when the Voximplant cloud receives the **ReInviteRejected** message. This message means that a call does not receive video from the other participant.
+
+Event constant: `CallEvents.ReInviteRejected`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+</Accordion>
+<a id="callevents-recordstarted" />
+<a id="recordstarted" />
+<a id="-recordstarted" />
+<Accordion title="RecordStarted">
+
+Triggered when call recording is started. The recording may be started by the `Call.record` method.
+
+Event constant: `CallEvents.RecordStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `url` | `string` | ✓ | Link to the record file. |
+</Accordion>
+<a id="callevents-recordstopped" />
+<a id="recordstopped" />
+<a id="-recordstopped" />
+<Accordion title="RecordStopped">
+
+Triggered when call recording is stopped. This happens after the `CallEvents.Disconnected` event is triggered.
+
+Event constant: `CallEvents.RecordStopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `url` | `string` | ✓ | Link to the record file. |
+| `cost` | `string` | ✓ | Record cost (in the account's currency: USD, EUR or RUB) |
+| `duration` | `number` | ✓ | Record duration (sec) |
+</Accordion>
+<a id="callevents-recorderror" />
+<a id="recorderror" />
+<a id="-recorderror" />
+<Accordion title="RecordError">
+
+Triggers in case of errors during the recording process.
+
+Event constant: `CallEvents.RecordError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `error` | `string` | ✓ | Triggers in case of errors during the recording process |
+</Accordion>
+<a id="callevents-ringing" />
+<a id="ringing" />
+<a id="-ringing" />
+<Accordion title="Ringing">
+
+Triggers after outgoing call receives progress signal from a remote peer.
+
+Event constant: `CallEvents.Ringing`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+</Accordion>
+<a id="callevents-statechanged" />
+<a id="statechanged" />
+<a id="-statechanged" />
+<Accordion title="StateChanged">
+
+Triggered when a call status is changed.
+
+Event constant: `CallEvents.StateChanged`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `oldState` | `string` | ✓ |  |
+| `newState` | `string` | ✓ |  |
+</Accordion>
+<a id="callevents-statistics" />
+<a id="statistics" />
+<a id="-statistics" />
+<Accordion title="Statistics">
+
+Triggered when call statistics change.
+
+Event constant: `CallEvents.Statistics`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-tonedetected" />
+<a id="tonedetected" />
+<a id="-tonedetected" />
+<Accordion title="ToneDetected">
+
+Triggered when a call dial tone is detected (either dial tone or busy tone).
+There is the deprecated method for enabling the tone detection - 'Call.detectProgressTone'. Note that:
+1) triggers only if the `CallEvents.Connected` event is triggered;
+2) the event is only triggered once in a call session.
+
+Event constant: `CallEvents.ToneDetected`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `ProgressTone` | `boolean` | ✓ | Whether the detected tone is a dial tone. |
+| <code>Voicemail<wbr />Tone</code> | `boolean` | ✓ | Whether the detected tone is a voicemail tone. |
+</Accordion>
+<a id="callevents-tonereceived" />
+<a id="tonereceived" />
+<a id="-tonereceived" />
+<Accordion title="ToneReceived">
+
+Triggered when a DTMF signal is received. Note that by default DTMF signals do not trigger this event, this behavior needs to be set explicitly via the `Call.handleTones` method.
+
+Event constant: `CallEvents.ToneReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `tone` | `string` | ✓ | Tone received in this event. The possible values are: 0-9,*,# |
+| `type` | `string` | ✓ | Type of the received tone. The possible values are: 1 (rfc 2833), 2 (Inband), 3 (SipInfo) |
+</Accordion>
+<a id="callevents-transfercomplete" />
+<a id="transfercomplete" />
+<a id="-transfercomplete" />
+<Accordion title="TransferComplete">
+
+Triggered when a call transfer is complete.
+
+Event constant: `CallEvents.TransferComplete`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `role` | <code>'transferor' \| 'target' \| 'transferee'</code> | ✗ | The transfer roles. |
+</Accordion>
+<a id="callevents-transferfailed" />
+<a id="transferfailed" />
+<a id="-transferfailed" />
+<Accordion title="TransferFailed">
+
+Triggered when a call transfer is failed.
+
+Event constant: `CallEvents.TransferFailed`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | SIP headers received with the message (the ones starting with "X-") |
+| `role` | <code>'transferor' \| 'target' \| 'transferee'</code> | ✗ | The transfer roles. |
+| `code` | `number` | ✓ | Failed transfer's status (e.g., 486) |
+| `reason` | `string` | ✓ | Failed transfer's status message |
+</Accordion>
+<a id="callevents-videotrackcreated" />
+<a id="videotrackcreated" />
+<a id="-videotrackcreated" />
+<Accordion title="VideoTrackCreated">
+
+Triggers after the video track is created. This could happen only if the `Call.record` method with **\{video: true\}** parameters is called.
+
+Event constant: `CallEvents.VideoTrackCreated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `url` | `string` | ✓ | Record URL |
+</Accordion>
+<a id="callevents-firstaudiopacketreceived" />
+<a id="firstaudiopacketreceived" />
+<a id="-firstaudiopacketreceived" />
+<Accordion title="FirstAudioPacketReceived">
+
+Triggers after the first audio packet is received.
+
+Event constant: `CallEvents.FirstAudioPacketReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-firstvideopacketreceived" />
+<a id="firstvideopacketreceived" />
+<a id="-firstvideopacketreceived" />
+<Accordion title="FirstVideoPacketReceived">
+
+Triggers after the first video packet is received.
+
+Event constant: `CallEvents.FirstVideoPacketReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-rtpstopped" />
+<a id="rtpstopped" />
+<a id="-rtpstopped" />
+<Accordion title="RtpStopped">
+
+Triggers within **7 seconds** after the RTP/RTCP has stopped. Applies to all types of calls (users, SIP, and PSTN).
+
+Event constant: `CallEvents.RtpStopped`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-rtpresumed" />
+<a id="rtpresumed" />
+<a id="-rtpresumed" />
+<Accordion title="RtpResumed">
+
+Triggers after the RTP resumed.
+
+Event constant: `CallEvents.RtpResumed`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+</Accordion>
+<a id="callevents-beepdetectioncomplete" />
+<a id="beepdetectioncomplete" />
+<a id="-beepdetectioncomplete" />
+<Accordion title="BeepDetectionComplete">
+
+Triggers after the beep detection is complete. The beep detection may be started by the `Call.enableBeepDetection` method.
+
+Event constant: `CallEvents.BeepDetectionComplete`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `frequencies` | `number[]` | ✗ | Array of frequencies detected during the beep detection in Hz. |
+| `timeout` | `boolean` | ✗ | Whether the timeout occurred during beep detection. |
+</Accordion>
+<a id="callevents-beepdetectionerror" />
+<a id="beepdetectionerror" />
+<a id="-beepdetectionerror" />
+<Accordion title="BeepDetectionError">
+
+Error during beep detection.
+
+Event constant: `CallEvents.BeepDetectionError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `reason` | `string` | ✓ | Beep detection failure reason. |
+</Accordion>
+<a id="callevents-audioqualitydetected" />
+<a id="audioqualitydetected" />
+<a id="-audioqualitydetected" />
+<Accordion title="AudioQualityDetected">
+
+Triggers after the audio quality detected.
+
+<a id="callaudioquality" />
+
+Event constant: `CallEvents.AudioQualityDetected`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `quality` | <code>CallAudio<wbr />Quality</code> | ✓ | The audio quality. Allowed values are listed in [`CallAudioQuality`](#callaudioquality): `HD`, `STANDARD`. |
+</Accordion>
+<a id="callevents-mediastatisticsreceived" />
+<a id="mediastatisticsreceived" />
+<a id="-mediastatisticsreceived" />
+<Accordion title="MediaStatisticsReceived">
+
+Triggers after media statistics has been recieved. To enable, call the `Call.monitorMediaStatistics` method.
+
+Event constant: `CallEvents.MediaStatisticsReceived`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `call` | `Call` | ✓ | Call that triggered the event |
+| `name` | `string` | ✓ | The name of the event |
+| `id` | `string` | ✓ | The call's ID |
+| `audio` | <code>CallMedia<wbr />Statistics</code> | ✓ | Statistical information about the audio channels. Contains metrics for both incoming and outgoing streams. |
+</Accordion>
+</AccordionGroup>
+
+## Parameter types
+
+<a id="callanswerparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> CallAnswerParameters
+The parameters can be passed as arguments to the `Call.answer` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="callanswerparameters-conferencecall" /> <code>conference<wbr />Call</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Whether the call is coming from a conference. The default value is **false**. |
+| <a id="callanswerparameters-disabledtxforaudio" /> <code>disableDtx<wbr />ForAudio</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Disables DTX for audio. The default value is **false**. |
+| <a id="callanswerparameters-disableextplayoutdelay" /> <code>disableExt<wbr />PlayoutDelay</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Whether to disable the RTP header extension to control playout delay if provided. |
+| <a id="callanswerparameters-disableextvideooffset" /> <code>disableExt<wbr />VideoOffset</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Whether to disable the RTP header extension for transmission offset if provided. |
+| <a id="callanswerparameters-disableextvideoorientation" /> <code>disableExt<wbr />Video<wbr />Orientation</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Whether to disable the RTP header extension for video orientation, **3gpp:video-orientation**, if provided. Browsers that do not support that extension display the video correctly, however, the battery consumption is higher. |
+| <a id="callanswerparameters-disableextvideotiming" /> <code>disableExt<wbr />VideoTiming</code> | `boolean` | ✗ | _inherited from BaseCallParameters_ Whether to disable the RTP header extension for video timing if provided. |
+| <a id="callanswerparameters-displayname" /> `displayName` | `string` | ✗ | _inherited from BaseCallParameters_ Name of the caller that is displayed to the user. Normally it is a human-readable version of CallerID, e.g. a person's name. |
+| <a id="callanswerparameters-maxvideobitrate" /> <code>maxVideo<wbr />Bitrate</code> | `number` | ✗ | _inherited from BaseCallParameters_ Sets the maximum possible video bitrate for the customer device in kbps. |
+| <a id="callanswerparameters-scheme" /> `scheme` | `Scheme` | ✗ | _inherited from BaseCallParameters_ Internal information about codecs. Pass the value received from a call event as-is. Do not inspect or modify the object. Reconstructing or mutating the payload can break codec negotiation. |
+
+<a id="callenablebeepdetectionparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> CallEnableBeepDetectionParameters
+Parameters for the `Call.enableBeepDetection` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="callenablebeepdetectionparameters-frequencies" /> `frequencies` | `number[]` | ✗ | Array of frequencies to detect in Hz. |
+| <a id="callenablebeepdetectionparameters-timeout" /> `timeout` | `number` | ✗ | Timeout in milliseconds to wait for the beep detection. |
+
+<a id="callrecordparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> CallRecordParameters
+The parameters can be passed as arguments to the `Call.record` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="callrecordparameters-dict" /> `dict` | <code>ASR<wbr />Dictionary \| string[]</code> | ✗ | Transcription dictionary. Array of words that are possible values. Note that dict does not limit the transcription to the specific list. Instead, words in the specified list have a higher chance to be selected. Note that the parameter does not affect the [Recorder module](/reference/voxengine/modules) because the transcription is not available for it. |
+| <a id="callrecordparameters-expire" /> `expire` | <code>RecordExpire<wbr />Time</code> | ✗ | _inherited from BaseRecorderParameters_ Storage time for recorded files. The default value is [RecordExpireTime.THREEMONTHS](/reference/voxengine/record-expire-time). |
+| <a id="callrecordparameters-format" /> `format` | `string` | ✗ | Transcription format. Could be specified as "json". In that case the transcription result is saved in JSON format. The parameter is not available for the [Recorder module](/reference/voxengine/modules). |
+| <a id="callrecordparameters-hdaudio" /> `hd_audio` | `boolean` | ✗ | _inherited from BaseRecorderParameters_ Whether to use the HD audio. The default value is **false**. If set to **false**, 8 KHz / 32 kbps mp3 file is generated. If set to **true**, "wideband audio" 48 KHz / 192 kbps mp3 file is generated. Note that transcription's quality does not depend on this parameter. The parameter is not compatible with **lossless: true** parameter. |
+| <a id="callrecordparameters-labels" /> `labels` | `string[]` | ✗ | An array of two strings. Each string names the label in resulting transcription: the first string names a call/stream that initiated recording, the second string names the other call. If there is only one string in the array or the parameter is not specified at all, the recording's initiate call has the "Left" name and the second stream has the "Right" name. The parameter requires the **transcribe: true** parameter. The parameter is not available for the [Recorder module](/reference/voxengine/modules). |
+| <a id="callrecordparameters-language" /> `language` | `ASRLanguage` | ✗ | _inherited from BaseRecorderParameters_ Transcription language. The parameter uses [ASRLanguage](/reference/voxengine/asr-language) from the [ASR module](/reference/voxengine/modules) as possible values. Note that it is necessary to include the [ASR module](/reference/voxengine/modules) in the scenario to use the language constants. The parameter is not available for the [Recorder module](/reference/voxengine/modules). |
+| <a id="callrecordparameters-lossless" /> `lossless` | `boolean` | ✗ | _inherited from BaseRecorderParameters_ Whether to save the record in flac format. The default value is **false**. The parameter is not compatible with **hd_audio: true** parameter. |
+| <a id="callrecordparameters-provider" /> `provider` | <code>Transcription<wbr />Provider</code> | ✗ | Transcription provider. |
+| <a id="callrecordparameters-recordnameprefix" /> <code>recordName<wbr />Prefix</code> | `string` | ✗ | _inherited from BaseRecorderParameters_ The prefix to add to the record names when storing to your S3 storage. Works only for custom S3-compatible storages. |
+| <a id="callrecordparameters-secure" /> `secure` | `boolean` | ✗ | _inherited from BaseRecorderParameters_ Whether to restrict access to the record without management API authorization (available only in the `VoxEngine.createRecorder` method). |
+| <a id="callrecordparameters-stereo" /> `stereo` | `boolean` | ✗ | Whether the sound is stereo. The default value is **false**. The parameter does not change anything for the [Recorder module](/reference/voxengine/modules): it records stereo with mixed streams in both channels. For the `Call.record` method it works in another way: 1. if it is False, it records stereo with mixed streams in both channels 2. if it is True, the Audio stream from a call endpoint to voximplant cloud is recorded into left channel. Audio stream from voximplant cloud to a call endpoint is recorded into right channel. |
+| <a id="callrecordparameters-transcribe" /> `transcribe` | `boolean` | ✗ | _inherited from BaseRecorderParameters_ Whether to create the call record transcription. Note that transcription is not available for the [Recorder module](/reference/voxengine/modules). See the details [in the article](/reference/voxengine/asr). |
+| <a id="callrecordparameters-video" /> `video` | `boolean` | ✗ | _inherited from BaseRecorderParameters_ Whether to record video. The default value is **false**. |
+| <a id="callrecordparameters-videoparameters" /> <code>video<wbr />Parameters</code> | <code>Recorder<wbr />Video<wbr />Parameters</code> | ✗ | _inherited from BaseRecorderParameters_ Recorder video parameters. |
+
+<a id="callsayparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> CallSayParameters
+The parameters can be passed as arguments to the `Call.say` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="callsayparameters-progressiveplayback" /> <code>progressive<wbr />Playback</code> | `boolean` | ✗ | Whether to use progressive playback. If true, the generated speech is delivered in chunks which reduces delay before a method call and playback. The default value is **false**. *Available for providers: Amazon, Google, IBM, Microsoft.* |
+| <a id="callsayparameters-request" /> `request` | `Object` | ✗ | Provide the TTS parameters directly to the provider in this parameter. Find more information in the [documentation](/voice-ai/speech/openai-tts). *Available for providers: Google.* |
+| <a id="callsayparameters-ttsoptions" /> `ttsOptions` | `TTSOptions` | ✗ | Parameters for TTS. Note that support of the `TTSOptions.pitch` parameter depends on the language and dictionary used. For unsupported combinations the `CallEvents.PlaybackFinished` event is triggered with error 400. *Available for providers: Amazon, Google, IBM, Microsoft.* |
+| <a id="callsayparameters-voice" /> `voice` | `Voice` | ✗ | Voice for TTS. List of all supported voices: [VoiceList](/reference/voxengine/voice-list). The default value is **VoiceList.Amazon.en_US_Joanna**. *Available for providers: Amazon, Google, IBM, Microsoft, ElevenLabs.* |
+
+<a id="sendmediaparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> SendMediaParameters
+Custom parameters for [WebSocket](/reference/voxengine/websocket) interaction. Can be passed as arguments to the [VoxMediaUnit](/reference/voxengine/scenario-globals#voxmediaunit) **sendMediaTo** method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="sendmediaparameters-customparameters" /> <code>custom<wbr />Parameters</code> | `any` | ✗ | Custom parameters for the media being sent. |
+| <a id="sendmediaparameters-encoding" /> `encoding` | <code>WebSocket<wbr />Audio<wbr />Encoding</code> | ✗ | The encoding format for the audio being sent. |
+| <a id="sendmediaparameters-tag" /> `tag` | `string` | ✗ | A tag that can be used to identify the media being sent. |
+
+<a id="startplaybackparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> StartPlaybackParameters
+The parameters can be passed as arguments to the `Call.startPlayback` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="startplaybackparameters-loop" /> `loop` | `boolean` | ✗ | Whether to loop playback. |
+| <a id="startplaybackparameters-progressiveplayback" /> <code>progressive<wbr />Playback</code> | `boolean` | ✗ | Whether to use progressive playback. If **true**, the file is delivered in chunks which reduces delay before a method call and playback. The default value is **false**. |
+
+<a id="transfertoparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> TransferToParameters
+The parameters can be passed as arguments to the `Call.transferTo` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="transfertoparameters-call" /> `call` | `Call` | ✓ | Call (for 'attendant transfer' only) |
+| <a id="transfertoparameters-headers" /> `headers` | <code>&#123; [header: string]: string &#125;</code> | ✗ | Custom parameters (SIP headers) that should be passed with a call (INVITE) message. Custom header names have to begin with the 'X-' prefix except the 'VI-CallTimeout': '60' which hangs up if there is no answer after the timeout (in seconds, the default value is **60**, must not be less than **10** or greater than **400**). The "X-" headers can be handled by a SIP phone or WEB SDK (e.g. see the [incomingCall](/reference/web-sdk/overview) event). Example: \{'X-header':'value'\}. |
+| <a id="transfertoparameters-to" /> `to` | `string` | ✓ | SIP(S) URI to make a call to. Example of an external call: **sip:alice@example.org**. Examples with the usage of TLS: **sips:alice@example.org:5061** ; **alice@example.org:5061;transport=tls**. The format for calls to another user of the same Voximplant application: user-of-the-application@application-name.account-name.voximplant.com |
+
+<a id="monitormediastatisticsparameters" />
+### <Icon icon="fa-duotone fa-sliders" /> MonitorMediaStatisticsParameters
+The parameters can be passed as arguments to the `Call.monitorMediaStatistics` method.
+
+| Property | Type | Req. | Description |
+| --- | --- | --- | --- |
+| <a id="monitormediastatisticsparameters-interval" /> `interval` | `number` | ✓ | Interval between messages (in seconds). The value must not be less than 3 or greater than 10. |
+| <a id="monitormediastatisticsparameters-monitor" /> `monitor` | `boolean` | ✓ | Enables or disables media statistics monitoring. |

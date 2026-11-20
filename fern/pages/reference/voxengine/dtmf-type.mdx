@@ -1,0 +1,26 @@
+---
+title: DTMFType
+subtitle: The DTMF type.
+---
+
+## Values
+
+<a id="all" />
+<ParamField path="ALL" type="0">
+All types of DTMF tones trigger the `CallEvents.ToneReceived` event: in-band, RFC 2833 and SIP INFO. Receiving an RFC 2833 tone disables processing of in-band tones to avoid duplicating
+</ParamField>
+
+<a id="telephoneevent" />
+<ParamField path="TELEPHONE_EVENT" type="1">
+Only RFC 2833 DTMF tones trigger the `CallEvents.ToneReceived` event
+</ParamField>
+
+<a id="inband" />
+<ParamField path="IN_BAND" type="2">
+Only in-band DTMF tones trigger the `CallEvents.ToneReceived` event
+</ParamField>
+
+<a id="sipinfo" />
+<ParamField path="SIP_INFO" type="3">
+Only SIP INFO DTMF tones trigger the `CallEvents.ToneReceived` event
+</ParamField>

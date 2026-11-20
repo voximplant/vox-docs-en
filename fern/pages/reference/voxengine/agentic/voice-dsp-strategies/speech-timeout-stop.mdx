@@ -1,0 +1,20 @@
+---
+title: SpeechTimeoutStop
+subtitle: A stop strategy that uses a configurable timeout to determine if the user is done speaking.
+---
+
+## Properties
+
+<a id="speechtimeout" />
+<ParamField path="speechTimeout" type="number">
+_optional_
+
+Optional. Time to wait (in seconds) after VAD detects silence before finalizing the user turn. The default value is **0.6**.
+</ParamField>
+
+<a id="type" />
+<ParamField path="type" type="'speech_timeout'">
+_readonly_
+
+Reported as **strategy** on `Agentic.VoiceDSPEvents.TurnInferenceTriggered` and `Agentic.VoiceDSPEvents.TurnStopped`.
+</ParamField>

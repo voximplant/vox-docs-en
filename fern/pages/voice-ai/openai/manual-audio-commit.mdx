@@ -1,0 +1,39 @@
+---
+title: "Example: Transcription with manual audio commit"
+description: "Transcribe a Voximplant call with OpenAI Realtime Whisper and commit audio when local turn detection confirms the caller has finished."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+`gpt-realtime-whisper` transcribes live call audio, but does not support OpenAI server VAD. The VoxEngine scenario below uses Silero to detect a pause and Pipecat to decide whether the caller has finished a turn. It then calls `inputAudioBufferCommit()` to finalize that turn's transcript.
+
+This example uses `gpt-realtime-whisper` to match the published VoxEngine scenario. For a new transcription integration, see OpenAI's [Realtime transcription guide](https://developers.openai.com/api/docs/guides/realtime-transcription), which currently recommends `gpt-live-transcribe`.
+
+## Prerequisites
+
+- Set up an [inbound call](/voice-ai/openai/inbound) and a [routing rule](/platform/getting-started/create-a-routing-rule) for this scenario.
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) as `OPENAI_API_KEY`.
+
+## How the turn is committed
+
+The client uses `OpenAI.RealtimeAPIClientType.TRANSCRIPTION` and selects `gpt-realtime-whisper` in both the connection and transcription session. Its `audio.input.turn_detection` is `null`; this model requires manual audio commits.
+
+The call sends audio to the OpenAI client, Silero VAD, and the Pipecat turn detector. When Silero reports `speechEndAt`, the scenario calls `turnDetector.predict()`. Only a Pipecat result with `endOfTurn: true` commits OpenAI's input audio buffer. OpenAI then emits transcription delta and completed events, which the example logs.
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/openai/voxeengine-openai-manual-commit.js"
+  title="voxeengine-openai-manual-commit.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## More information
+
+- [Voice activity detection](/voice-ai/speech-flow-control/voice-activity-detection)
+- [Turn detection](/voice-ai/speech-flow-control/turn-detection)
+- [OpenAI Realtime transcription](https://developers.openai.com/api/docs/guides/realtime-transcription)
+- [OpenAI Realtime VAD](https://developers.openai.com/api/docs/guides/realtime-vad)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)

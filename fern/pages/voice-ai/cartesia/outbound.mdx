@@ -1,0 +1,113 @@
+---
+title: "Example: Placing an outbound call"
+description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Cartesia Line Agents once the callee answers."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Cartesia Line Agents once the callee answers.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Create a Cartesia Line Agent in the [Cartesia Voice Agents portal](https://play.cartesia.ai/agents)
+- Store your [Cartesia API key](https://play.cartesia.ai/keys) in Voximplant [Secrets](/platform/storage/secret-storage) under `CARTESIA_API_KEY`
+- Store your [Cartesia Agent ID](https://play.cartesia.ai/agents) in Voximplant `ApplicationStorage` under `CARTESIA_AGENT_ID` (the agent ID is not sensitive, so it can live in key-value storage)
+- Ensure outbound calling is enabled for your Voximplant application and your caller ID is verified
+
+## Outbound call parameters
+
+The example expects destination and caller ID in `customData` passed to the routing rule:
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+## Launch the routing rule
+
+For quick testing from the Voximplant Control Panel:
+
+1. Open your Voximplant application and go to the **Routing** tab.
+2. Select the routing rule that has this scenario attached.
+3. Click **Run**.
+4. Provide custom data JSON with `destination` and `callerId`.
+
+For production, start the routing rule via Management API `startScenarios` and pass the same JSON in `script_custom_data`:
+[StartScenarios API reference](/reference/management-api/reference/scenarios/start-scenarios)
+
+## Alternate outbound destinations
+
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+
+- **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
+- **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
+- **Voximplant users** (`VoxEngine.callUser`): calls another app user inside the same Voximplant application such as web SDK, mobile SDK, or SIP user.
+
+Relevant guides:
+
+- [SIP calling options](/voice-ai/network-options/sip)
+- [Voximplant users calling options](/voice-ai/network-options/web-mobile)
+- [WhatsApp calling options](/voice-ai/network-options/whatsapp)
+
+## Session setup
+
+Outbound setup follows this order:
+
+1. Parse `destination` and `callerId` from `VoxEngine.customData()`.
+2. Place the PSTN call with `VoxEngine.callPSTN(...)`.
+3. Wait for `CallEvents.Connected`.
+4. Create `Cartesia.AgentsClient`.
+5. Send `start(...)` metadata with `mode: "outbound"`.
+6. Bridge call media to the Cartesia client.
+
+The scenario deliberately creates and starts the Cartesia session only after the callee answers:
+
+```js title="Create Cartesia client after callee answers"
+call.addEventListener(CallEvents.Connected, async () => {
+  voiceAIClient = await Cartesia.createAgentsClient({
+    apiKey: VoxEngine.getSecretValue('CARTESIA_API_KEY'),
+    cartesiaVersion: "2025-04-16",
+    agentId: (await ApplicationStorage.get("CARTESIA_AGENT_ID")).value
+  });
+});
+```
+
+Use outbound mode metadata for this scenario:
+
+```js title="Start outbound session"
+voiceAIClient.start({
+  metadata: {
+    channel: "voice",
+    provider: "voximplant",
+    mode: "outbound"
+  }
+});
+```
+
+Then connect audio between the PSTN leg and Cartesia:
+
+```js title="Bridge media"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+```
+
+The example also adds:
+
+- `CallEvents.Failed` and `CallEvents.Disconnected` handlers for cleanup.
+- A demo hangup timer to avoid indefinitely running sessions.
+- Cartesia event logs (`ACK`, `ConnectorInformation`, `Clear`, media started/ended) for debugging.
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/cartesia).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/cartesia-line-agents/voxeengine-cartesia-outbound.js"
+  title="voxeengine-cartesia-outbound.js"
+  language="javascript"
+  maxLines={0}
+/>

@@ -1,0 +1,68 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your ElevenLabs API key in Voximplant [Secrets](/platform/storage/secret-storage) under `ELEVENLABS_API_KEY`.
+- Store your ElevenLabs Agent ID in Voximplant [Secrets](/platform/storage/secret-storage) under `ELEVENLABS_AGENT_ID`.
+- Optional: set `ELEVENLABS_BASE_URL` in the example if your ElevenLabs account should use a custom Agents endpoint - i.e.: `"https://api.eu.residency.elevenlabs.io"`
+- Configure a client tool in your ElevenLabs Agent named `get_weather` that expects a `location` parameter.
+
+## Tool handling
+
+ElevenLabs Agents send tool requests via `ElevenLabs.AgentsEvents.ClientToolCall`. The example extracts the tool name and parameters, runs a stub implementation, and sends the result back using `clientToolResult`:
+
+```js title="Tool handling"
+agentsClient.addEventListener(ElevenLabs.AgentsEvents.ClientToolCall, (event) => {
+  const payload = event?.data?.payload || event?.data || {};
+  const toolName = payload.tool_name || payload.toolName || payload.name;
+  const toolCallId = payload.tool_call_id || payload.toolCallId || payload.id;
+
+  if (toolName !== "get_weather") return;
+
+  const result = { location: "San Francisco", temperature_f: 72, condition: "sunny" };
+
+  agentsClient.clientToolResult({
+    tool_call_id: toolCallId,
+    tool_name: toolName,
+    result,
+  });
+});
+```
+
+## Barge-in
+
+```js title="Barge-in"
+agentsClient.addEventListener(ElevenLabs.AgentsEvents.Interruption, () => {
+  agentsClient.clearMediaBuffer();
+});
+```
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/elevenlabs).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/elevenlabs-agents/voxeengine-elevenlabs-tool-call.js"
+  title="voxeengine-elevenlabs-tool-call.js"
+  language="javascript"
+  maxLines={0}
+/>

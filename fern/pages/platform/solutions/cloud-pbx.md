@@ -33,9 +33,9 @@ With Voximplant, you can build a software-defined cloud PBX featuring:
 
 To set up a cloud PBX in Voximplant:
 
-1. Create an [application]().
-2. Create [users]() for each employee or extension in your PBX (you can automate user provisioning in bulk using the [AddUser]() Management API method).
-3. Create three distinct [scenarios]() to handle the core call flows:
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create [users](/platform/getting-started/create-users) for each employee or extension in your PBX (you can automate user provisioning in bulk using the [AddUser](/reference/management-api/reference/users/add-user) Management API method).
+3. Create three distinct [scenarios](/platform/getting-started/create-a-scenario) to handle the core call flows:
    * **Inbound calls**: Handles business hours logic, greetings, extension routing, and hunt groups.
    * **Internal extension calls**: Manages internal calling between employees and records sessions.
    * **Outbound PSTN calls**: Connects internal users to external mobile and landline numbers.
@@ -224,7 +224,7 @@ VoxEngine.forwardCallToUser(function (call, call2) {
 This scenario handles outbound calls placed from an internal PBX user to an external PSTN phone number:
 
 <Warning title="Verified caller ID required">
-To place outbound calls to external phone numbers, you must specify a verified Caller ID. Use a phone number rented from Voximplant or an external number verified in your account. Refer to [How to call a phone number]() for details.
+To place outbound calls to external phone numbers, you must specify a verified Caller ID. Use a phone number rented from Voximplant or an external number verified in your account. Refer to [How to call a phone number](/platform/telephony/calls) for details.
 </Warning>
 
 ```javascript title="Outbound PSTN call scenario"
@@ -242,7 +242,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
 
 ### Routing rules configuration
 
-Configure [routing rules]() for each scenario in your application.
+Configure [routing rules](/platform/getting-started/create-a-routing-rule) for each scenario in your application.
 
 Because Voximplant evaluates routing rules sequentially from top to bottom and stops at the first match, order rules from most specific to most general:
 
@@ -256,7 +256,7 @@ Because Voximplant evaluates routing rules sequentially from top to bottom and s
    * Pattern: `.*` (or your rented phone number).
    * Scenario: Bind the incoming calls scenario.
 
-For detailed routing configuration, see [routing rules]().
+For detailed routing configuration, see [routing rules](/platform/getting-started/create-a-routing-rule).
 
 ---
 
@@ -264,8 +264,8 @@ For detailed routing configuration, see [routing rules]().
 
 To make and receive calls, employees authenticate with a softphone using their application user credentials:
 
-* **Web softphone**: Deploy our ready-to-use, open-source [voice and video app for Vue.js]() or embed the [Web SDK]() in your internal portal.
-* **Native mobile softphones**: Build iOS and Android calling apps using our native SDKs (see [Processing voice calls in SDKs]()) or explore reference demos on [GitHub]().
+* **Web softphone**: Deploy our ready-to-use, open-source [voice and video app for Vue.js]() or embed the [Web SDK](/sdk/web) in your internal portal.
+* **Native mobile softphones**: Build iOS and Android calling apps using our native SDKs (see [Processing voice calls in SDKs](/sdk/overview)) or explore reference demos on [GitHub]().
 * **Third-party SIP phones**: Configure standard hardware desk phones or software clients (e.g., Linphone, Bria) using the full SIP URI format: `sip:USERNAME@APPNAME.ACCOUNTNAME.voximplant.com`.
 
 Users act as PBX extensions, placing calls to other internal extension numbers or dialing external phone numbers through the configured routing rules.

@@ -1,0 +1,111 @@
+---
+title: NoiseSuppression
+---
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [Hush.NoiseSuppressionEvents](/reference/voxengine/hush/noise-suppression-events) or [Hush.Events](/reference/voxengine/hush/events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Hush.NoiseSuppressionEvents | Hush.Events | T, callback: (event: Hush._HushNoiseSuppressionClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Hush.NoiseSuppressionEvents | Hush.Events | T" required />
+
+<ParamField path="callback" type="(event: Hush._HushNoiseSuppressionClientEvents[T]) => any" required />
+
+### clearMediaBuffer
+
+Clears the NoiseSuppression WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ClearMediaBufferParameters" />
+
+### close
+
+Closes the NoiseSuppression connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+### id
+
+Returns the NoiseSuppression id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [Hush.NoiseSuppressionEvents](/reference/voxengine/hush/noise-suppression-events) or [Hush.Events](/reference/voxengine/hush/events) event.
+
+```ts
+removeEventListener(event: Hush.NoiseSuppressionEvents | Hush.Events | T, callback?: (event: Hush._HushNoiseSuppressionClientEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="Hush.NoiseSuppressionEvents | Hush.Events | T" required />
+
+<ParamField path="callback" type="(event: Hush._HushNoiseSuppressionClientEvents[T]) => any" />
+
+### reset
+
+Resets the Hush ONNX streaming state and resampler buffers.
+
+```ts
+reset(): void
+```
+
+### sendMediaTo
+
+Starts sending denoised media from the NoiseSuppression (via WebSocket) to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stop
+
+Stops the noise suppression session for this integration.
+
+```ts
+stop(): void
+```
+
+### stopMediaTo
+
+Stops sending media from the NoiseSuppression (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+### webSocketId
+
+Returns the NoiseSuppression WebSocket id.
+
+```ts
+webSocketId(): string
+```

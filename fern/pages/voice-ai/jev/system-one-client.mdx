@@ -1,0 +1,49 @@
+---
+title: System One client
+subtitle: Send several structured decisions on one connection
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+Use **Jev System One** when a voice or messaging scenario needs **structured decisions** (urgency, category, severity, and similar fields) rather than open-ended chat or TTS playback. From VoxEngine, use the **Jev** module and a [Jev.SystemOneClient](https://voximplant.com/docs/references/voxengine/jev/systemoneclient) to call TypeSafe System One.
+
+<Info title="Credentials">
+  Store your TypeSafe API key in an [application secret](/platform/storage/secret-storage) (for example, `TYPESAFE_API_KEY`) and pass it to [Jev.createSystemOneClient](https://voximplant.com/docs/references/voxengine/jev/createsystemoneclient). Do not hardcode secrets in scenario source.
+</Info>
+
+## Usage
+
+1. Require the `Modules.Jev` module in your VoxEngine [scenario](/platform/getting-started/create-a-scenario).
+2. Create a [Jev.SystemOneClient](https://voximplant.com/docs/references/voxengine/jev/systemoneclient) with [Jev.createSystemOneClient](https://voximplant.com/docs/references/voxengine/jev/createsystemoneclient), and your [SystemOneClientParameters](https://voximplant.com/docs/references/voxengine/jev/systemoneclientparameters) (`apiKey`, optional `baseUrl`, optional `longContext`).
+3. Wait for [Jev.SystemOneEvents.ConnectorInformation](https://voximplant.com/docs/references/voxengine/jev/systemoneevents#connectorinformation), then call [systemOne](https://voximplant.com/docs/references/voxengine/jev/systemoneclient#systemone) with a [SystemOneRequest](https://voximplant.com/docs/references/voxengine/jev/systemonerequest) (`body` with `state` and `questions`, optional `requestId` and `model`).
+4. Handle each result via the returned promise and/or [Jev.SystemOneEvents.Result](https://voximplant.com/docs/references/voxengine/jev/systemoneevents#result). Handle failures with [Jev.SystemOneEvents.Error](https://voximplant.com/docs/references/voxengine/jev/systemoneevents#error); a failed request does **not** close the client, so you can send another `systemOne` on the same connection.
+5. Close the client or terminate the scenario when finished.
+
+Build question objects with helpers such as [Jev.noul](https://voximplant.com/docs/references/voxengine/jev/noul), [Jev.choice](https://voximplant.com/docs/references/voxengine/jev/choice), [Jev.score](https://voximplant.com/docs/references/voxengine/jev/score), and [Jev.box](https://voximplant.com/docs/references/voxengine/jev/box) (see [System One questions](https://voximplant.com/docs/references/voxengine/jev/systemonequestions) in the API reference). Question and answer shapes follow the [TypeSafe System One documentation](https://docs.typesafe.ai/concepts/system-one).
+
+When `model` is omitted in the request body, the platform uses the **jev-latest** alias unless you choose **jev-preview** (for example, when using `Jev.box`).
+
+Here is a complete scenario that runs **two** System One requests on **one** connection:
+
+<Code
+  src="../../../examples/jev/jev-system-one.js"
+  title="jev-system-one.js"
+  language="javascript"
+  maxLines={0}
+/>
+
+## When to use System One vs voice AI clients
+
+| Goal | Module direction |
+| --- | --- |
+| Realtime speech in/out, TTS, STT, conversational agent | [OpenAI](/voice-ai/openai/overview), [Yandex](https://voximplant.com/docs/voice-ai/yandex/realtime-client), [Deepgram](/voice-ai/deepgram/overview), and other Voice AI clients |
+| Structured fields from text (routing, triage, scoring) | **Jev System One** (`Modules.Jev`) |
+
+System One does not replace [VoxEngine.sendMediaBetween](https://voximplant.com/docs/references/voxengine/voxengine/sendmediabetween) voice pipelines; combine it with your call flow (answer the call, run decisions, then route or speak via TTS/Avatar as needed).
+
+## See also
+
+- [Jev (TypeSafe System One)](/voice-ai/jev/overview)
+- [Bring your own LLM](/voice-ai/bring-your-own-llm/open-ai-api-compatibility)
+- [Voice AI overview](/voice-ai/client-options)

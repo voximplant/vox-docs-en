@@ -1,0 +1,42 @@
+---
+title: VoxEngine
+subtitle: Reference for the JavaScript runtime that executes Voximplant scenarios
+---
+
+VoxEngine is the server-side JavaScript runtime that executes every Voximplant
+scenario. It exposes classes, namespaces and enums for handling calls, audio
+streaming, conferences, ACD, ASR, TTS, push notifications, integrations
+with third-party AI vendors (OpenAI, Gemini, Ultravox, Cartesia, Deepgram,
+ElevenLabs, Grok, Inworld, Pipecat) and more.
+
+## How this reference is structured
+
+- **Classes** — runtime entities you interact with: `Call`, `Player`,
+  `Recorder`, `Conference`, `ACDRequest`, `StreamingAgent`, and friends.
+- **Enums** — event name collections (`CallEvents`, `PlayerEvents`, …) and
+  option enums (`CallAudioQuality`, `DTMFType`, …).
+- **Namespaces** — module-scoped APIs you opt into with
+  `require(Modules.<Name>)` (`AI`, `Net`, `Crypto`, `Logger`,
+  `ApplicationStorage`, the vendor namespaces, etc.).
+
+Each page lists the methods, properties and events of the symbol, plus every
+`@example` that ships in the TypeScript declarations.
+
+## Source of truth
+
+This reference is generated verbatim from the `voxengine.d.ts` typings file
+that ships with every scenario runtime:
+
+```
+https://cdn.voximplant.com/voxengine_typings/voxengine.d.ts
+```
+
+If you spot a discrepancy between this reference and the runtime behaviour,
+the typings file is authoritative and the page will be regenerated on the
+next update.
+
+<Tip>
+  Looking for guides and patterns instead of a symbol-by-symbol reference? See
+  [VoxEngine guides](/overview/how-voximplant-works/basic-concepts) for tutorials, recipes and migration
+  playbooks.
+</Tip>

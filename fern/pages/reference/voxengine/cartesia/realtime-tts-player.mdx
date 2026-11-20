@@ -1,0 +1,145 @@
+---
+title: RealtimeTTSPlayer
+---
+
+**Extends:** `BasePlayer`
+
+## Methods
+
+### cancelContextRequest
+
+Cancels a context request. No more messages are generated for that context.
+
+```ts
+cancelContextRequest(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+### clearBuffer
+
+Clears a [Cartesia.RealtimeTTSPlayer](/reference/voxengine/cartesia/realtime-tts-player) buffer.
+
+```ts
+clearBuffer(): void
+```
+
+### generationRequest
+
+Appends text to a [Cartesia.RealtimeTTSPlayer](/reference/voxengine/cartesia/realtime-tts-player).
+
+Use this to generate speech for a transcript.
+
+```ts
+generationRequest(parameters: Object): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="Object" required />
+
+## Inherited Methods
+
+### addEventListener
+
+*Inherited from `BasePlayer`.*
+
+Adds a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: PlayerEvents | T, callback: (event: _PlayerEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="PlayerEvents | T" required />
+
+<ParamField path="callback" type="(event: _PlayerEvents[T]) => any" required />
+
+### id
+
+*Inherited from `BasePlayer`.*
+
+Returns the player's id.
+
+```ts
+id(): string
+```
+
+### pause
+
+*Inherited from `BasePlayer`.*
+
+Pauses playback. To continue the playback use the `Player.resume` method.
+
+```ts
+pause(): void
+```
+
+### removeEventListener
+
+*Inherited from `BasePlayer`.*
+
+Removes a handler for the specified [PlayerEvents](/reference/voxengine/player-events) event.
+
+```ts
+removeEventListener(event: PlayerEvents | T, callback?: (event: _PlayerEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="PlayerEvents | T" required />
+
+<ParamField path="callback" type="(event: _PlayerEvents[T]) => any" />
+
+### resume
+
+*Inherited from `BasePlayer`.*
+
+Resumes playback after the `Player.pause` method is called.
+
+```ts
+resume(): void
+```
+
+### sendMediaTo
+
+*Inherited from `BasePlayer`.*
+
+Starts sending media from the player to the media unit.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stop
+
+*Inherited from `BasePlayer`.*
+
+Stops playback. The current player's instance is destroyed.
+
+```ts
+stop(): void
+```
+
+### stopMediaTo
+
+*Inherited from `BasePlayer`.*
+
+Stops sending media from the player to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />

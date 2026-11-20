@@ -1,0 +1,85 @@
+---
+title: "Example: Placing an outbound call"
+description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to ElevenLabs Agents once the callee answers."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to ElevenLabs Agents once the callee answers.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Store your ElevenLabs API key in Voximplant [Secrets](/platform/storage/secret-storage) under `ELEVENLABS_API_KEY`.
+- Store your ElevenLabs Agent ID in Voximplant [Secrets](/platform/storage/secret-storage) under `ELEVENLABS_AGENT_ID`.
+- Optional: set `ELEVENLABS_BASE_URL` in the example if your ElevenLabs account should use a custom Agents endpoint.
+- Ensure outbound calling is enabled for your Voximplant application and that your caller ID is verified.
+
+## Outbound call parameters
+
+The example expects destination and caller ID in `customData` (read via `VoxEngine.customData()`):
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+## Launch the routing rule
+
+For quick testing, you can start this outbound scenario from the Voximplant Control Panel:
+
+1. Open your Voximplant application and go to the **Routing** tab.
+2. Select the routing rule that has this scenario attached.
+3. Click **Run**.
+4. Provide **Custom data** (max 200 bytes) with `destination` and `callerId`:
+
+```json title="Custom data example"
+{"destination":"+15551234567","callerId":"+15557654321"}
+```
+
+For production, start the routing rule via the Management API [`startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method (pass `rule_id`, and pass the same JSON string in `script_custom_data`).
+
+## Alternate outbound destinations
+
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+
+- **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
+- **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
+- **Voximplant users** (`VoxEngine.callUser`): calls another app user inside the same Voximplant application such as web SDK, mobile SDK, or SIP user.
+
+Relevant guides:
+
+- [SIP calling options](/voice-ai/network-options/sip)
+- [Voximplant users calling options](/voice-ai/network-options/web-mobile)
+- [WhatsApp calling options](/voice-ai/network-options/whatsapp)
+
+## Connect call audio
+
+After the callee answers, the example creates an `ElevenLabs.AgentsClient` and bridges audio:
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, agentsClient);
+```
+
+## Barge-in
+
+```js title="Barge-in"
+agentsClient.addEventListener(ElevenLabs.AgentsEvents.Interruption, () => {
+  agentsClient.clearMediaBuffer();
+});
+```
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/elevenlabs).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/elevenlabs-agents/voxeengine-elevenlabs-outbound.js"
+  title="voxeengine-elevenlabs-outbound.js"
+  language="javascript"
+  maxLines={0}
+/>

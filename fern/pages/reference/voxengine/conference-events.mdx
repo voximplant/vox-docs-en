@@ -1,0 +1,41 @@
+---
+title: ConferenceEvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.Conference); ```'
+---
+
+## Values
+
+<a id="conferenceerror" />
+<ParamField path="ConferenceError" type="'Conference.Error'">
+Triggers in case of errors in the conference.
+</ParamField>
+
+<a id="started" />
+<ParamField path="Started" type="'Conference.Started'">
+Triggered when the conference has started. I.e., the call of `VoxEngine.createConference` triggers the event.
+</ParamField>
+
+<a id="stopped" />
+<ParamField path="Stopped" type="'Conference.Stopped'">
+Triggered when the conference is stopped. I.e., the call of `Conference.stop` triggers the event.
+</ParamField>
+
+<a id="endpointadded" />
+<ParamField path="EndpointAdded" type="'Conference.EndpointAdded'">
+Triggered when the endpoint is added.
+</ParamField>
+
+<a id="endpointupdated" />
+<ParamField path="EndpointUpdated" type="'Conference.EndpointUpdated'">
+Triggered when the endpoint is updated.
+</ParamField>
+
+<a id="endpointremoved" />
+<ParamField path="EndpointRemoved" type="'Conference.EndpointRemoved'">
+Triggered when the endpoint is removed.
+</ParamField>
+
+<a id="endpointmanaged" />
+<ParamField path="EndpointManaged" type="'Conference.EndpointManaged'">
+Triggered when the endpoint is manged.
+</ParamField>

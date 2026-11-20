@@ -1,0 +1,29 @@
+---
+title: Logger
+---
+
+## Functions
+
+### hideTones
+
+Whether to disable DTMF logging.
+
+```ts
+hideTones(flag: boolean): void
+```
+
+**Parameters**
+
+<ParamField path="flag" type="boolean" required />
+
+### write
+
+Writes a specified message to the session logger. Logs are stored in the [call history](https://manage.voximplant.com/calls).
+
+```ts
+write(message: string): void
+```
+
+**Parameters**
+
+<ParamField path="message" type="string" required />

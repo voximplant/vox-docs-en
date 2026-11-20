@@ -1,0 +1,115 @@
+---
+title: "Working with API requests"
+subtitle: "Learn how to make and accept HTTP requests and send emails in your Voximplant scenarios."
+---
+
+VoxEngine facilitates communication between our cloud and third-party services or APIs through the [Net](/reference/voxengine/net) namespace. Additionally, it provides guidance on creating and handling HTTP requests, as well as sending emails, within your JavaScript cloud scenarios.
+
+## HTTP API requests
+
+Two methods that allow performing requests: [httpRequest](/reference/voxengine/net#httprequest) and [httpRequestAsync](/reference/voxengine/net#httprequestasync).
+
+The **httpRequest** method performs synchronous HTTP requests. Its second parameter is a callback function that can accept the [HttpRequestResult](/reference/voxengine/net#httprequestresult) object and process the object's properties.
+
+```javascript title="Synchronous request"
+Net.httpRequest(
+  'https://voximplant.com/',
+  function (e) {
+    if (e.code == 200) {
+      Logger.write('Connected successfully');
+      Logger.write('code:  ' + e.code);
+      Logger.write('data:  ' + e.data);
+      Logger.write('error:  ' + e.error);
+      Logger.write('headers:  ' + JSON.stringify(e.headers));
+      Logger.write('raw_headers:  ' + e.raw_headers);
+      Logger.write('text:  ' + e.text);
+    } else {
+      Logger.write('Unable to connect');
+    }
+  },
+  { rawOutput: true }
+);
+
+```
+
+The **httpRequestAsync** method performs asynchronous HTTP requests, i.e., the method returns a Promise that resolves with the **HttpRequestResult** object. 
+
+```javascript title="Asynchronous request"
+Net.httpRequestAsync('https://voximplant.com/').then(function () {
+  Logger.write('request complete');
+});
+
+```
+
+<Info title="Timeouts and default verb">
+  By default, both methods use the GET verb to perform requests. TCP connect timeout is 6 seconds, and total request timeout is 90 seconds.
+</Info>
+
+## WebSocket connections
+
+In addition to HTTP API requests, VoxEngine allows developers to use the WebSocket protocol for two-way communication.
+
+To send data via the WebSocket protocol:
+
+1. Require the `Modules.WebSocket` module in your scenario
+2. Create a WebSocket connection via the [VoxEngine.createWebSocket](/reference/voxengine/voxengine#createwebsocket) method
+3. Use the [webSocket.send](/reference/voxengine/websocket#send) method to send text data into the connection
+4. Subscribe to [WebSocketEvents](/reference/voxengine/websocket-events), such as `MESSAGE`, to process the replies.
+
+Here is an example of sending text data to a WebSocket connection:
+
+```javascript title="Sending text via WebSockets"
+
+VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
+  call.answer();
+  call.addEventListener(CallEvents.Disconnected, VoxEngine.terminate);
+
+  const webSocket = VoxEngine.createWebSocket('wss://your-url.example.com');
+
+  webSocket.addEventListener(WebSocketEvents.OPEN, () => {
+    Logger.write('Sending message');
+    webSocket.send('Some test message');
+  });
+  webSocket.addEventListener(WebSocketEvents.MESSAGE, (message) => {
+    Logger.write(`Received message ${message.text}`);
+  });
+  webSocket.addEventListener(WebSocketEvents.CLOSE, () => {
+    VoxEngine.terminate();
+  });
+});
+
+```
+
+You can find more information about WebSocket media payloads in the [media stream format](/platform/media-streams/media-over-web-sockets#media-stream-format) section.
+
+## Sending emails
+
+Sometimes it is convenient or even necessary to send emails to an external service. To do that, you can use either the [sendMail](/reference/voxengine/net#sendmail) or [sendMailAsync](/reference/voxengine/net#sendmailasync) methods. Create `SMTP_LOGIN` and `SMTP_PASSWORD` [Secrets](/platform/storage/secret-storage) with your SMTP credentials. Both methods process the [SendMailResult](/reference/voxengine/net#sendmailresult) object after a successful call.
+
+```javascript title="Synchronous email"
+const smtpLogin = VoxEngine.getSecretValue('SMTP_LOGIN');
+const smtpPassword = VoxEngine.getSecretValue('SMTP_PASSWORD');
+if (!smtpLogin || !smtpPassword) throw new Error('Set SMTP_LOGIN and SMTP_PASSWORD in Voximplant Secrets');
+
+Net.sendMail('smtp.server.com', 'from@server.com', 'to@server.com', 'Title of the letter', 'Body of the letter', function stub() {}, {
+  login: smtpLogin,
+  password: smtpPassword,
+  port: 22,
+});
+
+```
+
+For asynchronous sending, use this:
+
+```javascript title="Asynchronous email"
+const smtpLogin = VoxEngine.getSecretValue('SMTP_LOGIN');
+const smtpPassword = VoxEngine.getSecretValue('SMTP_PASSWORD');
+if (!smtpLogin || !smtpPassword) throw new Error('Set SMTP_LOGIN and SMTP_PASSWORD in Voximplant Secrets');
+
+const result = await Net.sendMailAsync('smtp.server.com', 'from@server.com', 'to@server.com', 'Title of the letter', 'Body of the letter', {
+  login: smtpLogin,
+  password: smtpPassword,
+  port: 22,
+});
+
+```

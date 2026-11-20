@@ -6,14 +6,14 @@ Voximplant client SDKs provide real-time connection telemetry and call quality m
 
 Voximplant SDKs emit dedicated events when network or hardware issues degrade call quality. You can listen for these events to alert users or adapt your UI:
 
-* **Codec mismatch** ([Android](), [iOS]()): Triggered when local audio, video, or screen sharing is encoded using a codec different from the one specified in initialization or call settings.
-* **High media latency** ([Android](), [iOS]()): Triggered when significant round-trip network media latency is detected.
-* **ICE disconnected** ([Android](), [iOS]()): Triggered when the underlying WebRTC ICE connection switches to a disconnected state during an active call.
-* **Local video degradation** ([Android](), [iOS]()): Triggered when transmitted video resolution drops below captured camera resolution due to bandwidth constraints or CPU throttling.
-* **Packet loss** ([Android](), [iOS]()): Emitted every 2.5 seconds to report packet loss percentage over the previous interval.
-* **No audio captured** ([Android](), [iOS]()): Triggered when the local microphone captures no audio signal (e.g., hardware mute, system permission issues).
-* **No audio received** ([Android](), [iOS]()): Triggered when no audio stream is received from the remote endpoint.
-* **No video received** ([Android](), [iOS]()): Triggered when no video stream is received from the remote endpoint.
+* **Codec mismatch** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when local audio, video, or screen sharing is encoded using a codec different from the one specified in initialization or call settings.
+* **High media latency** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when significant round-trip network media latency is detected.
+* **ICE disconnected** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when the underlying WebRTC ICE connection switches to a disconnected state during an active call.
+* **Local video degradation** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when transmitted video resolution drops below captured camera resolution due to bandwidth constraints or CPU throttling.
+* **Packet loss** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Emitted every 2.5 seconds to report packet loss percentage over the previous interval.
+* **No audio captured** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when the local microphone captures no audio signal (e.g., hardware mute, system permission issues).
+* **No audio received** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when no audio stream is received from the remote endpoint.
+* **No video received** ([Android](/sdk/android), [iOS](/sdk/i-os-and-mac-os/getting-started)): Triggered when no video stream is received from the remote endpoint.
 
 ## Advanced connection statistics
 

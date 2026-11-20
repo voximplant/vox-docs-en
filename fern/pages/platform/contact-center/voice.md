@@ -8,8 +8,8 @@ All incoming and outgoing tasks are placed in **a queue** before an agent receiv
 
 To create a queue:
 
-1. Log in to the [control panel]().
-2. Open an existing [application]() or create a new one.
+1. Log in to the [control panel](https://manage.voximplant.com).
+2. Open an existing [application](/platform/getting-started/create-an-application) or create a new one.
 3. Navigate to **SmartQueue**.
 4. On the **Queues** tab, click **Create queue**.
 5. Configure the queue settings:
@@ -29,7 +29,7 @@ Agents are application users assigned to process tasks and handle calls from des
 
 To create an agent:
 
-1. In the [control panel](), open your [application]().
+1. In the [control panel](https://manage.voximplant.com), open your [application](/platform/getting-started/create-an-application).
 2. Navigate to **SmartQueue** → **Agents**.
 3. Click **Add agent**.
 4. Enter the agent's **Username**, **Display name**, and **Password**.
@@ -39,7 +39,7 @@ To create an agent:
 You can edit or delete agents anytime from the **Agents** tab.
 
 <Info title="Agents are application users">
-Agents are standard Voximplant application users. You can also create agents in the [Users]() section of your application and assign queues and skills to them in the **SmartQueue** section.
+Agents are standard Voximplant application users. You can also create agents in the [Users](/platform/getting-started/create-users) section of your application and assign queues and skills to them in the **SmartQueue** section.
 </Info>
 
 ## Set up agent skills
@@ -48,11 +48,11 @@ Skills allow you to route calls only to agents who meet specific criteria (such 
 
 For example, you can create an *Italian* skill, assign it to Italian-speaking agents, and define proficiency levels. The queue will then prioritize or restrict Italian-language calls to those agents.
 
-To learn more about skill-based routing, see [Agent skills]().
+To learn more about skill-based routing, see [Agent skills](/platform/contact-center/agent-skills).
 
 ## Set up an agent workspace
 
-An agent workspace is the client application where agents receive, manage, and place calls. You can build a custom agent desktop using any Voximplant client [SDK](). You can also test your setup using the built-in softphone in the Control Panel.
+An agent workspace is the client application where agents receive, manage, and place calls. You can build a custom agent desktop using any Voximplant client [SDK](/sdk/overview). You can also test your setup using the built-in softphone in the Control Panel.
 
 When initializing the Web SDK, pass `queueType` set to `SmartQueue`:
 
@@ -137,7 +137,7 @@ function setStatus(newStatus) {
 
 You can configure up to 10 custom statuses with customized display names (`CUSTOM_1` through `CUSTOM_10`). Custom statuses function in DND mode to provide detailed activity tracking (such as Lunch, Training, or Meeting).
 
-To assign a display name to a custom status, call the [SQ_SetAgentCustomStatusMapping]() HTTP API method:
+To assign a display name to a custom status, call the [SQ_SetAgentCustomStatusMapping](/reference/management-api/reference/smartqueue/sq-set-agent-custom-status-mapping) HTTP API method:
 
 ```bash title="Set custom status name"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_SetAgentCustomStatusMapping" \
@@ -151,7 +151,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_SetAgentCustomStatusMap
 }
 ```
 
-To inspect existing custom status mappings, use [SQ_GetAgentCustomStatusMapping]():
+To inspect existing custom status mappings, use [SQ_GetAgentCustomStatusMapping](/reference/management-api/reference/smartqueue/sq-get-agent-custom-status-mapping):
 
 ```bash title="Get custom status mappings"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_GetAgentCustomStatusMapping" \
@@ -180,7 +180,7 @@ curl -X POST "https://api.voximplant.com/platform_api/SQ_GetAgentCustomStatusMap
 }
 ```
 
-To delete a custom status name mapping, use [SQ_DeleteAgentCustomStatusMapping]():
+To delete a custom status name mapping, use [SQ_DeleteAgentCustomStatusMapping](/reference/management-api/reference/smartqueue/sq-delete-agent-custom-status-mapping):
 
 ```bash title="Delete custom status mapping"
 curl -X POST "https://api.voximplant.com/platform_api/SQ_DeleteAgentCustomStatusMapping" \
@@ -204,12 +204,12 @@ function setLunch() {
 
 ## Set up a VoxEngine scenario
 
-In a contact center, the primary role of the VoxEngine [scenario]() is to receive incoming or outgoing calls and place them into the appropriate SmartQueue.
+In a contact center, the primary role of the VoxEngine [scenario](/platform/getting-started/create-a-scenario) is to receive incoming or outgoing calls and place them into the appropriate SmartQueue.
 
-* For incoming calls, handle the [CallAlerting]() event and enqueue the call.
+* For incoming calls, handle the [CallAlerting](/reference/voxengine/app-events#callalerting) event and enqueue the call.
 * For outbound campaigns, initiate the call in the [Started]() event and enqueue it after the customer [answers]().
 
-Use the [enqueueTask]() method to place a call into a queue:
+Use the [enqueueTask](/reference/voxengine/voxengine#enqueuetask) method to place a call into a queue:
 
 ```javascript title="Voice contact center scenario"
 require(Modules.SmartQueue);
@@ -269,7 +269,7 @@ function addToQueue(call) {
 ```
 
 <Info title="Inbound numbers">
-To receive incoming phone calls, you must [buy a phone number]() and bind it to your application's routing rule.
+To receive incoming phone calls, you must [buy a phone number](/platform/getting-started/buy-a-phone-number) and bind it to your application's routing rule.
 </Info>
 
 ---

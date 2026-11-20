@@ -1,0 +1,813 @@
+---
+title: Deepgram
+subtitle: Voice Agent API and Realtime TTS for Deepgram scenarios.
+---
+
+Deepgram provides a VoxEngine client for connecting a call or media unit to the Deepgram Voice Agent API over WebSocket.
+
+Use `Deepgram.createVoiceAgentClient(...)` to create a `VoiceAgentClient` for the current scenario.
+
+Use `Deepgram.createRealtimeTTSPlayer(...)` when you only need realtime text-to-speech playback.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Deepgram connector overview" icon="fa-duotone fa-circle-info" href="/voice-ai/deepgram/overview">
+    Learn how Deepgram Voice Agent fits into a VoxEngine call flow.
+  </Card>
+</CardGroup>
+
+## Contents
+
+- <Icon icon="fa-duotone fa-terminal" /> [Usage](#usage): required module import and basic flow.
+- <Icon icon="fa-duotone fa-brackets-curly" /> [Factory functions](#factory-functions): create the Deepgram Voice Agent client and Realtime TTS player.
+- <Icon icon="fa-duotone fa-function" /> [Methods](#methods): media and conversation control methods.
+- <Icon icon="fa-duotone fa-waveform-lines" /> [Events](#events): WebSocket media bridge events.
+- <Icon icon="fa-duotone fa-bolt" /> [VoiceAgentEvents](#voiceagentevents): Deepgram Voice Agent event names and payload fields.
+
+## Usage
+
+Add the module before using the namespace:
+
+```js
+require(Modules.Deepgram);
+```
+
+Create the client, bridge media, and listen for Voice Agent events.
+
+## Factory functions
+
+<a id="createrealtimettsplayer" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createRealtimeTTSPlayer
+
+Creates a new [Deepgram.RealtimeTTSPlayer](/reference/voxengine/deepgram/realtime-tts-player) instance with the specified text (TTS is used to play the text). You can attach media streams later via the `Deepgram.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createRealtimeTTSPlayer(text: string, parameters?: RealtimeTTSPlayerParameters): RealtimeTTSPlayer
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `text` | `string` | ✓ |  |
+| `parameters` | <code>RealtimeTTS<wbr />Player<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>RealtimeTTS<wbr />Player</code> | The requested `RealtimeTTSPlayer` value. |
+
+<a id="createvoiceagentclient" />
+### <Icon icon="fa-duotone fa-brackets-curly" /> createVoiceAgentClient
+
+Creates a [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance.
+
+```ts
+createVoiceAgentClient(parameters: VoiceAgentClientParameters): Promise<VoiceAgentClient>
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>VoiceAgent<wbr />Client<wbr />Parameters</code> | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| <code>Promise&lt;VoiceAgentClient&gt;</code> | Resolves to the [`Deepgram.VoiceAgentClient`](#voiceagentclient) instance. |
+
+## VoiceAgentClient
+
+## Methods
+
+<a id="addeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> addEventListener
+
+Adds a handler for the specified [Deepgram.VoiceAgentEvents](/reference/voxengine/deepgram#voiceagentevents) or [Deepgram.Events](/reference/voxengine/deepgram#events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: Events | VoiceAgentEvents | string, callback: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Events \| VoiceAgent<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✓ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="clearmediabuffer" />
+### <Icon icon="fa-duotone fa-function" /> clearMediaBuffer
+
+Clears the VoiceAgent WebSocket media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `parameters` | <code>ClearMedia<wbr />Buffer<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="close" />
+### <Icon icon="fa-duotone fa-function" /> close
+
+Closes the VoiceAgent connection (over WebSocket) or connection attempt.
+
+```ts
+close(): void
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="id" />
+### <Icon icon="fa-duotone fa-function" /> id
+
+Returns the VoiceAgentClient id.
+
+```ts
+id(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+<a id="removeeventlistener" />
+### <Icon icon="fa-duotone fa-function" /> removeEventListener
+
+Removes a handler for the specified [Deepgram.VoiceAgentEvents](/reference/voxengine/deepgram#voiceagentevents) or [Deepgram.Events](/reference/voxengine/deepgram#events) event.
+
+```ts
+removeEventListener(event: Events | VoiceAgentEvents | string, callback?: (event: object) => any): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `event` | <code>Events \| VoiceAgent<wbr />Events \| string</code> | ✓ | Event constant or event name to subscribe to. |
+| `callback` | <code>(event: object) => any</code> | ✗ | Function called when the event is emitted. |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendfunctioncallresponse" />
+### <Icon icon="fa-duotone fa-function" /> sendFunctionCallResponse
+
+Send a message to provide a function call response in the middle of a conversation.
+[https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1SendFunctionCallResponse](https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1SendFunctionCallResponse)
+
+```ts
+sendFunctionCallResponse(input: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `input` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendinjectagentmessage" />
+### <Icon icon="fa-duotone fa-function" /> sendInjectAgentMessage
+
+Send a message to immediately trigger an Agent statement.
+[https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1InjectAgentMessage](https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1InjectAgentMessage)
+
+```ts
+sendInjectAgentMessage(input: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `input` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendinjectusermessage" />
+### <Icon icon="fa-duotone fa-function" /> sendInjectUserMessage
+
+Send a text based message to the agent.
+[https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1InjectUserMessage](https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1InjectUserMessage)
+
+```ts
+sendInjectUserMessage(input: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `input` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendmediato" />
+### <Icon icon="fa-duotone fa-function" /> sendMediaTo
+
+Starts sending media from the VoiceAgent (via WebSocket) to the media unit. VoiceAgent works in real time.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+| `parameters` | <code>SendMedia<wbr />Parameters</code> | ✗ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendupdateprompt" />
+### <Icon icon="fa-duotone fa-function" /> sendUpdatePrompt
+
+Send a message to update the system prompt of the agent.
+[https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1UpdatePrompt](https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1UpdatePrompt)
+
+```ts
+sendUpdatePrompt(input: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `input` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="sendupdatespeak" />
+### <Icon icon="fa-duotone fa-function" /> sendUpdateSpeak
+
+Send a message to change the Speak model in the middle of a conversation.
+[https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1UpdateSpeak](https://developers.deepgram.com/reference/voice-agent/voice-agent#send.AgentV1UpdateSpeak)
+
+```ts
+sendUpdateSpeak(input: Object): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `input` | `Object` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="stopmediato" />
+### <Icon icon="fa-duotone fa-function" /> stopMediaTo
+
+Stops sending media from the VoiceAgent (via WebSocket) to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit): void
+```
+
+**Parameters**
+
+| Parameter | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `mediaUnit` | `VoxMediaUnit` | ✓ |  |
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `void` | Does not return a value. |
+
+<a id="websocketid" />
+### <Icon icon="fa-duotone fa-function" /> webSocketId
+
+Returns the VoiceAgent WebSocket id.
+
+```ts
+webSocketId(): string
+```
+
+**Parameters**
+
+This method does not accept parameters.
+
+**Returns**
+
+| Type | Description |
+| --- | --- |
+| `string` | The requested string value. |
+
+## Events
+
+These events describe audio received through the Deepgram WebSocket media bridge.
+
+<a id="events-websocketmediastarted" />
+<a id="websocketmediastarted" />
+<a id="-websocketmediastarted" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaStarted
+
+Triggered when the audio stream sent by a third party through a Deepgram WebSocket starts playing.
+
+Event constant: `Events.WebSocketMediaStarted`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `encoding` | `string` | ✗ | Audio encoding formats. |
+| <code>custom<wbr />Parameters</code> | <code>&#123; [key: string]: string &#125;</code> | ✗ | Custom parameters. |
+
+<a id="events-websocketmediaended" />
+<a id="websocketmediaended" />
+<a id="-websocketmediaended" />
+### <Icon icon="fa-duotone fa-bolt" /> Events.WebSocketMediaEnded
+
+Triggered after the end of the audio stream sent by a third party through a Deepgram WebSocket (**1 second of silence**).
+
+Event constant: `Events.WebSocketMediaEnded`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `tag` | `string` | ✗ | Special tag to name audio streams sent over one WebSocket connection. With it, one can send 2 audios to 2 different media units at the same time. |
+| `mediaInfo` | <code>WebSocket<wbr />MediaInfo</code> | ✗ | Information about the audio stream that can be obtained after the stream stops or pauses (**1 second of silence**). |
+
+## VoiceAgentEvents
+
+These events mirror server messages from the Deepgram Voice Agent API. The `data` field contains the provider event payload.
+
+<AccordionGroup>
+<a id="voiceagentevents-unknown" />
+<a id="unknown" />
+<a id="-unknown" />
+<Accordion title="Unknown">
+
+The unknown event.
+
+Event constant: `VoiceAgentEvents.Unknown`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | This event payload is provider-specific. See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent) for the full payload shape. |
+</Accordion>
+<a id="voiceagentevents-httpresponse" />
+<a id="httpresponse" />
+<a id="-httpresponse" />
+<Accordion title="HTTPResponse">
+
+The HTTP response event.
+
+Event constant: `VoiceAgentEvents.HTTPResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="voiceagentevents-welcome" />
+<a id="welcome" />
+<a id="-welcome" />
+<Accordion title="Welcome">
+
+Receive a welcome message from the server to confirm the websocket has opened. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Welcome](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Welcome)
+
+Event constant: `VoiceAgentEvents.Welcome`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive welcome message from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Welcome). |
+| `data.type` | `"Welcome"` | ✓ | Message type identifier for welcome message |
+| `data.request_id` | `string` | ✓ | Unique identifier for the request |
+
+Example `data`:
+
+```json
+{
+  "type": "Welcome"
+}
+```
+</Accordion>
+<a id="voiceagentevents-settingsapplied" />
+<a id="settingsapplied" />
+<a id="-settingsapplied" />
+<Accordion title="SettingsApplied">
+
+Confirms the server has successfully received and applied the Settings message. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SettingsApplied](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SettingsApplied)
+
+Event constant: `VoiceAgentEvents.SettingsApplied`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive settings applied message from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SettingsApplied). |
+| `data.type` | <code>"Settings<wbr />Applied"</code> | ✓ | Message type identifier for settings applied confirmation |
+
+Example `data`:
+
+```json
+{
+  "type": "SettingsApplied"
+}
+```
+</Accordion>
+<a id="voiceagentevents-conversationtext" />
+<a id="conversationtext" />
+<a id="-conversationtext" />
+<Accordion title="ConversationText">
+
+Facilitates real-time communication by relaying spoken statements from both the user and the agent. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1ConversationText](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1ConversationText)
+
+Event constant: `VoiceAgentEvents.ConversationText`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive conversation text from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1ConversationText). |
+| `data.type` | <code>"Conversation<wbr />Text"</code> | ✓ | Message type identifier for conversation text |
+| `data.role` | `unknown` | ✓ | Identifies who spoke the statement |
+| `data.content` | `string` | ✓ | The actual statement that was spoken |
+| `data.languages_hinted` | `string[]` | ✓ | The language hints that were active at the time of the turn. Only present on user-role messages when the listen model is flux-general-multi. Optional. |
+| `data.languages` | `string[]` | ✓ | Languages detected in the user's speech, sorted by word count (descending). Only present on user-role messages when the listen model is flux-general-multi. Optional. |
+
+Example `data`:
+
+```json
+{
+  "type": "ConversationText"
+}
+```
+</Accordion>
+<a id="voiceagentevents-userstartedspeaking" />
+<a id="userstartedspeaking" />
+<a id="-userstartedspeaking" />
+<Accordion title="UserStartedSpeaking">
+
+Notifies the client that the user has begun speaking. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1UserStartedSpeaking](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1UserStartedSpeaking)
+
+Event constant: `VoiceAgentEvents.UserStartedSpeaking`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive user started speaking message from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1UserStartedSpeaking). |
+| `data.type` | <code>"UserStarted<wbr />Speaking"</code> | ✓ | Message type identifier indicating that the user has begun speaking |
+
+Example `data`:
+
+```json
+{
+  "type": "UserStartedSpeaking"
+}
+```
+</Accordion>
+<a id="voiceagentevents-agentthinking" />
+<a id="agentthinking" />
+<a id="-agentthinking" />
+<Accordion title="AgentThinking">
+
+Informs the client when the agent is processing information. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentThinking](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentThinking)
+
+Event constant: `VoiceAgentEvents.AgentThinking`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive agent thinking message from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentThinking). |
+| `data.type` | <code>"Agent<wbr />Thinking"</code> | ✓ | Message type identifier for agent thinking |
+| `data.content` | `string` | ✓ | The text of the agent's thought process |
+
+Example `data`:
+
+```json
+{
+  "type": "AgentThinking"
+}
+```
+</Accordion>
+<a id="voiceagentevents-functioncallrequest" />
+<a id="functioncallrequest" />
+<a id="-functioncallrequest" />
+<Accordion title="FunctionCallRequest">
+
+Server-initiated message requesting a function call, to be handled by either client or server. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1FunctionCallRequest](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1FunctionCallRequest)
+
+Event constant: `VoiceAgentEvents.FunctionCallRequest`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive function call request from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1FunctionCallRequest). |
+| `data.type` | <code>"Function<wbr />CallRequest"</code> | ✓ | Message type identifier for function call requests |
+| `data.functions` | `unknown[]` | ✓ | Array of functions to be called |
+
+Example `data`:
+
+```json
+{
+  "type": "FunctionCallRequest"
+}
+```
+</Accordion>
+<a id="voiceagentevents-functioncallresponse" />
+<a id="functioncallresponse" />
+<a id="-functioncallresponse" />
+<Accordion title="FunctionCallResponse">
+
+Message containing the result of a function call, sent by client or server. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1ReceiveFunctionCallResponse](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1ReceiveFunctionCallResponse)
+
+Event constant: `VoiceAgentEvents.FunctionCallResponse`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="voiceagentevents-promptupdated" />
+<a id="promptupdated" />
+<a id="-promptupdated" />
+<Accordion title="PromptUpdated">
+
+Confirms that a Prompt Configuration change has been applied. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1PromptUpdated](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1PromptUpdated)
+
+Event constant: `VoiceAgentEvents.PromptUpdated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive prompt update from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1PromptUpdated). |
+| `data.type` | <code>"Prompt<wbr />Updated"</code> | ✓ | Message type identifier for prompt update confirmation |
+
+Example `data`:
+
+```json
+{
+  "type": "PromptUpdated"
+}
+```
+</Accordion>
+<a id="voiceagentevents-speakupdated" />
+<a id="speakupdated" />
+<a id="-speakupdated" />
+<Accordion title="SpeakUpdated">
+
+Confirms that a Speak Configuration change has been applied. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SpeakUpdated](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SpeakUpdated)
+
+Event constant: `VoiceAgentEvents.SpeakUpdated`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive speak update from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1SpeakUpdated). |
+| `data.type` | <code>"Speak<wbr />Updated"</code> | ✓ | Message type identifier for speak update confirmation |
+
+Example `data`:
+
+```json
+{
+  "type": "SpeakUpdated"
+}
+```
+</Accordion>
+<a id="voiceagentevents-agentaudiodone" />
+<a id="agentaudiodone" />
+<a id="-agentaudiodone" />
+<Accordion title="AgentAudioDone">
+
+Get signals that the server has finished sending the final audio segment to the client. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentAudioDone](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentAudioDone)
+
+Event constant: `VoiceAgentEvents.AgentAudioDone`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive agent audio done message from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentAudioDone). |
+| `data.type` | <code>"AgentAudio<wbr />Done"</code> | ✓ | Message type identifier indicating the agent has finished sending audio |
+
+Example `data`:
+
+```json
+{
+  "type": "AgentAudioDone"
+}
+```
+</Accordion>
+<a id="voiceagentevents-latencyreport" />
+<a id="latencyreport" />
+<a id="-latencyreport" />
+<Accordion title="LatencyReport">
+
+Provides a detailed STT, LLM, and TTS latency breakdown for each turn. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentAudioDone#receive.AgentV1LatencyReport](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1AgentAudioDone#receive.AgentV1LatencyReport)
+
+Event constant: `VoiceAgentEvents.LatencyReport`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="voiceagentevents-error" />
+<a id="error" />
+<a id="-error" />
+<Accordion title="Error">
+
+Receive errors from the server if an issue has occurred. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Error](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Error)
+
+Event constant: `VoiceAgentEvents.Error`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive error response from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Error). |
+| `data.type` | `unknown` | ✓ | Message type identifier for error responses |
+| `data.description` | `string` | ✓ | A description of what went wrong |
+| `data.code` | `string` | ✓ | Error code identifying the type of error |
+
+Example `data`:
+
+```json
+{
+  "type": "Error"
+}
+```
+</Accordion>
+<a id="voiceagentevents-warning" />
+<a id="warning" />
+<a id="-warning" />
+<Accordion title="Warning">
+
+Receive warnings from the server if an issue has occurred. [https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Warning](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Warning)
+
+Event constant: `VoiceAgentEvents.Warning`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive warning messages from Deepgram's Voice Agent API See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1Warning). |
+| `data.type` | `unknown` | ✓ | Message type identifier for warnings |
+| `data.description` | `string` | ✓ | Description of the warning |
+| `data.code` | `string` | ✓ | Warning code identifier |
+
+Example `data`:
+
+```json
+{
+  "type": "Warning"
+}
+```
+</Accordion>
+<a id="voiceagentevents-history" />
+<a id="history" />
+<a id="-history" />
+<Accordion title="History">
+
+Provide conversation and function call history when starting a new Voice Agent session. [https://developers.deepgram.com/docs/voice-agent-history](https://developers.deepgram.com/docs/voice-agent-history)
+
+Event constant: `VoiceAgentEvents.History`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | Receive a conversation history message from Deepgram's Voice Agent API. Each message is either a conversation text (with role and content) or a function call record (with function_calls array). See the [partner event documentation](https://developers.deepgram.com/reference/voice-agent/voice-agent#receive.AgentV1History). |
+| `data.type` | `string` | ✓ | Event type identifier. |
+
+Example `data`:
+
+```json
+{
+  "type": "History"
+}
+```
+</Accordion>
+<a id="voiceagentevents-websocketerror" />
+<a id="websocketerror" />
+<a id="-websocketerror" />
+<Accordion title="WebSocketError">
+
+The WebSocket error response event.
+
+Event constant: `VoiceAgentEvents.WebSocketError`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+<a id="voiceagentevents-connectorinformation" />
+<a id="connectorinformation" />
+<a id="-connectorinformation" />
+<Accordion title="ConnectorInformation">
+
+Contains Voice AI integration session information.
+
+Event constant: `VoiceAgentEvents.ConnectorInformation`
+
+**Payload**
+
+| Field | Type | Req. | Description |
+| --- | --- | --- | --- |
+| `client` | <code>VoiceAgent<wbr />Client</code> | ✓ | The [Deepgram.VoiceAgentClient](/reference/voxengine/deepgram#voiceagentclient) instance. |
+| `data` | <code>&#123; custom<wbr />Event?: string; payload?: Object; &#125;</code> | ✗ | The 'payload' parameter contains the event's data. |
+</Accordion>
+</AccordionGroup>

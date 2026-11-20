@@ -1,0 +1,55 @@
+---
+title: PlayerEvents
+subtitle: 9 values
+---
+
+## Values
+
+<a id="created" />
+<ParamField path="Created" type="'Player.Created'">
+Triggered when [Player](/reference/voxengine/player) created.
+</ParamField>
+
+<a id="playbackready" />
+<ParamField path="PlaybackReady" type="'Player.PlaybackReady'">
+Triggers by the `createURLPlayer` and `createTTSPlayer` methods when
+1) the audio file download to the Voximplant cache is finished;
+2) the audio file is found in the cache (i.e., it is in the cache before).
+</ParamField>
+
+<a id="started" />
+<ParamField path="Started" type="'Player.Started'">
+Triggered when playback is started. Note that if the `createURLPlayer` method is called with the **onPause** parameter set to true, the event is not triggered; it is triggered after the `Player.resume` method call.
+</ParamField>
+
+<a id="stopped" />
+<ParamField path="Stopped" type="'Player.Stopped'">
+Triggers as a result of the `Player.stop` method call.
+</ParamField>
+
+<a id="playbackfinished" />
+<ParamField path="PlaybackFinished" type="'Player.PlaybackFinished'">
+Triggered when playback has finished successfully or with an error.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'Player.Error'">
+Triggered when playback has finished with an error.
+</ParamField>
+
+<a id="playbackmarkerreached" />
+<ParamField path="PlaybackMarkerReached" type="'Player.PlaybackMarkerReached'">
+Triggered when `Player.addMarker` is reached.
+</ParamField>
+
+<a id="playbackbuffering" />
+<ParamField path="PlaybackBuffering" type="'Player.Buffering'">
+Triggered when an audio file is playing faster than it is being loaded.
+</ParamField>
+
+<a id="audiochunksplaybackfinished" />
+<ParamField path="AudioChunksPlaybackFinished" type="'Player.AudioChunksPlaybackFinished'">
+Triggered when an audio chunk playback is finished. Note that this event is triggered only for RealtimeTTSPlayer instances.
+
+For [VoxTTS.RealtimeTTSPlayer](/reference/voxengine/vox-tts/realtime-tts-player), the optional **final** field indicates whether the completed flush ends the current phrase or is an intermediate auto-flush.
+</ParamField>

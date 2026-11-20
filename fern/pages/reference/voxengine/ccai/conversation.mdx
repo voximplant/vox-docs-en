@@ -1,0 +1,76 @@
+---
+title: Conversation
+subtitle: Represents a CCAI conversation instance.
+---
+
+## Constructor
+
+```ts
+new Conversation(settings: CCAI.ConversationSettings)
+```
+
+**Parameters**
+
+<ParamField path="settings" type="CCAI.ConversationSettings" required />
+
+```ts
+new Conversation(settings: CCAI.ConversationSettings)
+```
+
+**Parameters**
+
+<ParamField path="settings" type="CCAI.ConversationSettings" required />
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [CCAI.Events.Conversation](/reference/voxengine/ccai/events/conversation) event. Use only functions as handlers; anything except a function leads to an error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: CCAI.Events.Conversation | T, callback: (event: CCAI.Events._ConversationEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Conversation | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._ConversationEvents[T]) => any" required />
+
+### addParticipant
+
+Adds a participant to the conversation.
+
+```ts
+addParticipant(settings: CCAI.ParticipantSettings): CCAI.Participant
+```
+
+**Parameters**
+
+<ParamField path="settings" type="CCAI.ParticipantSettings" required />
+
+### removeEventListener
+
+Removes a handler for the specified [CCAI.Events.Conversation](/reference/voxengine/ccai/events/conversation) event.
+
+```ts
+removeEventListener(event: CCAI.Events.Conversation | T, callback?: (event: CCAI.Events._ConversationEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="CCAI.Events.Conversation | T" required />
+
+<ParamField path="callback" type="(event: CCAI.Events._ConversationEvents[T]) => any" />
+
+### removeParticipant
+
+Removes a participant from the conversation.
+
+```ts
+removeParticipant(participant: CCAI.Participant): void
+```
+
+**Parameters**
+
+<ParamField path="participant" type="CCAI.Participant" required />

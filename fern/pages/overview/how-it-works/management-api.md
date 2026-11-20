@@ -2,7 +2,7 @@
 
 The **Management API** is an OpenAPI-compliant REST API that gives your backend servers programmatic control over your Voximplant resources. 
 
-Anything you can manage manually inside the [control panel]()—from provisioning phone numbers and deploying scenarios to initiating outbound calls and fetching call logs—can be automated via Management API endpoints.
+Anything you can manage manually inside the [control panel](https://manage.voximplant.com)—from provisioning phone numbers and deploying scenarios to initiating outbound calls and fetching call logs—can be automated via Management API endpoints.
 
 ---
 
@@ -13,9 +13,9 @@ Anything you can manage manually inside the [control panel]()—from provisionin
 * **User & credential management**: Automatically provision application users for Web, iOS, Android, and Flutter SDK clients as users sign up in your product.
 * **Call automation & session control**: Launch outbound calls and multi-party conferences programmatically (`StartScenarios`, `StartConference`), and pass custom payload data directly into active VoxEngine sessions.
 * **Analytics, records & reporting**: Retrieve detailed Call Detail Records (CDRs), download audio/video session recordings, and export billing data.
-* **Multi-tenant account management**: Provision and manage isolated [child accounts]() and balance allocations for enterprise customers or sub-organizations.
+* **Multi-tenant account management**: Provision and manage isolated [child accounts](/overview/how-voximplant-works/management-api) and balance allocations for enterprise customers or sub-organizations.
 
-For complete endpoint documentation and schemas, refer to the [Management API reference]().
+For complete endpoint documentation and schemas, refer to the [Management API reference](/reference/management-api/reference).
 
 ---
 
@@ -27,7 +27,7 @@ Management API requests authenticate server-to-server using **Service Accounts**
 
 To generate service account credentials in the Voximplant Control Panel:
 
-1. Log in to the [Voximplant Control Panel]().
+1. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
 2. In the top or sidebar settings menu, navigate to **Settings** → **Service Accounts**.
 3. Click **Add** in the upper-right corner.
 4. Enter a descriptive name and optional description for the service account (for example, `backend-call-dispatcher`).
@@ -54,7 +54,7 @@ curl -X POST "https://api.voximplant.com/platform_api/StartScenarios" \
   }'
 ```
 
-For complete step-by-step instructions and code samples in Node.js, Python, and other languages, refer to the [JWT authorization guide]().
+For complete step-by-step instructions and code samples in Node.js, Python, and other languages, refer to the [JWT authorization guide](/reference/management-api/authorization).
 
 ---
 
@@ -64,10 +64,10 @@ Voximplant enforces the principle of least privilege using role-based access con
 
 A service account created **without any roles** has access only to non-destructive baseline metadata methods, such as:
 
-* [GetAccountInfo]() — View basic account details
-* [GetResourcePrice]() and [GetSubscriptionPrice]() — Check service rates
-* [GetActualPhoneNumberRegion]() — Inspect geographic number regions
-* [GetRoles](), [GetKeys](), and key management endpoints — Manage subordinate key permissions
+* [GetAccountInfo](/reference/management-api/reference/accounts/get-account-info) — View basic account details
+* [GetResourcePrice](/reference/management-api/reference/accounts/get-resource-price) and [GetSubscriptionPrice](/reference/management-api/reference/accounts/get-subscription-price) — Check service rates
+* [GetActualPhoneNumberRegion](/reference/management-api/reference/phone-numbers/get-actual-phone-number-region) — Inspect geographic number regions
+* [GetRoles](/reference/management-api/reference/role-system/get-roles), [GetKeys](/reference/management-api/reference/role-system/get-keys), and key management endpoints — Manage subordinate key permissions
 
 ### Granting additional roles
 

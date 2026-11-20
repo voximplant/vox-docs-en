@@ -153,7 +153,7 @@ Key mechanisms:
   * [AlreadyDisconnected]() — The client was already disconnected.
 * [Client.state]() — A read-only watchable reflecting the current [ClientState]().
 
-Subscribe to events with [Client.addEventListener()]() and to state changes with the [Watchable.watch()]() API:
+Subscribe to events with [Client.addEventListener()](/reference/voxengine/mcp/client#addeventlistener) and to state changes with the [Watchable.watch()]() API:
 
 ```javascript title="Listen to connection events and state"
 import {
@@ -261,5 +261,5 @@ const login = async () => {
 For detailed documentation on the legacy API, see the [React Native SDK v1 reference]().
 
 The v1 demos are:
-- [Conference]() — conference calls, including video and mute.
+- [Conference](/platform/telephony/conferences) — conference calls, including video and mute.
 - [Video conference]() — audio and video calls with push notifications.

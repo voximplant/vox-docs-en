@@ -1,0 +1,177 @@
+---
+title: WebSocket
+subtitle: 'Represents a WebSocket instance that provides the API for creating and managing an outgoing or incoming WebSocket connection, as well as for sending and…'
+---
+
+Represents a [WebSocket](/reference/voxengine/websocket) instance that provides the API for creating and managing an outgoing or incoming WebSocket connection, as well as for sending and receiving data to/from it.
+
+## Constructor
+
+```ts
+new WebSocket(url: string, parameters?: WebSocketParameters)
+```
+
+**Parameters**
+
+<ParamField path="url" type="string" required />
+
+<ParamField path="parameters" type="WebSocketParameters" />
+
+```ts
+new WebSocket(url: string, parameters?: WebSocketParameters)
+```
+
+**Parameters**
+
+<ParamField path="url" type="string" required />
+
+<ParamField path="parameters" type="WebSocketParameters" />
+
+## Methods
+
+### addEventListener
+
+Adds a handler for the specified [WebSocketEvents](/reference/voxengine/websocket-events) event. Use only functions as handlers; anything except a function leads to the error and scenario termination when a handler is called.
+
+```ts
+addEventListener(event: WebSocketEvents | T, callback: (event: _WebSocketEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="WebSocketEvents | T" required />
+
+<ParamField path="callback" type="(event: _WebSocketEvents[T]) => any" required />
+
+### clearMediaBuffer
+
+Clears the media buffer.
+
+```ts
+clearMediaBuffer(parameters?: ClearMediaBufferParameters): void
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ClearMediaBufferParameters" />
+
+### close
+
+Closes the WebSocket connection or connection attempt.
+
+```ts
+close(): void
+```
+
+### id
+
+Returns the WebSocket's id.
+
+```ts
+id(): string
+```
+
+### removeEventListener
+
+Removes a handler for the specified [WebSocketEvents](/reference/voxengine/websocket-events) event.
+
+```ts
+removeEventListener(event: WebSocketEvents | T, callback?: (event: _WebSocketEvents[T]) => any): void
+```
+
+**Parameters**
+
+<ParamField path="event" type="WebSocketEvents | T" required />
+
+<ParamField path="callback" type="(event: _WebSocketEvents[T]) => any" />
+
+### send
+
+Enqueues the specified data to be transmitted over the WebSocket connection.
+
+```ts
+send(data: string): void
+```
+
+**Parameters**
+
+<ParamField path="data" type="string" required />
+
+### sendMediaTo
+
+Starts sending media from the websocket to the media unit. WebSocket works in real time and the recommended duration of one audio chunk is **20** milliseconds.
+
+```ts
+sendMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+### stopMediaTo
+
+Stops sending media from the websocket to the media unit.
+
+```ts
+stopMediaTo(mediaUnit: VoxMediaUnit, parameters?: SendMediaParameters): void
+```
+
+**Parameters**
+
+<ParamField path="mediaUnit" type="VoxMediaUnit" required />
+
+<ParamField path="parameters" type="SendMediaParameters" />
+
+## Properties
+
+<a id="onclose" />
+<ParamField path="onclose" type="((event: _WebSocketCloseEvent) => any) | null">
+Event handler to call when the connection is closed.
+</ParamField>
+
+<a id="oncreated" />
+<ParamField path="oncreated" type="((event: _WebSocketCreatedEvent) => any) | null">
+Event handler to call when the connection is created.
+</ParamField>
+
+<a id="onerror" />
+<ParamField path="onerror" type="((event: _WebSocketErrorEvent) => any) | null">
+Event handler to call when an error occurs.
+</ParamField>
+
+<a id="onmediaended" />
+<ParamField path="onmediaended" type="((event: _WebSocketMediaEndedEvent) => any) | null">
+Event handler to call after the end of the audio stream.
+</ParamField>
+
+<a id="onmediastarted" />
+<ParamField path="onmediastarted" type="((event: _WebSocketMediaStartedEvent) => any) | null">
+Event handler to call when the audio stream starts playing.
+</ParamField>
+
+<a id="onmessage" />
+<ParamField path="onmessage" type="((event: _WebSocketMessageEvent) => any) | null">
+Event handler to call when a message is received.
+</ParamField>
+
+<a id="onopen" />
+<ParamField path="onopen" type="((event: _WebSocketOpenEvent) => any) | null">
+Event handler to call when the connection is open (ready to send and receive data).
+</ParamField>
+
+<a id="readystate" />
+<ParamField path="readyState" type="WebSocketReadyState">
+_readonly_
+
+Returns the current state of the WebSocket connection.
+</ParamField>
+
+<a id="url" />
+<ParamField path="url" type="string">
+_readonly_
+
+Returns the absolute URL of the WebSocket. For outgoing connection, it is the URL to which to connect; for incoming, it is the WebSocket session URL.
+</ParamField>

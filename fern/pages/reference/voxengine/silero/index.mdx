@@ -1,0 +1,84 @@
+---
+title: Silero
+subtitle: 'Silero voice activity detection on the Voximplant platform. Add the following line to your scenario code to use the namespace: ``` require(Modules.Silero); ```'
+---
+
+## Classes
+
+- [VAD](/reference/voxengine/silero/vad)
+## Enums
+
+- [VADEvents](/reference/voxengine/silero/vad-events) — Add the following line to your scenario code to use the events: ``` require(Modules.Silero); ```
+## Functions
+
+### createVAD
+
+Creates a [Silero.VAD](/reference/voxengine/silero/vad) instance.
+
+```ts
+createVAD(parameters: VADParameters): Promise<Silero.VAD>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="VADParameters" required />
+
+## Types
+
+### VADParameters
+
+*Extends:* `_WebSocketBasedClientParameters`
+
+[Silero.VAD](/reference/voxengine/silero/vad) parameters. Can be passed as arguments to the `Silero.createVAD` method.
+
+<a id="vadparameters-minsilencedurationms" />
+<ParamField path="minSilenceDurationMs" type="number">
+_optional_
+
+Optional. The duration of silence (in milliseconds) to wait for each speech segment before separating it. The default value is **300**.
+</ParamField>
+
+<a id="vadparameters-speechpadms" />
+<ParamField path="speechPadMs" type="number">
+_optional_
+
+Optional. The padding to add to speech segments to avoid aggressive cutting. The default value is **0**.
+</ParamField>
+
+<a id="vadparameters-threshold" />
+<ParamField path="threshold" type="number">
+_optional_
+
+Optional. The probability threshold above which we detect speech. The default value is **0.5**.
+</ParamField>
+
+#### Inherited fields
+
+<a id="vadparameters-privacy" />
+<ParamField path="privacy" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the privacy functionality.
+
+If privacy is enabled, the logging for the WebSocket connection is disabled.
+
+NOTE: the default value is **false**.
+</ParamField>
+
+<a id="vadparameters-statistics" />
+<ParamField path="statistics" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Enables statistics functionality.
+</ParamField>
+
+<a id="vadparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional, inherited from _WebSocketBasedClientParameters_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes. You can provide the trace file to our support team to help investigate issues.
+</ParamField>

@@ -28,7 +28,7 @@ While the runtime executes standard JavaScript (ECMAScript 2022), you can levera
 * If you write your scenarios locally in TypeScript, remember to transpile your code to standard JavaScript before deploying it to Voximplant.
 
 <Info title="Local IDE development">
-If you prefer working in a local IDE like VS Code or WebStorm, use [VoxEngine CI]() to synchronize and deploy your scenario files automatically.
+If you prefer working in a local IDE like VS Code or WebStorm, use [VoxEngine CI](/overview/how-voximplant-works/vox-engine-ci) to synchronize and deploy your scenario files automatically.
 </Info>
 
 ---

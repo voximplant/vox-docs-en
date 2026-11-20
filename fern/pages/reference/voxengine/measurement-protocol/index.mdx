@@ -1,0 +1,410 @@
+---
+title: MeasurementProtocol
+subtitle: 'Implementation of the Measurement Protocol v1. Add the following line to your scenario code to use the namespace: ``` require(Modules.MeasurementProtocol); ```'
+---
+
+## Functions
+
+### endSession
+
+Forces the current session to end with this hit. All other values are ignored.
+
+```ts
+endSession(): typeof MeasurementProtocol
+```
+
+### sendEvent
+
+Sends an event to Universal Analytics.
+
+```ts
+sendEvent(options: SendEventOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendEventOptions" required />
+
+### sendException
+
+Sends a record about an exception.
+
+```ts
+sendException(options: SendExceptionOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendExceptionOptions" required />
+
+### sendItem
+
+Sends an item to E-commerce.
+
+```ts
+sendItem(options: SendItemOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendItemOptions" required />
+
+### sendSocial
+
+Sends a social interaction.
+
+```ts
+sendSocial(options: SendSocialOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendSocialOptions" required />
+
+### sendTiming
+
+Measures the user's timings.
+
+```ts
+sendTiming(options: SendTimingOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendTimingOptions" required />
+
+### sendTransaction
+
+Sends a transaction to E-commerce.
+
+```ts
+sendTransaction(options: SendTransactionOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SendTransactionOptions" required />
+
+### setApplicationInfo
+
+Sets the application name and version.
+
+```ts
+setApplicationInfo(options: SetApplicationInfoOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SetApplicationInfoOptions" required />
+
+### setSessionByCallerId
+
+```ts
+setSessionByCallerId(options: SetSessionByCallerIdOptions): Promise<typeof MeasurementProtocol>
+```
+
+**Parameters**
+
+<ParamField path="options" type="SetSessionByCallerIdOptions" required />
+
+### setTrafficSource
+
+Sets traffic source values.
+
+```ts
+setTrafficSource(options: SetTrafficSourceOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="SetTrafficSourceOptions" required />
+
+### setup
+
+Sets up the required tracking parameters.
+
+```ts
+setup(trackingId: string, debug: boolean, dataSource: string): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="trackingId" type="string" required />
+
+<ParamField path="debug" type="boolean" required />
+
+<ParamField path="dataSource" type="string" required />
+
+### startSession
+
+Forces a new session to start with this hit. All other values are ignored.
+
+```ts
+startSession(options: StartSessionOptions): typeof MeasurementProtocol
+```
+
+**Parameters**
+
+<ParamField path="options" type="StartSessionOptions" required />
+
+## Types
+
+### SendEventOptions
+
+<a id="sendeventoptions-action" />
+<ParamField path="action" type="string" />
+
+<a id="sendeventoptions-category" />
+<ParamField path="category" type="string" />
+
+<a id="sendeventoptions-label" />
+<ParamField path="label" type="string">
+_optional_
+</ParamField>
+
+<a id="sendeventoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+<a id="sendeventoptions-value" />
+<ParamField path="value" type="string">
+_optional_
+</ParamField>
+
+### SendExceptionOptions
+
+<a id="sendexceptionoptions-description" />
+<ParamField path="description" type="string">
+_optional_
+</ParamField>
+
+<a id="sendexceptionoptions-isfatal" />
+<ParamField path="isFatal" type="boolean">
+_optional_
+</ParamField>
+
+<a id="sendexceptionoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+### SendItemOptions
+
+<a id="senditemoptions-category" />
+<ParamField path="category" type="string">
+_optional_
+</ParamField>
+
+<a id="senditemoptions-code" />
+<ParamField path="code" type="string">
+_optional_
+</ParamField>
+
+<a id="senditemoptions-name" />
+<ParamField path="name" type="string" />
+
+<a id="senditemoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+<a id="senditemoptions-price" />
+<ParamField path="price" type="number" />
+
+<a id="senditemoptions-quantity" />
+<ParamField path="quantity" type="number" />
+
+<a id="senditemoptions-transactionid" />
+<ParamField path="transactionId" type="number" />
+
+### SendSocialOptions
+
+<a id="sendsocialoptions-action" />
+<ParamField path="action" type="string">
+_optional_
+</ParamField>
+
+<a id="sendsocialoptions-network" />
+<ParamField path="network" type="string">
+_optional_
+</ParamField>
+
+<a id="sendsocialoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+<a id="sendsocialoptions-trigger" />
+<ParamField path="trigger" type="string">
+_optional_
+</ParamField>
+
+### SendTimingOptions
+
+<a id="sendtimingoptions-category" />
+<ParamField path="category" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtimingoptions-label" />
+<ParamField path="label" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtimingoptions-name" />
+<ParamField path="name" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtimingoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtimingoptions-time" />
+<ParamField path="time" type="number">
+_optional_
+</ParamField>
+
+### SendTransactionOptions
+
+<a id="sendtransactionoptions-affiliation" />
+<ParamField path="affiliation" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtransactionoptions-id" />
+<ParamField path="id" type="number" />
+
+<a id="sendtransactionoptions-noninteractionhit" />
+<ParamField path="nonInteractionHit" type="string">
+_optional_
+</ParamField>
+
+<a id="sendtransactionoptions-revenue" />
+<ParamField path="revenue" type="number" />
+
+<a id="sendtransactionoptions-shipping" />
+<ParamField path="shipping" type="number">
+_optional_
+</ParamField>
+
+<a id="sendtransactionoptions-tax" />
+<ParamField path="tax" type="number">
+_optional_
+</ParamField>
+
+### SetApplicationInfoOptions
+
+<a id="setapplicationinfooptions-id" />
+<ParamField path="id" type="string">
+_optional_
+</ParamField>
+
+<a id="setapplicationinfooptions-installerid" />
+<ParamField path="installerID" type="string">
+_optional_
+</ParamField>
+
+<a id="setapplicationinfooptions-name" />
+<ParamField path="name" type="string" />
+
+<a id="setapplicationinfooptions-version" />
+<ParamField path="version" type="string">
+_optional_
+</ParamField>
+
+### SetSessionByCallerIdOptions
+
+<a id="setsessionbycalleridoptions-anonymizeip" />
+<ParamField path="anonymizeIP" type="string">
+_optional_
+</ParamField>
+
+<a id="setsessionbycalleridoptions-callerid" />
+<ParamField path="callerId" type="string">
+_optional_
+</ParamField>
+
+<a id="setsessionbycalleridoptions-ipoverride" />
+<ParamField path="IPOverride" type="string">
+_optional_
+</ParamField>
+
+<a id="setsessionbycalleridoptions-userid" />
+<ParamField path="userID" type="string">
+_optional_
+</ParamField>
+
+### SetTrafficSourceOptions
+
+<a id="settrafficsourceoptions-campaigncontent" />
+<ParamField path="campaignContent" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-campaignid" />
+<ParamField path="campaignID" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-campaignkeyword" />
+<ParamField path="campaignKeyword" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-campaignmedium" />
+<ParamField path="campaignMedium" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-campaignname" />
+<ParamField path="campaignName" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-campaignsource" />
+<ParamField path="campaignSource" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-documentreferrer" />
+<ParamField path="documentReferrer" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-googleadsid" />
+<ParamField path="googleAdsID" type="string">
+_optional_
+</ParamField>
+
+<a id="settrafficsourceoptions-googledisplayadsid" />
+<ParamField path="googleDisplayAdsID" type="string">
+_optional_
+</ParamField>
+
+### StartSessionOptions
+
+<a id="startsessionoptions-anonymizeip" />
+<ParamField path="anonymizeIP" type="boolean">
+_optional_
+</ParamField>
+
+<a id="startsessionoptions-clientid" />
+<ParamField path="clientID" type="string" />
+
+<a id="startsessionoptions-geographicaloverride" />
+<ParamField path="geographicalOverride" type="string">
+_optional_
+</ParamField>
+
+<a id="startsessionoptions-ipoverride" />
+<ParamField path="IPOverride" type="string">
+_optional_
+</ParamField>
+
+<a id="startsessionoptions-userid" />
+<ParamField path="userID" type="string">
+_optional_
+</ParamField>

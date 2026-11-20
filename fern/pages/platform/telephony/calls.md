@@ -8,7 +8,7 @@ This article will guide you through making and receiving calls to/from different
 Follow [this guide]() to learn how to create a Voximplant user.
 </Info>
 
-To call another Voximplant user, use the [callUser]() method in your scenario. Specify the user you want to call in the **username** parameter and the callerID you want to show to the **callerid** parameter. See the example scenario to understand how it works.
+To call another Voximplant user, use the [callUser](/reference/voxengine/voxengine#calluser) method in your scenario. Specify the user you want to call in the **username** parameter and the callerID you want to show to the **callerid** parameter. See the example scenario to understand how it works.
 
 ```javascript title="Call a Voximplant user"
 // Initiate an outgoing call based on the dialed number
@@ -25,10 +25,10 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 ```
 
 <Info title="Call legs">
-Please note that if you are making a call via web or mobile SDK, it consists of two call legs: SDK → scenario and scenario → destination. In this case, the SDK → scenario call leg is considered an incoming call in the scenario, so you need to process it via the [CallAlerting]() event as well.
+Please note that if you are making a call via web or mobile SDK, it consists of two call legs: SDK → scenario and scenario → destination. In this case, the SDK → scenario call leg is considered an incoming call in the scenario, so you need to process it via the [CallAlerting](/reference/voxengine/app-events#callalerting) event as well.
 </Info>
 
-You can make a **peer-to-peer call**, which connects two devices directly instead of routing through Voximplant servers. It provides better connection security and audio/video quality. To make a peer-to-peer call, use the [callUserDirect]() method.
+You can make a **peer-to-peer call**, which connects two devices directly instead of routing through Voximplant servers. It provides better connection security and audio/video quality. To make a peer-to-peer call, use the [callUserDirect](/reference/voxengine/voxengine#calluserdirect) method.
 
 ```javascript title="Peer-to-peer call"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -47,7 +47,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 Calls that cost more than 20 cents per minute and calls to Africa are restricted for security reasons. To enable them, contact us: [support@voximplant.com](mailto:support@voximplant.com)
 </Warning>
 
-To call a phone number, use the [callPSTN]() method in your scenario. Specify the phone number you want to call to the **number** parameter, and the caller ID to show to the **callerid** parameter.
+To call a phone number, use the [callPSTN](/reference/voxengine/voxengine#callpstn) method in your scenario. Specify the phone number you want to call to the **number** parameter, and the caller ID to show to the **callerid** parameter.
 
 You can use the following numbers as your caller ID:
 
@@ -67,7 +67,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 
 If you want to use the incoming caller ID for the outgoing call from the scenario, set the [followDiversion]() parameter to **true**.
 
-Please note that if you are making a call **from a US phone number to a US destination**, you additionally need to add the [Call.ring()]() method to the incoming call leg in the scenario.
+Please note that if you are making a call **from a US phone number to a US destination**, you additionally need to add the [Call.ring()](/reference/voxengine/call#ring) method to the incoming call leg in the scenario.
 
 In this case, the scenario for US to US phone calls looks like this.
 
@@ -81,7 +81,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 
 ## How to call a SIP address
 
-To call a SIP address, use the [callSIP]() method in your scenario.
+To call a SIP address, use the [callSIP](/reference/voxengine/voxengine#callsip) method in your scenario.
 
 ```javascript title="Call SIP"
 // Use the default (UDP) transport
@@ -92,7 +92,7 @@ let callWithTCP = VoxEngine.callSIP('sip:alice@example.com;transport=tcp');
 ```
 
 <Info title="UDP/TCP transport">
-Voximplant uses UDP as the default protocol for SIP calls. If you want to use the TCP protocol, specify it in the [callSIP]() method as shown below in the code example.
+Voximplant uses UDP as the default protocol for SIP calls. If you want to use the TCP protocol, specify it in the [callSIP](/reference/voxengine/voxengine#callsip) method as shown below in the code example.
 </Info>
 
 To **enable TLS support** for your SIP calls, change the `sip:` prefix of your address to the `sips:` prefix or simply specify the TLS transport type. See the code example.
@@ -115,13 +115,13 @@ const call2 = VoxEngine.callSIP('alice@example.org:5061;transport=tls', {
 });
 ```
 
-Refer to the [SIP calls]() article to learn more about SIP calls in Voximplant.
+Refer to the [SIP calls](/platform/telephony/sip-calls-and-registrations) article to learn more about SIP calls in Voximplant.
 
 ## How to process incoming calls
 
-To process incoming calls, subscribe to the [CallAlerting]() event in the scenario. Use the [call.answer]() method to answer the call, or the [call.reject]() method to decline the call.
+To process incoming calls, subscribe to the [CallAlerting](/reference/voxengine/app-events#callalerting) event in the scenario. Use the [call.answer](/reference/voxengine/call#answer) method to answer the call, or the [call.reject](/reference/voxengine/call#reject) method to decline the call.
 
-You can use the [call.startEarlyMedia]() method to cast early media to the call before it is answered. It allows you to play music or synthesize speech such as a voicemail prompt.
+You can use the [call.startEarlyMedia](/reference/voxengine/call#startearlymedia) method to cast early media to the call before it is answered. It allows you to play music or synthesize speech such as a voicemail prompt.
 
 ```javascript title="Answer a call in a scenario"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -140,13 +140,13 @@ A call can be in the early media state for up to 60 seconds.
 ## Frequently asked questions
 
 **Q**: **How to redirect a call from a rented number to my mobile phone?**  
-**A**: You can manage all the calls in the scenario. Receive the call into the platform by subscribing to the [CallAlerting]() event, then use the [callPSTN]() method to call your mobile phone, and unite two calls via the [easyProcess]() method. You can see the scenario example in the [How to call a phone number](#how-to-call-a-phone-number) section of this article. Do not forget to create a [routing rule]() for your scenario.
+**A**: You can manage all the calls in the scenario. Receive the call into the platform by subscribing to the [CallAlerting](/reference/voxengine/app-events#callalerting) event, then use the [callPSTN](/reference/voxengine/voxengine#callpstn) method to call your mobile phone, and unite two calls via the [easyProcess](/reference/voxengine/voxengine#easyprocess) method. You can see the scenario example in the [How to call a phone number](#how-to-call-a-phone-number) section of this article. Do not forget to create a [routing rule](/platform/getting-started/create-a-routing-rule) for your scenario.
 
 **Q**: **How can I limit the dialing time? For example, if a user does not respond in 20 seconds, call the mobile number instead?**  
-**A**: You can use the [setTimeout]() method to set the timeout for the dialing time, and then call the phone number using the [callPSTN]() method.
+**A**: You can use the [setTimeout]() method to set the timeout for the dialing time, and then call the phone number using the [callPSTN](/reference/voxengine/voxengine#callpstn) method.
 
 **Q**: **How do I find the reason why a call fails?**  
 **A**: To find the reason, subscribe to the [CallEvents.Failed]() event and read the **e.code** property. It contains the error code. You can find the list of error codes in the event description.
 
 **Q**: **Can I share the same variable across different scenarios?**  
-**A**: If both your scenarios are attached to the same routing rule, they execute in one context and share all the variables between them. If you want to share a variable between two different JS sessions, you can use [Key-value storage]() to save the variable.
+**A**: If both your scenarios are attached to the same routing rule, they execute in one context and share all the variables between them. If you want to share a variable between two different JS sessions, you can use [Key-value storage](/platform/storage/key-value-storage) to save the variable.

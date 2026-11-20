@@ -1,0 +1,41 @@
+---
+title: ASREvents
+subtitle: 'Add the following line to your scenario code to use the events: ``` require(Modules.ASR); ```'
+---
+
+## Values
+
+<a id="asrerror" />
+<ParamField path="ASRError" type="'ASR.Error'">
+Triggers in case of errors during the recognition process.
+</ParamField>
+
+<a id="started" />
+<ParamField path="Started" type="'ASR.Started'">
+Triggers after ASR instance is created.
+</ParamField>
+
+<a id="capturestarted" />
+<ParamField path="CaptureStarted" type="'ASR.CaptureStarted'">
+Triggers after ASR detected voice input and started collecting audio data for ASR.
+</ParamField>
+
+<a id="speechcaptured" />
+<ParamField path="SpeechCaptured" type="'ASR.SpeechCaptured'">
+Triggers after ASR captured audio data, before recognition process.
+</ParamField>
+
+<a id="result" />
+<ParamField path="Result" type="'ASR.Result'">
+Triggered when a speech recognition result has been received from ASR. We strongly recommend to create recognition timeout manually to prevent unexpectedly long recognition time. NOTE: we recommend to take a decision about continuing speech recognition in this event's handler. Otherwise, speech recognition continues automatically.
+</ParamField>
+
+<a id="interimresult" />
+<ParamField path="InterimResult" type="'ASR.InterimResult'">
+Triggered when interim recognition result received from ASR. Note that event could be triggered only if the `ASRParameters.interimResults` option is set to **true**.
+</ParamField>
+
+<a id="stopped" />
+<ParamField path="Stopped" type="'ASR.Stopped'">
+Triggers as a result of the `ASR.stop` method call.
+</ParamField>

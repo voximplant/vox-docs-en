@@ -43,7 +43,7 @@ Use the [unmutePlayback]() method to restore audio playback.
 
 ## How to hold a call
 
-You can place a call on hold and play waiting music for your interlocutor. To hold a call from a client application, use [setActive]() in the Web SDK, [setHold]() in the iOS SDK, or [hold]() in the Android SDK. Refer to the [API reference]() for other platforms.
+You can place a call on hold and play waiting music for your interlocutor. To hold a call from a client application, use [setActive]() in the Web SDK, [setHold]() in the iOS SDK, or [hold]() in the Android SDK. Refer to the [API reference](/reference/overview) for other platforms.
 
 <CodeBlocks>
 ```javascript title="Web SDK"
@@ -108,7 +108,7 @@ call.hold(true, new ICallCompletionHandler() {
 ```
 </CodeBlocks>
 
-To play music to your interlocutor while they are on hold, handle the hold events in your cloud scenario. Create an audio player using the [createURLPlayer]() method and play the media stream when the [OnHold]() event fires:
+To play music to your interlocutor while they are on hold, handle the hold events in your cloud scenario. Create an audio player using the [createURLPlayer](/reference/voxengine/voxengine#createurlplayer) method and play the media stream when the [OnHold](/reference/voxengine/call#onhold) event fires:
 
 ```javascript title="Scenario: Hold music"
 VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
@@ -167,13 +167,13 @@ call.sendDTMF("9")
 ```
 </CodeBlocks>
 
-To process incoming DTMF tones in your scenario, subscribe to the [ToneReceived]() event on the call object.
+To process incoming DTMF tones in your scenario, subscribe to the [ToneReceived](/reference/voxengine/call#tonereceived) event on the call object.
 
 ## How to send data to the call
 
 ### Extra headers
 
-You can send custom SIP X-headers when initiating or answering a call. To send extra headers when calling a user, pass them in the [extraHeaders]() parameter of the [callUser]() method:
+You can send custom SIP X-headers when initiating or answering a call. To send extra headers when calling a user, pass them in the [extraHeaders]() parameter of the [callUser](/reference/voxengine/voxengine#calluser) method:
 
 ```javascript title="Send X-headers while calling"
 // X-header to hang up if there is no answer after the timeout
@@ -187,7 +187,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-To send extra headers when answering an incoming call, pass them via the `extraHeaders` parameter of the [Call.answer]() method:
+To send extra headers when answering an incoming call, pass them via the `extraHeaders` parameter of the [Call.answer](/reference/voxengine/call#answer) method:
 
 ```javascript title="Send X-headers while answering a call"
 //JS scenario receives a call from a Web/Mobile SDK
@@ -218,7 +218,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
 
 ### Send a message
 
-You can send data messages during an active call using the [sendMessage]() method on the `Call` class:
+You can send data messages during an active call using the [sendMessage](/reference/voxengine/call#sendmessage) method on the `Call` class:
 
 ```javascript title="Send a message to the call"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -237,7 +237,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-To receive a message sent to the call, subscribe to the [MessageReceived]() event on the call object. This event payload also includes any attached extra headers:
+To receive a message sent to the call, subscribe to the [MessageReceived](/reference/voxengine/call#messagereceived) event on the call object. This event payload also includes any attached extra headers:
 
 ```javascript title="The MessageReceived event"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
@@ -256,7 +256,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-You can also use the [sendInfo()]() method to pass SIP INFO messages to the call. It accepts three parameters: MIME type, message body, and extra headers:
+You can also use the [sendInfo()](/reference/voxengine/call#sendinfo) method to pass SIP INFO messages to the call. It accepts three parameters: MIME type, message body, and extra headers:
 
 ```javascript title="sendInfo() method usage"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {

@@ -17,7 +17,7 @@ When writing code in a modern IDE, the editor underlines syntax errors, flags mi
 
 Editors provide this real-time IntelliSense using **declaration files** (`.d.ts`). A declaration file defines the existence, signatures, and shapes of types, classes, methods, and global variables without providing their underlying runtime implementations.
 
-Adding VoxEngine type declarations to your local project enables rich autocompletion and static type checking for all Voximplant-specific objects (such as `VoxEngine`, `CallEvents`, `AppEvents`, and `Logger`) when developing cloud [scenarios]().
+Adding VoxEngine type declarations to your local project enables rich autocompletion and static type checking for all Voximplant-specific objects (such as `VoxEngine`, `CallEvents`, `AppEvents`, and `Logger`) when developing cloud [scenarios](/platform/getting-started/create-a-scenario).
 
 ---
 
@@ -59,5 +59,5 @@ VoxEngine executes standard JavaScript (ECMAScript 2022). If you author your sce
 
 ## See also
 
-* [Cloud IDE]()
-* [VoxEngine CI]()
+* [Cloud IDE](/overview/how-voximplant-works/cloud-ide)
+* [VoxEngine CI](/overview/how-voximplant-works/vox-engine-ci)

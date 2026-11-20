@@ -1,0 +1,32 @@
+---
+title: MinWordsStart
+subtitle: A start strategy that requires the user to speak a minimum number of words before triggering a turn start.
+---
+
+## Properties
+
+<a id="enableinterruptions" />
+<ParamField path="enableInterruptions" type="boolean">
+_optional_
+
+Optional. If **true**, the user can interrupt the bot when the turn starts. The default value is **true**.
+</ParamField>
+
+<a id="minwords" />
+<ParamField path="minWords" type="number">
+Minimum number of spoken words required to trigger the start of a user turn.
+</ParamField>
+
+<a id="type" />
+<ParamField path="type" type="'min_words'">
+_readonly_
+
+Reported as **strategy** on `Agentic.VoiceDSPEvents.TurnStarted`.
+</ParamField>
+
+<a id="useinterim" />
+<ParamField path="useInterim" type="boolean">
+_optional_
+
+Optional. Whether to trigger on interim (partial) transcription frames for earlier detection. The default value is **true**.
+</ParamField>

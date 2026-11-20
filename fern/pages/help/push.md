@@ -22,7 +22,7 @@ Before troubleshooting delivery failures, verify that your configuration meets t
 
 When a scenario places a call to an application user, VoxEngine dispatches push notifications to all active tokens registered for that user and records the result in the session debug log under the `Call.PushSent` event:
 
-1. Open the [Voximplant Control Panel]().
+1. Open the [Voximplant Control Panel](https://manage.voximplant.com).
 2. Navigate to **Call history** and open the session log for the call where the notification was not received.
 3. Locate the `Call.PushSent` event block:
 
@@ -70,7 +70,7 @@ Sent event to JS onPhoneEvent with params [{
 | **`DEVICE_UNREGISTERED` (FCM)** | The registration token is no longer valid (e.g., the user uninstalled the app, the token expired, or the app was reinstalled). | Remove the invalid token from client storage and re-request a fresh token using `FirebaseMessaging.getInstance().getToken()`. |
 | **`BadDeviceToken` (APNs)** | The device token does not match the configured environment (Development vs. Production). | Ensure your Xcode build environment matches the certificate mode in the Control Panel: use **Development** mode for local Xcode debug builds; use **Production** mode for TestFlight and App Store release builds. |
 | **`DeviceTokenNotForTopic` (APNs)** | The device token was issued for a different bundle identifier than the topic configured on the certificate. | Verify that the APNs topic matches the exact bundle identifier of the application. |
-| **`Request has failed with timeout` (APNs)** | The `.p12` push certificate has expired or the provider gateway timed out. | Check certificate expiration dates in Keychain Access or migrate to a non-expiring `.p8` key. If unexpired, contact [support@voximplant.com](). |
+| **`Request has failed with timeout` (APNs)** | The `.p12` push certificate has expired or the provider gateway timed out. | Check certificate expiration dates in Keychain Access or migrate to a non-expiring `.p8` key. If unexpired, contact [support@voximplant.com](mailto:support@voximplant.com). |
 | **`Push certificate not match to a bundle`** | The bundle ID or package name configured on the certificate does not match the identifier passed during SDK initialization. | When managing multiple certificates in one application, verify that the package name or bundle ID configured in the Control Panel matches the parameter supplied to `ClientConfig.packageName` or `registerVoIPPushNotificationsToken(bundleId:)`. |
 
 ---

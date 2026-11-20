@@ -39,8 +39,8 @@ To connect Voximplant to Firebase:
 1. Open the [Firebase console]() using your project's Google account.
 2. Navigate to **Project Settings** → **Service Accounts**.
 3. Click **Generate new private key** for the `firebase-adminsdk` account and download the service account JSON key.
-4. Log in to the [Voximplant Control Panel]().
-5. Open your [application]() and navigate to the **Push certificates** tab.
+4. Log in to the [Voximplant Control Panel](https://manage.voximplant.com).
+5. Open your [application](/platform/getting-started/create-an-application) and navigate to the **Push certificates** tab.
 6. Click **Add certificate** in the upper-right corner.
 7. In the **Platform** dropdown, select `GOOGLE`.
 8. Upload the service account JSON file.
@@ -217,10 +217,10 @@ Starting with Android 15, the operating system restricts network access for back
 For a reference implementation managing foreground services on modern Android versions, refer to the [Android SDK Demo]().
 </Warning>
 
-When your scenario invokes [callUser](), Voximplant automatically dispatches an FCM push notification to wake the application.
+When your scenario invokes [callUser](/reference/voxengine/voxengine#calluser), Voximplant automatically dispatches an FCM push notification to wake the application.
 
 <Info title="FCM delivery analytics">
-You can track push delivery status in real time in the Firebase console by setting the [analyticsLabel]() parameter on [callUser]() in your VoxEngine scenario.
+You can track push delivery status in real time in the Firebase console by setting the [analyticsLabel]() parameter on [callUser](/reference/voxengine/voxengine#calluser) in your VoxEngine scenario.
 </Info>
 
 ---

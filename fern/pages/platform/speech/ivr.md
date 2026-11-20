@@ -2,7 +2,7 @@
 
 Interactive Voice Response (IVR) allows callers to navigate phone menus, submit account numbers, or route themselves to specific departments using keypad DTMF tones or voice recognition.
 
-In Voximplant, you can construct low-level IVR logic using [Call.say()](), [Call.startPlayback()](), and [Call.handleTones()](), or use the built-in **IVR helper module** (`Modules.IVR`), which provides a clean state-machine abstraction for multi-level menus.
+In Voximplant, you can construct low-level IVR logic using [Call.say()](/reference/voxengine/call#say), [Call.startPlayback()](/reference/voxengine/call#startplayback), and [Call.handleTones()](/reference/voxengine/call#handletones), or use the built-in **IVR helper module** (`Modules.IVR`), which provides a clean state-machine abstraction for multi-level menus.
 
 ---
 
@@ -10,10 +10,10 @@ In Voximplant, you can construct low-level IVR logic using [Call.say()](), [Call
 
 Before deploying an IVR scenario:
 
-1. Create an [application]().
-2. Create a [scenario]().
-3. Create a [routing rule]() to route incoming traffic to your scenario.
-4. Rent a [phone number]() and bind it to your routing rule.
+1. Create an [application](/platform/getting-started/create-an-application).
+2. Create a [scenario](/platform/getting-started/create-a-scenario).
+3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) to route incoming traffic to your scenario.
+4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) and bind it to your routing rule.
 
 <Info title="Phone numbers and caller ID">
 You need a phone number to receive incoming calls to your IVR. If your IVR forwards callers to external mobile or landline numbers, that same rented number acts as your verified outbound caller ID.
@@ -454,4 +454,4 @@ function handleCallDisconnected(e) {
 
 ## Voice-driven IVRs with speech recognition
 
-In addition to DTMF keypad tones, you can build conversational IVRs that understand natural human speech using Voximplant's built-in speech recognition modules. Refer to [Speech-to-text]() to learn how to add voice recognition to your IVR flows.
+In addition to DTMF keypad tones, you can build conversational IVRs that understand natural human speech using Voximplant's built-in speech recognition modules. Refer to [Speech-to-text](/platform/speech-processing/speech-to-text) to learn how to add voice recognition to your IVR flows.

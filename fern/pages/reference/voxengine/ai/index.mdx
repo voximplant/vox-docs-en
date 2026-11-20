@@ -1,0 +1,486 @@
+---
+title: AI
+subtitle: The AI module provides additional methods that use Artificial Intelligence.
+---
+
+The AI module provides additional methods that use Artificial Intelligence. These methods allow solving business tasks in a more productive way.
+Add the following line to your scenario code to use the namespace:
+```
+require(Modules.AI);
+```
+
+## Classes
+
+- [DialogflowInstance](/reference/voxengine/ai/dialogflow-instance) — Represents a Dialogflow instance. Add the following line to your scenario code to use the class: ``` require(Modules.AI); ```
+## Enums
+
+- [Events](/reference/voxengine/ai/events) — Add the following line to your scenario code to use the events: ``` require(Modules.AI); ```
+## Functions
+
+### createDialogflow
+
+Creates a new [AI.DialogflowInstance](/reference/voxengine/ai/dialogflow-instance) which provides resources for exchanging data with the Dialogflow API, handling specified events, etc. You can attach media streams later via the `AI.DialogflowInstance.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.AI);
+```
+
+```ts
+createDialogflow(parameters: DialogflowSettings): DialogflowInstance
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="DialogflowSettings" required />
+
+### detectVoicemail
+
+<Warning title="Deprecated">
+Use [AMD](/reference/voxengine/amd) instead
+</Warning>
+
+Start a voicemail recognition session. You can check how many times voicemail was detected in the call history.
+Add the following line to your scenario code to use the function:
+```
+require(Modules.AI);
+```
+
+```ts
+detectVoicemail(call: Call, parameters: DetectVoicemailParameters): Promise<AI.Events>
+```
+
+**Parameters**
+
+<ParamField path="call" type="Call" required />
+
+<ParamField path="parameters" type="DetectVoicemailParameters" required />
+
+## Types
+
+### DetectVoicemailParameters
+
+Represents a parameters of the voicemail recognition session.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="detectvoicemailparameters-model" />
+<ParamField path="model" type="string">
+_optional_
+
+Optional. Recognition model. The possible values are **ru**, **colombia**. The default value is **ru**.
+</ParamField>
+
+<a id="detectvoicemailparameters-threshold" />
+<ParamField path="threshold" type="number">
+_optional_
+
+Optional. Detection threshold in the **0.0 - 1.0 milliseconds** range. Durations shorter than this value are considered human speech, and durations longer than this value are considered voicemail. The default value is **0.8**. Available only with the **latam** model.
+</ParamField>
+
+### DialogflowEventInput
+
+Dialogflow events allow matching intents by event name instead of the natural language input.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogfloweventinput-languagecode" />
+<ParamField path="languageCode" type="DialogflowLanguage">
+The language ot this conversation query
+</ParamField>
+
+<a id="dialogfloweventinput-name" />
+<ParamField path="name" type="string">
+The unique identifier of the event.
+</ParamField>
+
+<a id="dialogfloweventinput-parameters" />
+<ParamField path="parameters" type="{ [key: string]: any }">
+The collection of parameters associated with the event
+</ParamField>
+
+### DialogflowOutputAudioConfig
+
+Instructs the speech synthesizer on how to generate the output audio content.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowoutputaudioconfig-synthesizespeechconfig" />
+<ParamField path="synthesizeSpeechConfig" type="DialogflowSynthesizeSpeechConfig">
+_optional_
+
+Optional. Configuration of how speech should be synthesized.
+</ParamField>
+
+### DialogflowQueryInput
+
+Represents a Dialogflow query input. It can contain either:
+1. A conversational query in the form of text
+2. An event that specifies which intent to trigger
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowqueryinput-event" />
+<ParamField path="event" type="DialogflowEventInput">
+The event to be processed.
+</ParamField>
+
+<a id="dialogflowqueryinput-text" />
+<ParamField path="text" type="DialogflowTextInput">
+The natural language text to be processed.
+</ParamField>
+
+### DialogflowQueryParameters
+
+Represents a parameters of the conversational query.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowqueryparameters-contexts" />
+<ParamField path="contexts" type="any[]">
+_optional_
+
+Optional. The collection of contexts to be activated before the query execution.
+</ParamField>
+
+<a id="dialogflowqueryparameters-geolocation" />
+<ParamField path="geoLocation" type="{ [key: string]: any }">
+_optional_
+
+Optional. The geolocation of the conversational query.
+</ParamField>
+
+<a id="dialogflowqueryparameters-payload" />
+<ParamField path="payload" type="{ [key: string]: any }">
+_optional_
+
+Optional. Use this field to pass custom data into the webhook associated with the agent. Arbitrary JSON objects are supported.
+</ParamField>
+
+<a id="dialogflowqueryparameters-resetcontexts" />
+<ParamField path="resetContexts" type="boolean">
+_optional_
+
+Optional. Whether to delete all contexts in the current session before activation of a new one.
+</ParamField>
+
+<a id="dialogflowqueryparameters-sessionentitytypes" />
+<ParamField path="sessionEntityTypes" type="any[]">
+_optional_
+
+Optional. The collection of session entity types to replace or extend developer entities with for this query only. The entity synonyms apply to all languages.
+</ParamField>
+
+<a id="dialogflowqueryparameters-timezone" />
+<ParamField path="timeZone" type="string">
+_optional_
+
+Optional. The time zone of the conversational query from the time zone database, e.g., America/New_York, Europe/Paris. If not provided, the system uses the time zone specified in agent settings.
+</ParamField>
+
+### DialogflowResponse
+
+Represents a Dialogflow intent response.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowresponse-queryresult" />
+<ParamField path="queryResult" type="DialogflowResult">
+_optional_
+
+Optional. The result of the conversational query or event processing.
+</ParamField>
+
+<a id="dialogflowresponse-recognitionresult" />
+<ParamField path="recognitionResult" type="DialogflowStreamingRecognitionResult">
+_optional_
+
+Optional. The result of speech recognition.
+</ParamField>
+
+<a id="dialogflowresponse-responseid" />
+<ParamField path="responseId" type="string">
+The unique identifier of the response. Use it to locate a response in the training example set or for reporting issues.
+</ParamField>
+
+<a id="dialogflowresponse-webhookstatus" />
+<ParamField path="webhookStatus" type="{ [id: string]: any }">
+Status of the webhook request.
+</ParamField>
+
+### DialogflowResult
+
+Represents a result of an intent response.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowresult-action" />
+<ParamField path="action" type="string">
+The action name from the matched intent.
+</ParamField>
+
+<a id="dialogflowresult-allrequiredparamspresent" />
+<ParamField path="allRequiredParamsPresent" type="boolean">
+Whether all the required parameters are present. This field is set to:  - false if the matched intent has required parameters and not all the required parameter values have been collected.  - true if all required parameter values have been collected, or if the matched intent does not contain any required parameters.
+</ParamField>
+
+<a id="dialogflowresult-diagnosticinfo" />
+<ParamField path="diagnosticInfo" type="{ [id: string]: any }">
+The free-form diagnostic info. For example, this field could contain webhook call latency.
+</ParamField>
+
+<a id="dialogflowresult-fulfillmentmessages" />
+<ParamField path="fulfillmentMessages" type="any[]">
+The collection of rich messages to present to the user.
+</ParamField>
+
+<a id="dialogflowresult-fulfillmenttext" />
+<ParamField path="fulfillmentText" type="string">
+This field is set to:  - false if the matched intent has required parameters and not all the required parameter values have been collected.  - true if all required parameter values have been collected, or if the matched intent does not contain any required parameters.
+</ParamField>
+
+<a id="dialogflowresult-intent" />
+<ParamField path="intent" type="{ [id: string]: any }">
+The intent that matched the conversational query. Some, not all fields are filled in this message, including but not limited to: name, display_name and webhook_state.
+</ParamField>
+
+<a id="dialogflowresult-intentdetectionconfidence" />
+<ParamField path="intentDetectionConfidence" type="number">
+The intent detection confidence. Values range from 0.0 (completely uncertain) to 1.0 (completely certain).
+</ParamField>
+
+<a id="dialogflowresult-languagecode" />
+<ParamField path="languageCode" type="string">
+The language that was triggered during intent detection. See [Language support](https://cloud.google.com/dialogflow/docs/reference/language) for a list of the currently supported language codes.
+</ParamField>
+
+<a id="dialogflowresult-parameters" />
+<ParamField path="parameters" type="{ [id: string]: any }">
+The collection of extracted parameters.
+</ParamField>
+
+<a id="dialogflowresult-querytext" />
+<ParamField path="queryText" type="string">
+The original conversational query text:  - If natural language text was provided as input, query_text contains a copy of the input.  - If natural language speech audio was provided as input, query_text contains the speech recognition result. If speech recognizer produced multiple alternatives, a particular one is picked.  - If an event was provided as input, query_text is not set.
+</ParamField>
+
+### DialogflowSettings
+
+Settings for a new Dialogflow instance.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowsettings-agentid" />
+<ParamField path="agentId" type="number">
+_optional_
+
+Optional. ID of the Dialogflow agent certificate to use. It can be any of the certificates previously added in the [control panel](https://manage.voximplant.com/applications), see the Dialogflow Connector section in your Voximplant application. You do not need to specify agentId if you have only one Dialogflow agent certificate in your Voximplant application.
+</ParamField>
+
+<a id="dialogflowsettings-beta" />
+<ParamField path="beta" type="boolean">
+_optional_
+
+Optional. Whether to use beta. The Voximplant Dialogflow Connector uses Dialogflow v2 Beta by default. Set false to use the non-Beta version of Dialogflow v2.
+</ParamField>
+
+<a id="dialogflowsettings-environmentid" />
+<ParamField path="environmentId" type="string">
+_optional_
+
+Optional. Part of the Dialogflow [session](https://cloud.google.com/dialogflow/docs/reference/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.StreamingDetectIntentRequest) name. If Environment ID is not specified, we assume default ‘draft’ environment.
+</ParamField>
+
+<a id="dialogflowsettings-lang" />
+<ParamField path="lang" type="DialogflowLanguage">
+Language for the Dialogflow instance.
+</ParamField>
+
+<a id="dialogflowsettings-model" />
+<ParamField path="model" type="DialogflowModel">
+_optional_
+
+Optional. Machine learning model to transcribe your audio file.
+</ParamField>
+
+<a id="dialogflowsettings-modelvariant" />
+<ParamField path="modelVariant" type="DialogflowModelVariant">
+_optional_
+
+Optional. Variant of the specified Speech model to use.
+</ParamField>
+
+<a id="dialogflowsettings-outputaudioconfig" />
+<ParamField path="outputAudioConfig" type="DialogflowOutputAudioConfig">
+_optional_
+
+Optional. Instructs the speech synthesizer how to generate the output audio content.
+</ParamField>
+
+<a id="dialogflowsettings-phrasehints" />
+<ParamField path="phraseHints" type="any[]">
+_optional_
+
+Optional. The collection of phrase hints to boost accuracy of speech recognition.
+</ParamField>
+
+<a id="dialogflowsettings-queryparameters" />
+<ParamField path="queryParameters" type="DialogflowQueryParameters">
+_optional_
+
+Optional. Initial query parameters.
+</ParamField>
+
+<a id="dialogflowsettings-region" />
+<ParamField path="region" type="string">
+_optional_
+
+Optional. The agent’s location.
+</ParamField>
+
+<a id="dialogflowsettings-sessionid" />
+<ParamField path="sessionId" type="string">
+_optional_
+
+Optional. Dialogflow session id. Use it for connection to the existing Dialogflow session or to specify your own id for a new session.
+</ParamField>
+
+<a id="dialogflowsettings-singleutterance" />
+<ParamField path="singleUtterance" type="boolean">
+_optional_
+
+Optional. Whether to enable single utterance.
+</ParamField>
+
+<a id="dialogflowsettings-userid" />
+<ParamField path="userId" type="string">
+_optional_
+
+Optional. Part of the Dialogflow [session](https://cloud.google.com/dialogflow/docs/reference/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.StreamingDetectIntentRequest) name. If User ID is not specified, we use “-”.
+</ParamField>
+
+### DialogflowStreamingRecognitionResult
+
+Contains a speech recognition result, corresponding to a portion of the audio that is currently being processed; or an indication that this is the end of the single requested utterance.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowstreamingrecognitionresult-confidence" />
+<ParamField path="confidence" type="number">
+The Speech confidence between **0.0** and **1.0** for the current portion of audio. The default of **0.0** is a sentinel value indicating that confidence was not set. Note that the field is typically only provided if **is_final: true**, and you should not rely on it being accurate or even set.
+</ParamField>
+
+<a id="dialogflowstreamingrecognitionresult-isfinal" />
+<ParamField path="isFinal" type="boolean">
+The default of **0.0** is a sentinel value indicating confidence was not set. If **false**, the *StreamingRecognitionResult* represents an interim result that may change. If **true**, the recognizer does not return any further hypotheses about this piece of the audio.
+</ParamField>
+
+<a id="dialogflowstreamingrecognitionresult-messagetype" />
+<ParamField path="messageType" type="string">
+Type of the result message.
+</ParamField>
+
+<a id="dialogflowstreamingrecognitionresult-transcript" />
+<ParamField path="transcript" type="string">
+Optional. Transcript text representing the words that the user spoke.
+</ParamField>
+
+### DialogflowSynthesizeSpeechConfig
+
+Configuration of how speech should be synthesized.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowsynthesizespeechconfig-effectsprofileid" />
+<ParamField path="effectsProfileId" type="string[]">
+_optional_
+
+Optional. An identifier which selects 'audio effects' profiles that are applied on (post synthesized) text to speech. Effects are applied on top of each other in the order they are given.
+</ParamField>
+
+<a id="dialogflowsynthesizespeechconfig-pitch" />
+<ParamField path="pitch" type="number">
+_optional_
+
+Optional. Speaking pitch, in the range [-20.0, 20.0]. 20 means increase 20 semitones from the original pitch. -20 means decrease 20 semitones from the original pitch.
+</ParamField>
+
+<a id="dialogflowsynthesizespeechconfig-speakingrate" />
+<ParamField path="speakingRate" type="number">
+_optional_
+
+Optional. Speaking rate/speed, in the range [0.25, 4.0]. 1.0 is the normal native speed supported by the specific voice. 2.0 is twice as fast, and 0.5 is half as fast. If not set (0.0), defaults to the native 1.0 speed. Any other values &lt; 0.25 or > 4.0 return an error.
+</ParamField>
+
+<a id="dialogflowsynthesizespeechconfig-voice" />
+<ParamField path="voice" type="DialogflowVoiceSelectionParameters">
+_optional_
+
+Optional. The desired voice of the synthesized audio.
+</ParamField>
+
+<a id="dialogflowsynthesizespeechconfig-volumegaindb" />
+<ParamField path="volumeGainDb" type="number">
+_optional_
+
+Optional. Volume gain (in dB) of the normal native volume supported by the specific voice, in the range [-96.0, 16.0]. If not set, or set to a value of 0.0 (dB), plays at normal native signal amplitude. A value of -6.0 (dB) plays at approximately half the amplitude of the normal native signal amplitude. A value of +6.0 (dB) plays at approximately twice the amplitude of the normal native signal amplitude. We strongly recommend not to exceed +10 (dB) as there is usually no effective increase in loudness for any value greater than that.
+</ParamField>
+
+### DialogflowTextInput
+
+Represents a natural language text to be processed.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowtextinput-languagecode" />
+<ParamField path="languageCode" type="DialogflowLanguage">
+The language ot the conversation query
+</ParamField>
+
+<a id="dialogflowtextinput-text" />
+<ParamField path="text" type="string">
+The UTF-8 encoded natural language text to be processed. Text length must not exceed 256 bytes
+</ParamField>
+
+### DialogflowVoiceSelectionParameters
+
+Description of which voice to use for speech synthesis.
+Add the following line to your scenario code to use the interface:
+```
+require(Modules.AI);
+```
+
+<a id="dialogflowvoiceselectionparameters-name" />
+<ParamField path="name" type="string">
+_optional_
+
+Optional. The name of the voice. If not set, the service chooses a voice based on the other parameters such as language_code and gender.
+</ParamField>
+
+<a id="dialogflowvoiceselectionparameters-ssmlgender" />
+<ParamField path="ssmlGender" type="DialogflowSsmlVoiceGender">
+_optional_
+
+Optional. The preferred gender of the voice. If not set, the service chooses a voice based on the other parameters such as language_code and name. Note that this is only a preference, not requirement. If a voice of the appropriate gender is not available, the synthesizer should substitute a voice with a different gender rather than failing the request.
+</ParamField>

@@ -3,6 +3,14 @@ instances:
 
 title: Voximplant Documentation
 
+redirects:
+  - source: /reference/voxengine
+    destination: /reference/voxengine/overview
+  - source: /reference/management-api
+    destination: /reference/management-api/reference
+  - source: /voice-ai/dialogflow/overview
+    destination: /voice-ai/dialogflow/es
+
 layout:
   tabs-placement: header
   searchbar-placement: header
@@ -78,62 +86,437 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
-      - page: Bring your own LLM
-        path: ./pages/voice-ai/bring-your-own-llm.md
-        icon: fa-duotone fa-brain-circuit
-      - page: MCP Client
-        path: ./pages/voice-ai/mcp-client.md
-        icon: fa-duotone fa-brackets-curly
-      - section: OpenAI
+      - page: Capabilities
+        path: ./pages/voice-ai/capabilities.mdx
+        slug: capabilities
+        icon: fa-duotone fa-list-check
+      - section: Voice AI on Voximplant
+        slug: voice-ai-on-voximplant
         contents:
-          - page: Overview
-            path: ./pages/voice-ai/openai/overview.md
-            icon: fa-duotone fa-sparkles
-      - section: Gemini Live
-        contents:
-          - page: Overview
-            path: ./pages/voice-ai/google/overview.md
+          - page: Getting started
+            slug: overview
+            path: ./pages/voice-ai/voice-ai-on-voximplant/overview.mdx
+            icon: fa-duotone fa-star
+          - link: VoxEngine Overview
+            href: /voice-ai/voice-ai-on-voximplant/overview#voxengine-overview
+            icon: fa-duotone fa-microchip-ai
+          - link: LLM & Speech Engines
+            href: /voice-ai/voice-ai-on-voximplant/overview#what-llm-and-speech-engine-do-you-want-to-use
             icon: fa-duotone fa-waveform-lines
-      - section: Ultravox Realtime
+          - link: Telephony Networks
+            href: /voice-ai/voice-ai-on-voximplant/overview#what-telephony-networks-are-you-using
+          - link: Guide Usage
+            href: /voice-ai/voice-ai-on-voximplant/overview#using-these-guides
+            icon: fa-duotone fa-book-open
+      - section: Build with AI coding agents
+        slug: vibe-coding
         contents:
           - page: Overview
-            path: ./pages/voice-ai/ultravox/overview.md
-            icon: fa-duotone fa-bolt
-      - section: ElevenLabs Agents
+            slug: overview
+            path: ./pages/voice-ai/vibe-coding/overview.mdx
+            icon: fa-duotone fa-wand-magic-sparkles
+          - page: Build with Claude Code
+            slug: claude
+            path: ./pages/voice-ai/vibe-coding/claude.mdx
+            icon: fa-brands fa-claude
+      - section: Configure Voximplant
+        slug: configure-voximplant
+        contents:
+          - page: Configure Voximplant
+            slug: overview
+            path: ./pages/voice-ai/configure-voximplant/overview.mdx
+            icon: fa-duotone fa-sliders
+          - link: Create an account
+            href: /voice-ai/configure-voximplant/overview#create-an-account
+            icon: fa-duotone fa-user-plus
+          - link: Create an application
+            href: /voice-ai/configure-voximplant/overview#create-an-application
+          - link: Create a scenario
+            href: /voice-ai/configure-voximplant/overview#create-a-scenario
+            icon: fa-duotone fa-code
+          - link: Setup routing
+            href: /voice-ai/configure-voximplant/overview#setup-routing
+          - link: Application Storage
+            href: /voice-ai/configure-voximplant/overview#application-storage
+      - section: Network options
+        slug: network-options
+        contents:
+          - page: Phone Numbers & PSTN
+            slug: phone-numbers-pstn
+            path: ./pages/voice-ai/network-options/phone-numbers-pstn.mdx
+            icon: fa-duotone fa-phone
+          - page: SIP
+            slug: sip
+            path: ./pages/voice-ai/network-options/sip.mdx
+          - page: WhatsApp
+            slug: whatsapp
+            path: ./pages/voice-ai/network-options/whatsapp.mdx
+            icon: fa-brands fa-whatsapp
+          - page: WhatsApp Multi-modal Proxy Server
+            slug: whatsapp-multimodal-server
+            path: ./pages/voice-ai/network-options/whatsapp-multimodal-server.mdx
+            hidden: true
+            icon: fa-duotone fa-server
+          - page: Web & Mobile
+            slug: web-mobile
+            path: ./pages/voice-ai/network-options/web-mobile.mdx
+            icon: fa-duotone fa-user
+      - section: Inbound vs. Outbound calling
+        slug: inbound-vs-outbound
+        contents:
+          - page: Inbound calls
+            slug: inbound-calls
+            path: ./pages/voice-ai/inbound-vs-outbound/inbound-calls.mdx
+            icon: fa-duotone fa-phone-arrow-down-left
+          - page: Outbound calls
+            slug: outbound-calls
+            path: ./pages/voice-ai/inbound-vs-outbound/outbound-calls.mdx
+            icon: fa-duotone fa-phone-arrow-up-right
+      - section: What's next?
+        slug: enhance-and-deploy
+        contents:
+          - page: Enhance and deploy
+            slug: overview
+            path: ./pages/voice-ai/enhance-and-deploy/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: Telephony and Voice AI
+            slug: telephony-and-voice-ai
+            path: ./pages/voice-ai/enhance-and-deploy/telephony-and-voice-ai.mdx
+            icon: fa-duotone fa-phone-volume
+          - page: Build and Deploy
+            slug: build-and-deploy
+            path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
+            icon: fa-duotone fa-rocket-launch
+      - section: Pipeline Options
+        slug: pipeline-options
+        skip-slug: true
         contents:
           - page: Overview
-            path: ./pages/voice-ai/elevenlabs/overview.md
-            icon: fa-duotone fa-flask-vial
-      - section: Cartesia Line Agents
+            slug: pipeline-options
+            path: ./pages/voice-ai/pipeline-options.mdx
+            icon: fa-duotone fa-circle-info
+          - link: Speech-to-Speech
+            href: /voice-ai/pipeline-options#speech-to-speech
+            icon: fa-duotone fa-waveform-lines
+          - link: Hybrid-cascade (LLM↔TTS)
+            href: /voice-ai/pipeline-options#hybrid-cascade-1
+            icon: fa-duotone fa-arrows-split-up-and-left
+          - link: Cascaded (STT↔LLM↔TTS)
+            href: /voice-ai/pipeline-options#full-cascade
+            icon: fa-duotone fa-diagram-project
+      - section: Voice AI Clients
+        slug: connectors
+        skip-slug: true
+        contents:
+          - page: Client Options
+            slug: client-options
+            path: ./pages/voice-ai/client-options.mdx
+            icon: fa-duotone fa-circle-info
+          - section: Bring Your Own LLM
+            slug: bring-your-own-llm
+            icon: fa-duotone fa-plug
+            path: ./pages/voice-ai/bring-your-own-llm/introduction.md
+            contents:
+              - page: Open AI API Compatibility
+                slug: open-ai-api-compatibility
+                path: ./pages/voice-ai/bring-your-own-llm/open-ai-api-compatibility.mdx
+                icon: fa-duotone fa-brain-circuit
+              - page: "Chat Completions: Together AI"
+                slug: chat-completions-together
+                path: ./pages/voice-ai/bring-your-own-llm/chat-completions-together.mdx
+                icon: fa-duotone fa-comments
+              - page: "Responses: Deepgram-Groq-Inworld"
+                slug: full-cascade-groq
+                path: ./pages/voice-ai/bring-your-own-llm/full-cascade-groq.mdx
+                icon: fa-duotone fa-diagram-project
+              - page: "Responses: Microsoft-Grok-Grok TTS"
+                slug: grok-full-cascade
+                path: ./pages/voice-ai/bring-your-own-llm/grok-full-cascade.mdx
+                icon: fa-duotone fa-waveform-lines
+              - page: "Realtime: Azure OpenAI"
+                slug: azure-openai-realtime
+                path: ./pages/voice-ai/bring-your-own-llm/azure-openai-realtime.mdx
+                icon: fa-duotone fa-cloud
+          - section: OpenAI
+            slug: openai
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/openai/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: GPT Live
+                slug: gpt-live
+                path: ./pages/voice-ai/openai/gpt-live.mdx
+                icon: fa-duotone fa-waveform
+              - page: Migration guide from Beta
+                slug: migration-guide
+                path: ./pages/voice-ai/openai/migration-guide.mdx
+                hidden: true
+                icon: fa-duotone fa-route
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/openai/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/openai/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/openai/function-calling.mdx
+                icon: fa-duotone fa-code
+              - page: Manual audio commit
+                slug: manual-audio-commit
+                path: ./pages/voice-ai/openai/manual-audio-commit.mdx
+                icon: fa-duotone fa-microphone-lines
+              - page: Half-cascade with ElevenLabs
+                slug: half-cascade-elevenlabs
+                path: ./pages/voice-ai/openai/half-cascade-elevenlabs.mdx
+                icon: fa-duotone fa-bolt
+              - page: Half-cascade with Inworld
+                slug: half-cascade-inworld
+                path: ./pages/voice-ai/openai/half-cascade-inworld.mdx
+                icon: fa-duotone fa-bolt
+              - page: Half-cascade with Cartesia
+                slug: half-cascade-cartesia
+                path: ./pages/voice-ai/openai/half-cascade-cartesia.mdx
+                icon: fa-duotone fa-bolt
+          - section: Gemini Live
+            slug: google
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/google/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/google/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Vertex AI
+                slug: vertex-ai
+                path: ./pages/voice-ai/google/vertex-ai.mdx
+                icon: fa-duotone fa-bolt
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/google/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/google/function-calling.mdx
+                icon: fa-duotone fa-code
+              - page: Speech translation
+                slug: speech-translation
+                path: ./pages/voice-ai/google/speech-translation.mdx
+                icon: fa-duotone fa-phone
+          - section: Ultravox Realtime
+            slug: ultravox
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/ultravox/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/ultravox/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/ultravox/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/ultravox/function-calling.mdx
+                icon: fa-duotone fa-code
+          - section: ElevenLabs Agents
+            slug: elevenlabs
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/elevenlabs/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/elevenlabs/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/elevenlabs/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/elevenlabs/function-calling.mdx
+                icon: fa-duotone fa-code
+          - section: Cartesia Line Agents
+            slug: cartesia
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/cartesia/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/cartesia/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/cartesia/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/cartesia/function-calling.mdx
+                icon: fa-duotone fa-code
+          - section: Inworld Realtime
+            slug: inworld
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/inworld/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/inworld/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/inworld/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/inworld/function-calling.mdx
+                icon: fa-duotone fa-code
+          - section: Deepgram Agents
+            slug: deepgram
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/deepgram/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/deepgram/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/deepgram/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/deepgram/function-calling.mdx
+                icon: fa-duotone fa-code
+              - page: Context history
+                slug: context-history
+                path: ./pages/voice-ai/deepgram/context-history.mdx
+                icon: fa-duotone fa-database
+          - section: xAI Grok Voice Agent
+            slug: xai
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/xai/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/xai/inbound.mdx
+                icon: fa-duotone fa-phone
+              - page: Features
+                slug: features
+                path: ./pages/voice-ai/xai/features.mdx
+                icon: fa-duotone fa-stars
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/xai/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+          - section: Qwen Cloud
+            slug: qwen
+            contents:
+              - page: Overview
+                slug: overview
+                path: ./pages/voice-ai/qwen/overview.mdx
+                icon: fa-duotone fa-circle-info
+              - page: Inbound call
+                slug: inbound
+                path: ./pages/voice-ai/qwen/inbound.mdx
+                icon: fa-duotone fa-phone-arrow-down-left
+              - page: Outbound call
+                slug: outbound
+                path: ./pages/voice-ai/qwen/outbound.mdx
+                icon: fa-duotone fa-phone-arrow-up-right
+              - page: Function calling
+                slug: function-calling
+                path: ./pages/voice-ai/qwen/function-calling.mdx
+                icon: fa-duotone fa-code
+          - section: Dialogflow
+            slug: dialogflow
+            contents:
+              - page: Dialogflow ES
+                slug: es
+                path: ./pages/voice-ai/dialogflow/es.mdx
+                icon: fa-duotone fa-comment-dots
+              - page: Dialogflow CX
+                slug: cx
+                path: ./pages/voice-ai/dialogflow/cx.mdx
+                icon: fa-duotone fa-comments
+      - section: Jev
+        slug: jev
         contents:
           - page: Overview
-            path: ./pages/voice-ai/cartesia/overview.md
-            icon: fa-duotone fa-chart-network
-      - section: Inworld Realtime
+            slug: overview
+            path: ./pages/voice-ai/jev/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: System One client
+            slug: system-one-client
+            path: ./pages/voice-ai/jev/system-one-client.mdx
+            icon: fa-duotone fa-list-check
+      - section: MCP Client
+        slug: mcp-client
+        path: ./pages/voice-ai/mcp-client/introduction.md
         contents:
           - page: Overview
-            path: ./pages/voice-ai/inworld/overview.md
-            icon: fa-duotone fa-user-robot
-      - section: Deepgram Agents
+            slug: overview
+            path: ./pages/voice-ai/mcp-client/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: Gemini-Zapier-MCP Example
+            slug: gemini-zapier-mcp-example
+            path: ./pages/voice-ai/mcp-client/gemini-zapier-mcp-example.mdx
+            icon: fa-duotone fa-code
+      - section: Speech Flow Control
+        slug: speech-flow-control
         contents:
-          - page: Overview
-            path: ./pages/voice-ai/deepgram/overview.md
-            icon: fa-duotone fa-ear-listen
-      - section: xAI Grok Voice Agent
+          - page: Turn Detection
+            slug: turn-detection
+            path: ./pages/voice-ai/speech-flow-control/turn-detection.mdx
+            icon: fa-duotone fa-wave-pulse
+          - page: Voice Activity Detection
+            slug: voice-activity-detection
+            path: ./pages/voice-ai/speech-flow-control/voice-activity-detection.mdx
+            icon: fa-duotone fa-waveform-lines
+          - page: Noise Suppression
+            slug: noise-suppression
+            path: ./pages/voice-ai/speech-flow-control/noise-suppression.mdx
+            icon: fa-duotone fa-volume-high
+          - page: Agentic VoiceDSP
+            slug: agentic-voicedsp
+            path: ./pages/voice-ai/speech-flow-control/agentic-voicedsp.mdx
+            icon: fa-duotone fa-layer-group
+      - section: Speech Guides
+        slug: speech
         contents:
-          - page: Overview
-            path: ./pages/voice-ai/xai/overview.md
-            icon: fa-duotone fa-alien-8bit
-      - section: Qwen Cloud
-        contents:
-          - page: Overview
-            path: ./pages/voice-ai/qwen/overview.md
-            icon: fa-duotone fa-cloud-binary
-      - section: Dialogflow
-        contents:
-          - page: Overview
-            path: ./pages/voice-ai/dialogflow/overview.md
-            icon: fa-duotone fa-comments
+          - page: OpenAI TTS voices
+            slug: openai-tts
+            path: ./pages/voice-ai/speech/openai-tts.mdx
+            icon: fa-duotone fa-volume-high
+          - page: xAI realtime TTS
+            slug: grok-tts
+            path: ./pages/voice-ai/speech/grok-tts.mdx
+            icon: fa-duotone fa-volume-high
+          - page: Measuring TTS latency
+            slug: tts-metrics
+            path: ./pages/voice-ai/speech/tts-metrics.mdx
+            icon: fa-duotone fa-stopwatch
+      - page: FAQ
+        path: ./pages/voice-ai/faq.mdx
+        slug: faq
+        icon: fa-duotone fa-circle-question
 
   - tab: platform
     layout:
@@ -265,6 +648,18 @@ navigation:
             path: ./pages/platform/solutions/2fa.md
             icon: fa-duotone fa-mobile-screen-button
 
+      - page: Working with API requests
+        path: ./pages/platform/api-requests.mdx
+        slug: api-requests
+        icon: fa-duotone fa-arrow-right-arrow-left
+      - section: Management API guides
+        slug: management-api
+        contents:
+          - page: Callbacks
+            path: ./pages/platform/management-api/callbacks.mdx
+            slug: callbacks
+            icon: fa-duotone fa-webhook
+
   - tab: sdk
     layout:
       - page: Overview
@@ -347,15 +742,510 @@ navigation:
         path: ./pages/reference/overview.md
         icon: fa-duotone fa-list-check
       - section: VoxEngine
+        slug: voxengine
+        collapsed: true
         contents:
           - page: Overview
-            path: ./pages/reference/voxengine.md
-            icon: fa-brands fa-js
+            path: ./pages/reference/voxengine/overview.mdx
+          - section: Runtime and modules
+            slug: runtime-and-modules
+            contents:
+              - page: VoxEngine
+                path: ./pages/reference/voxengine/voxengine/index.mdx
+                slug: voxengine
+              - page: Scenario globals
+                path: ./pages/reference/voxengine/scenario-globals.mdx
+              - page: Modules
+                path: ./pages/reference/voxengine/modules.mdx
+              - page: AppEvents
+                path: ./pages/reference/voxengine/app-events.mdx
+              - page: TerminationStatus
+                path: ./pages/reference/voxengine/termination-status.mdx
+              - page: ApplicationStorage
+                path: ./pages/reference/voxengine/application-storage/index.mdx
+                slug: application-storage
+              - page: Logger
+                path: ./pages/reference/voxengine/logger/index.mdx
+                slug: logger
+              - page: Crypto
+                path: ./pages/reference/voxengine/crypto/index.mdx
+                slug: crypto
+              - page: Net
+                path: ./pages/reference/voxengine/net/index.mdx
+                slug: net
+              - page: MeasurementProtocol
+                path: ./pages/reference/voxengine/measurement-protocol/index.mdx
+                slug: measurement-protocol
+              - section: VoximplantAPI
+                slug: voximplant-api
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/voximplant-api/index.mdx
+                  - page: Client
+                    path: ./pages/reference/voxengine/voximplant-api/client.mdx
+            skip-slug: true
+          - section: Calls and telephony
+            slug: calls-and-telephony
+            contents:
+              - page: Call
+                path: ./pages/reference/voxengine/call.mdx
+              - page: Endpoint
+                path: ./pages/reference/voxengine/endpoint.mdx
+              - page: Conference
+                path: ./pages/reference/voxengine/conference.mdx
+              - page: ConferenceDirection
+                path: ./pages/reference/voxengine/conference-direction.mdx
+              - page: ConferenceEvents
+                path: ./pages/reference/voxengine/conference-events.mdx
+              - page: ConferenceMode
+                path: ./pages/reference/voxengine/conference-mode.mdx
+              - page: ConferenceRecorder
+                path: ./pages/reference/voxengine/conference-recorder.mdx
+              - page: PhoneNumber
+                path: ./pages/reference/voxengine/phone-number/index.mdx
+                slug: phone-number
+              - page: DTMFType
+                path: ./pages/reference/voxengine/dtmf-type.mdx
+              - page: VideoCodecs
+                path: ./pages/reference/voxengine/video-codecs.mdx
+            skip-slug: true
+          - section: Media playback and recording
+            slug: media-playback-and-recording
+            contents:
+              - page: Player
+                path: ./pages/reference/voxengine/player.mdx
+              - page: PlayerEvents
+                path: ./pages/reference/voxengine/player-events.mdx
+              - page: StreamingAgent
+                path: ./pages/reference/voxengine/streaming-agent.mdx
+              - page: StreamingAgentEvents
+                path: ./pages/reference/voxengine/streaming-agent-events.mdx
+              - page: SequencePlayer
+                path: ./pages/reference/voxengine/sequence-player.mdx
+              - page: SequencePlayerEvents
+                path: ./pages/reference/voxengine/sequence-player-events.mdx
+              - page: Recorder
+                path: ./pages/reference/voxengine/recorder.mdx
+              - page: RecorderDirection
+                path: ./pages/reference/voxengine/recorder-direction.mdx
+              - page: RecorderEvents
+                path: ./pages/reference/voxengine/recorder-events.mdx
+              - page: RecorderLabelFont
+                path: ./pages/reference/voxengine/recorder-label-font.mdx
+              - page: RecorderLabelPosition
+                path: ./pages/reference/voxengine/recorder-label-position.mdx
+              - page: RecorderLabelTextAlign
+                path: ./pages/reference/voxengine/recorder-label-text-align.mdx
+              - page: RecorderLayout
+                path: ./pages/reference/voxengine/recorder-layout.mdx
+              - page: RecorderObjectFit
+                path: ./pages/reference/voxengine/recorder-object-fit.mdx
+              - page: RecorderProfile
+                path: ./pages/reference/voxengine/recorder-profile.mdx
+              - page: RecordExpireTime
+                path: ./pages/reference/voxengine/record-expire-time.mdx
+              - page: URLPlayerRequestMethod
+                path: ./pages/reference/voxengine/url-player-request-method.mdx
+            skip-slug: true
+          - section: Speech, ASR, and TTS
+            slug: speech-asr-and-tts
+            contents:
+              - page: ASR
+                path: ./pages/reference/voxengine/asr.mdx
+              - page: ASRDictionary
+                path: ./pages/reference/voxengine/asr-dictionary.mdx
+              - page: ASREvents
+                path: ./pages/reference/voxengine/asr-events.mdx
+              - page: ASRLanguage
+                path: ./pages/reference/voxengine/asr-language.mdx
+              - page: ASRModel
+                path: ./pages/reference/voxengine/asr-model.mdx
+              - section: ASRModelList
+                slug: asr-model-list
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/asr-model-list/index.mdx
+                  - page: Amazon
+                    path: ./pages/reference/voxengine/asr-model-list/amazon/index.mdx
+                    slug: amazon
+                  - page: Cartesia
+                    path: ./pages/reference/voxengine/asr-model-list/cartesia/index.mdx
+                    slug: cartesia
+                  - page: Deepgram
+                    path: ./pages/reference/voxengine/asr-model-list/deepgram/index.mdx
+                    slug: deepgram
+                  - page: Google
+                    path: ./pages/reference/voxengine/asr-model-list/google/index.mdx
+                    slug: google
+                  - page: Microsoft
+                    path: ./pages/reference/voxengine/asr-model-list/microsoft/index.mdx
+                    slug: microsoft
+                  - page: XAI
+                    path: ./pages/reference/voxengine/asr-model-list/xai/index.mdx
+                    slug: xai
+              - page: ASRProfile
+                path: ./pages/reference/voxengine/asr-profile.mdx
+              - section: ASRProfileList
+                slug: asr-profile-list
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/asr-profile-list/index.mdx
+                  - page: Amazon
+                    path: ./pages/reference/voxengine/asr-profile-list/amazon/index.mdx
+                    slug: amazon
+                  - page: Cartesia
+                    path: ./pages/reference/voxengine/asr-profile-list/cartesia/index.mdx
+                    slug: cartesia
+                  - page: Deepgram
+                    path: ./pages/reference/voxengine/asr-profile-list/deepgram/index.mdx
+                    slug: deepgram
+                  - page: Google
+                    path: ./pages/reference/voxengine/asr-profile-list/google/index.mdx
+                    slug: google
+                  - page: Microsoft
+                    path: ./pages/reference/voxengine/asr-profile-list/microsoft/index.mdx
+                    slug: microsoft
+                  - page: XAI
+                    path: ./pages/reference/voxengine/asr-profile-list/xai/index.mdx
+                    slug: xai
+              - page: Voice
+                path: ./pages/reference/voxengine/voice.mdx
+              - section: VoiceList
+                slug: voice-list
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/voice-list/index.mdx
+                  - section: Amazon
+                    slug: amazon
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/voice-list/amazon/index.mdx
+                      - page: Neural
+                        path: ./pages/reference/voxengine/voice-list/amazon/neural/index.mdx
+                        slug: neural
+                  - page: Default
+                    path: ./pages/reference/voxengine/voice-list/default/index.mdx
+                    slug: default
+                  - page: ElevenLabs
+                    path: ./pages/reference/voxengine/voice-list/elevenlabs/index.mdx
+                    slug: elevenlabs
+                  - page: Google
+                    path: ./pages/reference/voxengine/voice-list/google/index.mdx
+                    slug: google
+                  - section: IBM
+                    slug: ibm
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/voice-list/ibm/index.mdx
+                      - page: Neural
+                        path: ./pages/reference/voxengine/voice-list/ibm/neural/index.mdx
+                        slug: neural
+                  - section: Microsoft
+                    slug: microsoft
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/voice-list/microsoft/index.mdx
+                      - page: Neural
+                        path: ./pages/reference/voxengine/voice-list/microsoft/neural/index.mdx
+                        slug: neural
+              - page: TranscriptionProvider
+                path: ./pages/reference/voxengine/transcription-provider.mdx
+              - page: TTSEffectsProfile
+                path: ./pages/reference/voxengine/tts-effects-profile.mdx
+              - section: VoxTTS
+                slug: vox-tts
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/vox-tts/index.mdx
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/vox-tts/realtime-tts-player.mdx
+              - page: VoxTTSModelList
+                path: ./pages/reference/voxengine/vox-tts-model-list.mdx
+              - page: VoxTTSVoiceList
+                path: ./pages/reference/voxengine/vox-tts-voice-list.mdx
+              - section: Hush
+                slug: hush
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/hush/index.mdx
+                  - page: Events
+                    path: ./pages/reference/voxengine/hush/events.mdx
+                  - page: NoiseSuppression
+                    path: ./pages/reference/voxengine/hush/noise-suppression.mdx
+                  - page: NoiseSuppressionEvents
+                    path: ./pages/reference/voxengine/hush/noise-suppression-events.mdx
+              - section: Silero
+                slug: silero
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/silero/index.mdx
+                  - page: VAD
+                    path: ./pages/reference/voxengine/silero/vad.mdx
+                  - page: VADEvents
+                    path: ./pages/reference/voxengine/silero/vad-events.mdx
+              - page: DialogflowLanguage
+                path: ./pages/reference/voxengine/dialogflow-language.mdx
+              - page: DialogflowModel
+                path: ./pages/reference/voxengine/dialogflow-model.mdx
+              - page: DialogflowModelVariant
+                path: ./pages/reference/voxengine/dialogflow-model-variant.mdx
+              - page: DialogflowSsmlVoiceGender
+                path: ./pages/reference/voxengine/dialogflow-ssml-voice-gender.mdx
+            skip-slug: true
+          - section: Voice AI
+            slug: voice-ai
+            contents:
+              - section: AI
+                slug: ai
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/ai/index.mdx
+                  - page: DialogflowInstance
+                    path: ./pages/reference/voxengine/ai/dialogflow-instance.mdx
+                  - page: Events
+                    path: ./pages/reference/voxengine/ai/events.mdx
+              - section: AMD
+                slug: amd
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/amd/index.mdx
+                  - page: AnsweringMachineDetector
+                    path: ./pages/reference/voxengine/amd/answering-machine-detector.mdx
+                  - page: Events
+                    path: ./pages/reference/voxengine/amd/events.mdx
+                  - page: Model
+                    path: ./pages/reference/voxengine/amd/model.mdx
+                  - page: ResultClass
+                    path: ./pages/reference/voxengine/amd/result-class.mdx
+                  - page: ResultSubtype
+                    path: ./pages/reference/voxengine/amd/result-subtype.mdx
+              - section: Agentic
+                slug: agentic
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/agentic/index.mdx
+                  - page: VoiceDSP
+                    path: ./pages/reference/voxengine/agentic/voice-dsp.mdx
+                  - page: VoiceDSPEvents
+                    path: ./pages/reference/voxengine/agentic/voice-dsp-events.mdx
+                  - section: VoiceDSPStrategies
+                    slug: voice-dsp-strategies
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/index.mdx
+                      - page: MinWordsStart
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/min-words-start.mdx
+                      - page: SpeechTimeoutStop
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/speech-timeout-stop.mdx
+                      - page: TranscriptionStart
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/transcription-start.mdx
+                      - page: TurnDetectorStop
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/turn-detector-stop.mdx
+                      - page: VADStart
+                        path: ./pages/reference/voxengine/agentic/voice-dsp-strategies/vad-start.mdx
+              - section: Cartesia
+                slug: cartesia
+                path: ./pages/reference/voxengine/cartesia/index.mdx
+                contents:
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/cartesia/realtime-tts-player.mdx
+              - section: CCAI
+                slug: ccai
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/ccai/index.mdx
+                  - page: Agent
+                    path: ./pages/reference/voxengine/ccai/agent.mdx
+                  - page: Conversation
+                    path: ./pages/reference/voxengine/ccai/conversation.mdx
+                  - section: Events
+                    slug: events
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/ccai/events/index.mdx
+                      - page: Agent
+                        path: ./pages/reference/voxengine/ccai/events/agent.mdx
+                      - page: Conversation
+                        path: ./pages/reference/voxengine/ccai/events/conversation.mdx
+                      - page: Participant
+                        path: ./pages/reference/voxengine/ccai/events/participant.mdx
+                  - page: Participant
+                    path: ./pages/reference/voxengine/ccai/participant.mdx
+                  - section: Vendor
+                    slug: vendor
+                    contents:
+                      - page: Overview
+                        path: ./pages/reference/voxengine/ccai/vendor/index.mdx
+                      - page: Role
+                        path: ./pages/reference/voxengine/ccai/vendor/role.mdx
+              - section: Deepgram
+                slug: deepgram
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/deepgram/index.mdx
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/deepgram/realtime-tts-player.mdx
+              - section: ElevenLabs
+                slug: elevenlabs
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/elevenlabs/index.mdx
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/elevenlabs/realtime-tts-player.mdx
+              - page: Gemini
+                path: ./pages/reference/voxengine/gemini/index.mdx
+              - section: Google
+                slug: google
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/google/index.mdx
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/google/realtime-tts-player.mdx
+              - section: Inworld
+                slug: inworld
+                path: ./pages/reference/voxengine/inworld/index.mdx
+                contents:
+                  - page: Events
+                    path: ./pages/reference/voxengine/inworld/events.mdx
+                  - page: RealtimeAPIClient
+                    path: ./pages/reference/voxengine/inworld/realtime-api-client.mdx
+                  - page: RealtimeAPIEvents
+                    path: ./pages/reference/voxengine/inworld/realtime-api-events.mdx
+              - page: Jev
+                path: ./pages/reference/voxengine/jev/index.mdx
+              - section: OpenAI
+                slug: openai
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/openai/index.mdx
+                  - page: RealtimeAPIClientType
+                    path: ./pages/reference/voxengine/openai/realtime-api-client-type.mdx
+              - page: Pipecat
+                path: ./pages/reference/voxengine/pipecat/index.mdx
+              - section: QwenCloud
+                slug: qwen-cloud
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/qwen-cloud/index.mdx
+                  - page: Events
+                    path: ./pages/reference/voxengine/qwen-cloud/events.mdx
+                  - page: VoiceAgentAPIClient
+                    path: ./pages/reference/voxengine/qwen-cloud/voice-agent-api-client.mdx
+                  - page: VoiceAgentAPIEvents
+                    path: ./pages/reference/voxengine/qwen-cloud/voice-agent-api-events.mdx
+              - page: Ultravox
+                path: ./pages/reference/voxengine/ultravox/index.mdx
+              - section: XAI
+                slug: xai
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/xai/index.mdx
+                  - page: RealtimeTTSPlayer
+                    path: ./pages/reference/voxengine/xai/realtime-tts-player.mdx
+              - section: MCP
+                slug: mcp
+                contents:
+                  - page: Overview
+                    path: ./pages/reference/voxengine/mcp/index.mdx
+                  - page: Client
+                    path: ./pages/reference/voxengine/mcp/client.mdx
+                  - page: ServerEvents
+                    path: ./pages/reference/voxengine/mcp/server-events.mdx
+            skip-slug: true
+          - section: WebSocket and protocol integrations
+            slug: websocket-and-protocol-integrations
+            contents:
+              - page: WebSocket
+                path: ./pages/reference/voxengine/websocket.mdx
+                slug: websocket
+              - page: WebSocketAudioEncoding
+                path: ./pages/reference/voxengine/websocket-audio-encoding.mdx
+                slug: websocket-audio-encoding
+              - page: WebSocketCloseCode
+                path: ./pages/reference/voxengine/websocket-close-code.mdx
+                slug: websocket-close-code
+              - page: WebSocketEvents
+                path: ./pages/reference/voxengine/websocket-events.mdx
+                slug: websocket-events
+              - page: WebSocketReadyState
+                path: ./pages/reference/voxengine/websocket-ready-state.mdx
+                slug: websocket-ready-state
+            skip-slug: true
+          - section: Queues and routing
+            slug: queues-and-routing
+            contents:
+              - page: CallList
+                path: ./pages/reference/voxengine/call-list/index.mdx
+                slug: call-list
+              - page: ACDEvents
+                path: ./pages/reference/voxengine/acd-events.mdx
+              - page: ACDRequest
+                path: ./pages/reference/voxengine/acd-request.mdx
+              - page: SmartQueueEvents
+                path: ./pages/reference/voxengine/smart-queue-events.mdx
+              - page: SmartQueueOperatorSettingsMode
+                path: ./pages/reference/voxengine/smart-queue-operator-settings-mode.mdx
+              - page: SmartQueueTask
+                path: ./pages/reference/voxengine/smart-queue-task.mdx
+              - page: TaskWaitingCode
+                path: ./pages/reference/voxengine/task-waiting-code.mdx
+            skip-slug: true
       - section: Management API
+        slug: management-api
         contents:
-          - page: Overview
-            path: ./pages/reference/management-api.md
-            icon: fa-duotone fa-rectangle-api
+          - api: Reference
+            api-name: management-api
+            display-errors: true
+            summary: ./pages/reference/management-api/overview.mdx
+            layout:
+              - accounts
+              - applications
+              - users
+              - call-lists
+              - scenarios
+              - rules
+              - history
+              - phone-numbers
+              - section: PSTN Blacklist
+                referenced-packages:
+                  - pstnBlacklist
+                contents: []
+              - section: SIP White List
+                referenced-packages:
+                  - sipWhiteList
+                contents: []
+              - section: SIP Registration
+                referenced-packages:
+                  - sipRegistration
+                contents: []
+              - section: WAB Phone Numbers
+                referenced-packages:
+                  - wabPhoneNumbers
+                contents: []
+              - callerids
+              - outboundtestnumbers
+              - queues
+              - smartqueue
+              - skills
+              - admin-users
+              - admin-roles
+              - authorized-ips
+              - regulation-address
+              - push-credentials
+              - dialogflow-credentials
+              - SMS:
+                  - endpoint: POST /A2PGetSmsHistory
+                    slug: a2p-get-sms-history
+                  - endpoint: POST /A2PSendSms
+                    slug: a2p-send-sms
+                  - POST /ControlSms
+                  - POST /GetSmsHistory
+                  - POST /SendSmsMessage
+          - page: Authorization
+            path: ./pages/reference/management-api/authorization.mdx
+            slug: authorization
+          - page: Errors
+            path: ./pages/reference/management-api/errors.mdx
       - section: Web SDK
         contents:
           - page: Overview
@@ -421,3 +1311,6 @@ colors:
   header-background:
     light: "#ffffff"
     dark: "#0a0714"
+
+css: assets/custom.css
+js: assets/custom.js

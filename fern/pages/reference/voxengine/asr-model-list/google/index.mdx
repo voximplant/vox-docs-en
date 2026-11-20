@@ -1,0 +1,24 @@
+---
+title: Google
+subtitle: List of Google ASR models.
+---
+
+List of Google ASR models. Can be passed via the `ASRParameters.model` parameter.
+NOTE: the **enhanced** models cost more than the standard rate.
+Add the following line to your scenario code to use the enum:
+```
+require(Modules.ASR);
+```
+
+## Constants
+
+| Name | Type | Description |
+| --- | --- | --- |
+| <a id="default" /> `DEFAULT` | `ASRModel` | Best for audio that is not one of the specific audio models. For example, long-form audio. Ideally the audio is high-fidelity, recorded at a 16khz or greater sampling rate. |
+| <a id="defaultenhanced" /> `default_enhanced` | `ASRModel` | **Default** model with more accurate recognition. |
+| <a id="commandandsearch" /> `command_and_search` | `ASRModel` | Best for short queries such as voice commands or voice search. |
+| <a id="commandandsearchenhanced" /> `command_and_search_enhanced` | `ASRModel` | **Command_and_search** model with more accurate recognition. |
+| <a id="phonecall" /> `phone_call` | `ASRModel` | Best for audio that originated from a phone call (typically recorded at a 8khz sampling rate). |
+| <a id="phonecallenhanced" /> `phone_call_enhanced` | `ASRModel` | **Phone_call** model with more accurate recognition. |
+| <a id="video" /> `video` | `ASRModel` | Best for audio that originated from video or includes multiple speakers. Ideally the audio is recorded at a 16khz or greater sampling rate. |
+| <a id="videoenhanced" /> `video_enhanced` | `ASRModel` | **Video** model with more accurate recognition. |

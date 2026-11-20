@@ -13,10 +13,10 @@ Learn how to play synthesized speech and pre-recorded audio files during an acti
 
 VoxEngine provides the [Player module]() for playing audio files and synthesized text-to-speech prompts.
 
-To play audio during an incoming call, first [answer a call](). You can also broadcast audio before answering using [startEarlyMedia]() to play a greeting or early voicemail prompt.
+To play audio during an incoming call, first [answer a call](). You can also broadcast audio before answering using [startEarlyMedia](/reference/voxengine/call#startearlymedia) to play a greeting or early voicemail prompt.
 
-* **Text-to-speech**: Use the [createTTSPlayer()]() method to generate a player instance from text. It accepts the same configuration options as [call.say()](). Refer to the [text-to-speech article]() for parameter details.
-* **Audio files via URL**: Use the [createURLPlayer]() method to play pre-recorded audio files over HTTP/HTTPS. It accepts the media file URL and optional [URLPlayerParameters]().
+* **Text-to-speech**: Use the [createTTSPlayer()](/reference/voxengine/voxengine#createttsplayer) method to generate a player instance from text. It accepts the same configuration options as [call.say()](/reference/voxengine/call#say). Refer to the [text-to-speech article]() for parameter details.
+* **Audio files via URL**: Use the [createURLPlayer](/reference/voxengine/voxengine#createurlplayer) method to play pre-recorded audio files over HTTP/HTTPS. It accepts the media file URL and optional [URLPlayerParameters]().
 
 After creating a TTS or URL player instance, stream its audio to the call using [sendMediaTo]():
 
@@ -67,7 +67,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 });
 ```
 
-You can also use URL players to stream audio from third-party speech providers, such as [OpenAI TTS]().
+You can also use URL players to stream audio from third-party speech providers, such as [OpenAI TTS](/voice-ai/speech/openai-tts).
 
 <Warning title="Media player limit">
 The maximum number of active media player instances per JavaScript session is 10.
@@ -99,7 +99,7 @@ firstPlayer.addEventListener(PlayerEvents.PlaybackFinished, () => {
 });
 ```
 
-When you need to play several tracks in sequence, managing nested event handlers becomes cumbersome. The [SequencePlayer]() solves this by accepting an array of "segments" (audio URLs or TTS strings with individual voice settings) and automatically handling sequential playback and event transitions:
+When you need to play several tracks in sequence, managing nested event handlers becomes cumbersome. The [SequencePlayer](/reference/voxengine/sequence-player) solves this by accepting an array of "segments" (audio URLs or TTS strings with individual voice settings) and automatically handling sequential playback and event transitions:
 
 ```javascript title="Sequence player approach"
 // define all the SequencePlayer segments

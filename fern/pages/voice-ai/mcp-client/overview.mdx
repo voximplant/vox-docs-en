@@ -1,0 +1,307 @@
+---
+title: MCP Client
+subtitle: Connect VoxEngine voice agents to Model Context Protocol servers.
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+## Overview
+
+The VoxEngine MCP Client lets a Voice AI scenario connect to external Model Context Protocol (MCP) servers and call tools from the same VoxEngine code that manages the call.
+
+MCP is an open protocol for exposing tools and context to AI applications. In a Voximplant scenario, the voice AI client can decide when a tool is needed, while VoxEngine keeps control over the MCP connection, validates the request, calls the tool, and returns the result to the model.
+
+The result is a provider-neutral tool layer. You can use the same MCP server with any of Voximplant's [Voice AI Clients](/voice-ai/client-options).
+
+## Architecture
+
+![MCP Client architecture demo](../../../assets/voice-ai/mcp-client/mcp-client-demo.gif)
+
+As shown in the image above, the typical MCP flow is as follows:
+
+1. Some user speech or user-related input triggers a tool/function call in the LLM.
+2. The VoxEngine scenario directs this tool call to the MCP client.
+3. The MCP Client sends a request to the MCP Server.
+4. The MCP server responds with some data or a confirmation.
+5. The VoxEngine scenario directs this response to the LLM as a tool response.
+6. The LLM incorporates this data into its new response.
+
+In this pattern, the voice AI client handles the conversation and decides when a tool is needed. The MCP Client handles the MCP Server interaction from VoxEngine. Your scenario code remains the control point: it can choose which tool to call, shape arguments, add call context, and decide how to recover if the tool fails.
+
+## Benefits
+
+- Keep tool orchestration in VoxEngine.
+- Use the same MCP server across voice AI providers.
+- Add telephony context before tool execution.
+- Control validation, allowlists, retries, and error handling.
+- Keep logging and audit behavior close to the call logic.
+- Avoid building a separate MCP gateway service.
+
+## Use Cases
+
+### Does your LLM support MCP?
+
+Many LLMs have MCP client support built in. If your voice AI provider supports attaching MCP servers directly, follow that provider's session configuration requirements and pass the required parameter or configuration object to the Voximplant [Voice AI client](/voice-ai/client-options).
+
+As discussed below, even if your LLM or Voice AI system includes an MCP client, you may still want to leverage a different MCP client, such as the one provided by Voximplant, for increased control and debugging help.
+
+### Typical Voximplant MCP Client uses
+
+If your LLM does not support MCP capabilities natively, the Voximplant MCP Client can provide full MCP support. Even if your LLM supports MCP, the MCP Client offers several valuable use cases:
+
+- **Custom Authentication** - if your MCP server needs specific authentication, such as per-user authentication, you can use the MCP Client and Voximplant's other [API interaction options](/platform/api-requests) to allow authentication based on phone number, DTMF entry, or a spoken code.
+- **Tool and Argument Management** - many external servers expose extensive capabilities that exceed the requirements of a voice interface. By utilizing the MCP Client, you can intercept and refine communication to and from the MCP server, reducing potential errors and providing more deterministic behavior.
+- **Data Compliance and Redaction** - ensure strict adherence to privacy standards by intercepting data exchange. The MCP Client provides the necessary oversight to filter, modify, or mask sensitive details transmitted between the LLM and your external MCP services.
+- **Observability** - built-in MCP implementations in LLMs frequently lack granular reporting. By using Voximplant's MCP Client, you gain comprehensive visibility and can manage every log entry within your scenario logic.
+- **Debugging** - ensuring the LLM interacts accurately with the MCP server often requires iterative prompt engineering. For initial troubleshooting, utilize a static mapping from the model to the MCP server to confirm execution and latency before optimizing the system prompt.
+
+
+## Demo video
+
+MCP Client demo:
+
+<llms-ignore>
+<iframe
+  width="100%"
+  height="360"
+  src="https://www.youtube.com/embed/fyjSWILjyMQ"
+  title="MCP Client demo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowFullScreen
+/>
+</llms-ignore>
+
+
+
+## MCP Client Setup and Interactions
+
+Create the MCP Client near the start of the application flow before the model needs to call external tools.
+
+### Client Creation
+
+`MCP.createClient(...)` accepts an `mcpServerConnectionConfig` object with these common fields:
+
+- `transport`: the transport supported by your MCP server - `http` and `sse` are supported.
+- `endpoint`: the MCP server URL.
+- `headers`: optional headers required by the MCP server.
+- `clientName` and `clientVersion`: values that identify your VoxEngine MCP client during the MCP handshake.
+
+Example:
+
+```js
+const mcpClient = await MCP.createClient({
+  mcpServerConnectionConfig: {
+    transport: "http",
+    endpoint: VoxEngine.getSecretValue("MCP_SERVER_URL"),
+    headers: {
+      Accept: "application/json, text/event-stream",
+    },
+    clientName: "voximplant-mcp-demo",
+    clientVersion: "1.0.0",
+  },
+});
+```
+
+<Info>
+    Use `http` as the transport when connecting to MCP servers that support the newer Streamable HTTP transport.
+    Use `sse` only for compatibility with older MCP servers that implement the deprecated HTTP+SSE transport.
+</Info>
+
+Then, you can use the `ConnectorInformation` event to verify the connection is established:
+
+```js
+mcpClient.addEventListener(MCP.ServerEvents.ConnectorInformation, (event) => {
+  Logger.write(`===MCP_CONNECTOR_INFORMATION===> ${JSON.stringify(event.data.payload)}`);
+});
+```
+
+That will return the Voximplant MCP Client application version and a unique connection ID.
+
+```json
+{
+  "applicationVersion": "0.51.0",
+  "id": "bf21a7a8a3ead25a2b9bc95db704108b",
+  "endpoint": "/mcp/client"
+}
+```
+
+### Tool discovery
+
+After the client connects, it is common to request the available tools using `mcpClient.listTools({})`.
+
+You should provide the `listTools` method a blank object (`{}`) as a parameter.
+
+Then listen for the `MCP.ServerEvents.ToolsList` event:
+
+```js
+mcpClient.addEventListener(MCP.ServerEvents.ToolsList, (event) => {
+  const tools = event?.data?.payload?.tools || [];
+  Logger.write(`===MCP_TOOLS_LIST===> ${tools.length} Tools Available:`);
+  Logger.write(JSON.stringify(tools.map((tool) => `${tool.name}: ${tool.description}`)));
+  Logger.write(JSON.stringify(tools));
+});
+```
+
+The `ToolsList` event payload contains a `tools` array with each tool's name, description, and input schema.
+
+You can filter this list and its contents before passing it to the LLM. The `ToolsList` is also useful for logging, diagnostics, and startup validation. The call flow does not need to expose this information to the caller.
+
+### Tool calls
+
+All of Voximplant's [Voice AI clients](/voice-ai/client-options) expose tools or function-call events.
+The LLM needs to be configured with these available tools as part of the session configuration that you pass to it.
+Typically, the LLM initiates a tool call in response to some input - for example, if a user says "I want to schedule a visit".
+
+When using MCP-based tools, the simplest approach is to use the MCP tool definitions and parameters from the
+`MCP.ServerEvents.ToolsList` response in your tool declaration.
+Each MCP tool must be adapted to the tool schema expected by the LLM.
+
+For example, with OpenAI Realtime:
+```js
+const mcpTools = tools.map((tool) => ({
+    type: "function",
+    name: tool.name,
+    description: tool.description,
+    parameters: tool.inputSchema,
+}));
+```
+
+Then you can pass this tool object to the LLM.
+
+```js
+// Add the MCP tools to the session configuration
+const SESSION_CONFIG = {
+    session: {
+        type: "realtime",
+        model: "gpt-realtime-2.1",
+        instructions: SYSTEM_PROMPT,
+        output_modalities: ["audio"],
+        audio: {
+            output: {
+                voice: "marin",
+            },
+        },
+        tools: [
+            ...mcpTools,
+            // Manually defined tool example
+            {
+                type: "function",
+                name: "hangup_call",
+                description: "Hang up the current call",
+                parameters: {
+                    type: "object",
+                    properties: {},
+                    required: [],
+                },
+            },
+        ],
+        tool_choice: "auto",
+    },
+};
+
+// Update the session with the new tools
+openaiClient.sessionUpdate(SESSION_CONFIG);
+
+```
+
+<Warning>
+    The MCP tool to session-defined tool adaptation scheme varies by LLM.
+    See the [Adapting MCP tools](/voice-ai/mcp-client/gemini-zapier-mcp-example#adapting-mcp-tools) section below for strategies to adjust the tool definitions to better fit your LLM's requirements.
+</Warning>
+
+Later, when OpenAI emits function-call events, compare the returned function name with the MCP tool names and use `mcpClient.callTool({name, arguments: args})` to invoke the server.
+
+```js
+openaiClient.addEventListener(OpenAI.RealtimeAPIEvents.ResponseOutputItemAdded, (event) => {
+    const item = event?.data?.payload?.item || {};
+    // OpenAI Realtime provides the function name and arguments in separate events,
+    //  so we store the function name in a temporary object until the arguments arrive.
+    if (item.type === "function_call" && item.call_id && item.name)
+        functionNameByCallId[item.call_id] = item.name;
+});
+
+openaiClient.addEventListener(OpenAI.RealtimeAPIEvents.ResponseFunctionCallArgumentsDone, (event) => {
+    const {call_id: callId, arguments: rawArgs} = event.data.payload;
+    const name = functionNameByCallId[callId];
+    const args = JSON.parse(rawArgs || "{}");
+
+    delete functionNameByCallId[callId];
+
+    // Send MCP tool calls to the MCP Server.
+    if (requiredMcpTools.includes(name)) {
+        pendingOpenAIFunction = {callId, name};
+        Logger.write("===ZAPIER_MCP_TOOL_CALL===");
+        Logger.write(JSON.stringify({callId, tool: name, args}));
+
+        mcpClient.callTool({name, arguments: args});
+    }
+    // You can still define your own local tools.
+    else if (name === "hangup_call") {
+        pendingHangup = true;
+
+        sendOpenAIToolOutput(callId, {
+            result: "Goodbye. Thank you for calling Voxy Plumbers.",
+        });
+    }
+    else {
+        sendOpenAIToolOutput(callId, {
+            error: `Unhandled tool: ${name}`,
+        });
+    }
+});
+```
+
+We must return a result for the OpenAI function call.
+In this case, we need to wait for the `MCP.ServerEvents.ToolResult` event before sending the tool response.
+We do that with OpenAI Realtime as follows:
+
+```js
+const sendOpenAIToolOutput = (callId, output) => {
+    openaiClient.conversationItemCreate({
+        item: {
+            type: "function_call_output",
+            call_id: callId,
+            output: JSON.stringify(output),
+        },
+    });
+    openaiClient.responseCreate({});
+};
+
+mcpClient.addEventListener(MCP.ServerEvents.ToolResult, (event) => {
+    // Match this MCP result to the OpenAI function call that triggered it.
+    if (!pendingOpenAIFunction) return;
+
+    const text = event.data.payload.content?.[0]?.text || "{}";
+    let mcpOutput;
+    try {
+        mcpOutput = JSON.parse(text);
+    } catch {
+        Logger.write("===MCP_RESULT_PARSE_ERROR===");
+        Logger.write(text);
+        mcpOutput = {text};
+    }
+
+    if (event.data.payload.isError || mcpOutput.error) {
+        mcpOutput = {error: mcpOutput.error || "MCP tool failed."};
+    }
+
+    sendOpenAIToolOutput(pendingOpenAIFunction.callId, mcpOutput);
+    pendingOpenAIFunction = undefined;
+});
+```
+
+<Info>
+    The above flow assumes an agentic approach where the LLM interprets MCP Server's tools and invokes them with the appropriate parameters. It is also possible to hardcode tools and parameters or make adjustments to them. We will demonstrate that in the [Gemini-Zapier-MCP Example](/voice-ai/mcp-client/gemini-zapier-mcp-example).
+</Info>
+
+## Links
+
+- [Model Context Protocol](https://modelcontextprotocol.io/)
+- [VoxEngine MCP API reference](/reference/voxengine/mcp)
+- [Product Announcement](https://voximplant.com/blog/voxengine-mcp-client)
+- [Product Page](https://voximplant.com/products/mcp-client)
+- [Zapier MCP](https://zapier.com/mcp)
+- [Zapier Tables](https://zapier.com/tables)

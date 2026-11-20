@@ -8,7 +8,7 @@ Capturing audio quality data enables dynamic UI and business logic adaptationsâ€
 
 ## How to detect call quality
 
-To detect call quality in your [scenario](), subscribe to the [AudioQualityDetected]() event on the call object. The event payload returns either `HD` or `STANDARD` in its `quality` property:
+To detect call quality in your [scenario](/platform/getting-started/create-a-scenario), subscribe to the [AudioQualityDetected](/reference/voxengine/call#audioqualitydetected) event on the call object. The event payload returns either `HD` or `STANDARD` in its `quality` property:
 
 ```javascript title="Detect call quality in a scenario"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {

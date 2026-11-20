@@ -1,0 +1,93 @@
+---
+title: Endpoint
+subtitle: Represents any remote media unit in a session.
+---
+
+Represents any remote media unit in a session. An endpoint can be represented as [ASR](/reference/voxengine/asr), [Recorder](/reference/voxengine/recorder), [Player](/reference/voxengine/player) or another [Call](/reference/voxengine/call).
+Add the following line to your scenario code to use the class:
+```
+require(Modules.Conference);
+```
+
+## Methods
+
+### getCall
+
+Returns the endpoint's [Call](/reference/voxengine/call) instance if the endpoint is not a player or recorder instance.
+
+```ts
+getCall(): Call
+```
+
+### getDirection
+
+Returns the endpoint's direction. **SEND** provides only outgoing stream from endpoint to conference, **RECEIVE** provides only incoming stream from conference to endpoint, **BOTH** allows both incoming and outgoing streams.
+
+```ts
+getDirection(): 'SEND' | 'RECEIVE' | 'BOTH'
+```
+
+### getMode
+
+Returns the endpoint's mode. **MIX** mode combines all streams in one, **FORWARD** mode sends only one stream.
+
+```ts
+getMode(): 'MIX' | 'FORWARD'
+```
+
+### id
+
+Returns the endpoint's id.
+
+```ts
+id(): string
+```
+
+### manageEndpoint
+
+Enables/disables receiving media streams from other conference participants.
+
+```ts
+manageEndpoint(parameters: ReceiveParameters): Promise<void>
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="ReceiveParameters" required>
+An object that specifies what media streams to receive from each [Endpoint](/reference/voxengine/endpoint). Can be passed via the `EndpointParameters.receiveParameters` parameter or an argument to the `Endpoint.manageEndpoint` method.
+The object can accept the following keys:
+
+    A string value with the endpoint ID. Applies the setting only for the specified endpoint.
+    The **all** keyword. Applies the setting for all the endpoints.
+    The **new** keyword. Applies the setting for the new endpoints only.
+</ParamField>
+
+<ParamField path="parameters[remoteParticipantId]" type="ParticipantReceiveParameters">
+_index signature_
+
+Substitute one of the available keys from the description.
+</ParamField>
+
+<ParamField path="parameters[remoteParticipantId].video" type="Array<'default' | string>">
+_optional_
+
+Optional. Video streams to receive.
+</ParamField>
+
+<ParamField path="parameters[remoteParticipantId].audio" type="Array<'default' | string>">
+_optional_
+
+Optional. Audio streams to receive.
+</ParamField>
+
+### setDisplayName
+
+Sets the display name for the specified endpoint. When the display name is set, all SDK clients receive 'EndpointEvents.InfoUpdated' event.
+
+```ts
+setDisplayName(displayName: string): void
+```
+
+**Parameters**
+
+<ParamField path="displayName" type="string" required />

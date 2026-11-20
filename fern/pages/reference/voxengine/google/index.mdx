@@ -1,0 +1,63 @@
+---
+title: Google
+subtitle: 'Google realtime streaming text-to-speech integration. Add the following line to your scenario code to use the namespace: ``` require(Modules.Google); ```'
+---
+
+## Classes
+
+- [RealtimeTTSPlayer](/reference/voxengine/google/realtime-tts-player)
+## Functions
+
+### createRealtimeTTSPlayer
+
+Creates a new [Google.RealtimeTTSPlayer](/reference/voxengine/google/realtime-tts-player) instance. You can attach media streams later via the `Google.RealtimeTTSPlayer.sendMediaTo` or `VoxEngine.sendMediaBetween` methods.
+
+```ts
+createRealtimeTTSPlayer(parameters?: RealtimeTTSPlayerParameters): RealtimeTTSPlayer
+```
+
+**Parameters**
+
+<ParamField path="parameters" type="RealtimeTTSPlayerParameters" />
+
+## Types
+
+### RealtimeTTSPlayerParameters
+
+[Google.RealtimeTTSPlayer](/reference/voxengine/google/realtime-tts-player) parameters. Can be passed as arguments to the `Google.createRealtimeTTSPlayer` method.
+
+<a id="realtimettsplayerparameters-keepalive" />
+<ParamField path="keepAlive" type="boolean">
+_optional_
+
+Optional. Whether to keep the connection alive after the timeout. The default value is **true**.
+</ParamField>
+
+<a id="realtimettsplayerparameters-languagecode" />
+<ParamField path="language_code" type="string">
+BCP-47 language tag representing the voice language.
+
+Specifies the locale used for speech synthesis, including language and optionally region.
+
+Must be a valid BCP-47 tag (e.g., "en-US","en-GB", "en-IN", "de-DE", "fr-FR", "pl-PL", "ru-RU").
+</ParamField>
+
+<a id="realtimettsplayerparameters-trace" />
+<ParamField path="trace" type="boolean">
+_optional_
+
+Optional. Whether to enable the tracing functionality.
+
+If tracing is enabled, a URL to the trace file appears in the 'websocket.created' message. The file contains all sent and received WebSocket messages in the plain text format. The file is uploaded to the S3 storage.
+
+NOTE: enable this only for diagnostic purposes.
+</ParamField>
+
+<a id="realtimettsplayerparameters-voice" />
+<ParamField path="voice" type="string">
+The name of the voice used for speech synthesis. Each voice has a unique identifier and represents a specific synthetic speaker with its own characteristics (e.g., gender, tone).
+
+Find more information in the [documentation](https://docs.cloud.google.com/text-to-speech/docs/list-voices-and-types).
+
+Example voices include: "Aoede", "Puck", "Charon", "Kore", "Fenrir", "Leda", "Orus", "Zephyr".
+</ParamField>

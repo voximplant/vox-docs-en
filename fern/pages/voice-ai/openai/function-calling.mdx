@@ -1,0 +1,236 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+
+It includes three tools:
+
+- `get_weather`
+- `hang_up`
+- `warm_transfer`
+
+**Jump to the [Full VoxEngine scenarios](#full-voxengine-scenarios).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
+
+## Session setup
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    The scenario uses `sessionUpdate` to define:
+
+    - Realtime model instructions
+    - low reasoning effort
+    - nested `semantic_vad` turn detection
+    - tool schemas (`tools`)
+    - `tool_choice: "auto"`
+
+    Tool definitions are declared in `SESSION_CONFIG.session.tools` and sent right after `SessionCreated`.
+
+```js title="GPT Realtime 2.1 session configuration"
+const SESSION_CONFIG = {
+  session: {
+    type: "realtime",
+    model: "gpt-realtime-2.1",
+    instructions: SYSTEM_PROMPT,
+    reasoning: { effort: "low" },
+    output_modalities: ["audio"],
+    audio: {
+      input: {
+        turn_detection: { type: "semantic_vad", interrupt_response: true },
+      },
+      output: {
+        voice: "alloy",
+      },
+    },
+    tools: [
+      {
+        type: "function",
+        name: WEATHER_TOOL,
+        description: "Get the weather for a given location",
+        parameters: {
+          type: "object",
+          properties: {
+            location: { type: "string" },
+          },
+          required: ["location"],
+        },
+      },
+      {
+        type: "function",
+        name: HANGUP_TOOL,
+        description: "Hang up the call",
+        parameters: {
+          type: "object",
+          properties: {},
+          required: [],
+        },
+      },
+      {
+        type: "function",
+        name: WARM_TRANSFER_TOOL,
+        description: "Warm transfer the caller to a phone number",
+        parameters: {
+          type: "object",
+          properties: {
+            destination_number: { type: "string" },
+            message: { type: "string" },
+            delay_ms: { type: "integer" },
+          },
+          required: [],
+        },
+      },
+    ],
+    tool_choice: "auto",
+  },
+};
+
+voiceAIClient.sessionUpdate(SESSION_CONFIG);
+```
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+    The scenario uses `sessionUpdate` to define:
+
+    - Realtime model instructions
+    - `server_vad` turn detection
+    - tool schemas (`tools`)
+    - `tool_choice: "auto"`
+
+    Tool definitions are declared in `SESSION_CONFIG.session.tools` and sent right after `SessionCreated`.
+
+```js title="GPT Realtime 1.5 session configuration"
+const SESSION_CONFIG = {
+  session: {
+    type: "realtime",
+    instructions: SYSTEM_PROMPT,
+    voice: "alloy",
+    output_modalities: ["audio"],
+    turn_detection: { type: "server_vad", interrupt_response: true },
+    tools: [
+      {
+        type: "function",
+        name: WEATHER_TOOL,
+        description: "Get the weather for a given location",
+        parameters: {
+          type: "object",
+          properties: {
+            location: { type: "string" },
+          },
+          required: ["location"],
+        },
+      },
+      {
+        type: "function",
+        name: HANGUP_TOOL,
+        description: "Hang up the call",
+        parameters: {
+          type: "object",
+          properties: {},
+          required: [],
+        },
+      },
+      {
+        type: "function",
+        name: WARM_TRANSFER_TOOL,
+        description: "Warm transfer the caller to a phone number",
+        parameters: {
+          type: "object",
+          properties: {
+            destination_number: { type: "string" },
+            message: { type: "string" },
+            delay_ms: { type: "integer" },
+          },
+          required: [],
+        },
+      },
+    ],
+    tool_choice: "auto",
+  },
+};
+
+voiceAIClient.sessionUpdate(SESSION_CONFIG);
+```
+  </Tab>
+</Tabs>
+
+## Connect call audio
+
+After `SessionUpdated`, the example bridges call audio to OpenAI and prompts the agent to greet the caller. See the full scenarios below for the version-specific greeting.
+
+```js title="Connect call audio"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+```
+
+## Function calling flow
+
+The example listens for `OpenAI.RealtimeAPIEvents.ResponseFunctionCallArgumentsDone`, parses arguments, and returns tool output with `conversationItemCreate` (`type: "function_call_output"`), then calls `responseCreate` so the assistant continues.
+
+### `get_weather`
+
+Returns a stub weather payload for the requested `location`.
+
+### `hang_up`
+
+Sets `pendingHangup = true`, returns `hangup_scheduled`, and hangs up after assistant audio completes (`ResponseOutputAudioDone` or `WebSocketMediaEnded`).
+
+### `warm_transfer`
+
+Places a PSTN leg, plays a brief intro to the callee, then bridges the original caller to the transfer leg after a delay.
+
+## Barge-in
+
+The scenario clears buffered model audio whenever OpenAI detects caller speech:
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechStarted, () => {
+  voiceAIClient.clearMediaBuffer();
+});
+```
+
+## Full VoxEngine scenarios
+
+### Notes
+- Tool implementations are demo stubs. Replace them with production APIs and transfer logic.
+- The warm transfer demo uses a default destination if the model does not provide one.
+
+<Tabs>
+  <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-function-calling.js"
+      title="voxeengine-openai-function-calling.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+  <Tab title="GPT Realtime 1.5" language="gpt-realtime-1.5">
+    <Code
+      src="../../../examples/openai/voxeengine-openai-function-calling-1-5.js"
+      title="voxeengine-openai-function-calling-1-5.js"
+      language="javascript"
+      maxLines={0}
+    />
+  </Tab>
+</Tabs>
+
+## More information
+
+- [OpenAI connector overview](/voice-ai/openai/overview)
+- [Answering an incoming call with OpenAI Realtime](/voice-ai/openai/inbound)
+- [Placing an outbound call with OpenAI Realtime](/voice-ai/openai/outbound)
+- [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
+- [Current OpenAI models](https://developers.openai.com/api/docs/models)
+- [VoxEngine call API reference](/reference/voxengine/call)

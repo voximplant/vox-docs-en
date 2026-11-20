@@ -37,8 +37,8 @@ To set up speech-to-text in your scenario:
 require(Modules.ASR);
 ```
 
-2. Use the [VoxEngine.createASR]() method to create an **STT object**.
-3. Subscribe to **STT object** events such as [ASREvents.Result]().
+2. Use the [VoxEngine.createASR](/reference/voxengine/voxengine#createasr) method to create an **STT object**.
+3. Subscribe to **STT object** events such as [ASREvents.Result](/reference/voxengine/asr-events#result).
 4. Send media from a **call object** to the **STT object** via the [sendMediaTo]() method.
 5. Receive the transcription results via events.
 
@@ -136,7 +136,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 You can find the complete [list of supported transcription providers]() and the [list of available languages]() in the API reference.
 </Info>
 
-Unlike audio and video recordings, transcription results are not available immediately after a call ends. Retrieve them using the [GetCallHistory]() method of the HTTP API with the `with_records=true` parameter.
+Unlike audio and video recordings, transcription results are not available immediately after a call ends. Retrieve them using the [GetCallHistory](/reference/management-api/reference/history/get-call-history) method of the HTTP API with the `with_records=true` parameter.
 
 The response JSON contains a [records]() array with a [transcription_url]() field that points to the transcription as plain text:
 
@@ -166,7 +166,7 @@ Currently, Voximplant speech-to-text supports the following beta features:
 * `diarizationConfig`
 * `metadata`
 
-To use these features, set the `beta` parameter to `true` when creating an STT instance. Refer to the [API reference]() to learn about the parameters:
+To use these features, set the `beta` parameter to `true` when creating an STT instance. Refer to the [API reference](/reference/overview) to learn about the parameters:
 
 ```javascript title="STT instance with v1p1beta1"
 const myasr = VoxEngine.createASR({
@@ -189,7 +189,7 @@ const myasr = VoxEngine.createASR({
 });
 ```
 
-With Google beta features enabled, the [ASREvents.Result]() event includes the **resultEndTime**, **channelTag**, and **languageCode** properties, visible in the session logs:
+With Google beta features enabled, the [ASREvents.Result](/reference/voxengine/asr-events#result) event includes the **resultEndTime**, **channelTag**, and **languageCode** properties, visible in the session logs:
 
 ```javascript title="STT result"
 2020-08-12 08:16:55 Sent event to JS onPhoneEvent with params[{
@@ -250,7 +250,7 @@ There are two ways to pass speech-to-text parameters to your provider:
 Ensure that you specify parameters in the exact format your provider accepts. Formats vary across providers; refer to your provider’s API reference for details.
 </Warning>
 
-To pass parameters directly, select the provider in the [profile]() parameter of [createASR]() and supply the [request]() parameter in the provider's format:
+To pass parameters directly, select the provider in the [profile]() parameter of [createASR](/reference/voxengine/voxengine#createasr) and supply the [request]() parameter in the provider's format:
 
 ```javascript title="Request parameter for Google STT"
 require(Modules.ASR);
@@ -502,10 +502,10 @@ Many STT providers support intermediate speech-to-text results to speed up inter
 When this feature is enabled, recognized text is sent to the scenario via events while the caller is still speaking, allowing you to process partial transcripts in real time.
 
 <Info title="Supported providers">
-Refer to the [API reference]() to learn which providers support this feature. The list of supported providers may change over time.
+Refer to the [API reference](/reference/overview) to learn which providers support this feature. The list of supported providers may change over time.
 </Info>
 
-To enable this feature, set the [interimResults]() parameter in `ASRParameters` to `true`, then listen for the [ASREvents.InterimResult]() event to receive the intermediate text:
+To enable this feature, set the [interimResults]() parameter in `ASRParameters` to `true`, then listen for the [ASREvents.InterimResult](/reference/voxengine/asr-events#interimresult) event to receive the intermediate text:
 
 ```javascript title="InterimResults parameter example"
 require(Modules.ASR);
@@ -538,7 +538,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 
 ## Realtime speech-to-text
 
-In addition to standard [speech-to-text](), where recognition runs on buffered or recorded audio, some providers support **realtime** speech-to-text: transcription updates while the caller is still speaking.
+In addition to standard [speech-to-text](/platform/speech-processing/speech-to-text), where recognition runs on buffered or recorded audio, some providers support **realtime** speech-to-text: transcription updates while the caller is still speaking.
 
 This streaming mode is beneficial for live captioning, voice assistants, and LLM pipelines that require partial transcripts with minimal latency.
 
@@ -546,16 +546,16 @@ This streaming mode is beneficial for live captioning, voice assistants, and LLM
 
 The xAI Speech-to-Text API supports realtime recognition over WebSockets. See the xAI documentation for provider details:
 
-- [Speech to Text]()
+- [Speech to Text](/platform/speech-processing/speech-to-text)
 - [Voice API reference]()
 
 To use xAI realtime speech-to-text in your application:
 
-1. Import the ASR module into your [scenario]() via `require(Modules.ASR)` (see [Speech-to-text usage](#speech-to-text-usage)).
-2. Create an STT object with [VoxEngine.createASR]() and set [profile]() to an [ASRProfileList.XAI]() entry (for example, `ASRProfileList.XAI.en`, another language profile, or `ASRProfileList.XAI.auto` to omit `language` from the provider query).
+1. Import the ASR module into your [scenario](/platform/getting-started/create-a-scenario) via `require(Modules.ASR)` (see [Speech-to-text usage](#speech-to-text-usage)).
+2. Create an STT object with [VoxEngine.createASR](/reference/voxengine/voxengine#createasr) and set [profile]() to an [ASRProfileList.XAI]() entry (for example, `ASRProfileList.XAI.en`, another language profile, or `ASRProfileList.XAI.auto` to omit `language` from the provider query).
 3. Optionally set [model]() (for example, `ASRModelList.XAI.grok_voice_transcribe_2_0`; defaults to **grok-voice-transcribe-2.0**).
-4. Send call audio to the STT object with [Call.sendMediaTo]().
-5. Subscribe to [ASREvents]() (such as [Result]() and [InterimResult]()) and implement your logic. To receive partial transcripts, enable [interimResults]() as described in [Receiving intermediate results](#receiving-intermediate-results).
+4. Send call audio to the STT object with [Call.sendMediaTo](/reference/voxengine/call#sendmediato).
+5. Subscribe to [ASREvents](/reference/voxengine/asr-events) (such as [Result]() and [InterimResult](/reference/voxengine/asr-events#interimresult)) and implement your logic. To receive partial transcripts, enable [interimResults]() as described in [Receiving intermediate results](#receiving-intermediate-results).
 
 <Info title="API authentication">
 Custom `api_key` values are not supported. The platform authenticates to xAI using the Voximplant integration key.
@@ -563,9 +563,9 @@ Custom `api_key` values are not supported. The platform authenticates to xAI usi
 
 #### Multichannel audio
 
-For stereo or other multi-track input, set [multichannel]() to **true** and [channels]() to the number of interleaved channels (from **2** to **8**) when calling [createASR](). You can set these fields in [ASRParameters]() or pass the equivalent options in the provider [request]() object.
+For stereo or other multi-track input, set [multichannel]() to **true** and [channels]() to the number of interleaved channels (from **2** to **8**) when calling [createASR](/reference/voxengine/voxengine#createasr). You can set these fields in [ASRParameters]() or pass the equivalent options in the provider [request]() object.
 
-When multichannel recognition is enabled, each [ASREvents.Result]() event includes a **channelTag** indicating the channel index for that transcript. Use **channelTag** in your scenario to route or display text per channel.
+When multichannel recognition is enabled, each [ASREvents.Result](/reference/voxengine/asr-events#result) event includes a **channelTag** indicating the channel index for that transcript. Use **channelTag** in your scenario to route or display text per channel.
 
 Here is a complete scenario without a [request]() parameter:
 
@@ -616,7 +616,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 
 ```
 
-To pass xAI-specific options in the provider’s native format, use the [request]() parameter on [createASR]():
+To pass xAI-specific options in the provider’s native format, use the [request]() parameter on [createASR](/reference/voxengine/voxengine#createasr):
 
 ```javascript title="Request parameter usage"
 /*

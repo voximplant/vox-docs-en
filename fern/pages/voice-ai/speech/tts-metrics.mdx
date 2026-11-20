@@ -1,0 +1,37 @@
+---
+title: "Measuring TTS latency"
+subtitle: "Read time to first byte from an Inworld realtime TTS player."
+---
+
+Use the `timeToFirstByte` field in [PlayerEvents.AudioChunksPlaybackFinished](/reference/voxengine/inworld#audiochunksplaybackfinished) to log the latency of a speech synthesis request in your VoxEngine scenario. This example uses an [Inworld realtime TTS player](/reference/voxengine/inworld#realtimettsplayer) to synthesize one phrase and play it to an incoming call.
+
+## What the metric measures
+
+Time to first byte (TTFB) is the delay between sending the request and receiving the first byte of audio data. The value is a number in **milliseconds**.
+
+`AudioChunksPlaybackFinished` fires when audio chunk playback finishes. Read the recorded TTFB value in that event; the event arrival time does not measure TTFB. The field does not measure the total synthesis duration or the time until the caller hears audio.
+
+This guide demonstrates the metric with Inworld. Check each provider's realtime TTS player reference before applying the example to another provider.
+
+## Run the example
+
+1. Create a [VoxEngine scenario](/platform/getting-started/create-a-scenario) with the code below and attach it to a [routing rule](/platform/getting-started/create-a-routing-rule) for incoming calls.
+2. If you use your own Inworld account, create a [Voximplant Secret](/platform/storage/secret-storage) named `INWORLD_API_KEY` and uncomment the `apiKey` line. The Inworld player also supports requests without your own provider key.
+3. Call the application through a connected user or phone number. Listen to the phrase; the scenario ends the call after playback finishes.
+4. Open the [session log](/help/troubleshooting/vox-engine-scenarios) and find `===TTS_TTFB_MS===`. The number after the marker is the TTFB for this request.
+
+<Code
+  src="../../../examples/inworld/voxeengine-inworld-tts-metrics.js"
+  title="voxeengine-inworld-tts-metrics.js"
+  language="javascript"
+/>
+
+The scenario registers the metric listener before it sends text, routes the player's audio to the call, and flushes the context to complete the phrase. It logs `event.timeToFirstByte` when playback finishes and ends the session on a player error, call disconnect, or timeout.
+
+For repeated measurements, log the value for each completed request in your own scenario. Keep the voice, model, and text comparable when you compare results.
+
+## See also
+
+- [Inworld.createRealtimeTTSPlayer](/reference/voxengine/inworld#createrealtimettsplayer)
+- [PlayerEvents.AudioChunksPlaybackFinished](/reference/voxengine/inworld#audiochunksplaybackfinished)
+- [OpenAI with Inworld TTS](/voice-ai/openai/half-cascade-inworld)

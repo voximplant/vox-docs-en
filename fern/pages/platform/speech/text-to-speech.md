@@ -22,9 +22,9 @@ You can synthesize speech and send it to your interlocutor before and during an 
 
 ### Text-to-speech usage
 
-To synthesize speech during an incoming call, first [answer a call](). You can also use the [startEarlyMedia]() method to broadcast speech before answering the call to play a greeting or a voicemail prompt.
+To synthesize speech during an incoming call, first [answer a call](). You can also use the [startEarlyMedia](/reference/voxengine/call#startearlymedia) method to broadcast speech before answering the call to play a greeting or a voicemail prompt.
 
-To synthesize speech, use the [VoxEngine.createTTSPlayer]() method in your scenario. Pass the text string to synthesize as the first parameter and the options as the second parameter:
+To synthesize speech, use the [VoxEngine.createTTSPlayer](/reference/voxengine/voxengine#createttsplayer) method in your scenario. Pass the text string to synthesize as the first parameter and the options as the second parameter:
 
 ```javascript title="Synthesize speech"
 VoxEngine.createTTSPlayer('Hello, you have created a TTSPlayer, have fun!', {
@@ -34,11 +34,11 @@ VoxEngine.createTTSPlayer('Hello, you have created a TTSPlayer, have fun!', {
 
 ### Configuring the voice
 
-You can choose a text-to-speech voice from the [VoiceList](). The default voice is [VoiceList.Amazon.en_US_Joanna]().
+You can choose a text-to-speech voice from the [VoiceList](/reference/voxengine/voice-list). The default voice is [VoiceList.Amazon.en_US_Joanna]().
 
-If you use a custom voice with one of the providers from the [VoiceList](), please contact support to activate this feature for your account and receive setup instructions. For example, for [VoiceList.Yandex]() you must specify the voice folder ID using the [yandexCustomModelName]() property.
+If you use a custom voice with one of the providers from the [VoiceList](/reference/voxengine/voice-list), please contact support to activate this feature for your account and receive setup instructions. For example, for [VoiceList.Yandex]() you must specify the voice folder ID using the [yandexCustomModelName]() property.
 
-You can also configure other text-to-speech options such as **pitch**, **rate**, and **volume**. To specify them, use the [CallSayParameters.ttsOptions]() parameter with the [Call.say]() method, or the [TTSPlayerParameters.ttsOptions]() parameter with the [VoxEngine.createTTSPlayer]() method:
+You can also configure other text-to-speech options such as **pitch**, **rate**, and **volume**. To specify them, use the [CallSayParameters.ttsOptions]() parameter with the [Call.say](/reference/voxengine/call#say) method, or the [TTSPlayerParameters.ttsOptions]() parameter with the [VoxEngine.createTTSPlayer](/reference/voxengine/voxengine#createttsplayer) method:
 
 ```javascript title="Configure the voice options"
 VoxEngine.createTTSPlayer('Hello from the cloud', {
@@ -86,7 +86,7 @@ VoxEngine.createTTSPlayer(
 There are two ways to pass text-to-speech parameters to your provider:
 
 1. Fill the [ttsOptions]() parameters on the Voximplant side so the platform converts them into the provider's format before sending them.
-2. Pass parameters directly to the provider via the [CallSayParameters.request]() parameter for the [Call.say]() method, or via the [TTSPlayerParameters.request]() parameter for the [VoxEngine.createTTSPlayer]() method.
+2. Pass parameters directly to the provider via the [CallSayParameters.request]() parameter for the [Call.say](/reference/voxengine/call#say) method, or via the [TTSPlayerParameters.request]() parameter for the [VoxEngine.createTTSPlayer](/reference/voxengine/voxengine#createttsplayer) method.
 
 <Warning title="About the formats">
 You must specify parameters in the specific format required by your provider. Refer to your provider's API reference for format specifications.
@@ -178,20 +178,20 @@ request: { // 'UtteranceSynthesisRequest' parameter in the YandexV3 documentatio
 ```
 
 <Warning title="Please note">
-Different providers require different parameters. In some cases, omitting a parameter causes an error; in others, default values are applied. For example, the `model_id` parameter for [ElevenLabs]() specifies the [selected model](). If omitted, `eleven_multilingual_v2` is used by default. Check your chosen provider's documentation for detailed parameter requirements.
+Different providers require different parameters. In some cases, omitting a parameter causes an error; in others, default values are applied. For example, the `model_id` parameter for [ElevenLabs](/voice-ai/elevenlabs/overview) specifies the [selected model](). If omitted, `eleven_multilingual_v2` is used by default. Check your chosen provider's documentation for detailed parameter requirements.
 </Warning>
 
 #### Third-party provider documentation
 
 Refer to the documentation of third-party text-to-speech providers for guidance on constructing the request parameter in your scenario:
 
-- [ElevenLabs]()
+- [ElevenLabs](/voice-ai/elevenlabs/overview)
 - [Google TTS request reference]()
 - [SaluteSpeech TTS request reference]()
 - [T-bank TTS request reference]()
 - [Yandex TTS request reference]()
 
-Alternatively, you can use the [Media player]() to integrate third-party voice providers such as [OpenAI TTS]().
+Alternatively, you can use the [Media player](/platform/speech-processing/media-player) to integrate third-party voice providers such as [OpenAI TTS](/voice-ai/speech/openai-tts).
 
 ---
 
@@ -250,7 +250,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 
 ```
 
-1. Require the `Modules.VoxTTS` module in your [scenario]().
+1. Require the `Modules.VoxTTS` module in your [scenario](/platform/getting-started/create-a-scenario).
 2. Create a `VoxTTS.RealtimeTTSPlayer` instance using the `VoxTTS.createRealtimeTTSPlayer` method and provide your parameters.
 3. Stream media between `Call` and `VoxTTS.RealtimeTTSPlayer` using `*.sendMedia` or `VoxEngine.sendMediaBetween`.
 4. Listen to `VoxTTS.RealtimeTTSPlayer` events and implement your application logic.
@@ -309,7 +309,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 
 ```
 
-1. Require the `Modules.Google` module in your [scenario]().
+1. Require the `Modules.Google` module in your [scenario](/platform/getting-started/create-a-scenario).
 2. Create a `Google.RealtimeTTSPlayer` instance using the `Google.createRealtimeTTSPlayer` method and provide your parameters.
 3. Stream media between `Call` and `Google.RealtimeTTSPlayer` using `*.sendMedia` or `VoxEngine.sendMediaBetween`.
 4. Listen to `Google.RealtimeTTSPlayer` events and implement your application logic.
@@ -318,9 +318,9 @@ Learn more about Google Cloud Text-to-Speech V1 in the [official documentation](
 
 ### ElevenLabs
 
-To use ElevenLabs realtime text-to-speech, require the [Modules.ElevenLabs]() module in your [scenario]().
+To use ElevenLabs realtime text-to-speech, require the [Modules.ElevenLabs](/reference/voxengine/modules#elevenlabs) module in your [scenario](/platform/getting-started/create-a-scenario).
 
-Use the [ElevenLabs.createRealtimeTTSPlayer]() method to create a realtime TTS player with the desired parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `ElevenLabs.RealtimeTTSPlayer`.
+Use the [ElevenLabs.createRealtimeTTSPlayer](/reference/voxengine/elevenlabs#createrealtimettsplayer) method to create a realtime TTS player with the desired parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `ElevenLabs.RealtimeTTSPlayer`.
 
 Listen to [ElevenLabs.RealtimeTTSPlayer]() events to implement your application logic.
 
@@ -423,9 +423,9 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 
 ### Cartesia
 
-To use Cartesia, require the [Modules.Cartesia]() module in your [scenario]().
+To use Cartesia, require the [Modules.Cartesia](/reference/voxengine/modules#cartesia) module in your [scenario](/platform/getting-started/create-a-scenario).
 
-Use the [Cartesia.createRealtimeTTSPlayer]() method to create a realtime TTS player with your desired parameters.
+Use the [Cartesia.createRealtimeTTSPlayer](/reference/voxengine/cartesia#createrealtimettsplayer) method to create a realtime TTS player with your desired parameters.
 
 Listen to [Cartesia.RealtimeTTSPlayer]() events to implement your application logic.
 
@@ -571,7 +571,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
 
 ### Inworld
 
-To use Inworld realtime text-to-speech, require the `Modules.Inworld` module in your [scenario]().
+To use Inworld realtime text-to-speech, require the `Modules.Inworld` module in your [scenario](/platform/getting-started/create-a-scenario).
 
 Use the `Inworld.createRealtimeTTSPlayer` method to create a realtime TTS player and configure your parameters. Use `*.sendMedia` or `VoxEngine.sendMediaBetween` to send media between `Call` and `Inworld.RealtimeTTSPlayer`.
 

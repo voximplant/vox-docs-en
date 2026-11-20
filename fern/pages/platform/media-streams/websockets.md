@@ -2,7 +2,7 @@
 
 WebSockets provide full-duplex, bidirectional communication between your Voximplant application and external third-party services in real time. This persistent connection enables continuous data exchange without the overhead of repeated HTTP polling.
 
-Voximplant offers the [WebSocket module]() for streaming media and data to and from external endpoints. The module supports both outgoing connections (initiated from your scenario) and incoming connections (initiated by an external service).
+Voximplant offers the [WebSocket module](/reference/voxengine/websocket) for streaming media and data to and from external endpoints. The module supports both outgoing connections (initiated from your scenario) and incoming connections (initiated by an external service).
 
 Media streaming over WebSockets uses standardized JSON event payloads categorized into four primary event types: `init`, `start`, `media`, and `stop`.
 
@@ -10,11 +10,11 @@ Media streaming over WebSockets uses standardized JSON event payloads categorize
 
 ## Outgoing connection
 
-To establish an outbound connection, create a [WebSocket]() instance using the [VoxEngine.createWebSocket]() method. It accepts two parameters: a **URL** (in the format `wss://domain/path`) and an optional **protocols** array.
+To establish an outbound connection, create a [WebSocket](/reference/voxengine/websocket) instance using the [VoxEngine.createWebSocket](/reference/voxengine/voxengine#createwebsocket) method. It accepts two parameters: a **URL** (in the format `wss://domain/path`) and an optional **protocols** array.
 
-Once the connection is open, stream audio from an active call to the WebSocket using the [call.sendMediaTo]() method. You can specify a preferred audio encoding format and custom metadata parameters (defaults to `PCM8` if omitted). The [WebSocket.send]() method transmits text or serialized JSON payloads across the socket.
+Once the connection is open, stream audio from an active call to the WebSocket using the [call.sendMediaTo](/reference/voxengine/call#sendmediato) method. You can specify a preferred audio encoding format and custom metadata parameters (defaults to `PCM8` if omitted). The [WebSocket.send](/reference/voxengine/websocket#send) method transmits text or serialized JSON payloads across the socket.
 
-Use [WebSocket.close]() to close the connection from either the client or server side.
+Use [WebSocket.close](/reference/voxengine/websocket#close) to close the connection from either the client or server side.
 
 The scenario code for establishing an outgoing connection looks like this:
 
@@ -29,11 +29,11 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (event) => {
 
 ## Incoming connection
 
-To allow external services to connect to an active Voximplant session over WebSockets, call [VoxEngine.allowWebSocketConnections]() in your scenario. Then subscribe to the [AppEvents.WebSocket]() event. Each incoming connection emits this event, providing access to the underlying socket object via `event.webSocket`.
+To allow external services to connect to an active Voximplant session over WebSockets, call [VoxEngine.allowWebSocketConnections](/reference/voxengine/voxengine#allowwebsocketconnections) in your scenario. Then subscribe to the [AppEvents.WebSocket](/reference/voxengine/app-events#websocket) event. Each incoming connection emits this event, providing access to the underlying socket object via `event.webSocket`.
 
-You can obtain the session's WebSocket URL from the HTTP response of the [StartScenarios]() Management API method or directly from the [AppEvents.Started]() event in your scenario (ensure the URL scheme uses `wss://` rather than `https://`).
+You can obtain the session's WebSocket URL from the HTTP response of the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) Management API method or directly from the [AppEvents.Started](/reference/voxengine/app-events#started) event in your scenario (ensure the URL scheme uses `wss://` rather than `https://`).
 
-Once connected, stream media between the incoming socket and an active call using [call.sendMediaTo]():
+Once connected, stream media between the incoming socket and an active call using [call.sendMediaTo](/reference/voxengine/call#sendmediato):
 
 ```javascript title="Incoming WebSocket scenario"
 VoxEngine.allowWebSocketConnections();
@@ -45,7 +45,7 @@ VoxEngine.addEventListener(AppEvents.WebSocket, (event) => {
 ```
 
 <Warning title="Connection limit">
-The maximum number of concurrent incoming WebSocket connections cannot exceed the number of active calls in the session plus 3 (`calls + 3`). Exceeding this limit triggers the [NewWebSocketFailed]() event. Note that existing WebSocket connections are not automatically closed when a call ends.
+The maximum number of concurrent incoming WebSocket connections cannot exceed the number of active calls in the session plus 3 (`calls + 3`). Exceeding this limit triggers the [NewWebSocketFailed](/reference/voxengine/app-events#newwebsocketfailed) event. Note that existing WebSocket connections are not automatically closed when a call ends.
 </Warning>
 
 ---
@@ -54,7 +54,7 @@ The maximum number of concurrent incoming WebSocket connections cannot exceed th
 
 ### Sending text data
 
-To transmit text or serialized JSON payloads across a WebSocket, use the [WebSocket.send]() method:
+To transmit text or serialized JSON payloads across a WebSocket, use the [WebSocket.send](/reference/voxengine/websocket#send) method:
 
 ```javascript title="Sending text over WebSocket"
 VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {
@@ -95,7 +95,7 @@ asyncio.run(main())
 
 ### Streaming audio from a call to WebSocket
 
-To stream live audio from a call into a WebSocket endpoint, use [call.sendMediaTo](). You can configure a preferred encoding format and custom parameters (defaults to `PCM8` if unspecified):
+To stream live audio from a call into a WebSocket endpoint, use [call.sendMediaTo](/reference/voxengine/call#sendmediato). You can configure a preferred encoding format and custom parameters (defaults to `PCM8` if unspecified):
 
 ```javascript title="Sending audio to WebSocket"
 VoxEngine.addEventListener(AppEvents.CallAlerting, ({ call }) => {

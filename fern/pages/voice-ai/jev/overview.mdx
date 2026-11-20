@@ -1,0 +1,17 @@
+---
+title: Overview
+subtitle: Run typed TypeSafe decisions from a VoxEngine scenario
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+[Jev](https://docs.typesafe.ai/) is TypeSafe's decision engine for structured evaluations over text and images. **System One** runs a single decision: you provide a `state` (for example, ticket text) and a set of **questions** (yes/no, choice, score, and related types), and the model returns typed **answers** you can use in IVR logic, routing, or agent workflows.
+
+In your VoxEngine [scenario](/platform/getting-started/create-a-scenario), require **Modules.Jev** and use a [Jev.SystemOneClient](https://voximplant.com/docs/references/voxengine/jev/systemoneclient). One client keeps a WebSocket session open so you can send several [systemOne](https://voximplant.com/docs/references/voxengine/jev/systemoneclient#systemone) requests without reconnecting. This path is **not** a realtime voice pipeline: you do not send call audio to Jev; you send JSON request bodies and read JSON results.
+
+## See also
+
+- [System One client](/voice-ai/jev/system-one-client) — scenario setup and example
+- [TypeSafe System One concepts](https://docs.typesafe.ai/concepts/system-one)
+- [Voice AI getting started](/voice-ai/voice-ai-on-voximplant/overview)

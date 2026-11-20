@@ -1,0 +1,26 @@
+---
+title: TaskWaitingCode
+subtitle: 'The SmartQueue task''s waiting code.'
+---
+
+## Values
+
+<a id="none" />
+<ParamField path="NONE" type="500">
+The task is not in a queue.
+</ParamField>
+
+<a id="success" />
+<ParamField path="SUCCESS" type="200">
+The task is queued successfully, the estimated response time is calculated.
+</ParamField>
+
+<a id="cannotbeestimated" />
+<ParamField path="CANNOT_BE_ESTIMATED" type="501">
+ETA for the task is not estimated.
+</ParamField>
+
+<a id="overflowed" />
+<ParamField path="OVERFLOWED" type="503">
+The task is not queued because of the queue overflow.
+</ParamField>

@@ -1,0 +1,52 @@
+---
+title: "Example: Function calling"
+description: "This example answers an inbound call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages.
+
+**⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Ultravox API key in Voximplant [Secrets](/platform/storage/secret-storage) under `ULTRAVOX_API_KEY`.
+- Configure tools in Ultravox (agent or call config) so tool invocations are emitted during the call.
+
+## Tool invocation flow
+
+Ultravox emits a `ClientToolInvocation` data message when the agent calls a client tool. The event payload includes:
+
+- `toolName`
+- `invocationId`
+- `parameters` (tool input)
+
+The example listens for these events and returns a `client_tool_result` response using `voiceAIClient.clientToolResult(...)`.
+
+```js title="Tool response (from the example)"
+voiceAIClient.clientToolResult({
+  type: "client_tool_result",
+  invocationId,
+  responseType: "tool-response",
+  agentReaction: "speaks",
+  result: JSON.stringify({ location, temperature_f: 72, condition: "sunny" }),
+});
+```
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/ultravox/voxeengine-ultravox-function-calling.js"
+  title="voxeengine-ultravox-function-calling.js"
+  language="javascript"
+  maxLines={0}
+/>

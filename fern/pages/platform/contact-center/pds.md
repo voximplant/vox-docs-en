@@ -2,7 +2,7 @@
 
 The Predictive Dialing System (PDS) is an outbound contact center engine designed to optimize agent occupancy and minimize idle time. By analyzing real-time agent availability, historical connect rates, and average call duration, PDS initiates outbound calls proactively and connects answered calls to agents just as they become available.
 
-When combined with [AI voicemail detection](), PDS filters out answering machines, busy signals, and disconnected numbers so agents only handle live human conversations.
+When combined with [AI voicemail detection](/platform/telephony/voicemail-detection), PDS filters out answering machines, busy signals, and disconnected numbers so agents only handle live human conversations.
 
 ## Contents
 
@@ -19,7 +19,7 @@ When combined with [AI voicemail detection](), PDS filters out answering machine
 
 PDS eliminates manual dialing and waiting for ringtones by automating outbound call pacing:
 
-* **Filters non-human and failed calls**: Bridges only answered calls to agents, discarding voicemails, busy tones, and invalid numbers when paired with [AI voicemail detection]().
+* **Filters non-human and failed calls**: Bridges only answered calls to agents, discarding voicemails, busy tones, and invalid numbers when paired with [AI voicemail detection](/platform/telephony/voicemail-detection).
 * **Predictive pacing**: Forecasts agent availability and initiates calls in advance, keeping agent utilization high while minimizing customer hold time.
 * **SmartQueue integration**: Leverages real-time queue states to dynamically adjust dialing frequency.
 * **Self-tuning algorithms**: Adapts statistical baselines (such as average handle time and answer rates) as the campaign progresses.
@@ -56,7 +56,7 @@ Progressive mode is ideal for smaller teams (fewer than 30 agents) or campaigns 
 
 ### 1. Set up agents and queues
 
-Configure your agents and queues as described in the [voice contact center]() guide.
+Configure your agents and queues as described in the [voice contact center](/platform/contact-center/voice) guide.
 
 ### 2. Deploy the PDS VoxEngine scenario
 
@@ -182,7 +182,7 @@ Then start the dialing session using `PDS.StartProgressive()` instead of `PDS.St
 The dialing mode is determined by the presence of `TaskMultiplier`. If both `TaskMultiplier` and predictive statistical baselines (`AvgTimeTalkSec` / `PercentSuccessful`) are defined, the system defaults to **progressive mode** and ignores the statistical parameters.
 </Warning>
 
-For technical setup assistance, refer to the [PDS client repository]() or contact [support]().
+For technical setup assistance, refer to the [PDS client repository]() or contact [support](/help/support).
 
 ---
 

@@ -1,0 +1,71 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to Cartesia Line Agents for real-time speech-to-speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to Cartesia Line Agents for real-time speech-to-speech conversations.
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/platform/getting-started/buy-a-phone-number)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user / SIP registration](/voice-ai/network-options/sip)
+  - [App user](/platform/getting-started/create-users)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
+- Store your Cartesia API key in Voximplant [Secrets](/platform/storage/secret-storage) under `CARTESIA_API_KEY`
+- Store your Cartesia Agent ID in Voximplant `ApplicationStorage` under `CARTESIA_AGENT_ID` (the agent ID is not sensitive, so it can live in key-value storage)
+
+## Session setup
+
+Create a `Cartesia.AgentsClient` with your API key, API version, and agent ID:
+
+```js title="Create Cartesia client"
+voiceAIClient = await Cartesia.createAgentsClient({
+  apiKey: VoxEngine.getSecretValue('CARTESIA_API_KEY'),
+  cartesiaVersion: "2025-04-16",
+  agentId: (await ApplicationStorage.get("CARTESIA_AGENT_ID")).value,
+});
+```
+
+After client creation, send a `start` event with optional metadata:
+
+```js title="Start session"
+voiceAIClient.start({
+  metadata: {
+    channel: "voice",
+    provider: "voximplant",
+    mode: "inbound"
+  }
+});
+```
+
+## Events
+
+The example logs key lifecycle and debugging events:
+
+```js title="Events (example from the scenario)"
+voiceAIClient.addEventListener(Cartesia.AgentsEvents.ACK, (event) => {
+  Logger.write("===Cartesia.Agents.ACK===");
+  if (event?.data) Logger.write(JSON.stringify(event.data));
+});
+```
+
+## Notes
+
+[See the VoxEngine API Reference for more details](/reference/voxengine/cartesia).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/cartesia-line-agents/voxeengine-cartesia-inbound.js"
+  title="voxeengine-cartesia-inbound.js"
+  language="javascript"
+  maxLines={0}
+/>

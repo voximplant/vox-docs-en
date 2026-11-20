@@ -6,12 +6,12 @@ Build custom, real-time monitoring dashboards that track contact center metrics 
 
 ## How it works
 
-To publish metrics from active call sessions and access them externally, use [Key-value storage]():
+To publish metrics from active call sessions and access them externally, use [Key-value storage](/platform/storage/key-value-storage):
 
-1. **Write metrics in scenarios**: During active calls in your [voice contact center]() or [video contact center](), scenarios collect custom metrics (such as active call status, duration, or agent assignments) and persist them using the VoxEngine [put()]() method from the `ApplicationStorage` module.
-2. **Read metrics externally**: To display these metrics on an external dashboard, your backend queries the Management API [GetKeyValueItems]() method. This returns stored metrics in JSON format, allowing you to refresh dashboard views at your preferred polling frequency.
+1. **Write metrics in scenarios**: During active calls in your [voice contact center](/platform/contact-center/voice) or [video contact center](/platform/contact-center/video), scenarios collect custom metrics (such as active call status, duration, or agent assignments) and persist them using the VoxEngine [put()](/reference/voxengine/application-storage#put) method from the `ApplicationStorage` module.
+2. **Read metrics externally**: To display these metrics on an external dashboard, your backend queries the Management API [GetKeyValueItems](/reference/management-api/reference/key-value-storage/get-key-value-items) method. This returns stored metrics in JSON format, allowing you to refresh dashboard views at your preferred polling frequency.
 
-You can apply this pattern to any Voximplant workflow, including [call list campaigns]() and standard [voice calls]().
+You can apply this pattern to any Voximplant workflow, including [call list campaigns](/platform/solutions/automated-call-lists) and standard [voice calls](/platform/telephony/calls).
 
 ---
 
@@ -501,7 +501,7 @@ To avoid unnecessary storage costs, delete key-value pairs when the call termina
 
 ### 3. Query metrics from your dashboard
 
-Your external dashboard service can query stored metrics at any interval using the [GetKeyValueItems]() Management API method:
+Your external dashboard service can query stored metrics at any interval using the [GetKeyValueItems](/reference/management-api/reference/key-value-storage/get-key-value-items) Management API method:
 
 ```bash title="Retrieve key-value items"
 curl -X POST "https://api.voximplant.com/platform_api/GetKeyValueItems" \
@@ -528,5 +528,5 @@ Refer to [Service accounts and API keys]() to configure authenticated JWT reques
 
 ## See also
 
-- [Key-value storage]()
-- [Management API]()
+- [Key-value storage](/platform/storage/key-value-storage)
+- [Management API](/overview/how-voximplant-works/management-api)

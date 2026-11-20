@@ -1,0 +1,153 @@
+---
+title: "Example: Answering an incoming call"
+description: "This example answers an inbound Voximplant call and bridges audio to Inworld Realtime API for speech-to-speech conversations."
+---
+<blockquote className="agent-directive">
+  For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
+</blockquote>
+
+
+This example answers an inbound Voximplant call and bridges audio to Inworld Realtime API for a live speech-to-speech demo.
+The scenario configures Inworld STT, Claude Sonnet, expressive Inworld TTS2 voice output, automatic turn responses, backchannels, responsiveness behavior, and barge-in.
+Video link: [Inworld Realtime API and Voximplant inbound SIP demo](https://youtu.be/1jQ9UZfCABQ)
+
+**Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
+
+## Prerequisites
+
+- Set up an inbound entrypoint for the caller:
+  - [Phone number](/voice-ai/network-options/phone-numbers-pstn)
+  - [WhatsApp](/voice-ai/network-options/whatsapp)
+  - [SIP user or SIP registration](/voice-ai/network-options/sip)
+  - [App user](/voice-ai/network-options/web-mobile)
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination to this scenario.
+- Store your Inworld API key in Voximplant [Secrets](/platform/storage/secret-storage) under `INWORLD_API_KEY`.
+
+## Session setup
+
+Create an `Inworld.RealtimeAPIClient` with your API key from VoxEngine Secrets and a unique session key.
+The session key is an Inworld session identifier; the example generates a new string per call.
+
+```js title="Create Inworld client"
+voiceAIClient = await Inworld.createRealtimeAPIClient({
+  apiKey: VoxEngine.getSecretValue("INWORLD_API_KEY"),
+  sessionKey: `inworld-realtime-demo-${Date.now()}`,
+  onWebSocketClose: terminate,
+});
+```
+
+After Inworld emits `SessionCreated`, send a `session.update` payload that configures the model, prompt, output modalities, speech recognition, turn detection, voice output, and Inworld-specific provider features.
+The Inworld-specific settings are passed in the `providerData` block inside the same session config:
+
+```js title="Session setup"
+voiceAIClient.addEventListener(Inworld.RealtimeAPIEvents.SessionCreated, () => {
+  voiceAIClient.sessionUpdate({
+    session: {
+      type: "realtime",
+      model: "claude-sonnet-4-6",
+      instructions: SYSTEM_PROMPT,
+      output_modalities: ["audio", "text"],
+      audio: {
+        input: {
+          transcription: {
+            model: "inworld/inworld-stt-1",
+            language: "en",
+            prompt: "Important terms: Voximplant, VoxEngine, Inworld, Inworld Realtime, TTS2, SIP, WhatsApp Business Calling.",
+          },
+          turn_detection: {
+            type: "semantic_vad",
+            eagerness: "high",
+            create_response: true,
+            interrupt_response: true,
+          },
+        },
+        output: { voice: "Ashley", model: "inworld-tts-2", speed: 1.0 },
+      },
+      providerData: {
+        tts: {
+          delivery_mode: "BALANCED",
+          segmenter_strategy: "full_turn",
+          steering_handling: "emit_once",
+        },
+        stt: { voice_profile: true },
+        backchannel: {
+          enabled: true,
+          eval_interval_ms: 800,
+          min_speech_ms: 800,
+          min_gap_ms: 4000,
+          max_per_turn: 3,
+          volume_gain: 0.6,
+        },
+        responsiveness: {
+          enabled: true,
+          initial_wait_timeout_ms: 500,
+          hard_deadline_ms: 1200,
+          max_tokens: 8,
+          min_filler_gap_ms: 5000,
+          max_initial_per_turn: 1,
+          enable_filler_on_first_assistant_reply: false,
+        },
+      },
+    },
+  });
+});
+```
+
+In this config, standard Realtime API fields set the voice model, STT model, and turn detection.
+The nested `providerData` block adds Inworld-specific behavior: `delivery_mode: "BALANCED"` for natural call-center speech, `segmenter_strategy: "full_turn"` for coherent spoken turns, backchannels for brief active-listening cues, and responsiveness settings to reduce dead air when the model needs more time.
+
+For deeper tuning details, see Inworld's docs for [Realtime API Extensions](https://docs.inworld.ai/realtime/provider-data), [Adding Naturalness](https://docs.inworld.ai/realtime/usage/naturalness), [Back-channel responses](https://docs.inworld.ai/realtime/usage/back-channel), and [Responsiveness](https://docs.inworld.ai/realtime/usage/responsiveness).
+
+## Connect call audio and greet
+
+Once Inworld emits `SessionUpdated`, bridge audio both ways between the call and Inworld.
+Then create a short text conversation item and call `responseCreate`.
+This explicit seed item gives Inworld a normal user turn to answer, so the agent greets automatically before the caller speaks.
+
+```js title="Connect audio and trigger greeting"
+VoxEngine.sendMediaBetween(call, voiceAIClient);
+voiceAIClient.conversationItemCreate({
+  item: {
+    type: "message",
+    role: "user",
+    content: [
+      {
+        type: "input_text",
+        text: "The phone call just connected. Say only: Hi, this is Voxi from Voximplant. How can I help?",
+      },
+    ],
+  },
+});
+voiceAIClient.responseCreate({
+  response: {
+    output_modalities: ["audio", "text"],
+  },
+});
+```
+
+## Barge-in
+
+When the caller starts speaking, clear any queued Inworld output audio so the caller can interrupt the agent naturally.
+
+```js title="Barge-in"
+voiceAIClient.addEventListener(Inworld.RealtimeAPIEvents.InputAudioBufferSpeechStarted, () => {
+  voiceAIClient.outputAudioBufferClear({});
+});
+```
+
+## Notes
+
+- `INWORLD_API_KEY` is read from Voximplant Secrets.
+- `sessionKey` can be any unique string to maintain context for the Inworld session.
+- `create_response: true` lets Inworld respond automatically after caller turns.
+- The initial greeting is triggered manually with `conversationItemCreate` followed by `responseCreate`.
+- [See the Inworld VoxEngine API reference for more details](/reference/voxengine/inworld).
+
+## Full VoxEngine scenario
+
+<Code
+  src="../../../examples/inworld/voxeengine-inworld-answer-incoming-call.js"
+  title="voxeengine-inworld-answer-incoming-call.js"
+  language="javascript"
+  maxLines={0}
+/>

@@ -1,0 +1,43 @@
+---
+title: SmartQueueEvents
+subtitle: 'Smart Queue task API for contact-center scenarios. Add the following line to your scenario code to use the events: ``` require(Modules.SmartQueue); ```'
+---
+
+## Values
+
+<a id="waiting" />
+<ParamField path="Waiting" type="'SmartQueue.Waiting'">
+The task is waiting for distribution to an agent. This event occurs every 10 or 15 seconds and contains information about task's position in a queue and approximate response time.
+</ParamField>
+
+<a id="operatorreached" />
+<ParamField path="OperatorReached" type="'SmartQueue.OperatorReached'">
+An agent responded to the task, e.g. answered the call. This event indicates that SmartQueue processed the task successfully.
+</ParamField>
+
+<a id="enqueuesuccess" />
+<ParamField path="EnqueueSuccess" type="'SmartQueue.EnqueueSuccess'">
+The task has been enqueued successfully.
+</ParamField>
+
+<a id="taskdistributed" />
+<ParamField path="TaskDistributed" type="'SmartQueue.DistributeTask'">
+SmartQueue distributed the task to an agent. This event can occur multiple times if an agent does not respond during the timeout.
+</ParamField>
+
+<a id="clientdisconnected" />
+<ParamField path="ClientDisconnected" type="'SmartQueue.ClientDisconnected'">
+The client disconnected.
+
+When you process the **ClientDisconnected** event, call the `e.cancel()` method inside the event manually to cancel the task.
+</ParamField>
+
+<a id="taskcanceled" />
+<ParamField path="TaskCanceled" type="'SmartQueue.TaskCanceled'">
+The task is cancelled.
+</ParamField>
+
+<a id="error" />
+<ParamField path="Error" type="'SmartQueue.Error'">
+An error occurred.
+</ParamField>
