@@ -78,73 +78,7 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
-      - section: Build with AI coding agents
-        slug: vibe-coding
-        contents:
-          - page: Overview
-            slug: overview
-            path: ./pages/voice-ai/vibe-coding/overview.mdx
-            icon: fa-duotone fa-wand-magic-sparkles
-          - page: Build with Claude Code
-            slug: claude
-            path: ./pages/voice-ai/vibe-coding/claude.mdx
-            icon: fa-brands fa-claude
-      - section: Network options
-        slug: network-options
-        contents:
-          - page: Phone Numbers & PSTN
-            slug: phone-numbers-pstn
-            path: ./pages/voice-ai/network-options/phone-numbers-pstn.mdx
-            icon: fa-duotone fa-phone
-          - page: SIP
-            slug: sip
-            path: ./pages/voice-ai/network-options/sip.mdx
-            icon: fa-duotone fa-phone-office
-          - page: WhatsApp
-            slug: whatsapp
-            path: ./pages/voice-ai/network-options/whatsapp.mdx
-            icon: fa-brands fa-whatsapp
-          - page: WhatsApp Multi-modal Proxy Server
-            slug: whatsapp-multimodal-server
-            path: ./pages/voice-ai/network-options/whatsapp-multimodal-server.mdx
-            hidden: true
-            icon: fa-duotone fa-server
-          - page: Web & Mobile
-            slug: web-mobile
-            path: ./pages/voice-ai/network-options/web-mobile.mdx
-            icon: fa-duotone fa-user
-      - section: Inbound vs. Outbound calling
-        slug: inbound-vs-outbound
-        contents:
-          - page: Inbound calls
-            slug: inbound-calls
-            path: ./pages/voice-ai/inbound-vs-outbound/inbound-calls.mdx
-            icon: fa-duotone fa-phone-arrow-down-left
-          - page: Outbound calls
-            slug: outbound-calls
-            path: ./pages/voice-ai/inbound-vs-outbound/outbound-calls.mdx
-            icon: fa-duotone fa-phone-arrow-up-right
-      - section: What's next?
-        slug: enhance-and-deploy
-        contents:
-          - page: Enhance and deploy
-            slug: overview
-            path: ./pages/voice-ai/enhance-and-deploy/overview.mdx
-            icon: fa-duotone fa-circle-info
-          - page: Telephony and Voice AI
-            slug: telephony-and-voice-ai
-            path: ./pages/voice-ai/enhance-and-deploy/telephony-and-voice-ai.mdx
-            icon: fa-duotone fa-phone-volume
-          - page: Build and Deploy
-            slug: build-and-deploy
-            path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
-            icon: fa-duotone fa-rocket-launch
-      - page: Overview
-        path: ./pages/voice-ai/pipeline-options.mdx
-        icon: fa-duotone fa-circle-info
-      - section: Voice AI Clients
-        slug: connectors
-        skip-slug: true
+      - section: Voice AI connectors
         contents:
           - page: Client Options
             slug: client-options
@@ -394,6 +328,67 @@ navigation:
                 slug: cx
                 path: ./pages/voice-ai/dialogflow/cx.mdx
                 icon: fa-duotone fa-comments
+      - section: Build with AI coding agents
+        slug: vibe-coding
+        contents:
+          - page: Overview
+            slug: overview
+            path: ./pages/voice-ai/vibe-coding/overview.mdx
+            icon: fa-duotone fa-wand-magic-sparkles
+          - page: Build with Claude Code
+            slug: claude
+            path: ./pages/voice-ai/vibe-coding/claude.mdx
+            icon: fa-brands fa-claude
+      - section: Network options
+        slug: network-options
+        contents:
+          - page: Phone Numbers & PSTN
+            slug: phone-numbers-pstn
+            path: ./pages/voice-ai/network-options/phone-numbers-pstn.mdx
+            icon: fa-duotone fa-phone
+          - page: SIP
+            slug: sip
+            path: ./pages/voice-ai/network-options/sip.mdx
+            icon: fa-duotone fa-phone-office
+          - page: WhatsApp
+            slug: whatsapp
+            path: ./pages/voice-ai/network-options/whatsapp.mdx
+            icon: fa-brands fa-whatsapp
+          - page: WhatsApp Multi-modal Proxy Server
+            slug: whatsapp-multimodal-server
+            path: ./pages/voice-ai/network-options/whatsapp-multimodal-server.mdx
+            hidden: true
+            icon: fa-duotone fa-server
+          - page: Web & Mobile
+            slug: web-mobile
+            path: ./pages/voice-ai/network-options/web-mobile.mdx
+            icon: fa-duotone fa-user
+      - section: Inbound vs. Outbound calling
+        slug: inbound-vs-outbound
+        contents:
+          - page: Inbound calls
+            slug: inbound-calls
+            path: ./pages/voice-ai/inbound-vs-outbound/inbound-calls.mdx
+            icon: fa-duotone fa-phone-arrow-down-left
+          - page: Outbound calls
+            slug: outbound-calls
+            path: ./pages/voice-ai/inbound-vs-outbound/outbound-calls.mdx
+            icon: fa-duotone fa-phone-arrow-up-right
+      - section: What's next?
+        slug: enhance-and-deploy
+        contents:
+          - page: Enhance and deploy
+            slug: overview
+            path: ./pages/voice-ai/enhance-and-deploy/overview.mdx
+            icon: fa-duotone fa-circle-info
+          - page: Telephony and Voice AI
+            slug: telephony-and-voice-ai
+            path: ./pages/voice-ai/enhance-and-deploy/telephony-and-voice-ai.mdx
+            icon: fa-duotone fa-phone-volume
+          - page: Build and Deploy
+            slug: build-and-deploy
+            path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
+            icon: fa-duotone fa-rocket-launch
       - section: Jev
         slug: jev
         contents:
