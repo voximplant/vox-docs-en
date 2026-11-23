@@ -14,7 +14,7 @@ Users are required only when your application authenticates client endpoints dir
   * You register third-party SIP hardware or softphones to your application.
   * You use instant messaging or manage Monthly Active User (MAU) quotas.
 * **You do not need users if**:
-  * Your application interacts exclusively with the public telephone network (PSTN). For example, if you rent a phone number that runs an automated IVR, or your backend triggers automated outbound calls to mobile phones via the Management API, no user entities are needed.
+  * Your application interacts exclusively with the public telephone network (PSTN). For example, if you rent a phone number that runs an automated IVR, or your backend triggers automated outgoing calls to mobile phones via the Management API, no user entities are needed.
 
 ---
 

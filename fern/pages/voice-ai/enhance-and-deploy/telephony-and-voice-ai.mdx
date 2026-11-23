@@ -7,7 +7,7 @@ subtitle: Expand customer-facing voice capabilities for production call flows
 </blockquote>
 
 
-These capabilities focus on call experience quality, channel expansion, and AI orchestration patterns used in production Voice AI deployments.
+These capabilities focus on call experience quality, channel expansion, and AI orchestration patterns for production Voice AI deployments.
 
 <CardGroup cols={3}>
   <Card title="Recording" icon="fa-duotone fa-microphone-lines" href="#recording">
@@ -22,11 +22,11 @@ These capabilities focus on call experience quality, channel expansion, and AI o
   <Card title="Playback audio" icon="fa-duotone fa-play" href="#playback-audio">
     Play prompts, messages, and media clips in live call flows.
   </Card>
-  <Card title="Add Click-to-call" icon="fa-duotone fa-mobile-screen" href="#add-click-to-call">
+  <Card title="Add click-to-call" icon="fa-duotone fa-mobile-screen" href="#add-click-to-call">
     Launch browser-to-phone journeys for onboarding and support.
   </Card>
-  <Card title="Use Call Lists" icon="fa-duotone fa-list-check" href="#use-call-lists">
-    Run outbound campaigns using uploaded contact lists.
+  <Card title="Use call lists" icon="fa-duotone fa-list-check" href="#use-call-lists">
+    Run outgoing campaigns with uploaded contact lists.
   </Card>
   <Card title="Work with WebSockets" icon="fa-duotone fa-signal-stream" href="#work-with-websockets">
     Stream media and events for advanced real-time integrations.
@@ -37,7 +37,7 @@ These capabilities focus on call experience quality, channel expansion, and AI o
   <Card title="Use Dialogflow" icon="../../../assets/getting-started/icon-dialogflow.svg" href="#dialogflow-state-machine">
     Build structured state-machine voice journeys.
   </Card>
-  <Card title="Even More" icon="fa-duotone fa-circle-plus" href="#even-more-telephony-and-voice-ai">
+  <Card title="Even more" icon="fa-duotone fa-circle-plus" href="#even-more-telephony-and-voice-ai">
     Explore additional guides and references.
   </Card>
 </CardGroup>
@@ -51,7 +51,7 @@ These capabilities focus on call experience quality, channel expansion, and AI o
     - Use recordings for QA workflows and stakeholder reviews.
     - Preserve call evidence for internal audits and escalations.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Recording links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Recording links:
     - [Call recording guide](/platform/telephony/recording-and-streaming)
   </Accordion>
 
@@ -63,21 +63,21 @@ These capabilities focus on call experience quality, channel expansion, and AI o
     - Improve Voice AI quality with transcript-based analysis loops.
     - Support text-based monitoring and reporting across campaigns.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Transcription links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Transcription links:
       - [VoxEngine `call.record` options (including transcription settings)](/reference/voxengine/call#record)
       - [Speech-to-text (ASR) guide](/platform/overview)
       - [ASR providers guide](/platform/overview)
   </Accordion>
 
   <a id="run-tts-in-voxengine"></a>
-  <Accordion title="Run streaming Text-to-Speech in VoxEngine">
+  <Accordion title="Run streaming text-to-speech in VoxEngine">
     VoxEngine TTS gives you direct control over how your AI voice sounds and responds across call flows.
 
     - Tune voice output for clarity and brand consistency.
     - Use this model in half-cascade architectures where output is provider-flexible.
     - Keep low-latency, interruption-friendly responses for live calls.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Text-to-Speech links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Text-to-speech links:
     - [Google Realtime TTS API](/reference/voxengine/google)
     - [Inworld Realtime TTS API](/reference/voxengine/inworld)
     - [ElevenLabs Streaming TTS example](/voice-ai/openai/half-cascade-elevenlabs)
@@ -92,34 +92,34 @@ These capabilities focus on call experience quality, channel expansion, and AI o
     - Use prompt playback for onboarding, queue messaging, and compliance notices.
     - Combine playback with AI-driven logic for hybrid call flows.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Playback links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Playback links:
     - [Media player guide](/reference/voxengine/player)
   </Accordion>
 
   <a id="add-click-to-call"></a>
-  <Accordion title="Add Click-to-call">
+  <Accordion title="Add click-to-call">
     Click-to-call is a fast path to embed calling in web experiences like onboarding, support, and sales journeys.
 
     - Let users initiate calls from your website or app with minimal friction.
     - Use browser entry points to connect web traffic directly into Voice AI call flows.
     - Accelerate proof-of-value for product and customer teams.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Click-to-call links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Click-to-call links:
     - [phone.voximplant.com](https://phone.voximplant.com/)
     - [Click-to-call web widget guide](/voice-ai/network-options/web-mobile)
     - [click-to-call example on GitHub](https://github.com/voximplant/click-to-call)
   </Accordion>
 
   <a id="use-call-lists"></a>
-  <Accordion title="Use Call Lists">
-    Call Lists let you upload target contacts and automate outbound dialing flows for campaigns, follow-ups, and scheduled outreach.
+  <Accordion title="Use call lists">
+    Call lists let you upload target contacts and automate outgoing dialing flows for campaigns, follow-ups, and scheduled outreach.
 
-    - Launch large outbound initiatives without manually triggering each call.
+    - Launch large outgoing initiatives without manually triggering each call.
     - Connect list-based dialing with your Voice AI scenarios for qualification and handoff.
     - Combine with campaign logic to monitor progression and optimize throughput.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Call Lists links:
-    - [Automated outbound calling capabilities](/voice-ai/capabilities#automated-outbound-calling-call-lists--dialing-logic)
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Call lists links:
+    - [Automated outgoing calling capabilities](/voice-ai/inbound-vs-outbound/outbound-calls#call-lists-for-automated-outbound-calling)
   </Accordion>
 
   <a id="work-with-websockets"></a>
@@ -130,7 +130,7 @@ These capabilities focus on call experience quality, channel expansion, and AI o
     - Build provider-specific integrations beyond out-of-the-box connectors.
     - Keep telephony orchestration in VoxEngine while extending media processing.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> WebSockets links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> WebSockets links:
     - [Media over WebSockets](/platform/media-streams/media-over-web-sockets)
   </Accordion>
 
@@ -142,26 +142,26 @@ These capabilities focus on call experience quality, channel expansion, and AI o
     - Bridge PSTN, SIP, and WebRTC participants into one session.
     - Support richer assisted-service and hybrid human+AI workflows.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Conferencing links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Conferencing links:
     - [Conferencing guide](/platform/contact-center/video)
     - [Conferencing scenarios guide](/platform/contact-center/video)
   </Accordion>
 
   <a id="dialogflow-state-machine"></a>
-  <Accordion title="Use Dialogflow (State-Machine oriented Voice AI)">
+  <Accordion title="Use Dialogflow (state-machine oriented Voice AI)">
     Dialogflow is a strong fit for deterministic conversation design where intents, states, and transitions are explicit and controlled.
 
     - Build predictable call journeys for regulated or policy-driven flows.
     - Combine intent/state routing with Voximplant telephony capabilities.
     - Run IVR-like and virtual-agent experiences with clear control logic.
 
-    #### <icon icon="fa-duotone fa-solid fa-link" /> Dialogflow links:
+    #### <Icon icon="fa-duotone fa-solid fa-link" /> Dialogflow links:
     - [Dialogflow ES integration guide](/voice-ai/dialogflow/es)
     - [Dialogflow CX integration guide](/voice-ai/dialogflow/cx)
   </Accordion>
 
   <a id="even-more-telephony-and-voice-ai"></a>
-  <Accordion title="Even More">
+  <Accordion title="Even more">
     <Info>
 
     - [Voximplant guides](/voice-ai/getting-started)

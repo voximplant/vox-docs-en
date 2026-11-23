@@ -1,19 +1,19 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine."
+description: "This example answers an incoming Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine.
+This example answers an incoming Voximplant call, connects it to Inworld Realtime, and handles function calls inside VoxEngine.
 
 **Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/voice-ai/network-options/phone-numbers-pstn)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user or SIP registration](/voice-ai/network-options/sip)
@@ -59,7 +59,7 @@ tool_choice: "auto",
 
 The rest of the session config stays focused on the tool flow: model, prompt, audio input/output models, and concise TTS delivery settings.
 The system prompt tells the model not to speak before a tool result is available, so the caller does not hear a filler phrase such as "let me check" before the function result is ready.
-Unlike the richer inbound demo, this example does not force `segmenter_strategy: "full_turn"`; that keeps the tool-result answer more responsive once Inworld starts generating the final spoken response.
+Unlike the richer incoming demo, this example does not force `segmenter_strategy: "full_turn"`; that keeps the tool-result answer more responsive once Inworld starts generating the final spoken response.
 For a broader walkthrough of Inworld voice behavior tuning, see [Answering an incoming call](/voice-ai/inworld/inbound).
 
 ## Handle tool calls
@@ -105,7 +105,7 @@ voiceAIClient.addEventListener(Inworld.Events.WebSocketMediaEnded, () => {
 
 ## Connect call audio
 
-The call setup is otherwise the same as the inbound example.
+The call setup is otherwise the same as the incoming example.
 After `SessionCreated`, send the session config. After `SessionUpdated`, bridge media and seed an initial greeting with `conversationItemCreate` followed by `responseCreate`.
 The caller's spoken turns go through the bridged audio stream; Inworld STT, semantic VAD, and `create_response: true` handle turn completion and response creation.
 
@@ -123,7 +123,7 @@ voiceAIClient.addEventListener(Inworld.RealtimeAPIEvents.InputAudioBufferSpeechS
 
 - `sessionKey` can be any unique string to maintain context for the Inworld session.
 - Keep tool handlers fast in VoxEngine. For slow work, return an acknowledgement and move the long-running workflow outside the call path.
-- Tool responses must use the same `call_id` that Inworld provided.
+- Tool responses should use the same `call_id` that Inworld provided.
 - Empty tool argument strings are treated as `{}`; tools without parameters do not need placeholder JSON.
 - Tool-call turns are silent until the function output is sent back and the follow-up response is created.
 - `ResponseOutputAudioDone` means Inworld finished generating the audio. For `hang_up`, this example waits for `WebSocketMediaEnded` so VoxEngine can finish playing the goodbye to the caller before disconnecting.

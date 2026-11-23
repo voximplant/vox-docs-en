@@ -1,11 +1,11 @@
 ---
 title: "Callbacks"
-subtitle: "Learn how to use HTTP Callbacks to get notifications without frequently sending HTTP requests from your backend to the Voximplant cloud."
+subtitle: "Learn how to use HTTP callbacks to get notifications without frequently sending HTTP requests from your backend to the Voximplant cloud."
 ---
 
-HTTP Callbacks allow getting important notifications without frequently sending HTTP requests from your backend to the Voximplant cloud. Instead of creating additional scripts that send requests to our HTTP Management API. It is more practical to rely on the already existing automation features, such as callbacks. 
+HTTP callbacks allow getting important notifications without frequently sending HTTP requests from your backend to the Voximplant cloud. Instead of creating additional scripts that send requests to the Voximplant HTTP Management API. It is more practical to rely on the already existing automation features, such as callbacks. 
 
-Voximplant offers you a variety of callbacks and, in this article, you will learn how to use `MinBalanceCallback`. With callbacks, the Voximplant HTTP Management API becomes even more useful in terms of better integration and monitoring.
+Voximplant offers you a variety of callbacks and, in this article, you learn how to use `MinBalanceCallback`. With callbacks, the Voximplant HTTP Management API becomes even more useful in terms of better integration and monitoring.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ Voximplant offers you a variety of callbacks and, in this article, you will lear
 
 ## Setup
 
-Go to the [Webhooks](https://manage.voximplant.com/settings/webhooks) section of the Voximplant control panel and click **Add**. The two boxes appear: **Callback URL** and **Security salt**. Technically, only the **Callback URL** box is required to enable callbacks while the **Security salt** box is optional. However, in this article, we check the hash, which is why both boxes should be filled in.
+Go to the [Webhooks](https://manage.voximplant.com/settings/webhooks) section of the Voximplant control panel and click **Add**. The two boxes appear: **Callback URL** and **Security salt**. Technically, only the **Callback URL** box is required to enable callbacks while the **Security salt** box is optional. However, in this article, you check the hash, which is why both boxes should be filled in.
 
 ![Webhook creation](../../../assets/platform/management-api/guides-managementapi-callbacks-webhooks.png)
 
@@ -35,7 +35,7 @@ The request body contains a `callbacks` array with the `AccountCallback` JSON ob
 
 - **type** – a callback type that determines which properties contain data. The min_balance type means `MinBalanceCallback`
 - **hash** – a hash calculated by the Voximplant cloud
-- **сallbackId** – a unique number of the callback used to calculate the hash
+- **сallbackId** – a unique number of the callback that you use to calculate the hash
 
 For more information, see the [Management API reference](/reference/management-api/reference).
 
@@ -47,7 +47,7 @@ The Voximplant HTTP Management API can communicate with the PHP/Node.js/nginx an
 
 Install [node.js](https://nodejs.org/en/) and [express.js](https://expressjs.com/) on any server platform (AWS, Azure, or any VDS, etc.). You can also test the solution locally via [ngrok](https://ngrok.com/), which allows testing demo applications from your local computer without deploying them with a public IP address.
 
-Since you set the **Security salt** value, it is possible to save it to the backend server to check the hash later. Calculate the hash using the **MD5** algorithm:
+Since you set the **Security salt** value, it is possible to save it to the backend server to check the hash later. Calculate the hash with the **MD5** algorithm:
 
 ```javascript
 md5(Security salt + account_id + api_key + callback_id)

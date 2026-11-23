@@ -1,19 +1,19 @@
 ---
 title: "Example: Answering an incoming call"
-description: "This example answers an inbound Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations."
+description: "This example answers an incoming Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations.
+This example answers an incoming Voximplant call and bridges audio to Deepgram Voice Agent for real-time speech‑to‑speech conversations.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -23,7 +23,7 @@ This example answers an inbound Voximplant call and bridges audio to Deepgram Vo
 
 ## Session setup
 
-The Deepgram Voice Agent session is configured via a `settingsOptions` object that’s passed directly to `Deepgram.createVoiceAgentClient(...)`.
+Pass a `settingsOptions` object directly to `Deepgram.createVoiceAgentClient(...)` to configure the Deepgram Voice Agent session.
 
 In the full example, see `SETTINGS_OPTIONS.agent`:
 
@@ -31,13 +31,13 @@ In the full example, see `SETTINGS_OPTIONS.agent`:
 - `think`: LLM provider + prompt
 - `speak`: text-to-speech provider
 
-<Info title="Don’t set audio settings">
+<Info title="Do not set audio settings">
   When using the VoxEngine connector, do not include `audio` settings in the Deepgram settings object — audio is handled by the connector for optimal telephony quality.
 </Info>
 
 ## Connect call audio
 
-Once you’ve created the `Deepgram.VoiceAgentClient`, you need to connect audio both ways between the phone call and the agent.
+After you create the `Deepgram.VoiceAgentClient`, connect audio both ways between the phone call and the agent.
 
 In the example, this is done with:
 
@@ -45,16 +45,16 @@ In the example, this is done with:
 VoxEngine.sendMediaBetween(call, voiceAgentClient);
 ```
 
-This bridges media between a `Call` and a `Deepgram.VoiceAgentClient`. You can also do the same thing explicitly, one direction at a time, using `sendMediaTo`:
+This bridges media between a `Call` and a `Deepgram.VoiceAgentClient`. You can also bridge each direction explicitly via `sendMediaTo`:
 
-```js title="Equivalent using sendMediaTo"
+```js title="Equivalent bridge via sendMediaTo"
 call.sendMediaTo(voiceAgentClient);
 voiceAgentClient.sendMediaTo(call);
 ```
 
 ## Mid-session updates
 
-After the client is created (see `voiceAgentClient` in the scenario), you can update the agent mid-call without reconnecting using `Deepgram.VoiceAgentClient` methods.
+After you create the client (see `voiceAgentClient` in the scenario), you can update the agent mid-call without reconnecting, via `Deepgram.VoiceAgentClient` methods.
 
 These methods are documented in the Voximplant reference:
 

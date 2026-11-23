@@ -17,8 +17,8 @@ The SDK is divided into dedicated, modular packages:
 Applications manage sessions through centralized singleton controllers and event listeners:
 
 * **Client management**: The [Client]() singleton in `@voximplant/react-native-core` manages socket connections, credentials, and global disconnection reasons.
-* **State tracking**: Monitor connection transitions using the [Watchable]() API (`client.state.watch()`).
-* **Calling & conferencing**: The `@voximplant/react-native-calls` module provides call controls, video view components, and in-call event handlers.
+* **State tracking**: Monitor connection transitions via the [Watchable]() API (`client.state.watch()`).
+* **Calling and conferencing**: The `@voximplant/react-native-calls` module provides call controls, video view components, and in-call event handlers.
 
 ---
 
@@ -26,8 +26,8 @@ Applications manage sessions through centralized singleton controllers and event
 
 Explore detailed API documentation across these core areas:
 
-* **[Core Package Reference]()** — Complete reference for `@voximplant/react-native-core`, `Client`, nodes, and authentication error models.
-* **[Calls Package Reference]()** — Methods, properties, and events for `@voximplant/react-native-calls`, call lifecycles, and conferencing.
-* **[Audio Device Management]()** — Automatic and manual audio routing across speakerphone, earpiece, wired headsets, and Bluetooth devices.
-* **[Video Views & Camera]()** — Native UI components for rendering local camera previews and remote video streams.
-* **[Push Notifications]()** — Background VoIP incoming call handling using APNs and FCM integration.
+* **[Core package reference]()** — Complete reference for `@voximplant/react-native-core`, `Client`, nodes, and authentication error models.
+* **[Calls package reference]()** — Methods, properties, and events for `@voximplant/react-native-calls`, call lifecycles, and conferencing.
+* **[Audio device management]()** — Automatic and manual audio routing across speakerphone, earpiece, wired headsets, and Bluetooth devices.
+* **[Video views and camera]()** — Native UI components for rendering local camera previews and remote video streams.
+* **[Push notifications]()** — Background VoIP incoming call handling via APNs and FCM integration.

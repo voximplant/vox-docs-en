@@ -8,7 +8,7 @@ subtitle: "Use the VoxEngine OpenAI Realtime client with an Azure OpenAI Realtim
 
 ## Overview
 
-This example answers an inbound call and bridges call audio to an Azure OpenAI Realtime deployment using `OpenAI.createRealtimeAPIClient()`.
+This example answers an incoming call and bridges call audio to an Azure OpenAI Realtime deployment via `OpenAI.createRealtimeAPIClient()`.
 
 Use this pattern when you have an Azure OpenAI Realtime model deployment and want VoxEngine call control, recording, media bridging, and OpenAI-compatible Realtime session handling in the same scenario.
 
@@ -19,7 +19,7 @@ Use this pattern when you have an Azure OpenAI Realtime model deployment and wan
 - An Azure subscription with access to [Azure OpenAI in Microsoft Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-openai#azure-openai-in-microsoft-foundry-models).
 - A Microsoft Foundry or Azure OpenAI resource in a region that supports GPT Realtime models. Check Microsoft's [Realtime audio model and region documentation](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/realtime-audio#supported-models) before creating the deployment.
 - Quota for the selected Realtime model and deployment type. Azure OpenAI quota is region-specific, so confirm the requested model has available quota in the target region. See [Azure OpenAI quotas and limits](https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits).
-- An Azure OpenAI Realtime model deployment, for example `gpt-realtime-1.5`. The `model` value in this VoxEngine scenario must match the Azure deployment name.
+- An Azure OpenAI Realtime model deployment, for example `gpt-realtime-1.5`. The `model` value in this VoxEngine scenario should match the Azure deployment name.
 - The Azure OpenAI resource endpoint from Foundry. The current Azure v1 API format uses `/openai/v1` in the endpoint URL. See [Azure OpenAI v1 API](https://learn.microsoft.com/en-us/azure/foundry/openai/api-version-lifecycle).
 - Store the Azure OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `AZURE_API_KEY`.
 - Store the Azure OpenAI endpoint in Voximplant [Secrets](/platform/storage/secret-storage) under `AZURE_OPENAI_BASE_URL`.
@@ -89,9 +89,9 @@ graph LR
 ## More info
 
 - VoxEngine OpenAI module API: https://voximplant.com/docs/references/voxengine/openai
-- Realtime client parameters: [/api-reference/voxengine/openai#createrealtimeapiclient](/reference/voxengine/openai#createrealtimeapiclient)
-- Voximplant Secrets: [/platform/voxengine/secrets](/platform/storage/secret-storage)
-- Voximplant routing rules: [/platform/voxengine/routing-rules](/platform/getting-started/create-a-routing-rule)
+- Realtime client parameters: [OpenAI.createRealtimeAPIClient](/reference/voxengine/openai#createrealtimeapiclient)
+- Voximplant Secrets: [Secret storage](/platform/storage/secret-storage)
+- Voximplant routing rules: [Routing rules](/platform/getting-started/create-a-routing-rule)
 - Azure OpenAI Realtime audio: https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/realtime-audio
 - Azure OpenAI v1 API: https://learn.microsoft.com/en-us/azure/foundry/openai/api-version-lifecycle
 - Azure OpenAI quotas and limits: https://learn.microsoft.com/en-us/azure/foundry/openai/quotas-limits

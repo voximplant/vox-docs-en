@@ -174,7 +174,7 @@ The callback payload contains an `IncomingSmsCallbackItem` with the following de
 4. Optionally specify a **Security salt** to verify callback authenticity.
 5. Click **Save**.
 
-Your backend can now receive incoming SMS events, trigger automated follow-ups, or route the text to your CRM. Refer to the [Management API callbacks guide](/platform/management-api/callbacks) for webhook security and payload parsing examples.
+Your backend can now receive incoming SMS events, trigger automated follow-ups, or route the text to your CRM. Refer to the [Management API callbacks guide](/reference/management-api/callbacks) for webhook security and payload parsing examples.
 
 ---
 

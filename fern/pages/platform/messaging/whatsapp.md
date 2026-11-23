@@ -1,6 +1,6 @@
 # WhatsApp Business
 
-Voximplant integrates with Meta's WhatsApp Business Calling API (Cloud API), allowing you to receive incoming calls from WhatsApp users and initiate outbound business calls directly to customers' WhatsApp applications.
+Voximplant integrates with Meta's WhatsApp Business Calling API (Cloud API), allowing you to receive incoming calls from WhatsApp users and initiate outgoing business calls directly to customers' WhatsApp applications.
 
 <Info title="Video walkthrough">
 For a complete visual walkthrough covering Meta developer account setup and Voximplant integration, watch our [video guide]().
@@ -14,9 +14,9 @@ For a complete visual walkthrough covering Meta developer account setup and Voxi
   - [Step 2: Register the number via Meta Graph API](#step-2-register-the-number-via-meta-graph-api)
 - [Connect your WhatsApp number to Voximplant](#connect-your-whatsapp-number-to-voximplant)
 - [Handle incoming WhatsApp calls](#handle-incoming-whatsapp-calls)
-- [Initiate outbound WhatsApp calls](#initiate-outbound-whatsapp-calls)
+- [Initiate outgoing WhatsApp calls](#initiate-outgoing-whatsapp-calls)
   - [Customer call permissions](#customer-call-permissions)
-  - [Outbound scenario implementation](#outbound-scenario-implementation)
+  - [Outgoing scenario implementation](#outgoing-scenario-implementation)
 - [PSTN bridging restrictions](#pstn-bridging-restrictions)
 
 ---
@@ -28,7 +28,7 @@ Before configuring WhatsApp calling, ensure you have:
 * A dedicated phone number not currently registered with any personal or business WhatsApp mobile app.
 * A Voximplant account with an active [application](/platform/getting-started/create-an-application).
 
-<Info title="Regional availability for outbound calls">
+<Info title="Regional availability for outgoing calls">
 Business-initiated WhatsApp calling is available in all regions supported by the WhatsApp Cloud API, except the following countries: **United States, Canada, Turkey, Egypt, Vietnam, and Nigeria**.
 </Info>
 
@@ -138,22 +138,22 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 
 ---
 
-## Initiate outbound WhatsApp calls
+## Initiate outgoing WhatsApp calls
 
 ### Customer call permissions
 
-According to Meta policies, businesses cannot place unsolicited outbound calls to WhatsApp users without prior user consent. You can obtain call permissions through two mechanisms:
+According to Meta policies, businesses cannot place unsolicited outgoing calls to WhatsApp users without prior user consent. You can obtain call permissions through two mechanisms:
 
 1. **Permission request template**: Send an interactive WhatsApp message template asking the user to approve calls from your business.
 2. **Incoming call window (7-day temporary permission)**: If a customer calls your WhatsApp Business number first, your business automatically receives a 7-day window to place return calls to that user.
 
 Users can also manage call permissions directly from your business profile in their WhatsApp application. For detailed compliance rules, refer to Meta's [Business-initiated calling documentation]().
 
-### Outbound scenario implementation
+### Outgoing scenario implementation
 
-To place an outbound call to a customer's WhatsApp application, use the `VoxEngine.callWhatsappUser()` method. Pass the destination number in `number` and your registered WhatsApp Business number in `callerid`:
+To place an outgoing call to a customer's WhatsApp application, use the `VoxEngine.callWhatsappUser()` method. Pass the destination number in `number` and your registered WhatsApp Business number in `callerid`:
 
-```javascript title="Outbound WhatsApp call scenario"
+```javascript title="Outgoing WhatsApp call scenario"
 VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
   const number = '19999999999'; // customer's whatsapp phone number
   const callerid = '442039665862'; // whatsapp business account

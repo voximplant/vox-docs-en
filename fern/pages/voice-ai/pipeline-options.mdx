@@ -1,5 +1,5 @@
 ---
-title: Pipeline Options
+title: Pipeline options
 subtitle: Compare the main Voice AI pipeline patterns supported in VoxEngine.
 ---
 <blockquote className="agent-directive">
@@ -51,10 +51,10 @@ The right pipeline depends on your priorities -- low latency, interactivity need
     provider mix and are willing to manage the additional interactions.
 </Tip>
 
-## Voximplant Connectors & Pipeline Support
+## Voximplant connectors and pipeline support
 
 Voximplant always manages the telephony side of the call: routing, answering, bridging media, call control, and any orchestration logic you add in VoxEngine.
-Our Voice AI API clients - also referred to as connectors - provide a direct connection from VoxEngine to the provider's environment with a low-latency WebSocket connection.
+Voximplant Voice AI API clients, also called connectors, provide a direct connection from VoxEngine to the provider's environment with a low-latency WebSocket connection.
 Voximplant's various connector options differ in how they handle transcription, reasoning, and speech synthesis internally.
 
 LLMs like OpenAI, Gemini, Grok, and Qwen provide direct access to the speech-enabled LLM.
@@ -62,21 +62,21 @@ Speech input and output parameters are managed as part of the connector.
 
 Ultravox provides a speech-native LLM, but integrates TTS within their environment, only exposing a Speech-to-Speech interface to Voximplant.
 Similarly, ElevenLabs, Cartesia, Deepgram, and Inworld provide a speech-to-speech interface to Voximplant, but handle LLM, STT, and TTS elements internally.
-Configuration of these internal elements vary by vendor. We refer to the integrations as "indirect speech-to-speech".
+Configuration of these internal elements varies by vendor. Call these integrations "indirect speech-to-speech".
 
 All vendors provide some level of end-of-turn detection, with some vendors providing more explicit control over turn-taking and barge-in.
 
 The table below summarizes support by vendor from the Voximplant connector perspective.
-| Agent Vendor | Direct S2S | Indirect S2S | Hybrid | Cascaded |
+| Agent vendor | Direct S2S | Indirect S2S | Hybrid | Cascaded |
 | --- | --- | --- | --- | --- |
 | [OpenAI](/voice-ai/openai/overview) | ✓ |  | ✓ | ✓ |
 | [Gemini Live](/voice-ai/google/overview) | ✓ |  |  |  |
-| [xAI Grok Voice Agent](/voice-ai/xai/overview) | ✓ |  |  |  |
+| [xAI Grok voice agent](/voice-ai/xai/overview) | ✓ |  |  |  |
 | [Qwen Cloud](/voice-ai/qwen/overview) | ✓ |  |  |  |
 | [Ultravox](/voice-ai/ultravox/overview) |  | ✓ |  |  |
-| [ElevenLabs Agents](/voice-ai/elevenlabs/overview) |  | ✓ |  |  |
-| [Deepgram Agents](/voice-ai/deepgram/overview) |  | ✓ |  |  |
-| [Cartesia Line Agents](/voice-ai/cartesia/overview) |  | ✓ |  |  |
+| [ElevenLabs agents](/voice-ai/elevenlabs/overview) |  | ✓ |  |  |
+| [Deepgram agents](/voice-ai/deepgram/overview) |  | ✓ |  |  |
+| [Cartesia Line agents](/voice-ai/cartesia/overview) |  | ✓ |  |  |
 | [Inworld Realtime](/voice-ai/inworld/overview) |  | ✓ |  |  |
 
 ## Speech-to-speech
@@ -141,7 +141,7 @@ These connectors expose the speech-enabled LLM directly to VoxEngine.
   </a>
 
   <a className="voice-connector-card compact" href="/voice-ai/xai/overview">
-    <h3>xAI Grok Voice Agent</h3>
+    <h3>xAI Grok voice agent</h3>
     <p>Realtime voice interaction with Grok voice agent sessions.</p>
   </a>
 
@@ -162,17 +162,17 @@ These connectors present a speech-to-speech interface to VoxEngine while managin
   </a>
 
   <a className="voice-connector-card compact" href="/voice-ai/elevenlabs/overview">
-    <h3>ElevenLabs Agents</h3>
+    <h3>ElevenLabs agents</h3>
     <p>Conversational agent sessions with realtime speech handling.</p>
   </a>
 
   <a className="voice-connector-card compact" href="/voice-ai/deepgram/overview">
-    <h3>Deepgram Agents</h3>
+    <h3>Deepgram agents</h3>
     <p>Realtime voice agent flow with Deepgram speech input and output.</p>
   </a>
 
   <a className="voice-connector-card compact" href="/voice-ai/cartesia/overview">
-    <h3>Cartesia Line Agents</h3>
+    <h3>Cartesia Line agents</h3>
     <p>Speech-to-speech agent flow with Cartesia-managed runtime behavior.</p>
   </a>
 
@@ -324,7 +324,7 @@ For turn-taking, interruption, and end-of-turn behavior, see the [Speech Flow Co
 
 ## Choosing a pipeline
 
-If you are new to Voice AI starting from scratch, we recommend the following progression:
+We recommend this progression when you are new to Voice AI:
 
 1. Start with speech-to-speech to validate the call flow and prompt design quickly.
 2. Move to hybrid-cascade if you need a different voice or output speech behavior than your speech-LLM provider offers.

@@ -1,19 +1,19 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine."
+description: "This example answers an incoming Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine.
+This example answers an incoming Voximplant call, connects it to ElevenLabs Agents, and handles client-side tool calls inside VoxEngine.
 
 **Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -26,7 +26,7 @@ This example answers an inbound Voximplant call, connects it to ElevenLabs Agent
 
 ## Tool handling
 
-ElevenLabs Agents send tool requests via `ElevenLabs.AgentsEvents.ClientToolCall`. The example extracts the tool name and parameters, runs a stub implementation, and sends the result back using `clientToolResult`:
+ElevenLabs Agents send tool requests via `ElevenLabs.AgentsEvents.ClientToolCall`. The example extracts the tool name and parameters, runs a stub implementation, and sends the result back via `clientToolResult`:
 
 ```js title="Tool handling"
 agentsClient.addEventListener(ElevenLabs.AgentsEvents.ClientToolCall, (event) => {

@@ -1,13 +1,13 @@
 ---
 title: "Authorization"
-subtitle: "Learn how to authenticate with Service accounts and API keys to use Voximplant Management API."
+subtitle: "Learn how to authenticate with service accounts and API keys to use the Voximplant Management API."
 ---
 
 Most Voximplant Management API calls require authentication and authorization, which link API calls to your account. Service accounts and API keys are the primary authentication methods. For method-level HTTP documentation, see the [Management API reference](/reference/management-api/reference).
 
 ## Service accounts
 
-A service account is a way to grant access to the Voximplant Management API on behalf of your developer account. You can manage the permissions of each service account by assigning one or more roles to it. If a service account has no assigned roles, it will only have access to the basic Management API methods.
+A service account is a way to grant access to the Voximplant Management API on behalf of your developer account. You can manage the permissions of each service account by assigning one or more roles to it. If a service account has no assigned roles, it only has access to the basic Management API methods.
 
 Go to the [Service accounts](https://manage.voximplant.com/settings/service_accounts) section and click **Add** in the upper right corner. In the dialogue opened, click **Add role** and specify as many roles as you need. For example, if you want to enable this new account to just start cloud scenarios, add the **Scenarios** role. Put a short description (if needed), click **Generate key**, and specify where to save a private key.
 
@@ -15,7 +15,7 @@ Go to the [Service accounts](https://manage.voximplant.com/settings/service_acco
   Since Voximplant does not store the keys, save them securely on your side.
 </Warning>
 
-Next, form [a JWT](https://jwt.io/) using RS256. The required fields are:
+Next, form [a JWT](https://jwt.io/) with RS256. The required fields are:
 
 * **kid** – key_id to be specified in the header section
 * **iat** – start date, it should be [a Numeric date value](https://tools.ietf.org/html/rfc7519#section-4.1.6) (UNIX timestamp)
@@ -48,7 +48,7 @@ To use most [Voximplant Management API](/reference/management-api/reference) fun
 
 ### Creating
 
-First, go to the [Service accounts](https://manage.voximplant.com/settings/service_accounts) section to create a new account and generate a JSON with its credentials (**Add** → **Generate a key**). Do not forget about the role; it allows using certain features and making certain requests. Then save the **result** value as a **credentials.json** file.
+First, go to the [Service accounts](https://manage.voximplant.com/settings/service_accounts) section to create a new account and generate a JSON with its credentials (**Add** → **Generate a key**). Do not forget about the role; it grants access to certain features and certain requests. Then save the **result** value as a **credentials.json** file.
 
 Read more about [authentication through service accounts](#json-web-token).
 
@@ -110,7 +110,7 @@ sign
 ```
 
 <Info title="Quick copy-paste">
-  You can create a **token.sh** by downloading the script from our site.
+  You can create a **token.sh** by downloading the script from the Voximplant site.
 
   <Download src="../../../assets/images/2020/08/06/jwt.sh" filename="token.sh">
     <Button>Download token.sh</Button>

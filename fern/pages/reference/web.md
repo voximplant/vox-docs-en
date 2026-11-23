@@ -15,8 +15,8 @@ The SDK is organized around a centralized Core container with modular extensions
 
 Applications initialize the Core container, register necessary modules, and interact with the platform through watchables and event emitters:
 
-* **Connection & authentication**: The [Client]() interface handles socket connectivity to your account's assigned node and manages login credentials.
-* **Reactive state**: Watch connection transitions in real time using the [Watchable]() API (e.g., `client.state.watch()`).
+* **Connection and authentication**: The [Client]() interface handles socket connectivity to your account's assigned node and manages login credentials.
+* **Reactive state**: Watch connection transitions in real time via the [Watchable]() API (e.g., `client.state.watch()`).
 * **Call management**: The registered `CallManager` manages active audio/video calls, screen sharing, and media streams.
 
 ---
@@ -25,7 +25,7 @@ Applications initialize the Core container, register necessary modules, and inte
 
 Explore detailed API documentation across these core areas:
 
-* **[Core & Client Reference]()** — Detailed docs for `Core`, module registration, `Client` methods, and connection events.
-* **[Calls & Conferences Reference]()** — API references for `CallManager`, `Call` instances, call controls, and quality telemetry.
-* **[Media Streams & Hardware]()** — Camera and microphone capture, audio device selection, and local/remote stream rendering.
-* **[Audio Processing Modules]()** — Specialized modules for AI-powered background noise suppression and custom audio transforms.
+* **[Core and client reference]()** — Detailed docs for `Core`, module registration, `Client` methods, and connection events.
+* **[Calls and conferences reference]()** — API references for `CallManager`, `Call` instances, call controls, and quality telemetry.
+* **[Media streams and hardware]()** — Camera and microphone capture, audio device selection, and local/remote stream rendering.
+* **[Audio processing modules]()** — Specialized modules for AI-powered background noise suppression and custom audio transforms.

@@ -10,11 +10,11 @@ subtitle: Gemini Live API in VoxEngine
 ## Benefits
 
 The native Gemini module connects Voximplant calls to Google’s Gemini Live API for real‑time, speech‑to‑speech conversations.
-This integration supports inbound and outbound calls and is designed to bridge telephony to Gemini with low latency while keeping call control inside VoxEngine.
+This integration supports incoming and outgoing calls and is designed to bridge telephony to Gemini with low latency while keeping call control inside VoxEngine.
 
 Capability and feature highlights:
 
-- **Connect inbound and outbound calls to a Gemini‑powered agent** with a real‑time, speech‑to‑speech interface.
+- **Connect incoming and outgoing calls to a Gemini‑powered agent** with a real‑time, speech‑to‑speech interface.
 - **Minimal audio latency** by sending media directly from Voximplant media servers to Gemini in the required audio format.
 - **Endpoint flexibility** across phone calls, Web SDK, SIP, and WhatsApp Business Calling.
 - **Barge‑in and playback interruption** to keep conversations natural.
@@ -60,7 +60,7 @@ See the examples for details on each approach.
 - **WebSocket session config**: Live API session configuration includes response modalities, system instructions, and tools in the initial setup message.
 - **Audio‑to‑audio responses**: Use `responseModalities: ["AUDIO"]` to receive audio responses from the model.
 - **Input/output transcriptions**: The Live API can return input and output audio transcriptions when enabled in the session config.
-- **Turn detection and barge‑in**: Automatic activity detection can be configured (prefix padding and silence duration) and is used to detect speech activity.
+- **Turn detection and barge‑in**: You can configure automatic activity detection (prefix padding and silence duration). It detects speech activity.
 - **Function calling**: Live API sessions can receive function call requests from the model.
 
 <Warning title="Vertex AI">
@@ -70,14 +70,14 @@ See the examples for details on each approach.
 <Warning title="Gemini 2.5 and 3.1">
   If you are migrating older `gemini-2.5-flash-native-audio-preview-12-2025` or `gemini-3.1-flash-live-preview` examples to `gemini-3.8-live`:
   omit `thinkingConfig` — `gemini-3.8-live` rejects `thinkingLevel`;
-  `3.1` samples use `sendRealtimeInput(...)` for the startup prompt, where older `2.5` samples used `sendClientContent(...)`.
+  `3.1` samples use `sendRealtimeInput(...)` for the startup prompt, where older `2.5` samples call `sendClientContent(...)`.
 </Warning>
 
 ## Examples
 
 - [Example: Answering an incoming call](/voice-ai/google/inbound)
 - [Example: Using Vertex AI](/voice-ai/google/vertex-ai)
-- [Example: Placing an outbound call](/voice-ai/google/outbound)
+- [Example: Placing an outgoing call](/voice-ai/google/outbound)
 - [Example: Function calling](/voice-ai/google/function-calling)
 - [Example: Speech-to-speech translation](/voice-ai/google/speech-translation)
 

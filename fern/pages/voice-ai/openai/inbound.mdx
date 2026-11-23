@@ -1,30 +1,30 @@
 ---
 title: "Example: Answering an incoming call"
-description: "This example answers an inbound Voximplant call and bridges audio to OpenAI Realtime for speech‑to‑speech conversations."
+description: "This example answers an incoming Voximplant call and bridges audio to OpenAI Realtime for speech‑to‑speech conversations."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call and bridges audio to OpenAI Realtime for speech-to-speech conversations. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+This example answers an incoming Voximplant call and bridges audio to OpenAI Realtime for speech-to-speech conversations. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
 
 **Jump to the [Full VoxEngine scenarios](#full-voxengine-scenarios).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
-  - [App user](/platform/getting-started/create-users) - also see the [Web & Mobile](/voice-ai/network-options/web-mobile) client SDK options
+  - [App user](/platform/getting-started/create-users) - also see the [Web and mobile](/voice-ai/network-options/web-mobile) client SDK options
 - Create a [routing rule](/platform/getting-started/create-a-routing-rule) that points the destination (phone number / WhatsApp / SIP username / app user alias) to this scenario.
 - Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
 
 ## Session setup
 
 <Info>
-    `gpt-realtime-2` and above introduced some breaking changes to the `gpt-realtime-1.x` session configuration object.
+    `gpt-realtime-2` and later versions change the `gpt-realtime-1.x` session configuration object.
     Make sure to select the appropriate version in the examples below.
 </Info>
 
@@ -116,7 +116,7 @@ voiceAIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechSt
 ## More information
 
 - [OpenAI connector overview](/voice-ai/openai/overview)
-- [Placing an outbound call with OpenAI Realtime](/voice-ai/openai/outbound)
+- [Placing an outgoing call with OpenAI Realtime](/voice-ai/openai/outbound)
 - [Function calling with OpenAI Realtime](/voice-ai/openai/function-calling)
 - [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
 - [Current OpenAI models](https://developers.openai.com/api/docs/models)

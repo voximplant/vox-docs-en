@@ -49,7 +49,7 @@ A saved scenario does not run on its own—it requires a **routing rule** to def
 You can trigger scenario execution through three primary mechanisms:
 
 * **Incoming calls**: When a caller dials a rented phone number, connects via a mobile/web SDK, or sends a SIP request matching an application's routing rule.
-* **Management API requests**: Trigger outbound campaigns or server-side workflows by calling API methods like `StartScenarios` or `StartConference`.
+* **Management API requests**: Trigger outgoing campaigns or server-side workflows by calling API methods like `StartScenarios` or `StartConference`.
 * **Manual launch**: Test and debug scenarios directly from the control panel by executing a rule manually with custom parameters.
 
 ---
@@ -84,4 +84,4 @@ Because all scenarios assigned to a single routing rule share the same global sc
 **A**: No. If multiple scenarios are bound to the same routing rule, they share a single JavaScript context. Importing a module once in any scenario makes it available to all others in that rule.
 
 **Q**: **Should I create a separate scenario for each call type, or combine them into one?**  
-**A**: For most projects, starting with a single scenario that handles both incoming and outgoing logic is the best practice. You can split logic into multiple scenarios as your requirements expand (for example, separating incoming IVR routing from outbound queue dispatchers).
+**A**: For most projects, starting with a single scenario that handles both incoming and outgoing logic is the best practice. You can split logic into multiple scenarios as your requirements expand (for example, separating incoming IVR routing from outgoing queue dispatchers).

@@ -34,14 +34,14 @@ Capability highlights:
 
 The turn lifecycle follows [Pipecat UserTurnProcessor](https://github.com/pipecat-ai/pipecat/blob/main/src/pipecat/turns/user_turn_processor.py) and [TurnAnalyzerUserTurnStopStrategy](https://github.com/pipecat-ai/pipecat/blob/main/src/pipecat/turns/user_stop/turn_analyzer_user_turn_stop_strategy.py).
 
-### Smart Turn flow
+### Smart turn flow
 
 1. VAD detects a pause, and the turn detector runs (`Predict`).
 2. If the model returns **end of turn**, VoiceDSP emits [`TurnInferenceTriggered`](/reference/voxengine/agentic/voice-dsp-events#turninferencetriggered), then [`TurnStopped`](/reference/voxengine/agentic/voice-dsp-events#turnstopped) after transcript gating when ASR is configured.
 3. If the model returns **incomplete**, silence has to continue for [`stopSecs`](/reference/voxengine/agentic#turndetectorparameters-stopsecs) seconds. VoiceDSP then emits [`TurnStopTimeout`](/reference/voxengine/agentic/voice-dsp-events#turnstoptimeout) with `reason: stop_secs`, then `TurnStopped`.
 
 <div className="themed-figure">
-  <img src="../../../assets/voice-ai-orchestration/speech-agentic-turn-flow.png" alt="Smart Turn flow from a VAD pause through the turn-detector verdict to TurnStopped" />
+  <img src="../../../assets/voice-ai-orchestration/speech-agentic-turn-flow.png" alt="Smart turn flow from a VAD pause through the turn-detector verdict to TurnStopped" />
 </div>
 
 If the caller resumes speaking before the `Predict` response arrives, VoiceDSP ignores that response. An in-flight `Predict` is invalidated on VAD speech start, so a stale `endOfTurn` cannot emit `TurnInferenceTriggered` or merge the next utterance into the same turn.
@@ -71,7 +71,7 @@ Pass an [ASR](/reference/voxengine/asr) instance to [`Agentic.createVoiceDSP`](/
 - Transcription-based start strategies ([`transcription`](/reference/voxengine/agentic/voice-dsp-strategies/transcription-start), [`min_words`](/reference/voxengine/agentic/voice-dsp-strategies/min-words-start)) can emit [`TurnStarted`](/reference/voxengine/agentic/voice-dsp-events#turnstarted).
 - `TurnStopped` waits for a **final** transcript when it can.
 - If the turn analyzer finishes before ASR, `TurnInferenceTriggered` fires first so the scenario can start LLM inference early.
-- An ASR grace timer ([`asrGraceTimeout`](/reference/voxengine/agentic#voicedspparameters-asrgracetimeout), default **0.3** seconds) starts at `TurnInferenceTriggered`. Until it expires, later ASR interim or final results update the snapshot used by `TurnStopped`. A final transcript finalizes the turn immediately. Keep the default shorter than typical ASR final latency so `TurnStopped` does not wait for the ASR final; start the LLM on `TurnInferenceTriggered`. When the timer expires, `TurnStopped` uses the latest snapshot, including interim text.
+- An ASR grace timer ([`asrGraceTimeout`](/reference/voxengine/agentic#voicedspparameters-asrgracetimeout), default **0.3** seconds) starts at `TurnInferenceTriggered`. Until it expires, later ASR interim or final results update the snapshot that `TurnStopped` uses. A final transcript finalizes the turn immediately. Keep the default shorter than typical ASR final latency so `TurnStopped` does not wait for the ASR final; start the LLM on `TurnInferenceTriggered`. When the timer expires, `TurnStopped` uses the latest snapshot, including interim text.
 - After `TurnStopped`, late ASR interim or final results for the closed utterance are ignored until a new speech segment (VAD speech start) or a new turn start. That prevents a ghost `TurnStarted` and content bleed into the next turn.
 
 <Info title="Required for transcription and min_words">
@@ -236,8 +236,8 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, async ({ call }) => {
 - [VoiceDSP API reference](/reference/voxengine/agentic/voice-dsp)
 - [VoiceDSP events](/reference/voxengine/agentic/voice-dsp-events)
 - [VoiceDSP strategies](/reference/voxengine/agentic/voice-dsp-strategies/overview)
-- [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection)
-- [Turn Detection](/voice-ai/speech-flow-control/turn-detection)
+- [Voice activity detection](/voice-ai/speech-flow-control/voice-activity-detection)
+- [Turn detection](/voice-ai/speech-flow-control/turn-detection)
 - [Hush noise suppression](/reference/voxengine/hush/noise-suppression)
 
 ### Upstream technology

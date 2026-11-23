@@ -1,5 +1,5 @@
 ---
-title: Gemini-Zapier-MCP Example
+title: Gemini-Zapier-MCP example
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
@@ -8,14 +8,14 @@ title: Gemini-Zapier-MCP Example
 
 The demo uses Zapier Tables as a simple dispatch stand-in. A caller reaches Voxy Plumbers, reports a plumbing issue, and the voice agent checks dispatch availability through Zapier MCP before responding.
 
-Video link: [MCP Client demo](https://www.youtube.com/watch?v=fyjSWILjyMQ)
+Video link: [MCP client demo](https://www.youtube.com/watch?v=fyjSWILjyMQ)
 
 ## Prerequisites
 
-- A Voximplant application with an inbound route to this scenario.
+- A Voximplant application with an incoming route to this scenario.
 - Vertex AI credentials for Gemini Live stored in Voximplant Secrets: `GCP_CREDENTIALS`, `GCP_PROJECT_ID`, and `GCP_REGION`.
 - A Zapier Table.
-- A Zapier MCP Server with a Find Records action connected to the table.
+- A Zapier MCP server with a Find Records action for the table.
 - Store the Zapier MCP server URL in Voximplant Secrets under `ZAPIER_MCP_URL`.
 
 ### Zapier configuration
@@ -36,7 +36,7 @@ Then, configure a [Zapier MCP server](https://mcp.zapier.com/mcp/servers/) with 
   </Step>
   <Step title="Create the Gemini Live client with those MCP tools plus a local `hangup_call` tool.">
   </Step>
-  <Step title="Answer the inbound call.">
+  <Step title="Answer the incoming call.">
   </Step>
   <Step title="Bridge call audio to Gemini Live after setup completes.">
   </Step>
@@ -46,7 +46,7 @@ Then, configure a [Zapier MCP server](https://mcp.zapier.com/mcp/servers/) with 
   </Step>
   <Step title="When the MCP `ToolResult` arrives, send the result back to Gemini as a tool response.">
   </Step>
-  <Step title="Gemini suggests the returned plumber and arrival window to the caller.">
+  <Step title="Gemini suggests the plumber and arrival window to the caller.">
   </Step>
   <Step title="If the caller accepts or says goodbye, Gemini calls `hangup_call`, says goodbye, and the scenario closes the call.">
   </Step>
@@ -56,18 +56,20 @@ Then, configure a [Zapier MCP server](https://mcp.zapier.com/mcp/servers/) with 
 The best flow for your Voice AI agent may vary based on your LLM and MCP server behavior.
 </Note>
 
-## Calling MCP ToolList first
+<a id="calling-mcp-toollist-first"></a>
+## Call MCP ToolList first
 
-Some LLMs require tool definitions when the agent is created. Others allow tools to be updated via a session update or equivalent function. Gemini Live currently only allows tool definition on agent creation. To avoid delay, we immediately connect to the MCP server, wait for the `MCP.ServerEvents.ConnectorInformation` event to verify the connection, then call `mcpClient.listTools({})`. When the `MCP.ServerEvents.ToolsList` event is returned, we then start the call.
+Some LLMs require tool definitions when the agent is created. Others allow tools to be updated via a session update or equivalent function. Gemini Live currently only allows tool definition on agent creation. To avoid delay, connect to the MCP server immediately, wait for the `MCP.ServerEvents.ConnectorInformation` event to verify the connection, then call `mcpClient.listTools({})`. When the `MCP.ServerEvents.ToolsList` event arrives, start the call.
 
 This may result in an extra ring. In a production environment, this should be guarded with timers and fallback logic in case there is an error or excessive delay in this path.
 
-## Adjusting MCP Tool inputSchema for Gemini
+<a id="adjusting-mcp-tool-inputschema-for-gemini"></a>
+## Adjust MCP tool inputSchema for Gemini
 The MCP Tool output object generally can not be fed into a LLM without adjustment.
 Gemini's live's tool calling expects a `parametersJsonSchema` field describing the tool parameters, but Zapier's MCP tools use `inputSchema`.
-While the LLM may adapt to adapt the schema, to avoid confusion and potential hallucinations, we copy the `inputSchema` from Zapier's MCP tools into the `parametersJsonSchema` field when we adapt the tools for Gemini.
+The LLM may adapt the schema. To avoid confusion and potential hallucinations, copy the `inputSchema` from Zapier's MCP tools into the `parametersJsonSchema` field when you adapt the tools for Gemini.
 
-We adjust this using a simple `map` after filtering the tools:
+Adjust this with a simple `map` after you filter the tools:
 ```js
 const mcpFunctionDeclarations = mcpTools.map((tool) => ({
   name: tool.name,
@@ -77,12 +79,13 @@ const mcpFunctionDeclarations = mcpTools.map((tool) => ({
 ```
 
 
-## Adapting MCP Tools
+<a id="adapting-mcp-tools"></a>
+## Adapt MCP tools
 
 Zapier's MCP tool descriptions are designed for broad agentic use.
-In our testing, the `list_enabled_zapier_actions` description could draw Gemini toward Zapier management tools that are not needed for this voice demo.
-Since we cannot change the metadata returned by Zapier, we adapt the tool metadata before giving it to Gemini.
-We also copy each MCP `inputSchema` into Gemini's `parametersJsonSchema` field to reduce potential field mapping hallucinations.
+In testing, the `list_enabled_zapier_actions` description can draw Gemini toward Zapier management tools that are not needed for this voice demo.
+You cannot change the metadata Zapier returns, so adapt the tool metadata before you give it to Gemini.
+Also copy each MCP `inputSchema` into Gemini's `parametersJsonSchema` field to reduce potential field mapping hallucinations.
 
 ```js
 const mcpFunctionDeclarations = tools.map((tool) => ({
@@ -94,14 +97,15 @@ const mcpFunctionDeclarations = tools.map((tool) => ({
 }));
 ```
 
-Similar filters and maps could be used to remove Personally Identifiable Information (PII) or make other compliance adaptations.
+You can use similar filters and maps to remove Personally Identifiable Information (PII) or make other compliance adaptations.
 
-## Checking MCP tools
+<a id="checking-mcp-tools"></a>
+## Check MCP tools
 
-Our agent is only set up to work if these 2 tools are available. As a last step, we will check that both tools are available.
+The agent works only if these 2 tools are available. As a last step, check that both tools are available.
 
 ```js
-// Verify Zapier returned our 2 required tools
+// Verify Zapier returned the 2 required tools
 if (mcpFunctionDeclarations.length !== requiredMcpTools.length) {
   Logger.write("===MCP_REQUIRED_TOOLS_MISSING===");
   terminate();
@@ -109,10 +113,11 @@ if (mcpFunctionDeclarations.length !== requiredMcpTools.length) {
 }
 ```
 
-## Debugging MCP tools
+<a id="debugging-mcp-tools"></a>
+## Debug MCP tools
 
-When first implementing MCP, it is often helpful to have a deterministic input to verify the server's functionality and performance without the variable behavior introduced by the LLM.
-In developing this demo, we started with the MCP call tool immediately below to check the table lookup features:
+When you first implement MCP, a deterministic input helps you verify the server without the variable behavior the LLM introduces.
+To check the table lookup features, call the MCP tool immediately below:
 
 ```js
 await mcpClient.callTool({

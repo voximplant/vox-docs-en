@@ -1,19 +1,19 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages."
+description: "This example answers an incoming call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages.
+This example answers an incoming call, connects it to Ultravox, and handles **client tool invocations** via Ultravox data messages.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -30,7 +30,7 @@ Ultravox emits a `ClientToolInvocation` data message when the agent calls a clie
 - `invocationId`
 - `parameters` (tool input)
 
-The example listens for these events and returns a `client_tool_result` response using `voiceAIClient.clientToolResult(...)`.
+The example listens for these events and returns a `client_tool_result` response via `voiceAIClient.clientToolResult(...)`.
 
 ```js title="Tool response (from the example)"
 voiceAIClient.clientToolResult({

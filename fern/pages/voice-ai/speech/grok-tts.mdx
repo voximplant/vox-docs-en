@@ -11,11 +11,11 @@ For an agent that receives caller audio and generates responses directly, use th
 
 ## Setup
 
-Create a [VoxEngine scenario](/platform/getting-started/create-a-scenario) and assign it to an application's [routing rule](/platform/getting-started/create-a-routing-rule). Route an inbound phone number, SIP user, WebRTC user, or app user to the rule. Require `Modules.XAI` in the scenario.
+Create a [VoxEngine scenario](/platform/getting-started/create-a-scenario) and assign it to an application's [routing rule](/platform/getting-started/create-a-routing-rule). Route an incoming phone number, SIP user, WebRTC user, or app user to the rule. Require `Modules.XAI` in the scenario.
 
-Pass `voice` and `language` in `connectionParameters` when creating the player. Both must be non-empty strings. The example uses `eve` and English (`en`). Voximplant fixes the audio format for telephony to PCM at 16 kHz.
+Pass `voice` and `language` in `connectionParameters` when creating the player. Both should be non-empty strings. The example uses `eve` and English (`en`). Voximplant fixes the audio format for telephony to PCM at 16 kHz.
 
-### Optional: bring your own xAI API key
+### Optional: Bring your own xAI API key
 
 The `apiKey` parameter is optional. To use your own xAI account, store its API key in Voximplant [Secrets](/platform/storage/secret-storage) as `XAI_API_KEY`. The example reads it synchronously with `VoxEngine.getSecretValue('XAI_API_KEY')` and passes it only when present. Omit the secret to use Voximplant's provider credentials and TTS billing.
 

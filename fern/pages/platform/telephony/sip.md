@@ -129,13 +129,13 @@ You can monitor registration health in the control panel:
 * **In progress**: Provisioning is underway (typically completes within 2 minutes).
 * **Failed**: The remote SIP proxy rejected registration. Check the error code in the control panel tooltip.
 
-Status change notifications can be dispatched via email or HTTP callbacks. Learn more in [Management API callbacks](/platform/management-api/callbacks).
+Status change notifications can be dispatched via email or HTTP callbacks. Learn more in [Management API callbacks](/reference/management-api/callbacks).
 
 ### Placing calls through a SIP registration
 
-To place an outbound call through an active SIP registration, pass its `regId` to [VoxEngine.callSIP](/reference/voxengine/voxengine#callsip):
+To place an outgoing call through an active SIP registration, pass its `regId` to [VoxEngine.callSIP](/reference/voxengine/voxengine#callsip):
 
-```javascript title="Outbound call via SIP registration"
+```javascript title="Outgoing call via SIP registration"
 const call = VoxEngine.callSIP("12125550199", {
   regId: 12345, // Registration ID from the control panel or API
 });

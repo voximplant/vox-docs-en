@@ -15,7 +15,7 @@ tags:
   - name: users
     x-displayName: Users
   - name: call-lists
-    x-displayName: Call Lists
+    x-displayName: Call lists
   - name: scenarios
     x-displayName: Scenarios
   - name: rules
@@ -23,19 +23,19 @@ tags:
   - name: history
     x-displayName: History
   - name: phone-numbers
-    x-displayName: Phone Numbers
+    x-displayName: Phone numbers
   - name: pstn-blacklist
-    x-displayName: PSTN Blacklist
+    x-displayName: PSTN blacklist
   - name: sip-white-list
-    x-displayName: SIP White List
+    x-displayName: SIP whitelist
   - name: sip-registration
-    x-displayName: SIP Registration
+    x-displayName: SIP registration
   - name: wab-phone-numbers
-    x-displayName: WAB Phone Numbers
+    x-displayName: WAB phone numbers
   - name: callerids
     x-displayName: CallerIDs
   - name: outboundtestnumbers
-    x-displayName: OutboundTestNumbers
+    x-displayName: Outgoing test numbers
   - name: queues
     x-displayName: Queues
   - name: smartqueue
@@ -43,25 +43,25 @@ tags:
   - name: skills
     x-displayName: Skills
   - name: admin-users
-    x-displayName: Admin Users
+    x-displayName: Admin users
   - name: admin-roles
-    x-displayName: Admin Roles
+    x-displayName: Admin roles
   - name: authorized-ips
     x-displayName: Authorized IPs
   - name: regulation-address
-    x-displayName: Regulation Address
+    x-displayName: Regulation address
   - name: push-credentials
-    x-displayName: Push Credentials
+    x-displayName: Push credentials
   - name: dialogflow-credentials
-    x-displayName: Dialogflow Credentials
+    x-displayName: Dialogflow credentials
   - name: sms
     x-displayName: SMS
   - name: record-storages
-    x-displayName: Record Storages
+    x-displayName: Record storages
   - name: role-system
-    x-displayName: Role System
+    x-displayName: Role system
   - name: key-value-storage
-    x-displayName: Key value storage
+    x-displayName: Key-value storage
   - name: invoices
     x-displayName: Invoices
   - name: secrets
@@ -12380,7 +12380,7 @@ paths:
                     message_id: 1
                     fragments_count: 1
       description: |-
-        Sends an SMS message between two phone numbers. The source phone number should be purchased from Voximplant and support SMS (which is indicated by the **is_sms_supported** property in the objects returned by the [GetPhoneNumbers] Management API) and SMS should be enabled for it via the [ControlSms] Management API. SMS messages can be received via HTTP callbacks, see <a href='/platform/management-api/callbacks'>this article</a> for details.
+        Sends an SMS message between two phone numbers. The source phone number should be purchased from Voximplant and support SMS (which is indicated by the **is_sms_supported** property in the objects returned by the [GetPhoneNumbers] Management API) and SMS should be enabled for it via the [ControlSms] Management API. SMS messages can be received via HTTP callbacks, see <a href='/reference/management-api/callbacks'>this article</a> for details.
 
         Allowed roles: `Owner`, `Admin`, `Developer`, `CallsSMS`.
 
@@ -12500,7 +12500,7 @@ paths:
                   value:
                     result: 1
       description: |-
-        Enables or disables sending and receiving SMS for the phone number. Can be used only for phone numbers with SMS support, which is indicated by the **is_sms_supported** property in the objects returned by the [GetPhoneNumbers] Management API. Each incoming SMS message is charged according to the <a href='https://voximplant.com/pricing'>pricing</a>. If enabled, SMS can be sent from this phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/platform/management-api/callbacks'>this article</a> for HTTP callback details.
+        Enables or disables sending and receiving SMS for the phone number. Can be used only for phone numbers with SMS support, which is indicated by the **is_sms_supported** property in the objects returned by the [GetPhoneNumbers] Management API. Each incoming SMS message is charged according to the <a href='https://voximplant.com/pricing'>pricing</a>. If enabled, SMS can be sent from this phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/reference/management-api/callbacks'>this article</a> for HTTP callback details.
 
         Allowed roles: `Owner`, `Admin`, `Developer`, `Accountant`.
 
@@ -12613,7 +12613,7 @@ paths:
                       key_id: ab80c76e-573e-4346-9af9-115269dfafca
                       private_key: key in the .pem format
       description: |-
-        Creates a public/private key pair. You can optionally specify one or more roles for the key. You can find all available service account roles [here](/overview/how-voximplant-works/management-api#service-account-roles).
+        Creates a public/private key pair. You can optionally specify one or more roles for the key. You can find all available service account roles [here](/overview/how-voximplant-works/management-api#role-based-permissions).
 
         **Example request:** Create a key pair.
   /GetKeys:
@@ -16375,7 +16375,7 @@ components:
           description: Media server IP address
         log_file_url:
           type: string
-          description: Link to the session log. The log retention policy is 1 month, after that time this field clears. If you have issues accessing the log file, check if the application has "Secure storage of applications and logs" feature enabled. In this case, you need to <a href='/platform/management-api/secure-objects'>authorize</a>.
+          description: Link to the session log. The log retention policy is 1 month, after that time this field clears. If you have issues accessing the log file, check if the application has "Secure storage of applications and logs" feature enabled. In this case, you need to <a href='/platform/storage/s-3-compatible-storage'>authorize</a>.
         finish_reason:
           type: string
           description: Finish reason. Possible values are __Normal termination__, __Insufficient funds__, __Internal error (billing timeout)__, __Terminated administratively__, __JS session error__, __Timeout__
@@ -16553,7 +16553,7 @@ components:
           description: The call duration in seconds
         record_url:
           type: string
-          description: The record URL.  If you have issues accessing the record file, check if the application has "Secure storage of applications and logs" feature enabled. In this case, you need to <a href='/platform/management-api/secure-objects'>authorize</a>.
+          description: The record URL.  If you have issues accessing the record file, check if the application has "Secure storage of applications and logs" feature enabled. In this case, you need to <a href='/platform/storage/s-3-compatible-storage'>authorize</a>.
         transaction_id:
           type: integer
           description: The transaction ID
@@ -17664,7 +17664,7 @@ components:
           description: Whether a not verified account can use the phone
         is_sms_supported:
           type: boolean
-          description: Whether SMS is supported for this phone number. SMS needs to be explicitly enabled via the [ControlSms] Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from this phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/platform/management-api/callbacks'>this article</a> for HTTP callback details
+          description: Whether SMS is supported for this phone number. SMS needs to be explicitly enabled via the [ControlSms] Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from this phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/reference/management-api/callbacks'>this article</a> for HTTP callback details
         is_sms_enabled:
           type: boolean
           description: Whether SMS sending and receiving is enabled for this phone number via the [ControlSms] Management API
@@ -17801,7 +17801,7 @@ components:
           description: The type of regulation address. The possible values are LOCAL, NATIONAL, WORLDWIDE
         is_sms_supported:
           type: boolean
-          description: Whether SMS is supported for phone numbers in this region. SMS needs to be explicitly enabled for a phone number via the [ControlSms] Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from a phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/platform/management-api/callbacks'>this article</a> for HTTP callback details
+          description: Whether SMS is supported for phone numbers in this region. SMS needs to be explicitly enabled for a phone number via the [ControlSms] Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from a phone number via the [SendSmsMessage] Management API and received via the [InboundSmsCallback] property of the HTTP callback. See <a href='/reference/management-api/callbacks'>this article</a> for HTTP callback details
         multiple_numbers_price:
           type: array
           items:
@@ -18969,7 +18969,7 @@ components:
           items:
             $ref: "#/components/schemas/AccountCallback"
           description: The account callback array
-      description: The account callbacks body. See <a href='/platform/management-api/callbacks'>this article</a> for details.
+      description: The account callbacks body. See <a href='/reference/management-api/callbacks'>this article</a> for details.
     AccountCallback:
       type: object
       properties:

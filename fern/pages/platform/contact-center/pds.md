@@ -1,6 +1,6 @@
 # Predictive dialing system (PDS)
 
-The Predictive Dialing System (PDS) is an outbound contact center engine designed to optimize agent occupancy and minimize idle time. By analyzing real-time agent availability, historical connect rates, and average call duration, PDS initiates outbound calls proactively and connects answered calls to agents just as they become available.
+The Predictive Dialing System (PDS) is an outgoing contact center engine designed to optimize agent occupancy and minimize idle time. By analyzing real-time agent availability, historical connect rates, and average call duration, PDS initiates outgoing calls proactively and connects answered calls to agents just as they become available.
 
 When combined with [AI voicemail detection](/platform/telephony/voicemail-detection), PDS filters out answering machines, busy signals, and disconnected numbers so agents only handle live human conversations.
 
@@ -17,7 +17,7 @@ When combined with [AI voicemail detection](/platform/telephony/voicemail-detect
 
 ## What is a PDS
 
-PDS eliminates manual dialing and waiting for ringtones by automating outbound call pacing:
+PDS eliminates manual dialing and waiting for ringtones by automating outgoing call pacing:
 
 * **Filters non-human and failed calls**: Bridges only answered calls to agents, discarding voicemails, busy tones, and invalid numbers when paired with [AI voicemail detection](/platform/telephony/voicemail-detection).
 * **Predictive pacing**: Forecasts agent availability and initiates calls in advance, keeping agent utilization high while minimizing customer hold time.
@@ -60,7 +60,7 @@ Configure your agents and queues as described in the [voice contact center](/pla
 
 ### 2. Deploy the PDS VoxEngine scenario
 
-Unlike incoming queue scenarios, PDS scenarios handle outbound dialing and bridge answered calls into SmartQueue:
+Unlike incoming queue scenarios, PDS scenarios handle outgoing dialing and bridge answered calls into SmartQueue:
 
 ```javascript title="PDS VoxEngine scenario"
 require(Modules.SmartQueue);
@@ -222,5 +222,5 @@ Alternatively, you can configure a **dynamic buffer** that scales automatically 
 **Q**: **Can I prevent specific agents from receiving PDS calls?**  
 **A**: PDS delivers calls to any agent in the `Ready` status. To prevent an agent from receiving calls, switch their status to `DND`, `AfterService`, or a custom non-ready status.
 
-**Q**: **Can I set a dialing timeout for outbound attempts?**  
+**Q**: **Can I set a dialing timeout for outgoing attempts?**  
 **A**: Yes. Use the [timeout]() parameter in `SmartQueueTaskParameters` to specify the maximum ringing duration before an unanswered call is abandoned.

@@ -1,6 +1,6 @@
 ---
-title: "Example: Placing an outbound call"
-description: "This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to Gemini Live API when the session is ready."
+title: "Example: Placing an outgoing call"
+description: "This example starts a VoxEngine session, places an outgoing PSTN call, and connects the callee to Gemini Live API when the session is ready."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
@@ -9,7 +9,7 @@ description: "This example starts a VoxEngine session, places an outbound PSTN c
 
 ## Overview
 
-This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to Gemini Live API when the session is ready.
+This example starts a VoxEngine session, places an outgoing PSTN call, and connects the callee to Gemini Live API when the session is ready.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -20,19 +20,19 @@ This example starts a VoxEngine session, places an outbound PSTN call, and conne
 
 ## Prerequisites
 
-- Create a [routing rule](/platform/getting-started/create-a-routing-rule) with this scenario attached (outgoing calls don’t use patterns) so you can run it from the Control Panel or trigger it via API.
+- Create a [routing rule](/platform/getting-started/create-a-routing-rule) with this scenario attached (outgoing calls do not use patterns) so you can run it from the Control Panel or trigger it via API.
 - Have a PSTN `destination` number you can dial (E.164 format), for example your mobile number.
-- Configure a valid outbound `callerId` (for example, a rented Voximplant number or a verified caller ID); see [phone numbers](/platform/getting-started/buy-a-phone-number).
+- Configure a valid outgoing `callerId` (for example, a rented Voximplant number or a verified caller ID); see [phone numbers](/platform/getting-started/buy-a-phone-number).
 - Pass `destination` and `callerId` as routing rule custom data (this example reads them from `VoxEngine.customData()`): `{"destination":"+15551234567","callerId":"+15557654321"}`.
 - Store your Gemini API key in Voximplant [Secrets](/platform/storage/secret-storage) under `GEMINI_API_KEY`.
 
-<Info title="About outbound Caller ID">
+<Info title="About outgoing caller ID">
   `VoxEngine.callPSTN(...)` requires a valid callback-capable caller ID (for example, a rented Voximplant number or a verified caller ID). See [phone numbers](/platform/getting-started/buy-a-phone-number).
 </Info>
 
 ## Launch the routing rule
 
-For quick testing, you can start this outbound scenario from the Voximplant Control Panel:
+For quick testing, you can start this outgoing scenario from the Voximplant Control Panel:
 
 1. Open your Voximplant application and go to the **Routing** tab.
 2. Select the routing rule that has this scenario attached.
@@ -45,9 +45,9 @@ For quick testing, you can start this outbound scenario from the Voximplant Cont
 
 For production, start the routing rule via the Management API [`startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method (pass `rule_id`, and pass the same JSON string in `script_custom_data`).
 
-## Alternate outbound destinations
+## Alternate outgoing destinations
 
-This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outgoing calls to other destination types in VoxEngine:
 
 - **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
 - **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
@@ -66,10 +66,10 @@ Relevant guides:
 - Audio is connected after `Gemini.LiveAPIEvents.SetupComplete` fires.
 
 <Warning title="Older Live models">
-  `gemini-3.1-flash-live-preview` outbound samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples used `sendClientContent(...)` for the initial prompt.
+  `gemini-3.1-flash-live-preview` outgoing samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples call `sendClientContent(...)` for the initial prompt.
 </Warning>
 
-[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+[See the VoxEngine API reference for more details](/reference/voxengine/gemini).
 ## Full VoxEngine scenario
 
 <Code

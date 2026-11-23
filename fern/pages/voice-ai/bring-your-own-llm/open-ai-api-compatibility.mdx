@@ -18,12 +18,12 @@ The Bring your own LLM capability does have some limitations. Note these caveats
 - While the core API interface is the same, event usage, parameters, and payloads may vary by provider.
 
 <Info>
-We recommend using one of Voximplant's direct speech-to-speech Voice AI clients when they are available.
+We recommend one of Voximplant's direct speech-to-speech Voice AI clients when one is available.
     The existing Voice AI connectors usually provide a simpler implementation when the provider's built-in voice, language, and agent behavior meet your requirements.
 </Info>
 
 <Note>
-Voximplant's [HTTP requests API](/platform/api-requests), [webhooks interface](/platform/management-api/callbacks), and [WebSocket module](/reference/voxengine/voxengine#createwebsocket) can be used to interface with unsupported LLM platforms.
+The [HTTP requests API](/reference/voxengine/api-requests), [webhooks interface](/reference/management-api/callbacks), and [WebSocket module](/reference/voxengine/voxengine#createwebsocket) let you connect to LLM platforms without a dedicated connector.
 </Note>
 
 
@@ -52,7 +52,7 @@ For Chat Completions and Responses, the main integration requirement is specifyi
 
 ## Reference examples
 
-| API option | Scenario | Example Description |
+| API option | Scenario | Example description |
 | --- | --- | --- |
 | Chat Completions | [Chat Completions with Together AI](/voice-ai/bring-your-own-llm/chat-completions-together) | Together AI through `https://api.together.ai/v1` |
 | Responses API | [Responses: Deepgram-Groq-Inworld](/voice-ai/bring-your-own-llm/full-cascade-groq) | Deepgram STT, Groq Responses API, and Inworld TTS |
@@ -104,17 +104,17 @@ Some third-party voice providers advertise OpenAI compatibility, but may use dif
 Before using a third-party provider in production, verify:
 
 - The correct `baseUrl`.
-- The provider supports the API shape you are using: Chat Completions, Responses, or Realtime.
+- The provider supports the API shape you use: Chat Completions, Responses, or Realtime.
 - The selected model supports streaming.
 - The selected model supports your message format, role names, tools, and structured output settings.
 - Whether the provider supports stored context, `previous_response_id`, or requires you to resend conversation history.
 - The provider's timeout, rate limit, and maximum context behavior.
 - The provider's data retention, logging, and compliance terms.
-- Audio behavior if using a realtime speech API.
+- Audio behavior when you use a realtime speech API.
 
 ## Related guides
 
-- [Pipeline Options](/voice-ai/pipeline-options)
+- [Pipeline options](/voice-ai/pipeline-options)
 - [OpenAI overview](/voice-ai/openai/overview)
 - [Responses: Deepgram-Groq-Inworld](/voice-ai/bring-your-own-llm/full-cascade-groq)
 - [Responses: Microsoft-Grok-Grok TTS](/voice-ai/bring-your-own-llm/grok-full-cascade)

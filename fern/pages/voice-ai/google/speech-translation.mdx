@@ -1,13 +1,13 @@
 ---
 title: "Example: Speech-to-speech translation"
-description: "This example answers an inbound English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time."
+description: "This example answers an incoming English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time.
+This example answers an incoming English call, dials a Spanish-speaking callee, and uses Gemini Live API to translate the caller’s speech into Spanish audio in real time.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -18,7 +18,7 @@ This example answers an inbound English call, dials a Spanish-speaking callee, a
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -107,7 +107,7 @@ For illustration, it also logs these events:
   `gemini-3.1-flash-live-preview` translation samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples used `thinkingBudget`. This example sends a short `sendRealtimeInput(...)` startup instruction on `SetupComplete` so the live interpretation session begins reliably.
 </Warning>
 
-[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+[See the VoxEngine API reference for more details](/reference/voxengine/gemini).
 ## Full VoxEngine scenario
 
 <Code

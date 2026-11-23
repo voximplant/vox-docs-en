@@ -17,7 +17,7 @@ Capability and feature highlights:
 
 - Delivered as a Voice AI Connector inside VoxEngine: you define Deepgram STT, LLM, and TTS parameters; Voximplant handles telephony, media conversion, and streaming WebSockets.
 - Fully exposes Deepgram speech recognition, a wide variety of LLM models, and speech synthesis options from Deepgram and partners.
-- Bridge PSTN, SIP, WebRTC, or WhatsApp calls into Deepgram Voice Agent using a single VoxEngine scenario.
+- Bridge PSTN, SIP, WebRTC, or WhatsApp calls into Deepgram Voice Agent via a single VoxEngine scenario.
 - Keep conversations natural with low-latency turn‑taking and barge‑in.
 - Apply and update agent configuration mid-call.
 - Subscribe to Voice Agent events (for example `AgentThinking` and `History`).
@@ -25,7 +25,7 @@ Capability and feature highlights:
 
 ## Demo video
 
-Deepgram Voice Agent on Voximplant: Enterprise-ready Voice AI Phone Calls with Context Memory
+Deepgram Voice Agent on Voximplant: Enterprise-ready Voice AI phone calls with context memory
 
 Video link: [Deepgram Voice Agent on Voximplant](https://www.youtube.com/watch?v=cAmOmfxoTTA)
 
@@ -34,7 +34,7 @@ Video link: [Deepgram Voice Agent on Voximplant](https://www.youtube.com/watch?v
   width="100%"
   height="360"
   src="https://www.youtube.com/embed/cAmOmfxoTTA"
-  title="Deepgram Voice Agent on Voximplant: Enterprise-ready Voice AI Phone Calls with Context Memory"
+  title="Deepgram Voice Agent on Voximplant: Enterprise-ready Voice AI phone calls with context memory"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   allowFullScreen
@@ -56,7 +56,7 @@ Video link: [Deepgram Voice Agent on Voximplant](https://www.youtube.com/watch?v
 - **Native VoxEngine module**: load with `require(Modules.Deepgram)` and create a `Deepgram.VoiceAgentClient` via `Deepgram.createVoiceAgentClient(...)`.
 - **Session setup**: pass Deepgram’s Voice Agents settings object to specify `agent.listen` (STT), `agent.think` (LLM), and `agent.speak` (TTS). Do not include `audio` settings — these are hardcoded by the connector for optimum voice quality with Voximplant.
 - **Events**: all Deepgram Voice Agent events are supported under the `Deepgram.VoiceAgentEvents` enum. Subscribe to events such as `ConversationText`, `AgentThinking`, `Warning`, `Error`, and `History`. VoxEngine also provides `WebSocketMediaStarted` and `WebSocketMediaEnded` for debugging media flow.
-- **Mid-session updates**: update without reconnecting using `sendUpdatePrompt` and `sendUpdateSpeak`. Inject text with `sendInjectUserMessage` and `sendInjectAgentMessage`.
+- **Mid-session updates**: update without reconnecting via `sendUpdatePrompt` and `sendUpdateSpeak`. Inject text with `sendInjectUserMessage` and `sendInjectAgentMessage`.
 - **Function calling**: define tools in Deepgram’s `think.functions` array; handle requests via `Deepgram.VoiceAgentEvents.FunctionCallRequest` and respond with `FunctionCallResponse`.
 - **Barge‑in**: listen for `Deepgram.VoiceAgentEvents.UserStartedSpeaking` and call `voiceAgentClient.clearMediaBuffer()` to cancel current TTS audio when the user interrupts.
 - **Deepgram ASR is a different module**: this connector is independent of VoxEngine’s existing Deepgram ASR module (`VoxEngine.createASR`). You can align ASR parameters with your Voice Agent `listen` configuration for consistent transcription before/after the agent is invoked.
@@ -65,7 +65,7 @@ See the [Deepgram module API reference](/reference/voxengine/deepgram) for full 
 
 ## Examples
 - [Example: Answering an incoming call](/voice-ai/deepgram/inbound)
-- [Example: Placing an outbound call](/voice-ai/deepgram/outbound)
+- [Example: Placing an outgoing call](/voice-ai/deepgram/outbound)
 - [Example: Function calling](/voice-ai/deepgram/function-calling)
 - [Example: Context history with ApplicationStorage](/voice-ai/deepgram/context-history)
 

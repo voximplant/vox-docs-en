@@ -1,5 +1,5 @@
 ---
-title: "Example: Chat Completions with Together AI"
+title: "Example: Chat completions with Together AI"
 subtitle: "Use the VoxEngine OpenAI Chat Completions client with Together AI's OpenAI-compatible API."
 ---
 <blockquote className="agent-directive">
@@ -8,18 +8,18 @@ subtitle: "Use the VoxEngine OpenAI Chat Completions client with Together AI's O
 
 ## Overview
 
-This full-cascade example answers an inbound call, transcribes caller speech with Voximplant ASR, sends the final transcript to Together AI through the OpenAI-compatible Chat Completions interface, and speaks the completed response back into the call.
+This full-cascade example answers an incoming call, transcribes caller speech with Voximplant ASR, sends the final transcript to Together AI through the OpenAI-compatible Chat Completions interface, and speaks the completed response back into the call.
 
-Use this pattern when you want to keep Voximplant call control, ASR, and TTS in VoxEngine while using a third-party LLM provider that exposes an OpenAI-compatible Chat Completions API.
+Use this pattern when you want to keep Voximplant call control, ASR, and TTS in VoxEngine and call a third-party LLM provider that exposes an OpenAI-compatible Chat Completions API.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 This example:
-1. answers an inbound call
-2. transcribes caller speech using Voximplant's built-in [ASR module](/reference/voxengine/asr)
+1. answers an incoming call
+2. transcribes caller speech via Voximplant's built-in [ASR module](/reference/voxengine/asr)
 3. sends each final transcript to Together AI through `OpenAI.createChatCompletionsAPIClient()`
 4. logs streamed text deltas
-5. speaks the completed response back to the caller using Voximplant's default TTS provider
+5. speaks the completed response back to the caller via Voximplant's default TTS provider
 
 ## Prerequisites
 
@@ -75,5 +75,5 @@ graph LR
 
 - OpenAI module API: https://voximplant.com/docs/references/voxengine/openai
 - ASR module API: https://voximplant.com/docs/references/voxengine/asr
-- Voximplant Secrets: [/platform/voxengine/secrets](/platform/storage/secret-storage)
+- Voximplant Secrets: [Secret storage](/platform/storage/secret-storage)
 - Together AI documentation: https://docs.together.ai/

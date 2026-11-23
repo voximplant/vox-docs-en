@@ -38,7 +38,7 @@ graph LR
 
 - **Native VoxEngine module**: load with `require(Modules.Ultravox)` and create a `Ultravox.WebSocketAPIClient` via `Ultravox.createWebSocketAPIClient(...)`.
 - **Session setup**: choose `Ultravox.HTTPEndpoint.CREATE_CALL` (or `CREATE_AGENT_CALL`) and provide `authorizations` (for example `X-API-Key`) plus a request `body` with `systemPrompt`, `model`, and `voice`.
-- **Audio bridge**: connect the call and Ultravox using `VoxEngine.sendMediaBetween(call, voiceAIClient)`.
+- **Audio bridge**: connect the call and Ultravox via `VoxEngine.sendMediaBetween(call, voiceAIClient)`.
 - **Transcripts**: `Ultravox.WebSocketAPIEvents.Transcript` contains `role` plus `text`/`delta` fields; use it for logging and barge‑in logic.
 - **Tool invocations**: handle `Ultravox.WebSocketAPIEvents.ClientToolInvocation` and respond with `voiceAIClient.clientToolResult(...)`.
 - **Barge‑in**: call `voiceAIClient.clearMediaBuffer()` when you detect user speech or when the server requests buffer clearing.
@@ -46,7 +46,7 @@ graph LR
 ## Examples
 
 - [Example: Answering an incoming call](/voice-ai/ultravox/inbound)
-- [Example: Placing an outbound call](/voice-ai/ultravox/outbound)
+- [Example: Placing an outgoing call](/voice-ai/ultravox/outbound)
 - [Example: Function calling](/voice-ai/ultravox/function-calling)
 
 ## Links

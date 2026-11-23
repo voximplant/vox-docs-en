@@ -1,5 +1,5 @@
 ---
-title: Inbound calls
+title: Incoming calls
 subtitle: Flows where the caller initiates the session
 ---
 <blockquote className="agent-directive">
@@ -7,17 +7,17 @@ subtitle: Flows where the caller initiates the session
 </blockquote>
 
 
-Inbound flows start when a caller reaches your destination (phone number, WhatsApp destination, SIP username, or app user alias) and a routing rule launches your scenario.
+Incoming flows start when a caller reaches your destination (phone number, WhatsApp destination, SIP username, or app user alias) and a routing rule launches your scenario.
 
 ## Use `AppEvents.CallAlerting` as the entry point
 
-All inbound calls use the same entry point, allowing easy, common handling regardless of the channel. Use `AppEvents.CallAlerting` to answer the call and start your Voice AI logic.
+All incoming calls use the same entry point, allowing easy, common handling regardless of the channel. Use `AppEvents.CallAlerting` to answer the call and start your Voice AI logic.
 
 For example:
 
-```js title="Inbound Voice AI pattern"
+```js title="Incoming Voice AI pattern"
 VoxEngine.addEventListener(AppEvents.CallAlerting, async (event) => {
-  const call = event.call;  // call object for the inbound session
+  const call = event.call;  // call object for the incoming session
   call.answer();            // stops ringing and connects media
 
     // Termination functions - add cleanup and logging as needed
@@ -32,7 +32,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, async (event) => {
 });
 ```
 
-## Inbound guidelines:
+## Incoming guidelines:
 
 - Answer quickly with `call.answer()`
 - Listen for key call events (`Disconnected`, `Failed`, etc.) and handle as needed
@@ -42,7 +42,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, async (event) => {
     - Alternatively use `call.sendMediaTo(...)` and `connector.sendMediaTo(...)` for more complex pipelines
 - Invoke methods and handle events from the connector to drive your Voice AI logic
 
-## <icon icon="fa-duotone fa-solid fa-link" /> More information:
+## <Icon icon="fa-duotone fa-solid fa-link" /> More information:
 - [Calls and Sessions concepts](/platform/telephony/calls)
-- [Launching a routing rule](/platform/getting-started/create-a-routing-rule#launching-a-routing-rule)
+- [Launching a routing rule](/platform/getting-started/create-a-routing-rule#ways-to-launch-a-routing-rule)
 - [VoxEngine Call class](/reference/voxengine/call)

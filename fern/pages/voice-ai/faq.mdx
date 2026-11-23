@@ -38,9 +38,9 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
 
 <AccordionGroup>
   <Accordion title="What is Voximplant AI?">
-    Voximplant is a Voice AI Orchestration and Communications Platform for developers and business teams. Voximplant AI is the Voice AI-focused part of that platform: it helps you connect modern LLMs, AI agent platforms, and speech systems to Voximplant telephony features such as phone numbers, outbound dialing, SIP, and WhatsApp.
+    Voximplant is a Voice AI orchestration and communications platform for developers and business teams. Voximplant AI is the Voice AI-focused part of that platform: it helps you connect modern LLMs, AI agent platforms, and speech systems to Voximplant telephony features such as phone numbers, outgoing dialing, SIP, and WhatsApp.
 
-    Start with [voximplant.ai](https://voximplant.ai/) or the [Getting started guide](/voice-ai/voice-ai-on-voximplant/overview).
+    Start with [voximplant.ai](https://voximplant.ai/) or the [Getting started guide](/voice-ai/getting-started).
   </Accordion>
 
   <Accordion title="What can I build with Voximplant AI?">
@@ -48,7 +48,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
 
     Voximplant is flexible enough to support far more than those patterns. You can deploy on phone numbers, SIP-based telephony systems, in-app voice, WebRTC, or WhatsApp Business Calling.
 
-    Start with the [Getting started guide](/voice-ai/voice-ai-on-voximplant/overview) and the connector examples under [Voice AI Connectors](/voice-ai/client-options).
+    Start with the [Getting started guide](/voice-ai/getting-started) and the connector examples under [Voice AI connectors](/voice-ai/client-options).
   </Accordion>
 
   <Accordion title="What is the fastest way to build a Voice AI application with Voximplant?">
@@ -59,7 +59,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
         Create an account at [manage.voximplant.com](https://manage.voximplant.com/auth).
       </Step>
       <Step title="Set up your calling path">
-        For PSTN, start with [Phone Numbers & PSTN](/voice-ai/network-options/phone-numbers-pstn) and then [Configure Voximplant](/voice-ai/configure-voximplant/overview). You can use a test number for initial testing.
+        For PSTN, start with [Phone numbers and PSTN](/voice-ai/network-options/phone-numbers-pstn) and then [Configure Voximplant](/voice-ai/getting-started). You can use a test number for initial testing.
       </Step>
       <Step title="Choose a Voice AI connector">
         Pick the provider you want to work with and follow its guides:
@@ -70,10 +70,10 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
         - [OpenAI](/voice-ai/openai/overview): direct realtime, full-cascade, and half-cascade voice pipelines.
         - [Gemini Live](/voice-ai/google/overview): direct Gemini API or Vertex AI credentials.
         - [Ultravox](/voice-ai/ultravox/overview): speech-native voice AI with function calling support.
-        - [ElevenLabs Agents](/voice-ai/elevenlabs/overview): conversational agents for PSTN, SIP, WebRTC, and WhatsApp.
+        - [ElevenLabs agents](/voice-ai/elevenlabs/overview): conversational agents for PSTN, SIP, WebRTC, and WhatsApp.
         - [Deepgram](/voice-ai/deepgram/overview): Deepgram Voice Agent integration with context history.
-        - [Grok Voice Agent](/voice-ai/xai/overview): xAI Grok realtime voice integration.
-        - [Cartesia Line Agents](/voice-ai/cartesia/overview): line-agent runtime pattern for telephony control and tools.
+        - [Grok voice agent](/voice-ai/xai/overview): xAI Grok realtime voice integration.
+        - [Cartesia Line agents](/voice-ai/cartesia/overview): line-agent runtime pattern for telephony control and tools.
         </llms-only>
 
         <div className="card-grid">
@@ -83,7 +83,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
             </span>
             <h3>OpenAI</h3>
             <p>OpenAI and OpenAI-compatible APIs with direct realtime, full-cascade, and half-cascade voice pipelines.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling | <wbr /> Full-cascade | Half-cascade</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling | <wbr /> Full-cascade | Half-cascade</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/google/overview">
@@ -92,7 +92,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
             </span>
             <h3>Gemini Live</h3>
             <p>Gemini live audio sessions with support for direct Gemini API or Vertex AI credentials.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling | <wbr /> Vertex | Speech translation</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling | <wbr /> Vertex | Speech translation</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/ultravox/overview">
@@ -100,17 +100,17 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
               <img className="voice-connector-logo" src="../../assets/connectors/ultravox.svg" alt="Ultravox logo" />
             </span>
             <h3>Ultravox</h3>
-            <p>Speech-native voice AI with examples for inbound, outbound, and tool-driven interactions.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+            <p>Speech-native voice AI with examples for incoming, outgoing, and tool-driven interactions.</p>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/elevenlabs/overview">
             <span className="voice-connector-logo-wrap">
               <img className="voice-connector-logo" src="../../assets/connectors/elevenlabs.svg" alt="ElevenLabs logo" />
             </span>
-            <h3>ElevenLabs Agents</h3>
+            <h3>ElevenLabs agents</h3>
             <p>Connect ElevenLabs conversational agents to PSTN, SIP, WebRTC, and WhatsApp call flows.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/deepgram/overview">
@@ -119,29 +119,29 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
             </span>
             <h3>Deepgram</h3>
             <p>Deepgram Voice Agent integration with support for context history in ApplicationStorage.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/xai/overview">
             <span className="voice-connector-logo-wrap">
               <img className="voice-connector-logo" src="../../assets/connectors/grok-x.svg" alt="xAI logo" />
             </span>
-            <h3>Grok Voice Agent</h3>
+            <h3>Grok voice agent</h3>
             <p>xAI Grok real-time voice integration with examples for core calls and connector-specific features.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Feature controls</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Feature controls</span>
           </a>
 
           <a className="voice-connector-card" href="/voice-ai/cartesia/overview">
             <span className="voice-connector-logo-wrap">
               <img className="voice-connector-logo" src="../../assets/connectors/cartesia.png" alt="Cartesia logo" />
             </span>
-            <h3>Cartesia Line Agents</h3>
+            <h3>Cartesia Line agents</h3>
             <p>Line-agent runtime pattern for real-time calls, tool handling, and external business logic.</p>
-            <span className="voice-connector-chip">Inbound | Outbound | Function calling</span>
+            <span className="voice-connector-chip">Incoming | Outgoing | Function calling</span>
           </a>
         </div>
 
-        Voximplant offers many vendor and pipeline options. Explore our [docs](/voice-ai/client-options) for more information.
+        Voximplant offers many vendor and pipeline options. Explore the [connector docs](/voice-ai/client-options) for more information.
       </Step>
     </Steps>
   </Accordion>
@@ -179,28 +179,28 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
         <span className="voice-connector-logo-wrap">
           <img className="voice-connector-logo" src="../../assets/connectors/elevenlabs.svg" alt="ElevenLabs logo" />
         </span>
-        <h3>ElevenLabs Conversational Agent</h3>
+        <h3>ElevenLabs conversational agent</h3>
       </a>
 
       <a className="voice-connector-card compact" href="/voice-ai/deepgram/overview">
         <span className="voice-connector-logo-wrap">
           <img className="voice-connector-logo" src="../../assets/connectors/deepgram.svg" alt="Deepgram logo" />
         </span>
-        <h3>Deepgram Voice Agent</h3>
+        <h3>Deepgram voice agent</h3>
       </a>
 
       <a className="voice-connector-card compact" href="/voice-ai/xai/overview">
         <span className="voice-connector-logo-wrap">
           <img className="voice-connector-logo" src="../../assets/connectors/grok-x.svg" alt="xAI logo" />
         </span>
-        <h3>xAI Grok Voice Agent</h3>
+        <h3>xAI Grok voice agent</h3>
       </a>
 
       <a className="voice-connector-card compact" href="/voice-ai/cartesia/overview">
         <span className="voice-connector-logo-wrap">
           <img className="voice-connector-logo" src="../../assets/connectors/cartesia.png" alt="Cartesia logo" />
         </span>
-        <h3>Cartesia Line Agents</h3>
+        <h3>Cartesia Line agents</h3>
       </a>
     </div>
 
@@ -212,7 +212,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
   <Accordion title="What Voice AI pipelines does Voximplant support?">
     VoxEngine is a serverless orchestration environment, so it supports multiple Voice AI pipeline designs.
 
-    For diagrams, tradeoffs, and sample guides, see [Pipeline Options](/voice-ai/pipeline-options).
+    For diagrams, tradeoffs, and sample guides, see [Pipeline options](/voice-ai/pipeline-options).
 
     **Speech-to-speech**
 
@@ -226,16 +226,16 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
     - Caller audio is sent to a realtime LLM that returns text.
     - VoxEngine synthesizes that text through [Voximplant TTS](/voice-ai/speech/openai-tts).
     - This gives you a broader speech-provider choice for output.
-    - For lower latency, use streaming playback such as `createRealtimeTTSPlayer` with providers like Google, Grok, ElevenLabs, Cartesia, or Inworld. See [Run Text-to-Speech in VoxEngine](/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine).
+    - For lower latency, use streaming playback such as `createRealtimeTTSPlayer` with providers like Google, Grok, ElevenLabs, Cartesia, or Inworld. See [Run text-to-speech in VoxEngine](/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine).
 
     **Cascaded: STT→LLM→TTS**
 
-    - Voximplant transcribes the call using one of its ASR integrations.
+    - Voximplant transcribes the call via one of its ASR integrations.
     - Your VoxEngine code sends text to the LLM.
     - The LLM responds with text.
     - VoxEngine synthesizes the result and plays it back to the caller.
-    - Our VAD and turn taking modules detect when the user is speaking and when to interrupt the agent.
-    - See the [Full Cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for a complete example of this style.
+    - The built-in VAD and turn-taking modules detect when the user is speaking and when to interrupt the agent.
+    - See the [Full cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for a complete example of this style.
   </Accordion>
 
   <Accordion title="Is it easy to use and switch between multiple LLMs?">
@@ -260,51 +260,51 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
     - [OpenAI Realtime API](/voice-ai/openai/overview)
     - [Google Gemini Live](/voice-ai/google/overview)
     - [Ultravox Realtime](/voice-ai/ultravox/overview)
-    - [ElevenLabs Conversational Agent](/voice-ai/elevenlabs/overview)
-    - [Deepgram Voice Agent](/voice-ai/deepgram/overview)
-    - [xAI Grok Voice Agent](/voice-ai/xai/overview)
-    - [Cartesia Line Agents](/voice-ai/cartesia/overview)
+    - [ElevenLabs conversational agent](/voice-ai/elevenlabs/overview)
+    - [Deepgram voice agent](/voice-ai/deepgram/overview)
+    - [xAI Grok voice agent](/voice-ai/xai/overview)
+    - [Cartesia Line agents](/voice-ai/cartesia/overview)
   </Accordion>
 
   <Accordion title="Am I limited to using LLMs and speech providers that are already integrated with Voximplant?">
     No.
 
-    Voximplant has a "Bring your own LLM" capability where you can use one of our OpenAI connectors to specify your own model endpoint for any system that supports OpenAI compatibility. See the [Full Cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for an example.
+    Voximplant has a "Bring your own LLM" capability where you can use a Voximplant OpenAI connector to specify your own model endpoint for any system that supports OpenAI compatibility. See the [Full cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for an example.
 
     In addition, you can use VoxEngine’s HTTP request APIs and WebSocket APIs to connect to external LLM or speech systems that expose web-based interfaces.
 
-    The built-in integrations are optimized for realtime conversational use cases. If you build your own connector, you need to account for latency, media formats, and streaming behavior yourself. Our Voice Activity Detection (VAD) and Agentic VoiceDSP module can provide speech activity, turn boundaries, and interruption control. See our [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection) and [Agentic VoiceDSP](/voice-ai/speech-flow-control/agentic-voicedsp) guides for more information.
+    The built-in integrations are optimized for realtime conversational use cases. If you build your own connector, you need to account for latency, media formats, and streaming behavior yourself. Voximplant Voice Activity Detection (VAD) and the Agentic VoiceDSP module can provide speech activity, turn boundaries, and interruption control. See the [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection) and [Agentic VoiceDSP](/voice-ai/speech-flow-control/agentic-voicedsp) guides for more information.
   </Accordion>
 </AccordionGroup>
 
 ## Speech system support
 
 <AccordionGroup>
-  <Accordion title="What Text-to-Speech systems does Voximplant support?">
+  <Accordion title="What text-to-speech systems does Voximplant support?">
     Voximplant supports many speech synthesis providers and hundreds of voice options. Current providers include Amazon, Cartesia, ElevenLabs, Google, Grok, IBM, Inworld, Microsoft, and OpenAI, among others.
 
-      See [Run Text-to-Speech in VoxEngine](/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine) for realtime TTS options, including [Grok TTS](/voice-ai/speech/grok-tts) and Google Realtime TTS.
+      See [Run text-to-speech in VoxEngine](/voice-ai/enhance-and-deploy/telephony-and-voice-ai#run-tts-in-voxengine) for realtime TTS options, including [Grok TTS](/voice-ai/speech/grok-tts) and Google Realtime TTS.
   </Accordion>
 
-  <Accordion title="Do I need to implement Speech-to-Text with my Voice AI agent?">
+  <Accordion title="Do I need to implement speech-to-text with my Voice AI agent?">
     No - not unless you have a specific transcription need. The realtime LLM integrations consume audio directly and return transcription as text events over WebSockets.
 
-    Some Voice AI implementations require specialized speech recognition for difficult jargon or improved language support. In these cases Voximplant supports a cascaded pipeline where you can use one of our integrated Automatic Speech Recognition (ASR) options or bring your own. See the [Full Cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for an example.
+    Some Voice AI implementations require specialized speech recognition for difficult jargon or improved language support. In these cases Voximplant supports a cascaded pipeline where you can use one of the integrated automatic speech recognition (ASR) options or bring your own. See the [Full cascade guide](/voice-ai/bring-your-own-llm/full-cascade-groq) for an example.
 
-    While not required with our realtime LLM integrations, many Voice AI customers do use Voximplant's transcription mechanisms in addition to their Voice AI pipeline to help with improved accuracy, interoperability with existing systems, debugging, and compliance. Voximplant supports transcription from many different speech providers — including Amazon, Deepgram, Google and Microsoft — across hundreds of languages.
+    While not required with the realtime LLM integrations, many Voice AI customers do use Voximplant's transcription mechanisms in addition to their Voice AI pipeline to help with improved accuracy, interoperability with existing systems, debugging, and compliance. Voximplant supports transcription from many different speech providers — including Amazon, Deepgram, Google and Microsoft — across hundreds of languages.
 
-    See our [Speech Recognition guide](/platform/overview) to get started.
+    See the [Speech recognition guide](/platform/overview) to get started.
   </Accordion>
 
-  <Accordion title="How do I use Speech Synthesis for Voice AI applications?">
+  <Accordion title="How do I use speech synthesis for Voice AI applications?">
     Voximplant supports several synthesis patterns:
 
-    1. Pass through speech generated by a realtime LLM or conversational AI system using one of the built-in connectors.
-    2. Pass through speech generated by your own external integration over the [media stream format](/platform/media-streams/media-over-web-sockets#media-stream-format).
+    1. Pass through speech generated by a realtime LLM or conversational AI system via one of the built-in connectors.
+    2. Pass through speech generated by your own external integration over the [media stream format](/platform/media-streams/media-streams-format).
     3. Use `call.say` to speak directly into an established call.
     4. Use `createTTSPlayer` for more advanced text-to-speech playback and control.
     5. Play an audio file generated elsewhere with `createURLPlayer`.
-    6. Realtime speech generation for streaming audio generation using an integration, including [Grok TTS](/voice-ai/speech/grok-tts) and [Google Realtime TTS](/reference/voxengine/google).
+    6. Realtime speech generation for streaming audio via an integration, including [Grok TTS](/voice-ai/speech/grok-tts) and [Google Realtime TTS](/reference/voxengine/google).
 
     Most Voice AI applications either use the speech produced by the realtime AI system itself or use realtime streaming TTS for lower latency. The other mechanisms are still useful for static prompts, menus, and hybrid IVR flows.
   </Accordion>
@@ -314,7 +314,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
 
     All of Voximplant’s Voice AI connectors that handle speech-input include turn taking functionality. This includes all speech-to-speech pipelines and hybrid/half-cascade pipelines with speech as input. Voximplant exposes controls over the capability as provided by the vendor - typically as part of the connector’s configuration options.
 
-    If you are implementing our own cascaded pipeline in Voximplant with speech-to-text that input into an LLM, then you will need to use our VAD and turn-detection libraries. See our [speech-flow control guides](/voice-ai/speech-flow-control/turn-detection) for more information.
+    If you implement a Voximplant cascaded pipeline with speech-to-text input to an LLM, use the built-in VAD and turn-detection libraries. See the [speech-flow control guides](/voice-ai/speech-flow-control/turn-detection) for more information.
   </Accordion>
 </AccordionGroup>
 
@@ -333,14 +333,14 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
 
     See the channel guides:
 
-    - [Phone Numbers & PSTN](/voice-ai/network-options/phone-numbers-pstn)
+    - [Phone numbers and PSTN](/voice-ai/network-options/phone-numbers-pstn)
     - [SIP](/voice-ai/network-options/sip)
     - [WhatsApp](/voice-ai/network-options/whatsapp)
-    - [Web & Mobile](/voice-ai/network-options/web-mobile)
+    - [Web and mobile](/voice-ai/network-options/web-mobile)
   </Accordion>
 
   <Accordion title="In which countries and territories does Voximplant offer phone numbers?">
-    Voximplant supports outbound calling to more than 230 countries and territories and offers phone numbers from more than 100 countries.
+    Voximplant supports outgoing calling to more than 230 countries and territories and offers phone numbers from more than 100 countries.
 
     For the current country lists and rates, download the rate lists from the [pricing page](https://voximplant.com/pricing).
   </Accordion>
@@ -352,7 +352,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
   </Accordion>
 
   <Accordion title="What SIP capabilities do you support?">
-    Voximplant has a mature SIP stack built for interoperability with production carriers, PBXs, and custom SIP environments.
+    Voximplant provides a mature SIP stack for interoperability with production carriers, PBXs, and custom SIP environments.
 
     Supported patterns include:
 
@@ -362,7 +362,7 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
     - Encryption with SDES or DTLS keying, plus SIP over TLS for signaling and IPSec VPN on request
     - DTMF via in-band, RFC 2833, or SIP INFO
     - Custom SIP headers (`X-headers`)
-    - Adjustable parameters such as `authUser`, `callerId`, and outbound proxy
+    - Adjustable parameters such as `authUser`, `callerId`, and outgoing proxy
     - Audio codec support including G.711 (mu-law/A-law), G.722, Opus, and iLBC
     - Video codec support including H.264 and VP8
     - SIP REFER call transfer so VoxEngine can be removed from the media path
@@ -371,9 +371,9 @@ subtitle: Common questions about Voximplant Voice AI, telephony, connectors, and
   </Accordion>
 
   <Accordion title="Do you support Voice AI with WhatsApp?">
-    Yes. Voximplant supports WhatsApp Business Calling for inbound and outbound calls from an existing WhatsApp Business account. You can run Voice AI on those calls and optionally hand off to a live person or another system.
+    Yes. Voximplant supports WhatsApp Business Calling for incoming and outgoing calls from an existing WhatsApp Business account. You can run Voice AI on those calls and optionally hand off to a live person or another system.
 
-    After the initial number setup, inbound WhatsApp calls are handled like other incoming calls. Outbound WhatsApp calls are started with `VoxEngine.callWhatsappUser`.
+    After the initial number setup, incoming WhatsApp calls are handled like other incoming calls. Outgoing WhatsApp calls are started with `VoxEngine.callWhatsappUser`.
 
     See the [WhatsApp guide](/voice-ai/network-options/whatsapp).
   </Accordion>
@@ -412,13 +412,13 @@ Pricing, provider support, and regional telephony availability can change. Use t
     Pricing varies by region and channel:
 
     - Phone numbers start at roughly **$1 per number per month** in North America and many European regions.
-    - PSTN calling rates also vary by region, with entry pricing starting at **$0.01/min outbound** and **$0.005/min inbound** in North America and many European regions.
+    - PSTN calling rates also vary by region, with entry pricing starting at **$0.01/min outgoing** and **$0.005/min incoming** in North America and many European regions.
     - SIP, in-app calling, and WhatsApp bidirectional audio connectivity are priced at **$0.004/min** and billed in **15-second increments**.
 
     Always confirm the current figures on the [pricing page](https://voximplant.com/pricing).
   </Accordion>
 
-  <Accordion title="How much does Text-to-Speech cost?">
+  <Accordion title="How much does text-to-speech cost?">
     Voximplant supports two TTS billing models:
 
     **Voximplant billing**

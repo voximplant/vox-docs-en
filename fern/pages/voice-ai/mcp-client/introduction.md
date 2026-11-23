@@ -6,7 +6,7 @@ The Model Context Protocol is an open standard that enables AI models to communi
 
 This architecture allows voice agents to listen via Voximplant VAD, fetch dynamic context from an MCP resource, and execute MCP tools (such as checking account balances, updating ticketing systems, or booking calendar appointments) mid-conversation without requiring external orchestration middleware.
 
-Learn more about MCP on the [official website]().
+Learn more about MCP on the [official website](https://modelcontextprotocol.io/).
 
 ---
 
@@ -15,7 +15,7 @@ Learn more about MCP on the [official website]().
 To connect to an MCP server and interact with its tools:
 
 1. Require the `Modules.MCP` module in your VoxEngine [scenario](/platform/getting-started/create-a-scenario).
-2. Create an `MCP.Client` instance using `MCP.createClient()` and configure your connection parameters.
+2. Create an `MCP.Client` instance via `MCP.createClient()` and configure your connection parameters.
 3. Call `mcpClient.listTools()` to retrieve the list of available tools exposed by the MCP server.
 4. Call `mcpClient.callTool()` to execute a specified tool and receive results back into your scenario.
 5. Listen to `MCP.Client` events (via `MCP.ServerEvents`) to handle responses, errors, and tool outputs within your application logic.

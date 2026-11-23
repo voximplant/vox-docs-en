@@ -10,7 +10,7 @@ Media streaming over WebSockets uses standardized JSON event payloads categorize
 
 ## Outgoing connection
 
-To establish an outbound connection, create a [WebSocket](/reference/voxengine/websocket) instance using the [VoxEngine.createWebSocket](/reference/voxengine/voxengine#createwebsocket) method. It accepts two parameters: a **URL** (in the format `wss://domain/path`) and an optional **protocols** array.
+To establish an outgoing connection, create a [WebSocket](/reference/voxengine/websocket) instance using the [VoxEngine.createWebSocket](/reference/voxengine/voxengine#createwebsocket) method. It accepts two parameters: a **URL** (in the format `wss://domain/path`) and an optional **protocols** array.
 
 Once the connection is open, stream audio from an active call to the WebSocket using the [call.sendMediaTo](/reference/voxengine/call#sendmediato) method. You can specify a preferred audio encoding format and custom metadata parameters (defaults to `PCM8` if omitted). The [WebSocket.send](/reference/voxengine/websocket#send) method transmits text or serialized JSON payloads across the socket.
 

@@ -1,6 +1,6 @@
 # Automated call lists
 
-Voximplant's **Call Lists** engine allows you to launch high-volume, automated outbound calling campaigns using CSV data files processed directly by VoxEngine scenarios.
+Voximplant's **Call Lists** engine allows you to launch high-volume, automated outgoing calling campaigns using CSV data files processed directly by VoxEngine scenarios.
 
 Common use cases include appointment reminders, service notifications, customer surveys, debt collection alerts, and automated multi-attempt outreach.
 
@@ -31,7 +31,7 @@ Before launching a call list campaign:
 1. Create an [application](/platform/getting-started/create-an-application).
 2. Create a [scenario](/platform/getting-started/create-a-scenario).
 3. Create a [routing rule](/platform/getting-started/create-a-routing-rule) and bind it to your scenario.
-4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to use as your verified outbound caller ID.
+4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to use as your verified outgoing caller ID.
 5. Prepare a CSV file containing your contact records.
 
 ---
@@ -235,7 +235,7 @@ Key request parameters:
 
 * **`rule_id`**: The ID of the application routing rule bound to your scenario.
 * **`file_content`**: The raw CSV file content passed in the request body.
-* **`max_simultaneous`**: Maximum number of concurrent outbound calls.
+* **`max_simultaneous`**: Maximum number of concurrent outgoing calls.
 * **`num_attempts`**: Number of dial attempts allowed per contact if `CallList.reportError` is invoked.
 * **`interval_seconds`**: Interval between successive dial attempts in seconds.
 * **`priority`**: Overall priority of this call list relative to other lists.

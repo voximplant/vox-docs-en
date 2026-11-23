@@ -1,13 +1,13 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound call, enables Gemini tool calling, and sends tool responses back to the model."
+description: "This example answers an incoming call, enables Gemini tool calling, and sends tool responses back to the model."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound call, enables Gemini tool calling, and sends tool responses back to the model.
+This example answers an incoming call, enables Gemini tool calling, and sends tool responses back to the model.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -18,7 +18,7 @@ This example answers an inbound call, enables Gemini tool calling, and sends too
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -28,7 +28,7 @@ This example answers an inbound call, enables Gemini tool calling, and sends too
 
 ## Tool definitions
 
-The example registers tools in `connectConfig.tools` using `functionDeclarations` and JSON Schema parameters. `gemini-3.8-live` does not accept `thinkingLevel`, so the sample omits `thinkingConfig`.
+The example registers tools in `connectConfig.tools` via `functionDeclarations` and JSON Schema parameters. `gemini-3.8-live` does not accept `thinkingLevel`, so the sample omits `thinkingConfig`.
 
 ```js
 const TOOLS = [
@@ -76,7 +76,7 @@ geminiLiveAPIClient.addEventListener(Gemini.LiveAPIEvents.ToolCall, (event) => {
   `gemini-3.1-flash-live-preview` function-calling samples should move to `gemini-3.8-live` and drop `thinkingConfig`. Older `2.5` samples used `sendClientContent(...)` for the startup prompt and `thinkingBudget` instead of the `3.1` `thinkingLevel` field.
 </Warning>
 
-[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+[See the VoxEngine API reference for more details](/reference/voxengine/gemini).
 ## Full VoxEngine scenario
 
 <Code

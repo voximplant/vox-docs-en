@@ -1,5 +1,5 @@
 ---
-title: Web & Mobile
+title: Web & mobile
 subtitle: Use Voximplant users and SDKs for browser and mobile app calling
 ---
 <blockquote className="agent-directive">
@@ -9,21 +9,21 @@ subtitle: Use Voximplant users and SDKs for browser and mobile app calling
 
 ## <Icon icon="fa-duotone fa-user" /> Overview
 
-Voximplant supports users that are registered and authenticated the Voximplant platform.
-Our web and mobile SDKs use these users by default for authentication and routing.
-Users are scope to each Application, so you can have the same username in different applications as needed.
+Voximplant supports users that are registered and authenticated on the Voximplant platform.
+By default, web and mobile SDKs use these users for authentication and routing.
+Users are scoped to each application, so you can have the same username in different applications as needed.
 
 
-Users may also be used for SIP calling as every user becomes its own unique SIP address.
-See the [SIP calling guide](/voice-ai/network-options/sip#-user-based-sip-routing-voximplant-user-per-endpoint) for more details using Voximplant users with SIP.
+You can also use users for SIP calling, because every user gets a unique SIP address.
+See the [SIP calling guide](/voice-ai/network-options/sip#sip-user-based) for how Voximplant users work with SIP.
 
 
 This is the standard path for in-app calls, authenticated customer sessions, and app-to-app voice AI experiences.
 
 
-## SDK Guides
+## SDK guides
 
-Voximplant current supports these SDKs for web and mobile app development. Each SDK has a quickstart guide:
+Voximplant currently supports these SDKs for web and mobile app development. Each SDK has a quickstart guide:
 
 <CardGroup cols={3}>
   <Card title="Web SDK guide" href="/reference/web-sdk/overview" icon="fa-duotone fa-globe"/>
@@ -36,8 +36,8 @@ Voximplant current supports these SDKs for web and mobile app development. Each 
 ## <Icon icon="fa-duotone fa-user-plus" /> Create app users
 
 Voximplant's Media Client SDKs need to be authenticated to a user.
-When you call a user, VoxEngine will direct media and signaling information to any SDK clients who are signed in under that user.
-Similarly, outbound calls initiated from the client SDKs are associated with the user identity, which can be used for routing and personalization in your Voice AI scenarios.
+When you call a user, VoxEngine directs media and signaling information to any SDK clients who are signed in under that user.
+Outgoing calls that the client SDKs start carry the user identity. Use that identity for routing and personalization in your Voice AI scenarios.
 You can create users in Control Panel or via Management API.
 
 Users are scoped at the Application level, so you can have different users with the same username in different applications if needed.
@@ -53,17 +53,17 @@ Users are scoped at the Application level, so you can have different users with 
     ![User editor](../../../assets/getting-started/users-editor.png)
   </Step>
   <Step title="Use user alias in routing">
-    Route inbound app-user calls by alias to the target Voice AI scenario.
-    See [Setup routing](/voice-ai/configure-voximplant/overview#setup-routing) for rule pattern and scenario assignment details.
+    Route incoming app-user calls by alias to the target Voice AI scenario.
+    See [Getting started](/voice-ai/getting-started) for rule pattern and scenario assignment details.
     ![Users routing rule editor](../../../assets/getting-started/users-routing-rule.png)
   </Step>
 </Steps>
 
-## <Icon icon="fa-duotone fa-arrow-up-right" /> Outbound specifics
+## <Icon icon="fa-duotone fa-arrow-up-right" /> Outgoing specifics
 
-Use `VoxEngine.callUser()` to place outbound calls to Voximplant user aliases.
+Use `VoxEngine.callUser()` to place outgoing calls to Voximplant user aliases.
 
-```js title="Outbound to app user"
+```js title="Outgoing to app user"
 const call = VoxEngine.callUser({
   username: "alice",
   callerid: "voice-ai-app"
@@ -139,7 +139,7 @@ Voximplant users and client SDKs support a wide range of use cases, but here are
   </table>
 
 - **User-to-user routing patterns**<br />
-  Use `VoxEngine.callUser()` for direct app-user calls, with fallback to SIP/PSTN/WhatsApp when needed. More info: [VoxEngine.callUser](/reference/voxengine/voxengine#calluser), [Outbound calling options](/voice-ai/inbound-vs-outbound/outbound-calls)
+  Use `VoxEngine.callUser()` for direct app-user calls, with fallback to SIP/PSTN/WhatsApp when needed. More info: [VoxEngine.callUser](/reference/voxengine/voxengine#calluser), [Outgoing calling options](/voice-ai/inbound-vs-outbound/outbound-calls)
 
 - **Multi-device behavior**<br />
   Expect one user identity to be active on multiple clients and design first-answer/fallback behavior accordingly.
@@ -246,4 +246,4 @@ Voximplant users and client SDKs support a wide range of use cases, but here are
     </tbody>
   </table>
 - **Security and abuse controls**<br />
-  Restrict operational permissions with service-account roles, protect Management API access, and validate outbound destinations in app logic. More info: [Management API authorization](/reference/management-api/authorization), [Role system API](/reference/management-api/reference/role-system), [Initial Voximplant setup](/voice-ai/configure-voximplant)
+  Restrict operational permissions with service-account roles, protect Management API access, and validate outgoing destinations in app logic. More info: [Management API authorization](/reference/management-api/authorization), [Role system API](/reference/management-api/reference/role-system), [Getting started](/voice-ai/getting-started)

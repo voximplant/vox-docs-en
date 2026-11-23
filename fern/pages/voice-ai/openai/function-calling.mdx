@@ -1,13 +1,13 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine."
+description: "This example answers an incoming Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+This example answers an incoming Voximplant call, connects it to OpenAI Realtime, and handles function calls in VoxEngine. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
 
 It includes three tools:
 
@@ -19,7 +19,7 @@ It includes three tools:
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -39,7 +39,7 @@ It includes three tools:
     - tool schemas (`tools`)
     - `tool_choice: "auto"`
 
-    Tool definitions are declared in `SESSION_CONFIG.session.tools` and sent right after `SessionCreated`.
+    The scenario declares tool definitions in `SESSION_CONFIG.session.tools` and sends them right after `SessionCreated`.
 
 ```js title="GPT Realtime 2.1 session configuration"
 const SESSION_CONFIG = {
@@ -110,7 +110,7 @@ voiceAIClient.sessionUpdate(SESSION_CONFIG);
     - tool schemas (`tools`)
     - `tool_choice: "auto"`
 
-    Tool definitions are declared in `SESSION_CONFIG.session.tools` and sent right after `SessionCreated`.
+    The scenario declares tool definitions in `SESSION_CONFIG.session.tools` and sends them right after `SessionCreated`.
 
 ```js title="GPT Realtime 1.5 session configuration"
 const SESSION_CONFIG = {
@@ -230,7 +230,7 @@ voiceAIClient.addEventListener(OpenAI.RealtimeAPIEvents.InputAudioBufferSpeechSt
 
 - [OpenAI connector overview](/voice-ai/openai/overview)
 - [Answering an incoming call with OpenAI Realtime](/voice-ai/openai/inbound)
-- [Placing an outbound call with OpenAI Realtime](/voice-ai/openai/outbound)
+- [Placing an outgoing call with OpenAI Realtime](/voice-ai/openai/outbound)
 - [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
 - [Current OpenAI models](https://developers.openai.com/api/docs/models)
 - [VoxEngine call API reference](/reference/voxengine/call)

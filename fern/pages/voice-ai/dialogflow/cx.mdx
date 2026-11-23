@@ -1,22 +1,22 @@
 ---
 title: "Dialogflow CX"
-subtitle: "Connect Dialogflow CX to Voximplant for inbound and outbound calls."
+subtitle: "Connect Dialogflow CX to Voximplant for incoming and outgoing calls."
 ---
 
-This article will demonstrate how to integrate [Dialogflow CX](https://cloud.google.com/dialogflow/cx/docs) with Voximplant for both incoming and outgoing calling.
+This article demonstrates how to integrate [Dialogflow CX](https://cloud.google.com/dialogflow/cx/docs) with Voximplant for both incoming and outgoing calling.
 
 Dialogflow, a virtual agent, facilitates conversations with your end-users. It employs a natural language understanding module that comprehends the intricacies of human language.
 
 Dialogflow CX is an advanced agent type that is well-suited for large or extremely complex agents.
 
-Here, we also provide instructions on how to enable Dialogflow CX’s telephony integration features within the Dialogflow CX console (as of March 2021), including:
+These sections also explain how to enable Dialogflow CX’s telephony integration features within the Dialogflow CX console (as of March 2021), including:
 
 - No speech timeout
 - DTMF interaction
 - Playing pre-recorded messages
-- Live Agent Handoff
+- Live agent handoff
 
-Dialogflow CX, Google Cloud’s latest interface for Dialogflow, is designed specifically for customer experience applications. **Dialogflow ES** users (formerly known as **Dialogflow**) are advised to refer to our [Dialogflow ES guide](/voice-ai/dialogflow/es) for more information.
+Dialogflow CX, Google Cloud’s latest interface for Dialogflow, is designed specifically for customer experience applications. **Dialogflow ES** users (formerly known as **Dialogflow**) can refer to the [Dialogflow ES guide](/voice-ai/dialogflow/es) for more information.
 
 <Info title="Already have one-click integration and want to go straight to outgoing calling?">
   Scroll down to the last two sections: **Outgoing calling** and **Call lists**
@@ -26,7 +26,7 @@ This article assumes you already have a Dialogflow CX agent configured. See [Goo
 
 ## One-click telephony integration
 
-The first step to connect Dialogflow CX to Voximplant is using the *One-click Telephony integration*. Go to the [Google Cloud Dialogflow CX console](https://dialogflow.cloud.google.com/cx) and select your **agent**. Then from the **Manage** menu, select **Integrations**, and click **Connect** on Voximplant:
+Start with the *One-click telephony integration*. Go to the [Google Cloud Dialogflow CX console](https://dialogflow.cloud.google.com/cx) and select your **agent**. Then from the **Manage** menu, select **Integrations**, and click **Connect** on Voximplant:
 
 ![Go to Google Cloud Dialogflow CX console](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-1.png)
 
@@ -34,9 +34,9 @@ You are prompted to specify an integration name with a language and environment.
 
 ![Create a new integration](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-2.png)
 
-Note that you can have multiple independent integrations with Voximplant using different parameters.
+Note that you can create multiple independent integrations with Voximplant, each with different parameters.
 
-You then need to give Voximplant permission to access your Dialogflow account. If you are not already [signed into Voximplant](https://manage.voximplant.com/auth/), you will be prompted to sign in or create an account.
+You then need to give Voximplant permission to access your Dialogflow account. If you are not already [signed into Voximplant](https://manage.voximplant.com/auth/), you are prompted to sign in or create an account.
 
 ![Sign in or create an account](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-3.png)
 
@@ -50,9 +50,9 @@ Once you select your phone number you are directed back to the Dialogflow CX con
 
 ![Manage the integration](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-5.png)
 
-From here, you can use the three-dots menu and choose **Manage** to log in to the Voximplant Management console or **Disconnect** to destroy the connection. If you had issues or stopped during the *One-click integration* procedure, you also have the option to resume the integration process from where you left off.
+From here, you can use the three-dots menu and choose **Manage** to log in to the Voximplant Management console or **Disconnect** to destroy the connection. If you have issues or stop during the *One-click integration* procedure, resume the integration at the current step.
 
-If you click on **Manage** to go to the Voximplant console and click **Applications** or visit the [Voximplant control panel - Applications](https://manage.voximplant.com/applications) directly, you will see your newly created application.
+If you click on **Manage** to go to the Voximplant console and click **Applications** or visit the [Voximplant Control Panel - Applications](https://manage.voximplant.com/applications) directly, you see the new application.
 
 ![Your application](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-6.png)
 
@@ -88,7 +88,7 @@ If enabled, intent detection begins as soon as a fulfillment message is played.
 
 Dialogflow CX, in conjunction with Voximplant’s Dialogflow Connector, seamlessly handles DTMF natively, eliminating the need for any specific VoxEngine code. The entered DTMF digits are conveniently managed as part of Dialogflow CX Parameters.
 
-Pressed DTMF digits are passed into Dialogflow as text numbers and `dtmf_digits_432*` where whatever digits we pressed are added after `dtmf_digits_`.
+Pressed DTMF digits pass into Dialogflow as text numbers and `dtmf_digits_432*`, and the digits you press are added after `dtmf_digits_`.
 
 #### Use entities to identify DTMF
 
@@ -155,7 +155,7 @@ Voximplant’s Dialogflow Connector seamlessly integrates with CX telephony, ena
 
 #### Dialogflow CX console
 
-Dialogflow CX offers a **Live Agent handoff** option within the routes options on each page. By selecting this option, a `liveAgentHandoff` value is automatically included in the response to Voximplant, enabling the initiation of a call with the live agent.
+Dialogflow CX offers a **Live agent handoff** option within the routes options on each page. By selecting this option, a `liveAgentHandoff` value is automatically included in the response to Voximplant, enabling the initiation of a call with the live agent.
 
 You can also pass arbitrary data in JSON format along with the request. For instance, you could specify a particular call center or department for proper routing within VoxEngine.
 
@@ -165,7 +165,7 @@ See the Dialogflow CX [fulfillment documentation](https://cloud.google.com/dialo
 
 #### How it works in VoxEngine
 
-The default VoxEngine scenario created during the *One-click integration* already includes the necessary logic to transfer the agent. All you need to do is enter the destination number and the caller ID values.
+The default VoxEngine scenario that the *One-click integration* creates already includes the necessary logic to transfer the agent. All you need to do is enter the destination number and the caller ID values.
 
 VoxEngine recognizes a `liveAgentHandoff` request as follows. The template code simply sets a global `transfer` variable to **true**.
 
@@ -182,7 +182,7 @@ conversationParticipant.addEventListener(CCAI.Events.Participant.Response, (e) =
 
 ```
 
-Then, after the [PlaybackFinished](/reference/voxengine/ccai/events/participant#playbackfinished) event indicates any preceding synthesized speech or audio has been played, this `transfer` value is checked, an outgoing call is initiated with [VoxEngine.callPSTN](/reference/voxengine/voxengine#callpstn) and finally, the media is connected with [VoxEngine.easyProcess](/reference/voxengine/voxengine#easyprocess). Make sure to enter the destination phone number - such as your call center - and one of your caller IDs as part of the `callPSTN` function.
+Then, after the [PlaybackFinished](/reference/voxengine/ccai/events/participant#playbackfinished) event indicates that any preceding synthesized speech or audio finishes, check the `transfer` value, place an outgoing call with [VoxEngine.callPSTN](/reference/voxengine/voxengine#callpstn), and connect the media with [VoxEngine.easyProcess](/reference/voxengine/voxengine#easyprocess). Enter the destination phone number, such as your call center, and one of your caller IDs in the `callPSTN` function.
 
 ```javascript title="Initiate a call"
 conversationParticipant.addEventListener(CCAI.Events.Participant.PlaybackFinished, (e) => {
@@ -207,11 +207,11 @@ Note that the default connector template assumes that the call remains connected
 
 Voximplant, a full-featured Communications Platform as a Service (CPaaS), offers immense flexibility in managing communication with both Dialogflow and telephony networks.
 
-In this scenario, we modify the call transfer behavior to indicate the successful completion of the transfer and subsequently return control to Dialogflow CX in the event of a call failure.
+In this scenario, modify the call transfer behavior to report a completed transfer, and to return control to Dialogflow CX if the call fails.
 
 ### Use VoxEngine events, callbacks, and CCAI methods
 
-Let’s alter the `CCAI.Events.Participant.PlaybackFinished` code to show how we can monitor the telephony connection and send events to Dialogflow CX:
+Alter the `CCAI.Events.Participant.PlaybackFinished` code to monitor the telephony connection and send events to Dialogflow CX:
 
 ```javascript title="Monitor the telephony connection"
 conversationParticipant.addEventListener(CCAI.Events.Participant.PlaybackFinished, (e) => {
@@ -240,17 +240,17 @@ conversationParticipant.addEventListener(CCAI.Events.Participant.PlaybackFinishe
 
 ```
 
-We initiate an outgoing call using the standard template `VoxEngine.callPSTN`, but we also add an event listener that starts the `easyProcess` only after the outgoing call is connected.
+Place the outgoing call with the standard `VoxEngine.callPSTN` template, and add an event listener that starts `easyProcess` only after the outgoing call connects.
 
-Then we add the optional callback function to send an event via the [conversation](/reference/voxengine/ccai/conversation) object returned from the CCAI module, [conversation.addParticipant](/reference/voxengine/ccai/conversation#addparticipant), earlier in the default template. In this case, we send a `TRANSFER_SUCCESS` event and then use the `endConversation` function from the template to end the Dialogflow CX connection.
+Then add the optional callback to send an event via the [conversation](/reference/voxengine/ccai/conversation) object that [conversation.addParticipant](/reference/voxengine/ccai/conversation#addparticipant) returns earlier in the default template. In this case, send a `TRANSFER_SUCCESS` event, then call the template `endConversation` function to end the Dialogflow CX connection.
 
 See the Dialogflow CX [QueryInput documentation](https://cloud.google.com/dialogflow/cx/docs/reference/rpc/google.cloud.dialogflow.cx.v3#google.cloud.dialogflow.cx.v3.QueryInput) for options and the format for sending query input.
 
-In addition to monitoring the [CallEvents.Connected](/reference/voxengine/call#connected) event, we also add a [CallEvents.Failed](/reference/voxengine/call#failed) handler, but this time we send a `TRANSFER_FAIL` event to Dialogflow.
+In addition to the [CallEvents.Connected](/reference/voxengine/call#connected) event, add a [CallEvents.Failed](/reference/voxengine/call#failed) handler that sends a `TRANSFER_FAIL` event to Dialogflow.
 
 ### Dialogflow CX setup
 
-In this scenario, we establish a separate **Live Agent** page that is loaded after a **transfer** intent. Configure the **Entry fulfillment** in a manner similar to the *Call Transfer* example provided earlier.
+In this scenario, create a separate **Live Agent** page that loads after a **transfer** intent. Configure the **Entry fulfillment** in a manner similar to the *Call transfer* example provided earlier.
 
 ![Create a distinct Live Agent page](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-12.png)
 
@@ -258,11 +258,11 @@ Dialogflow CX enables you to create custom events by navigating to the **Event h
 
 ![Add event handler](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-13.png)
 
-Then click on **Use custom event** and enter the event name you specified in VoxEngine. Add any fulfillment and specify the transition flow or page.
+Then click on **Use custom event** and enter the event name you specify in VoxEngine. Add any fulfillment and specify the transition flow or page.
 
 ![Set up the event](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-14.png)
 
-Make sure to repeat this for each custom event you specify in VoxEngine. `TRANSER_SUCCESS` might transition to **End Session**, and `TRANSFER_FAILED` could go to another page to handle the error or try different **Live agent handoff** details.
+Make sure to repeat this for each custom event you specify in VoxEngine. `TRANSFER_SUCCESS` might transition to **End Session**, and `TRANSFER_FAILED` could go to another page to handle the error or try different **Live agent handoff** details.
 
 ## Change your agent’s voice
 
@@ -290,9 +290,9 @@ conversationParticipant = conversation.addParticipant({
 
 ```
 
-Any Google Cloud text-to-speech voice can be used, including different languages. See the list of available Google Cloud text-to-speech voices [here](https://cloud.google.com/text-to-speech/docs/voices).
+You can use any Google Cloud text-to-speech voice, including voices for different languages. See the list of available Google Cloud text-to-speech voices [here](https://cloud.google.com/text-to-speech/docs/voices).
 
-If you need to use a non-Google voice for any reason, you can process the agent's response event, then read the reply to your customer using Voximplant [speech synthesis](/voice-ai/speech/openai-tts) engine:
+If you need to use a non-Google voice for any reason, you can process the agent's response event, then read the reply to your customer with the Voximplant [speech synthesis](/voice-ai/speech/openai-tts) engine:
 
 ```javascript title="Use a non-default voice"
 conversationParticipant.addEventListener(CCAI.Events.Participant.Response, (e) => {
@@ -307,7 +307,7 @@ Alternatively, you may use the [VoiceList.Google](/reference/voxengine/voice-lis
 
 ## Outgoing calling
 
-If you want to use this scenario with outgoing calling, you need to remove the [AppEvents.CallAlerting](/reference/voxengine/app-events#callalerting) code block and create a new [AppEvents.Started](/reference/voxengine/app-events#started) block. The most important thing here is the [callPSTN](/reference/voxengine/voxengine#callpstn) method that we apply to make a call when the scenario has started. Use the following logic:
+If you want to use this scenario with outgoing calling, you need to remove the [AppEvents.CallAlerting](/reference/voxengine/app-events#callalerting) code block and create a new [AppEvents.Started](/reference/voxengine/app-events#started) block. The important part is the [callPSTN](/reference/voxengine/voxengine#callpstn) method, which places a call when the scenario starts. Use the following logic:
 
 ```javascript title="AppEvents.Started code block"
 VoxEngine.addEventListener(AppEvents.Started, (e) => {
@@ -325,7 +325,7 @@ VoxEngine.addEventListener(AppEvents.Started, (e) => {
 
 ```
 
-You may wonder what to do with the old `AppEvents.Started` block. It’s simple: move its contents to the newly created `onCallConnected` function and delete the old block:
+You may wonder what to do with the old `AppEvents.Started` block. Move its contents to the new `onCallConnected` function and delete the old block:
 
 ```javascript title="onCallConnected function code"
 function onCallConnected(ev) {
@@ -348,13 +348,13 @@ Now, you simply need to initiate the scenario. To do this, navigate to the **Rul
 
 ![Start the scenario](../../../assets/voice-ai/dialogflow/guides-integrations-dialogflow-cx-15.png)
 
-Or use the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method of our management API. Do not forget to specify the phone number as script custom data. Otherwise, there is no number to call.
+Or use the [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method of the Management API. Do not forget to specify the phone number as script custom data. Otherwise, there is no number to call.
 
 ## Call lists
 
 Sometimes, you need to make multiple phone calls, and that is when you use call lists.
 
-First, design a CSV file that represents your call list. The data in this file is passed to the VoxEngine scenario as a JSON string that we parse. The CSV file contains the names and phone numbers of the people you want to call.
+First, design a CSV file that represents your call list. The scenario receives the data in this file as a JSON string and parses it. The CSV file contains the names and phone numbers of the people you want to call.
 
 ```txt
 first_name;last_name;phone_number
@@ -362,8 +362,8 @@ Jon;Snow;+16501234567
 Daenerys;Targaryen;+16501234568
 ```
 
-Now we can modify the scenario so it processes every string of the file and makes calls.
-Your `AppEvents.Started` block should look like this (we do not need the `AppEvents.CallAlerting` block here):
+Modify the scenario so it processes every row of the file and places the calls.
+Your `AppEvents.Started` block should look like this (omit the `AppEvents.CallAlerting` block here):
 
 ```javascript title="AppEvents.Started for call lists"
 VoxEngine.addEventListener(AppEvents.Started, function (ev) {
@@ -384,7 +384,7 @@ VoxEngine.addEventListener(AppEvents.Started, function (ev) {
 
 ```
 
-The `onCallConnected` function remains the same as it was for the outgoing call to one person:
+The `onCallConnected` function remains the same as it is for the outgoing call to one person:
 
 ```javascript title="onCallConnected for call lists"
 function onCallConnected(ev) {
@@ -431,6 +431,6 @@ function handleCallFailed(e) {
 
 ```
 
-The final step is to select the “Call lists” section from your application menu. Create a list (either manually or automatically), upload the CSV file, and launch the list by executing the rule if it’s manual (automatic lists are automatically launched after creation).
+The final step is to select the “Call lists” section from your application menu. Create a list (either manually or automatically), upload the CSV file, and launch the list by executing the rule if it is manual (automatic lists start after creation).
 
 The call results are accessible in the **Call history** section. For more information about call lists, refer to the [Call lists for automated calls](/platform/solutions/automated-call-lists) article.

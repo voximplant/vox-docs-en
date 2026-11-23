@@ -71,7 +71,7 @@ When launching scenarios via the Management API, use the `script_custom_data` pa
 **A**: Yes. If you attach multiple scenarios to a single rule, they execute in the same global JavaScript context. This allows you to split logic across modular files while sharing variables and functions.
 
 **Q**: **Do pattern filters apply to outgoing calls?**  
-**A**: No. The regex pattern filters incoming call destinations. For programmatic outbound calls triggered via the Management API, you specify the routing rule or scenario directly.
+**A**: No. The regex pattern filters incoming call destinations. For programmatic outgoing calls triggered via the Management API, you specify the routing rule or scenario directly.
 
 **Q**: **Do patterns work with SIP addresses?**  
 **A**: Yes. Patterns evaluate the username portion of the incoming SIP URI. You can define specific prefixes (such as `^sip_.*`) to route SIP calls to dedicated scenarios.
@@ -80,4 +80,4 @@ When launching scenarios via the Management API, use the `script_custom_data` pa
 **A**: Only the first matching rule executes. Rules are evaluated from top to bottom; once a match is found, evaluation stops.
 
 **Q**: **How can I separate rules for incoming and outgoing calls?**  
-**A**: Create a rule for incoming calls with your phone numbers or a matching pattern (e.g., `.*`) at the top of your list. Place your outbound or API-triggered rules below it, and invoke those rules directly by name or ID using the Management API.
+**A**: Create a rule for incoming calls with your phone numbers or a matching pattern (e.g., `.*`) at the top of your list. Place your outgoing or API-triggered rules below it, and invoke those rules directly by name or ID using the Management API.

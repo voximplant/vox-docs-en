@@ -14,9 +14,9 @@ The connector streams audio between Voximplant and ElevenLabs while keeping call
 
 Capability and feature highlights:
 
-- Connect inbound and outbound calls to a single ElevenLabs agent ID.
+- Connect incoming and outgoing calls to a single ElevenLabs agent ID.
 - Bi-directional audio streaming with low latency and built-in media conversion.
-- Barge-in support using interruption events and media buffer control.
+- Barge-in support via interruption events and media buffer control.
 - Real-time events for transcripts, responses, tool calls, and diagnostics.
 - Client-side tool execution with `ClientToolCall` and `clientToolResult`.
 
@@ -33,7 +33,7 @@ graph LR
 ## Prerequisites
 
 - ElevenLabs account and API key from [ElevenLabs](https://elevenlabs.io/app/settings/api-keys).
-- ElevenLabs Agent created in the [ElevenLabs Agents console](https://elevenlabs.io/app/agents/agents).
+- An ElevenLabs Agent in the [ElevenLabs Agents console](https://elevenlabs.io/app/agents/agents).
 - Agent ID for the specific ElevenLabs agent you want to run in Voximplant.
 
 ## Development notes
@@ -49,7 +49,7 @@ See the [ElevenLabs module API reference](/reference/voxengine/elevenlabs) for f
 
 ## Examples
 - [Example: Answering an incoming call](/voice-ai/elevenlabs/inbound)
-- [Example: Placing an outbound call](/voice-ai/elevenlabs/outbound)
+- [Example: Placing an outgoing call](/voice-ai/elevenlabs/outbound)
 - [Example: Function calling](/voice-ai/elevenlabs/function-calling)
 
 ## Links

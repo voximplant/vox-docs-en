@@ -1,20 +1,20 @@
 ---
 title: "Example: Using Vertex AI"
-description: "This example answers an inbound Voximplant call and connects Gemini Live API through Vertex AI."
+description: "This example answers an incoming Voximplant call and connects Gemini Live API through Vertex AI."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call and connects Gemini Live API through Vertex AI.
+This example answers an incoming Voximplant call and connects Gemini Live API through Vertex AI.
 It reads Vertex service account credentials from Voximplant Secrets through a shared credentials scenario.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -107,7 +107,7 @@ The scenario logs Gemini events for debugging:
   `gemini-3.8-live` is not available on Vertex AI unless the Google Cloud project has Gemini Enterprise early access. This example keeps the Vertex-supported model `gemini-live-2.5-flash-preview-native-audio-09-17`. Developer API examples use `gemini-3.8-live`.
 </Warning>
 
-[See the VoxEngine API Reference for more details](/reference/voxengine/gemini).
+[See the VoxEngine API reference for more details](/reference/voxengine/gemini).
 ## Full VoxEngine scenario
 
 <Code

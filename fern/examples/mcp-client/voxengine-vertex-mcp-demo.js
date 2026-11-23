@@ -1,6 +1,6 @@
 /**
  * Voximplant + Gemini Live on Vertex AI + MCP demo
- * Scenario: answer an inbound call and look up Voxy Plumbers dispatch
+ * Scenario: answer an incoming call and look up Voxy Plumbers dispatch
  * availability from Zapier Tables through an MCP server.
  */
 require(Modules.Gemini);
