@@ -1,4 +1,4 @@
-/** Transcribe an inbound call with manual audio commits and local turn detection. */
+/** Transcribe an incoming call with manual audio commits and local turn detection. */
 require(Modules.Silero);
 require(Modules.Pipecat);
 require(Modules.OpenAI);

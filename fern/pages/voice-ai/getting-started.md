@@ -1,15 +1,15 @@
 # Getting started with Voice AI
 
-Voximplant combines a serverless **Voice AI Orchestration Platform** with a carrier-grade **Communications Platform as a Service (CPaaS)**. This allows you to connect real-time conversational AI models, LLMs, and speech engines directly to telephone lines, SIP trunks, WebRTC, and WhatsApp.
+Voximplant combines a serverless **Voice AI orchestration platform** with a carrier-grade **communications platform as a service (CPaaS)**. This allows you to connect real-time conversational AI models, LLMs, and speech engines directly to telephone lines, SIP trunks, WebRTC, and WhatsApp.
 
 Before writing code or deploying an agent, consider three architectural choices:
 
-1. **Telephony channels**: How will users connect? (PSTN phone numbers, SIP PBX trunks, WebRTC in a web/mobile app, or WhatsApp Business).
-2. **AI pipeline architecture**: Are you running an end-to-end speech-to-speech model, a half-cascade, or a modular STT $\rightarrow$ LLM $\rightarrow$ TTS cascade?
-3. **Call direction**: Is your agent answering inbound customer calls or placing outbound notifications and campaigns?
+1. **Telephony channels**: How do users connect? (PSTN phone numbers, SIP PBX trunks, WebRTC in a web/mobile app, or WhatsApp Business).
+2. **AI pipeline architecture**: Are you running an end-to-end speech-to-speech model, a half-cascade, or a modular STT → LLM → TTS cascade?
+3. **Call direction**: Is your agent answering incoming customer calls or placing outgoing notifications and campaigns?
 
 <Note>
-For common questions regarding platform latency, billing, and architecture, see our [Voice AI Frequently Asked Questions (FAQ)](/voice-ai/faq).
+For common questions regarding platform latency, billing, and architecture, see the [Voice AI FAQ](/voice-ai/faq).
 </Note>
 
 ---
@@ -21,7 +21,7 @@ Voximplant runs on **VoxEngine**, a serverless JavaScript runtime executing dire
 * **Applications**: Top-level project containers that isolate your scenarios, credentials, routing rules, and phone numbers.
 * **Scenarios**: Serverless JavaScript programs that control telephony logic, manipulate media streams, and communicate with AI providers.
 * **Routing rules**: Pattern-matching rules that evaluate incoming destinations and determine which scenario to launch.
-* **Phone numbers**: Virtual PSTN numbers (local, mobile, toll-free) used to receive calls or provide an outbound Caller ID.
+* **Phone numbers**: Virtual PSTN numbers (local, mobile, toll-free) that receive calls or provide an outgoing caller ID.
 * **Secrets & Application Storage**: Isolated key-value storage for environment variables and encrypted storage for third-party AI provider API keys.
 
 ---
@@ -95,7 +95,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
     
     1. Inside your application, navigate to **Routing**.
     2. Click **New rule**.
-    3. Set a descriptive name (e.g., `inbound-calls`).
+    3. Set a descriptive name (e.g., `incoming-calls`).
     4. Set the **Pattern** field to `.*` (matches all incoming destinations).
     5. Under **Assigned scenarios**, drag or select your `voice-ai-agent.js` scenario.
     6. Click **Save**.
@@ -137,7 +137,7 @@ const calleeDestination = (await ApplicationStorage.get("CALLEE_DESTINATION")).v
     4. Attach the purchased number and bind it to your routing rule.
     
     <Info title="Testing without a phone number">
-    If you are testing using WebRTC, our client SDKs, or the built-in Web Softphone under **Testing tools** in the top navigation bar, a phone number is optional.
+    If you are testing via WebRTC, the Voximplant client SDKs, or the built-in web softphone under **Testing tools** in the top navigation bar, a phone number is optional.
     </Info>
   </Step>
 </Steps>
@@ -148,16 +148,16 @@ const calleeDestination = (await ApplicationStorage.get("CALLEE_DESTINATION")).v
 
 Once your basic application structure is deployed, choose the pipeline architecture that fits your use case:
 
-* **Speech-to-Speech (Full Duplex)**: Raw audio streams directly between the caller and an end-to-end conversational model with native turn-taking (e.g., OpenAI Realtime, Google Gemini Live, Ultravox, xAI Grok).
-* **Half-Cascade (Speech/LLM $\rightarrow$ Realtime TTS)**: Use a multimodal speech model for reasoning, but pipe generated text into a dedicated low-latency neural TTS provider like [Grok TTS](/voice-ai/speech/grok-tts), Cartesia, or ElevenLabs for distinct voice branding.
-* **Full Cascade (STT $\rightarrow$ LLM $\rightarrow$ TTS)**: Connect best-of-breed components—such as Deepgram for transcription, an open-source or commercial LLM for reasoning, and Cartesia or ElevenLabs for speech output.
+* **Speech-to-speech (full duplex)**: Raw audio streams directly between the caller and an end-to-end conversational model with native turn-taking (e.g., OpenAI Realtime, Google Gemini Live, Ultravox, xAI Grok).
+* **Half-cascade (speech/LLM → realtime TTS)**: Use a multimodal speech model for reasoning, but pipe generated text into a dedicated low-latency neural TTS provider like [Grok TTS](/voice-ai/speech/grok-tts), Cartesia, or ElevenLabs for distinct voice branding.
+* **Full cascade (STT → LLM → TTS)**: Connect best-of-breed components—such as Deepgram for transcription, an open-source or commercial LLM for reasoning, and Cartesia or ElevenLabs for speech output.
 
 ---
 
 ## Next steps
 
-Explore our production-ready connectors to wire up your chosen provider:
+Explore the production-ready connectors to wire up your chosen provider:
 
-* [Voice AI Connectors Overview](/voice-ai/overview) — Browse complete scenario code and setup guides for OpenAI, Gemini, ElevenLabs, Cartesia, Deepgram, and more.
-* [Inbound vs. Outbound Calling](/voice-ai/inbound-vs-outbound/inbound-calls) — Learn how to handle inbound customer service inquiries versus triggering proactive outbound AI agent calls.
+* [Voice AI connectors overview](/voice-ai/overview) — Browse complete scenario code and setup guides for OpenAI, Gemini, ElevenLabs, Cartesia, Deepgram, and more.
+* [Incoming vs. outgoing calling](/voice-ai/inbound-vs-outbound/inbound-calls) — Learn how to handle incoming customer service inquiries versus triggering proactive outgoing AI agent calls.
 * [Bring your own LLM](/voice-ai/bring-your-own-llm) — Connect custom self-hosted models or private OpenAI-compatible endpoints.

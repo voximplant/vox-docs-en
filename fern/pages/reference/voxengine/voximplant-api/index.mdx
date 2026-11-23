@@ -1399,7 +1399,7 @@ Whether SMS sending and receiving is enabled for this phone number via the `Cont
 
 <a id="attachedphoneinfo-issmssupported" />
 <ParamField path="isSmsSupported" type="boolean">
-Whether SMS is supported for this phone number. SMS needs to be explicitly enabled via the `ControlSms` Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from this phone number via the `SendSmsMessage` Management API and received via the `InboundSmsCallback` property of the HTTP callback. See [this article](/platform/management-api/callbacks) for HTTP callback details
+Whether SMS is supported for this phone number. SMS needs to be explicitly enabled via the `ControlSms` Management API before sending or receiving SMS. If SMS is supported and enabled, SMS can be sent from this phone number via the `SendSmsMessage` Management API and received via the `InboundSmsCallback` property of the HTTP callback. See [this article](/reference/management-api/callbacks) for HTTP callback details
 </ParamField>
 
 <a id="attachedphoneinfo-modified" />
@@ -7987,7 +7987,7 @@ Sends an A2P SMS message from the application to customers. A SenderID is requir
 
 <a id="smsinterface-controlsms" />
 <ParamField path="controlSms" type="(request: ControlSmsRequest) => Promise<ControlSmsResponse>">
-Enables or disables sending and receiving SMS for the phone number. Can be used only for phone numbers with SMS support, which is indicated by the **is_sms_supported** property in the objects returned by the `GetPhoneNumbers` Management API. Each incoming SMS message is charged according to the [pricing](https://voximplant.com/pricing). If enabled, SMS can be sent from this phone number via the `SendSmsMessage` Management API and received via the `InboundSmsCallback` property of the HTTP callback. See [this article](/platform/management-api/callbacks) for HTTP callback details.
+Enables or disables sending and receiving SMS for the phone number. Can be used only for phone numbers with SMS support, which is indicated by the **is_sms_supported** property in the objects returned by the `GetPhoneNumbers` Management API. Each incoming SMS message is charged according to the [pricing](https://voximplant.com/pricing). If enabled, SMS can be sent from this phone number via the `SendSmsMessage` Management API and received via the `InboundSmsCallback` property of the HTTP callback. See [this article](/reference/management-api/callbacks) for HTTP callback details.
 </ParamField>
 
 <a id="smsinterface-getsmshistory" />
@@ -7997,7 +7997,7 @@ Gets the history of sent and/or received SMS.
 
 <a id="smsinterface-sendsmsmessage" />
 <ParamField path="sendSmsMessage" type="(request: SendSmsMessageRequest) => Promise<SendSmsMessageResponse>">
-Sends an SMS message between two phone numbers. The source phone number should be purchased from Voximplant and support SMS (which is indicated by the **is_sms_supported** property in the objects returned by the `GetPhoneNumbers` Management API) and SMS should be enabled for it via the `ControlSms` Management API. SMS messages can be received via HTTP callbacks, see [this article](/platform/management-api/callbacks) for details.
+Sends an SMS message between two phone numbers. The source phone number should be purchased from Voximplant and support SMS (which is indicated by the **is_sms_supported** property in the objects returned by the `GetPhoneNumbers` Management API) and SMS should be enabled for it via the `ControlSms` Management API. SMS messages can be received via HTTP callbacks, see [this article](/reference/management-api/callbacks) for details.
 </ParamField>
 
 ### SmsTransaction

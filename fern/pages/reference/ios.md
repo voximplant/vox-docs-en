@@ -25,8 +25,8 @@ Applications interact with the SDK through centralized singleton managers and de
 
 Explore detailed API documentation across these core areas:
 
-* **[VoximplantCore Reference]()** — Comprehensive guide to `VIClient`, connection nodes, session delegates, and authentication models.
-* **[VoximplantCalls Reference]()** — Methods, properties, and delegates for `VICall`, conference controls, and call quality events.
-* **[Audio & Hardware Management]()** — Manage system audio routing (earpiece, speaker, Bluetooth) and microphone permissions.
-* **[Video & Stream Rendering]()** — Camera management, local preview rendering, and remote video stream views (`VIVideoView`).
-* **[CallKit & PushKit Integration]()** — Native system calling UI, VoIP background push processing, and CallKit audio session handling.
+* **[VoximplantCore reference]()** — Comprehensive guide to `VIClient`, connection nodes, session delegates, and authentication models.
+* **[VoximplantCalls reference]()** — Methods, properties, and delegates for `VICall`, conference controls, and call quality events.
+* **[Audio and hardware management]()** — Manage system audio routing (earpiece, speaker, Bluetooth) and microphone permissions.
+* **[Video and stream rendering]()** — Camera management, local preview rendering, and remote video stream views (`VIVideoView`).
+* **[CallKit and PushKit integration]()** — Native system calling UI, VoIP background push processing, and CallKit audio session handling.

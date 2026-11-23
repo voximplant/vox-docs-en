@@ -1,6 +1,6 @@
 /**
  * Voximplant + Inworld Realtime API demo
- * Scenario: place an outbound call and bridge it to Inworld Realtime.
+ * Scenario: place an outgoing call and bridge it to Inworld Realtime.
  *
  * Configure this in the Voximplant application:
  * - Secret `INWORLD_API_KEY` (Voximplant Secrets)
@@ -82,7 +82,7 @@ VoxEngine.addEventListener(AppEvents.Started, async () => {
         const {destination, callerId} = JSON.parse(VoxEngine.customData());
 
         call = VoxEngine.callPSTN(destination, callerId);
-        // Alternative outbound paths:
+        // Alternative outgoing paths:
         // call = VoxEngine.callUser({username: destination, callerid: callerId});
         // call = VoxEngine.callSIP(`sip:${destination}@your-sip-domain`, callerId);
         // call = VoxEngine.callWhatsappUser({number: destination, callerid: callerId});

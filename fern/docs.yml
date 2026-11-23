@@ -78,29 +78,39 @@ navigation:
       - page: Getting started
         path: ./pages/voice-ai/getting-started.md
         icon: fa-duotone fa-rocket
+      - page: Pipeline options
+        path: ./pages/voice-ai/pipeline-options.mdx
+        slug: pipeline-options
+        icon: fa-duotone fa-sitemap
       - section: Build with AI coding agents
+        slug: vibe-coding
         contents:
           - page: Overview
+            slug: overview
             path: ./pages/voice-ai/vibe-coding/overview.mdx
             icon: fa-duotone fa-wand-magic-sparkles
           - page: Build with Claude Code
+            slug: claude
             path: ./pages/voice-ai/vibe-coding/claude.mdx
             icon: fa-brands fa-claude
       - section: Voice AI connectors
+        slug: connectors
+        skip-slug: true
         contents:
-          - page: Client Options
+          - page: Client options
+            slug: client-options
             path: ./pages/voice-ai/client-options.mdx
-            icon: fa-duotone fa-circle-info
-          - section: Bring Your Own LLM
+            icon: fa-duotone fa-sliders
+          - section: Bring your own LLM
             slug: bring-your-own-llm
             icon: fa-duotone fa-plug
             path: ./pages/voice-ai/bring-your-own-llm/introduction.md
             contents:
-              - page: Open AI API Compatibility
+              - page: OpenAI API compatibility
                 slug: open-ai-api-compatibility
                 path: ./pages/voice-ai/bring-your-own-llm/open-ai-api-compatibility.mdx
                 icon: fa-duotone fa-brain-circuit
-              - page: "Chat Completions: Together AI"
+              - page: "Chat completions: Together AI"
                 slug: chat-completions-together
                 path: ./pages/voice-ai/bring-your-own-llm/chat-completions-together.mdx
                 icon: fa-duotone fa-comments
@@ -117,6 +127,7 @@ navigation:
                 path: ./pages/voice-ai/bring-your-own-llm/azure-openai-realtime.mdx
                 icon: fa-duotone fa-cloud
           - section: OpenAI
+            slug: openai
             contents:
               - page: Overview
                 slug: overview
@@ -126,16 +137,16 @@ navigation:
                 slug: gpt-live
                 path: ./pages/voice-ai/openai/gpt-live.mdx
                 icon: fa-duotone fa-waveform
-              - page: Migration guide from Beta
+              - page: Migration guide from beta
                 slug: migration-guide
                 path: ./pages/voice-ai/openai/migration-guide.mdx
                 hidden: true
                 icon: fa-duotone fa-route
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/openai/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/openai/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -154,18 +165,19 @@ navigation:
               - page: Half-cascade with Inworld
                 slug: half-cascade-inworld
                 path: ./pages/voice-ai/openai/half-cascade-inworld.mdx
-                icon: fa-duotone fa-bolt
+                icon: fa-duotone fa-sparkles
               - page: Half-cascade with Cartesia
                 slug: half-cascade-cartesia
                 path: ./pages/voice-ai/openai/half-cascade-cartesia.mdx
-                icon: fa-duotone fa-bolt
+                icon: fa-duotone fa-wave-pulse
           - section: Gemini Live
+            slug: google
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/google/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/google/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
@@ -173,7 +185,7 @@ navigation:
                 slug: vertex-ai
                 path: ./pages/voice-ai/google/vertex-ai.mdx
                 icon: fa-duotone fa-bolt
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/google/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -184,18 +196,19 @@ navigation:
               - page: Speech translation
                 slug: speech-translation
                 path: ./pages/voice-ai/google/speech-translation.mdx
-                icon: fa-duotone fa-phone
+                icon: fa-duotone fa-language
           - section: Ultravox Realtime
+            slug: ultravox
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/ultravox/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/ultravox/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/ultravox/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -204,16 +217,17 @@ navigation:
                 path: ./pages/voice-ai/ultravox/function-calling.mdx
                 icon: fa-duotone fa-code
           - section: ElevenLabs Agents
+            slug: elevenlabs
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/elevenlabs/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/elevenlabs/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/elevenlabs/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -222,16 +236,17 @@ navigation:
                 path: ./pages/voice-ai/elevenlabs/function-calling.mdx
                 icon: fa-duotone fa-code
           - section: Cartesia Line Agents
+            slug: cartesia
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/cartesia/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/cartesia/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/cartesia/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -240,16 +255,17 @@ navigation:
                 path: ./pages/voice-ai/cartesia/function-calling.mdx
                 icon: fa-duotone fa-code
           - section: Inworld Realtime
+            slug: inworld
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/inworld/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/inworld/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/inworld/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -258,16 +274,17 @@ navigation:
                 path: ./pages/voice-ai/inworld/function-calling.mdx
                 icon: fa-duotone fa-code
           - section: Deepgram Agents
+            slug: deepgram
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/deepgram/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/deepgram/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/deepgram/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -280,34 +297,36 @@ navigation:
                 path: ./pages/voice-ai/deepgram/context-history.mdx
                 icon: fa-duotone fa-database
           - section: xAI Grok Voice Agent
+            slug: xai
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/xai/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/xai/inbound.mdx
-                icon: fa-duotone fa-phone
+                icon: fa-duotone fa-phone-arrow-down-left
               - page: Features
                 slug: features
                 path: ./pages/voice-ai/xai/features.mdx
                 icon: fa-duotone fa-stars
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/xai/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
           - section: Qwen Cloud
+            slug: qwen
             contents:
               - page: Overview
                 slug: overview
                 path: ./pages/voice-ai/qwen/overview.mdx
                 icon: fa-duotone fa-circle-info
-              - page: Inbound call
+              - page: Incoming call
                 slug: inbound
                 path: ./pages/voice-ai/qwen/inbound.mdx
                 icon: fa-duotone fa-phone-arrow-down-left
-              - page: Outbound call
+              - page: Outgoing call
                 slug: outbound
                 path: ./pages/voice-ai/qwen/outbound.mdx
                 icon: fa-duotone fa-phone-arrow-up-right
@@ -316,6 +335,7 @@ navigation:
                 path: ./pages/voice-ai/qwen/function-calling.mdx
                 icon: fa-duotone fa-code
           - section: Dialogflow
+            slug: dialogflow
             contents:
               - page: Dialogflow ES
                 slug: es
@@ -325,47 +345,62 @@ navigation:
                 slug: cx
                 path: ./pages/voice-ai/dialogflow/cx.mdx
                 icon: fa-duotone fa-comments
-      - section: MCP Client
+      - section: MCP client
+        slug: mcp-client
         path: ./pages/voice-ai/mcp-client/introduction.md
         contents:
           - page: Overview
+            slug: overview
             path: ./pages/voice-ai/mcp-client/overview.mdx
             icon: fa-duotone fa-circle-info
           - page: Gemini-Zapier-MCP example
+            slug: gemini-zapier-mcp
             path: ./pages/voice-ai/mcp-client/gemini-zapier-mcp-example.mdx
             icon: fa-duotone fa-code
       - section: Jev
+        slug: jev
         contents:
           - page: Overview
+            slug: overview
             path: ./pages/voice-ai/jev/overview.mdx
             icon: fa-duotone fa-circle-info
           - page: System One client
+            slug: system-one-client
             path: ./pages/voice-ai/jev/system-one-client.mdx
             icon: fa-duotone fa-list-check
       - section: Network options
+        slug: network-options
         contents:
           - page: Phone numbers & PSTN
+            slug: phone-numbers-pstn
             path: ./pages/voice-ai/network-options/phone-numbers-pstn.mdx
             icon: fa-duotone fa-phone
           - page: SIP
+            slug: sip
             path: ./pages/voice-ai/network-options/sip.mdx
             icon: fa-duotone fa-phone-office
           - page: WhatsApp
+            slug: whatsapp
             path: ./pages/voice-ai/network-options/whatsapp.mdx
             icon: fa-brands fa-whatsapp
-          - page: WhatsApp Multi-modal Proxy Server
+          - page: WhatsApp multimodal proxy server
+            slug: whatsapp-multimodal-server
             path: ./pages/voice-ai/network-options/whatsapp-multimodal-server.mdx
             hidden: true
             icon: fa-duotone fa-server
-          - page: Web & Mobile
+          - page: Web & mobile
+            slug: web-mobile
             path: ./pages/voice-ai/network-options/web-mobile.mdx
             icon: fa-duotone fa-user
       - section: Incoming vs outgoing calls
+        slug: inbound-vs-outbound
         contents:
-          - page: Inbound calls
+          - page: Incoming calls
+            slug: inbound-calls
             path: ./pages/voice-ai/inbound-vs-outbound/inbound-calls.mdx
             icon: fa-duotone fa-phone-arrow-down-left
-          - page: Outbound calls
+          - page: Outgoing calls
+            slug: outbound-calls
             path: ./pages/voice-ai/inbound-vs-outbound/outbound-calls.mdx
             icon: fa-duotone fa-phone-arrow-up-right
       - section: What is next?
@@ -379,30 +414,30 @@ navigation:
             slug: telephony-and-voice-ai
             path: ./pages/voice-ai/enhance-and-deploy/telephony-and-voice-ai.mdx
             icon: fa-duotone fa-phone-volume
-          - page: Build and Deploy
+          - page: Build and deploy
             slug: build-and-deploy
             path: ./pages/voice-ai/enhance-and-deploy/build-and-deploy.mdx
             icon: fa-duotone fa-rocket-launch
-      - section: Speech Flow Control
+      - section: Speech flow control
         slug: speech-flow-control
         contents:
-          - page: Turn Detection
+          - page: Turn detection
             slug: turn-detection
             path: ./pages/voice-ai/speech-flow-control/turn-detection.mdx
             icon: fa-duotone fa-wave-pulse
-          - page: Voice Activity Detection
+          - page: Voice activity detection
             slug: voice-activity-detection
             path: ./pages/voice-ai/speech-flow-control/voice-activity-detection.mdx
             icon: fa-duotone fa-waveform-lines
-          - page: Noise Suppression
+          - page: Noise suppression
             slug: noise-suppression
             path: ./pages/voice-ai/speech-flow-control/noise-suppression.mdx
-            icon: fa-duotone fa-volume-high
+            icon: fa-duotone fa-volume-slash
           - page: Agentic VoiceDSP
             slug: agentic-voicedsp
             path: ./pages/voice-ai/speech-flow-control/agentic-voicedsp.mdx
             icon: fa-duotone fa-layer-group
-      - section: Speech Guides
+      - section: Speech guides
         slug: speech
         contents:
           - page: OpenAI TTS voices
@@ -412,7 +447,7 @@ navigation:
           - page: xAI realtime TTS
             slug: grok-tts
             path: ./pages/voice-ai/speech/grok-tts.mdx
-            icon: fa-duotone fa-volume-high
+            icon: fa-duotone fa-waveform
           - page: Measuring TTS latency
             slug: tts-metrics
             path: ./pages/voice-ai/speech/tts-metrics.mdx
@@ -483,7 +518,7 @@ navigation:
             icon: fa-duotone fa-grid
       - section: Media streams
         contents:
-          - page: Media Streams format
+          - page: Media streams format
             path: ./pages/platform/media-streams/format.md
             icon: fa-duotone fa-waveform
           - page: Media over WebSockets
@@ -634,11 +669,13 @@ navigation:
         path: ./pages/reference/overview.md
         icon: fa-duotone fa-list-check
       - section: VoxEngine
+        slug: voxengine
         contents:
           - page: Overview
             path: ./pages/reference/voxengine/overview.mdx
             icon: fa-brands fa-js
           - section: Runtime and modules
+            slug: runtime-and-modules
             icon: fa-duotone fa-cubes
             contents:
               - page: VoxEngine
@@ -702,6 +739,7 @@ navigation:
                 path: ./pages/reference/voxengine/video-codecs.mdx
             skip-slug: true
           - section: Media playback and recording
+            slug: media-playback-and-recording
             icon: fa-duotone fa-circle-play
             contents:
               - page: Player
@@ -886,6 +924,7 @@ navigation:
                 path: ./pages/reference/voxengine/dialogflow-ssml-voice-gender.mdx
             skip-slug: true
           - section: Voice AI
+            slug: voice-ai
             icon: fa-duotone fa-sparkles
             contents:
               - section: AI
@@ -1046,38 +1085,56 @@ navigation:
                     path: ./pages/reference/voxengine/mcp/server-events.mdx
             skip-slug: true
           - section: WebSocket and protocol integrations
+            slug: websocket-and-protocol-integrations
+            skip-slug: true
             icon: fa-duotone fa-plug
             contents:
               - page: WebSocket
+                slug: websocket
                 path: ./pages/reference/voxengine/websocket.mdx
               - page: WebSocketAudioEncoding
+                slug: websocket-audio-encoding
                 path: ./pages/reference/voxengine/websocket-audio-encoding.mdx
               - page: WebSocketCloseCode
+                slug: websocket-close-code
                 path: ./pages/reference/voxengine/websocket-close-code.mdx
               - page: WebSocketEvents
+                slug: websocket-events
                 path: ./pages/reference/voxengine/websocket-events.mdx
               - page: WebSocketReadyState
+                slug: websocket-ready-state
                 path: ./pages/reference/voxengine/websocket-ready-state.mdx
               - page: Working with API requests
+                slug: api-requests
                 path: ./pages/reference/voxengine/api-requests.mdx
           - section: Queues and routing
+            slug: queues-and-routing
+            skip-slug: true
             icon: fa-duotone fa-route
             contents:
               - page: CallList
+                slug: call-list
                 path: ./pages/reference/voxengine/call-list/index.mdx
               - page: ACDEvents
+                slug: acd-events
                 path: ./pages/reference/voxengine/acd-events.mdx
               - page: ACDRequest
+                slug: acd-request
                 path: ./pages/reference/voxengine/acd-request.mdx
               - page: SmartQueueEvents
+                slug: smart-queue-events
                 path: ./pages/reference/voxengine/smart-queue-events.mdx
               - page: SmartQueueOperatorSettingsMode
+                slug: smart-queue-operator-settings-mode
                 path: ./pages/reference/voxengine/smart-queue-operator-settings-mode.mdx
               - page: SmartQueueTask
+                slug: smart-queue-task
                 path: ./pages/reference/voxengine/smart-queue-task.mdx
               - page: TaskWaitingCode
+                slug: task-waiting-code
                 path: ./pages/reference/voxengine/task-waiting-code.mdx
       - section: Management API
+        slug: management-api
         contents:
           - api: Reference
             api-name: management-api
@@ -1093,19 +1150,23 @@ navigation:
               - rules
               - history
               - phone-numbers
-              - section: PSTN Blacklist
+              - section: PSTN blacklist
+                slug: pstn-blacklist
                 referenced-packages:
                   - pstnBlacklist
                 contents: []
-              - section: SIP White List
+              - section: SIP whitelist
+                slug: sip-white-list
                 referenced-packages:
                   - sipWhiteList
                 contents: []
-              - section: SIP Registration
+              - section: SIP registration
+                slug: sip-registration
                 referenced-packages:
                   - sipRegistration
                 contents: []
-              - section: WAB Phone Numbers
+              - section: WAB phone numbers
+                slug: wab-phone-numbers
                 referenced-packages:
                   - wabPhoneNumbers
                 contents: []
@@ -1129,12 +1190,15 @@ navigation:
                   - POST /GetSmsHistory
                   - POST /SendSmsMessage
           - page: Authorization
+            slug: authorization
             path: ./pages/reference/management-api/authorization.mdx
             icon: fa-duotone fa-key
           - page: Callbacks
+            slug: callbacks
             path: ./pages/reference/management-api/callbacks.mdx
             icon: fa-duotone fa-webhook
           - page: Errors
+            slug: errors
             path: ./pages/reference/management-api/errors.mdx
             icon: fa-duotone fa-triangle-exclamation
       - section: Web SDK
@@ -1205,3 +1269,15 @@ colors:
 
 css: assets/custom.css
 js: assets/custom.js
+
+redirects:
+  - source: /reference/voxengine
+    destination: /reference/voxengine/overview
+  - source: /reference/management-api
+    destination: /reference/management-api/reference
+  - source: /voice-ai/dialogflow/overview
+    destination: /voice-ai/dialogflow/es
+  - source: /platform/management-api/callbacks
+    destination: /reference/management-api/callbacks
+  - source: /platform/api-requests
+    destination: /reference/voxengine/api-requests

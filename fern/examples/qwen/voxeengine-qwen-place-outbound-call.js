@@ -44,7 +44,7 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
     }
 
     const call = VoxEngine.callPSTN(destination, callerId);
-    // Alternative outbound paths (uncomment one and comment out callPSTN):
+    // Alternative outgoing paths (uncomment one and comment out callPSTN):
     // const call = VoxEngine.callUser({username: destination, callerid: callerId});
     // const call = VoxEngine.callSIP(`sip:${destination}@your-sip-domain`, callerId);
     // const call = VoxEngine.callWhatsappUser({number: destination, callerid: callerId});

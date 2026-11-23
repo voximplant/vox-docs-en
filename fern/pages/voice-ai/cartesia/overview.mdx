@@ -14,7 +14,7 @@ This allows one agent design to power calls across SIP trunks, WhatsApp, PSTN nu
 
 Capability and feature highlights:
 
-- Connect inbound and outbound calls to one Cartesia Line Agent
+- Connect incoming and outgoing calls to one Cartesia Line Agent
 - Bi-directional media streaming with telephony-ready audio format support
 - Barge-in support via clear events and media buffer control
 - Real-time agent events for ACK, custom metadata, DTMF, and diagnostics
@@ -49,18 +49,18 @@ Video link: [Cartesia Line Agents demo](https://www.youtube.com/watch?v=5tg83Xl2
 ## Development notes
 
 - **Native VoxEngine module**: load `require(Modules.Cartesia)` and create a `Cartesia.AgentsClient` via `Cartesia.createAgentsClient({ apiKey, agentId, cartesiaVersion, ... })`.
-- **Line Agent → VoxEngine coordination**: handle `AppEvents.HttpRequest` in your scenario to process `POST` messages sent by your Cartesia Line script for tool-call orchestration and routing decisions.
-- **VoxEngine → Line Agent configuration**: pass telephony context and callback endpoints to Line using the `metadata` object in `client.start({ ... })` so the agent can request out-of-band actions from VoxEngine.
+- **Line Agent → VoxEngine coordination**: handle `AppEvents.HttpRequest` in your scenario to process `POST` messages that your Cartesia Line script sends for tool-call orchestration and routing decisions.
+- **VoxEngine → Line Agent configuration**: pass telephony context and callback endpoints to Line via the `metadata` object in `client.start({ ... })` so the agent can request out-of-band actions from VoxEngine.
 - **Barge-in and turn-taking**: interruption behavior between caller/callee and the agent is managed by the Line Agent runtime; no additional VAD or turn-taking configuration is required in VoxEngine.
 - **Telephony tools for Voximplant-controlled routing**: Line built-ins like `end_call` and `transfer_call` are designed for Line-native calling flows. For Voximplant-owned flows (warm transfer, SIP handoff, post-call survey), define passthrough tools in Line that signal VoxEngine out-of-band, then execute the telephony action in VoxEngine.
 
-The [Function Calling example](/voice-ai/cartesia/function-calling) demonstrates how to use the HTTP callback pattern for Line → VoxEngine control.
+The [Function calling example](/voice-ai/cartesia/function-calling) demonstrates how to use the HTTP callback pattern for Line → VoxEngine control.
 See the [Cartesia module API reference](/reference/voxengine/cartesia) for all methods and events.
 
 ## Examples
 
 - [Example: Answering an incoming call](/voice-ai/cartesia/inbound)
-- [Example: Placing an outbound call](/voice-ai/cartesia/outbound)
+- [Example: Placing an outgoing call](/voice-ai/cartesia/outbound)
 - [Example: Function calling](/voice-ai/cartesia/function-calling)
 
 ## Links

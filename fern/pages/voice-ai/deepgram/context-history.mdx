@@ -1,13 +1,13 @@
 ---
 title: "Example: Context history with ApplicationStorage"
-description: "This example answers an inbound call and uses ApplicationStorage to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via agent.context.messages."
+description: "This example answers an incoming call and uses ApplicationStorage to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via agent.context.messages."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound call and uses `ApplicationStorage` to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via `agent.context.messages`.
+This example answers an incoming call and uses `ApplicationStorage` to persist a small “memory” per caller across calls, then injects it into the next Deepgram Voice Agent session via `agent.context.messages`.
 
 For a full breakdown of session setup, media bridging, barge-in, and event handling, see [Example: Answering an incoming call](/voice-ai/deepgram/inbound).
 
@@ -15,7 +15,7 @@ For a full breakdown of session setup, media bridging, barge-in, and event handl
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -27,7 +27,7 @@ For a full breakdown of session setup, media bridging, barge-in, and event handl
 
 ### 1) Pick a user identity and storage key
 
-The example uses the inbound caller ID (`call.callerid()`) as a simple “user identity”, and stores history under a key like `dgva_history:+15550123456`.
+The example uses the incoming caller ID (`call.callerid()`) as a simple “user identity”, and stores history under a key like `dgva_history:+15550123456`.
 
 <Info title="Caller ID is not always a stable user ID">
   Caller ID can be missing, blocked, spoofed, or shared (for example, a PBX).

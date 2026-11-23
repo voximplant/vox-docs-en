@@ -1,13 +1,13 @@
 ---
-title: "Example: Placing an outbound call"
-description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Inworld Realtime once the callee answers."
+title: "Example: Placing an outgoing call"
+description: "This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to Inworld Realtime once the callee answers."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Inworld Realtime once the callee answers.
+This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to Inworld Realtime once the callee answers.
 
 **Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -15,10 +15,10 @@ This example starts a VoxEngine session, places an outbound PSTN call, and bridg
 
 - Create a [routing rule](/platform/getting-started/create-a-routing-rule) with this scenario attached so you can run it from the Control Panel or trigger it with the Management API.
 - Have a PSTN `destination` number you can dial.
-- Configure a valid outbound `callerId`, such as a rented Voximplant number or a verified caller ID. See [Phone Numbers & PSTN](/voice-ai/network-options/phone-numbers-pstn).
+- Configure a valid outgoing `callerId`, such as a rented Voximplant number or a verified caller ID. See [Phone Numbers & PSTN](/voice-ai/network-options/phone-numbers-pstn).
 - Store your Inworld API key in Voximplant [Secrets](/platform/storage/secret-storage) under `INWORLD_API_KEY`.
 
-## Outbound call parameters
+## Outgoing call parameters
 
 The example expects `destination` and `callerId` in `customData` passed to the routing rule:
 
@@ -37,9 +37,9 @@ For quick testing from the Voximplant Control Panel:
 
 For production, start the routing rule via the [Management API `startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method and pass the same JSON in `script_custom_data`.
 
-## Alternate outbound destinations
+## Alternate outgoing destinations
 
-This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outgoing calls to other destination types in VoxEngine:
 
 - **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
 - **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call from an enabled WhatsApp Business number.
@@ -53,13 +53,13 @@ Relevant guides:
 
 ## Session setup
 
-Outbound setup follows this order:
+Set up the outgoing call in this order:
 
 1. Parse `destination` and `callerId` from `VoxEngine.customData()`.
 2. Place the PSTN call with `VoxEngine.callPSTN(...)`.
 3. Wait for `CallEvents.Connected`.
 4. Create `Inworld.RealtimeAPIClient`.
-5. Send the same style of `sessionUpdate(...)` payload shown in the [inbound example](/voice-ai/inworld/inbound) after Inworld emits `SessionCreated`.
+5. Send the same style of `sessionUpdate(...)` payload from the [incoming example](/voice-ai/inworld/inbound) after Inworld emits `SessionCreated`.
 6. Bridge call media to Inworld after `SessionUpdated`.
 7. Seed the first assistant turn with `conversationItemCreate(...)` and `responseCreate(...)`.
 
@@ -75,7 +75,7 @@ call.addEventListener(CallEvents.Connected, async () => {
 });
 ```
 
-The full outbound scenario keeps the session config intentionally smaller than the [inbound example](/voice-ai/inworld/inbound): it sets the model, prompt, audio input/output models, and the TTS delivery options used by this call flow.
+The full outgoing scenario keeps the session config intentionally smaller than the [incoming example](/voice-ai/inworld/inbound): it sets the model, prompt, audio input/output models, and the TTS delivery options used by this call flow.
 For the detailed session config walkthrough, including naturalness and responsiveness tuning, see [Answering an incoming call](/voice-ai/inworld/inbound).
 
 After `SessionUpdated`, connect the PSTN leg to Inworld and trigger the opening turn:
@@ -117,7 +117,7 @@ voiceAIClient.addEventListener(Inworld.RealtimeAPIEvents.InputAudioBufferSpeechS
 
 - `INWORLD_API_KEY` is read from Voximplant Secrets.
 - `sessionKey` can be any unique string to maintain context for the Inworld session.
-- The example includes a demo hangup timer so unattended outbound tests do not run indefinitely.
+- The example includes a demo hangup timer so unattended outgoing tests do not run indefinitely.
 
 ## Full VoxEngine scenario
 

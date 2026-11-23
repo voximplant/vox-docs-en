@@ -424,7 +424,7 @@ else {
 
 ### 3. Bridge the call
 
-In `callCourierOrClient()`, notify the caller that the connection is underway, initiate the outbound call to the callee using [callPSTN()](/reference/voxengine/voxengine#callpstn), and play hold music to the caller:
+In `callCourierOrClient()`, notify the caller that the connection is underway, initiate the outgoing call to the callee using [callPSTN()](/reference/voxengine/voxengine#callpstn), and play hold music to the caller:
 
 ```javascript title="Dial destination and play hold music"
 await say(store.data.sub_status === 'Courier' ? phrases.waitForClient : phrases.waitForCourier, call);

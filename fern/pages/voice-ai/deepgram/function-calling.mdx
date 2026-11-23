@@ -1,19 +1,19 @@
 ---
 title: "Example: Function calling"
-description: "This example answers an inbound Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine."
+description: "This example answers an incoming Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine.
+This example answers an incoming Voximplant call, connects it to Deepgram Voice Agent, and handles function calls (tool requests) from the agent inside VoxEngine.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -42,7 +42,7 @@ VoxEngine.sendMediaBetween(call, voiceAgentClient);
 
 In the scenario, `Deepgram.VoiceAgentEvents.FunctionCallRequest` delivers one or more function calls requested by the agent.
 
-Each call includes an `id`, a `name`, and JSON string `arguments`. Respond using `voiceAgentClient.sendFunctionCallResponse(...)` with a `FunctionCallResponse` message containing the same `id`:
+Each call includes an `id`, a `name`, and JSON string `arguments`. Respond via `voiceAgentClient.sendFunctionCallResponse(...)` with a `FunctionCallResponse` message containing the same `id`:
 
 ```js title="Handle FunctionCallRequest and respond"
 voiceAgentClient.addEventListener(Deepgram.VoiceAgentEvents.FunctionCallRequest, (event) => {

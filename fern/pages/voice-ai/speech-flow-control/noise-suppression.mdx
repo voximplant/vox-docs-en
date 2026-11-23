@@ -1,5 +1,5 @@
 ---
-title: Noise Suppression
+title: Noise suppression
 subtitle: Reduce background noise in VoxEngine call audio with Hush
 ---
 <blockquote className="agent-directive">
@@ -8,13 +8,13 @@ subtitle: Reduce background noise in VoxEngine call audio with Hush
 
 ## Overview
 
-Hush noise suppression processes call audio and sends enhanced audio to a destination such as a caller or recorder. It can be useful in regular calls and in Voice AI flows, where background noise can affect recognition and cause false interruptions. For speech boundaries, combine it with [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection) or [Turn Detection](/voice-ai/speech-flow-control/turn-detection) as needed.
+Hush noise suppression processes call audio and sends enhanced audio to a destination such as a caller or recorder. It can be useful in regular calls and in Voice AI flows, where background noise can affect recognition and cause false interruptions. For speech boundaries, combine it with [Voice activity detection](/voice-ai/speech-flow-control/voice-activity-detection) or [Turn detection](/voice-ai/speech-flow-control/turn-detection) as needed.
 
 For one connector that combines Hush with VAD and turn detection, see [Agentic VoiceDSP](/voice-ai/speech-flow-control/agentic-voicedsp), which enables noise suppression with optional `noiseSuppressionParameters`. This guide covers the separate Hush media unit.
 
 Create a session with [`Hush.createNoiseSuppression`](/reference/voxengine/hush) and pass parameters such as `attenLimDb`. Bridge audio with [`sendMediaTo`](/reference/voxengine/hush/noise-suppression) and [`stopMediaTo`](/reference/voxengine/hush/noise-suppression). Listen for [`NoiseSuppressionEvents`](/reference/voxengine/hush/noise-suppression-events) such as `ConnectorInformation`, `Error`, and `Reset`.
 
-> **Beta:** Hush noise suppression is currently in beta and temporarily not billed. Billing will apply automatically when the feature officially launches.
+> **Beta:** Hush noise suppression is currently in beta and temporarily not billed. Billing applies automatically when the feature officially launches.
 
 ## Route call audio through Hush
 
@@ -51,7 +51,7 @@ The example listens for connector information and errors so the scenario can log
 
 It can be difficult to evaluate noise suppression during a live conversation because microphone audio and enhanced playback overlap. To compare the processed audio with the original, route a noisy clip into Hush without sending the live microphone to it, and record the processed output.
 
-Use an audio clip with background noise, such as office, street, or cafe noise. A 16 kHz mono clip can be used directly; MediaServer can also resample an MP3. After the recorder stops, copy its URL from the scenario logs and compare it with the original in an audio editor. If replaying the same clip in one session, call [`reset()`](/reference/voxengine/hush/noise-suppression#reset) between replays.
+Use an audio clip with background noise, such as office, street, or cafe noise. A 16 kHz mono clip works directly; MediaServer can also resample an MP3. After the recorder stops, copy its URL from the scenario logs and compare it with the original in an audio editor. If replaying the same clip in one session, call [`reset()`](/reference/voxengine/hush/noise-suppression#reset) between replays.
 
 ```js
 require(Modules.Hush);
@@ -119,8 +119,8 @@ Keep the caller silent or muted while the clip plays. Do not send the live call 
 
 ### Voximplant
 
-- [Voice Activity Detection](/voice-ai/speech-flow-control/voice-activity-detection)
-- [Turn Detection](/voice-ai/speech-flow-control/turn-detection)
+- [Voice activity detection](/voice-ai/speech-flow-control/voice-activity-detection)
+- [Turn detection](/voice-ai/speech-flow-control/turn-detection)
 - [Hush module API reference](/reference/voxengine/hush)
 - [NoiseSuppression](/reference/voxengine/hush/noise-suppression)
 - [NoiseSuppressionEvents](/reference/voxengine/hush/noise-suppression-events)

@@ -1,22 +1,22 @@
 ---
-title: "Example: Placing an outbound call"
-description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to OpenAI Realtime once the callee answers."
+title: "Example: Placing an outgoing call"
+description: "This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to OpenAI Realtime once the callee answers."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to OpenAI Realtime once the callee answers. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
+This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to OpenAI Realtime once the callee answers. Select a model version to keep the session configuration and complete scenario synchronized. `gpt-realtime-2.1` is the default for new applications.
 
 **Jump to the [Full VoxEngine scenarios](#full-voxengine-scenarios).**
 
 ## Prerequisites
 
 - Store your OpenAI API key in Voximplant [Secrets](/platform/storage/secret-storage) under `OPENAI_API_KEY`.
-- Ensure outbound calling is enabled for your Voximplant application and that your caller ID is verified.
+- Ensure outgoing calling is enabled for your Voximplant application and that your caller ID is verified.
 
-## Outbound call parameters
+## Outgoing call parameters
 
 The example expects destination and caller ID in `customData` (read via `VoxEngine.customData()`):
 
@@ -26,7 +26,7 @@ The example expects destination and caller ID in `customData` (read via `VoxEngi
 
 ## Launch the routing rule
 
-For quick testing, you can start this outbound scenario from the Voximplant Control Panel:
+For quick testing, you can start this outgoing scenario from the Voximplant Control Panel:
 
 1. Open your Voximplant application and go to the **Routing** tab.
 2. Select the routing rule that has this scenario attached.
@@ -39,9 +39,9 @@ For quick testing, you can start this outbound scenario from the Voximplant Cont
 
 For production, start the routing rule with the Management API [`startScenarios`](/reference/management-api/reference/scenarios/start-scenarios) method. Pass `rule_id` and the same JSON string in `script_custom_data`.
 
-## Alternate outbound destinations
+## Alternate outgoing destinations
 
-This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outgoing calls to other destination types in VoxEngine:
 
 - **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
 - **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
@@ -55,7 +55,7 @@ Relevant guides:
 
 ## Session setup
 
-The outbound call setup is shared between versions. Only the Realtime model and session configuration change.
+The outgoing call setup is shared between versions. Only the Realtime model and session configuration change.
 
 <Tabs>
   <Tab title="GPT Realtime 2.1" language="gpt-realtime-2.1">

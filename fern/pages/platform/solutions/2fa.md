@@ -3,7 +3,7 @@
 Two-factor authentication (2FA) strengthens account security by requiring users to verify their identity with a one-time passcode (OTP) delivered to their mobile device.
 
 With Voximplant, you can deliver 2FA security codes across two channels:
-* **Voice OTP calls**: Places an automated outbound call that speaks the verification code using neural text-to-speech.
+* **Voice OTP calls**: Places an automated outgoing call that speaks the verification code using neural text-to-speech.
 * **SMS messages**: Delivers passcodes via global high-priority A2P SMS.
 
 ---
@@ -13,10 +13,10 @@ With Voximplant, you can deliver 2FA security codes across two channels:
 To place an automated call that dictates an OTP code to your user:
 
 1. Create an [application](/platform/getting-started/create-an-application).
-2. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to serve as your verified outbound caller ID.
+2. Rent a [phone number](/platform/getting-started/buy-a-phone-number) to serve as your verified outgoing caller ID.
 3. Create a [scenario](/platform/getting-started/create-a-scenario) that:
    * Extracts the destination number and security code from session [custom data](/platform/storage/custom-data).
-   * Places an outbound call using [callPSTN()](/reference/voxengine/voxengine#callpstn).
+   * Places an outgoing call using [callPSTN()](/reference/voxengine/voxengine#callpstn).
    * Synthesizes and dictates the passcode to the user using [createTTSPlayer()](/reference/voxengine/voxengine#createttsplayer) or `call.say()`.
 
 Your backend initiates the call remotely via the Management API [StartScenarios](/reference/management-api/reference/scenarios/start-scenarios) method, passing the destination phone number and OTP code in the `script_custom_data` parameter:

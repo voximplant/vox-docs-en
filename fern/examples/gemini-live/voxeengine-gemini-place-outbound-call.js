@@ -1,6 +1,6 @@
 /**
  * Voximplant + Gemini Live API connector demo
- * Scenario: place an outbound PSTN call and bridge it to Gemini Live API.
+ * Scenario: place an outgoing PSTN call and bridge it to Gemini Live API.
  */
 
 require(Modules.Gemini);
@@ -29,9 +29,9 @@ VoxEngine.addEventListener(AppEvents.Started, async () => {
         // example: {"destination": "+15551234567","callerId": "+15557654321"}
         const {destination, callerId} = JSON.parse(VoxEngine.customData());
 
-        // Place the outbound call
+        // Place the outgoing call
         call = VoxEngine.callPSTN(destination, callerId);
-        // Alternative outbound paths (uncomment to use):
+        // Alternative outgoing paths (uncomment to use):
         // call = VoxEngine.callUser({username: destination, callerid: callerId});
         // call = VoxEngine.callSIP(`sip:${destination}@your-sip-domain`, callerId);
         // call = VoxEngine.callWhatsappUser({number: destination, callerid: callerId});

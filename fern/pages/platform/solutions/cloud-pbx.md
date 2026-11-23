@@ -8,7 +8,7 @@ Build a scalable, cloud-based Private Branch Exchange (PBX) for your organizatio
 - [Setting up a cloud PBX](#setting-up-a-cloud-pbx)
   - [Scenario 1: Incoming calls and business hours](#scenario-1-incoming-calls-and-business-hours)
   - [Scenario 2: Internal extension calls](#scenario-2-internal-extension-calls)
-  - [Scenario 3: Outbound calls to PSTN](#scenario-3-outbound-calls-to-pstn)
+  - [Scenario 3: Outgoing calls to PSTN](#scenario-3-outgoing-calls-to-pstn)
   - [Routing rules configuration](#routing-rules-configuration)
 - [Setting up user workspaces (Softphones)](#setting-up-user-workspaces-softphones)
 
@@ -16,7 +16,7 @@ Build a scalable, cloud-based Private Branch Exchange (PBX) for your organizatio
 
 ## What is a cloud PBX
 
-A Private Branch Exchange (PBX) is an organizational telephony system that routes internal calls between extensions and manages incoming and outbound connections with the public telephone network (PSTN).
+A Private Branch Exchange (PBX) is an organizational telephony system that routes internal calls between extensions and manages incoming and outgoing connections with the public telephone network (PSTN).
 
 With Voximplant, you can build a software-defined cloud PBX featuring:
 
@@ -219,15 +219,15 @@ VoxEngine.forwardCallToUser(function (call, call2) {
 });
 ```
 
-### Scenario 3: Outbound calls to PSTN
+### Scenario 3: Outgoing calls to PSTN
 
-This scenario handles outbound calls placed from an internal PBX user to an external PSTN phone number:
+This scenario handles outgoing calls placed from an internal PBX user to an external PSTN phone number:
 
 <Warning title="Verified caller ID required">
-To place outbound calls to external phone numbers, you must specify a verified Caller ID. Use a phone number rented from Voximplant or an external number verified in your account. Refer to [How to call a phone number](/platform/telephony/calls) for details.
+To place outgoing calls to external phone numbers, you must specify a verified Caller ID. Use a phone number rented from Voximplant or an external number verified in your account. Refer to [How to call a phone number](/platform/telephony/calls) for details.
 </Warning>
 
-```javascript title="Outbound PSTN call scenario"
+```javascript title="Outgoing PSTN call scenario"
 const officeNumber = 'your-callerid-or-some-office-number';
 
 VoxEngine.addEventListener(AppEvents.CallAlerting, function (e) {
@@ -251,7 +251,7 @@ Because Voximplant evaluates routing rules sequentially from top to bottom and s
    * Scenario: Bind the internal extension scenario.
 2. **Outgoing PSTN rule (Medium priority)**:
    * Pattern: `^[0-9]{10,}$` (matches standard external phone numbers).
-   * Scenario: Bind the outbound PSTN scenario.
+   * Scenario: Bind the outgoing PSTN scenario.
 3. **Incoming public calls rule (Lowest priority)**:
    * Pattern: `.*` (or your rented phone number).
    * Scenario: Bind the incoming calls scenario.

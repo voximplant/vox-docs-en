@@ -1,19 +1,19 @@
 ---
 title: "Example: Answering an incoming call"
-description: "This example answers an inbound Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations."
+description: "This example answers an incoming Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example answers an inbound Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations.
+This example answers an incoming Voximplant call and bridges audio to Ultravox’s WebSocket API for real‑time speech‑to‑speech conversations.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -23,7 +23,7 @@ This example answers an inbound Voximplant call and bridges audio to Ultravox’
 
 ## Session setup
 
-Ultravox uses a WebSocket API client created via `Ultravox.createWebSocketAPIClient(...)`. The key inputs are:
+`Ultravox.createWebSocketAPIClient(...)` creates the WebSocket API client. The key inputs are:
 
 - `endpoint`: use `Ultravox.HTTPEndpoint.CREATE_CALL` (or `CREATE_AGENT_CALL` for an existing Ultravox agent).
 - `authorizations`: include `X-API-Key` with your Ultravox API key.
@@ -31,7 +31,7 @@ Ultravox uses a WebSocket API client created via `Ultravox.createWebSocketAPICli
 
 ## Connect call audio
 
-Once the client is created, bridge audio both ways between the call and Ultravox:
+After you create the client, bridge audio both ways between the call and Ultravox:
 
 ```js title="Connect call audio"
 VoxEngine.sendMediaBetween(call, voiceAIClient);

@@ -2,7 +2,7 @@
 // - Streams caller audio <-> Cartesia Line agent (Agents connector)
 // - Supports:
 //   - end_call: hang up the caller leg
-//   - call_transfer: place an outbound PSTN consult call and then bridge caller -> consult leg
+//   - call_transfer: place an outgoing PSTN consult call and then bridge caller -> consult leg
 //
 // Configure these in the Voximplant application:
 // - Secret `CARTESIA_API_KEY` (Voximplant Secrets)

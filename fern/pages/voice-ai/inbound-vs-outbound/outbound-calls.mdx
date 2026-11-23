@@ -1,5 +1,5 @@
 ---
-title: Outbound calls
+title: Outgoing calls
 subtitle: Flows where your scenario initiates the call
 ---
 <blockquote className="agent-directive">
@@ -7,19 +7,19 @@ subtitle: Flows where your scenario initiates the call
 </blockquote>
 
 
-Outbound flows start when you trigger a routing rule manually (Control Panel) or through the Management API (`startScenarios`).
+Outgoing flows start when you trigger a routing rule manually (Control Panel) or through the Management API (`startScenarios`).
 VoxEngine then starts `AppEvents.Started`.
 
-Alternatively you can start the outbound flow against a call list for automated dialing [see call lists for automated outbound calling](#call-lists-for-automated-outbound-calling).
+Alternatively, you can start the outgoing flow against a call list for automated dialing [see call lists for automated outgoing calling](#call-lists-for-automated-outbound-calling).
 
-## Outbound Voice AI pattern
+## Outgoing Voice AI pattern
 
-Outbound calls have different methods depending on the destination channel (PSTN, SIP, WhatsApp, app user),
+Outgoing calls have different methods depending on the destination channel (PSTN, SIP, WhatsApp, app user),
 but the overall pattern is similar: trigger the call, listen for `CallEvents.Connected`, then set up the Voice AI client and media bridging.
-The call methods require a `callerId`. For phone numbers this must be a verified caller ID or a purchased Voximplant number.
-For WhatsApp, this must be a verified WhatsApp Business number.
+The call methods require a `callerId`. For phone numbers this should be a verified caller ID or a purchased Voximplant number.
+For WhatsApp, this should be a verified WhatsApp Business number.
 
-```js title="Outbound Voice AI pattern"
+```js title="Outgoing Voice AI pattern"
 VoxEngine.addEventListener(AppEvents.Started, () => {
   // Retrieve information passed when the scenario was triggered
   const { destination, callerId } = JSON.parse(VoxEngine.customData());
@@ -43,13 +43,13 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 });
 ```
 
-### Start the outbound flow
+### Start the outgoing flow
 
 Choose one of these options:
 
 #### <Icon size="5" icon="fa-sharp fa-solid fa-square-1" /> Start from the GUI (Control Panel)
 
-In `manage.voximplant.com`, open your application, go to **Routing**, choose the rule that points to your outbound scenario, then start it with `script_custom_data` that includes destination and caller ID.
+In `manage.voximplant.com`, open your application, go to **Routing**, choose the rule that points to your outgoing scenario, then start it with `script_custom_data` that includes destination and caller ID.
 
 Custom script from the control panel demo:
 
@@ -76,16 +76,14 @@ curl -X POST "https://api.voximplant.com/platform_api/StartScenarios/" \
   --data-urlencode "rule_id=$VOX_RULE_ID" \
   --data-urlencode "script_custom_data={\"destination\":\"+15551234567\",\"callerId\":\"+15557654321\"}"
 ```
-If using the management API via `curl` or one of the [management API Clients](/overview/how-voximplant-works/management-api#api-clients),
-you will need to [configure an API key](https://manage.voximplant.com/settings/service_accounts?_ga=2.264241679.1608268282.1771956490-551602791.1771956490)
-and create an [authorization token](/reference/management-api/authorization).
+To call the Management API via `curl` or one of the [Management API clients](/overview/how-voximplant-works/management-api), [configure an API key](https://manage.voximplant.com/settings/service_accounts?_ga=2.264241679.1608268282.1771956490-551602791.1771956490) and create an [authorization token](/reference/management-api/authorization).
 
 
-### <Icon icon="fa-duotone fa-list-check" /> Outbound checklist
+### <Icon icon="fa-duotone fa-list-check" /> Outgoing checklist
 
 - Listen for the `AppEvents.Started` entry point
 - Use `VoxEngine.customData()` to retrieve any information needed for the scenario, such as destination and caller ID to use
-- Place the channel-specific call using one of the call methods (`callPSTN`, `callUser`, `callSIP`, `callWhatsappUser`)
+- Place the channel-specific call with one of the call methods (`callPSTN`, `callUser`, `callSIP`, `callWhatsappUser`)
 - Listen for key call events (`Disconnected`, `Failed`, etc.) and handle as needed
 - Create the Voice AI connector after `CallEvents.Connected`
 - Bridge media between call and connector:
@@ -94,14 +92,15 @@ and create an [authorization token](/reference/management-api/authorization).
 - Invoke methods and handle events from the connector to drive your Voice AI logic
 
 
-### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+### <Icon icon="fa-duotone fa-solid fa-link" /> More information:
 - [Calls and Sessions concepts](/platform/telephony/calls)
 - [Processing calls in scenarios guide](/voice-ai/inbound-vs-outbound/inbound-calls)
 - [VoxEngine Call class](/reference/voxengine/call)
 
-## Call lists for automated outbound calling
+<a id="call-lists-for-automated-outbound-calling"></a>
+## Call lists for automated outgoing calling
 
-When you need to dial many contacts, you can run your outbound scenario against an uploaded CSV number table and have each scenario execution
+When you need to dial many contacts, you can run your outgoing scenario against an uploaded CSV number table and have each scenario execution
 pull the next destination.
 
 ```js title="Call list task pattern with CallList module"
@@ -149,6 +148,6 @@ VoxEngine.addEventListener(AppEvents.Started, () => {
 });
 ```
 
-### <icon icon="fa-duotone fa-solid fa-link" /> More information:
+### <Icon icon="fa-duotone fa-solid fa-link" /> More information:
  - [Call lists solution guide](/platform/solutions/automated-call-lists).
  - [Management API: call lists](/reference/management-api/reference/call-lists)

@@ -10,15 +10,15 @@ In this architecture, your LLM is responsible for reasoning, context management,
 
 ### Speech-to-text (STT) across multiple providers
 
-Voximplant provides [automatic speech-to-text]() through a wide selection of industry-leading speech recognition engines. You can select the provider that best aligns with your target languages, latency budgets, accuracy requirements, and pricing models.
+Voximplant provides [automatic speech-to-text](/platform/speech-processing/speech-to-text) through a wide selection of industry-leading speech recognition engines. You can select the provider that best aligns with your target languages, latency budgets, accuracy requirements, and pricing models.
 
 This flexibility allows you to optimize recognition for noisy environments, support niche dialects, or maintain consistency with your existing cloud infrastructure.
 
 ### VAD and turn detection
 
-Natural conversations require more than speech recognition—your application must understand *when* a user is speaking and determine when they have completed their thought.
+Natural conversations require more than speech recognition—your application should understand *when* a user is speaking and determine when they have completed their thought.
 
-Voximplant integrates [Silero VAD and Pipecat Turn Detection](/voice-ai/speech-flow-control/turn-detection):
+Voximplant integrates [Silero VAD and Pipecat turn detection](/voice-ai/speech-flow-control/turn-detection):
 
 * **Silero VAD**: Distinguishes human speech from ambient background noise and silence in the incoming audio stream.
 * **Pipecat Turn Detection**: Differentiates between brief mid-sentence pauses and the true completion of an utterance.
@@ -27,7 +27,7 @@ Working in tandem, these modules minimize accidental interruptions and eliminate
 
 ### Text-to-speech (TTS) streaming
 
-Once your LLM generates a text response, Voximplant can [convert that text into speech]() using high-quality neural TTS providers supporting dozens of languages, accents, and speaking styles.
+Once your LLM generates a text response, Voximplant can [convert that text into speech](/platform/speech-processing/text-to-speech) via high-quality neural TTS providers supporting dozens of languages, accents, and speaking styles.
 
 As with STT, you can swap TTS providers dynamically to find the ideal balance of voice naturalness, emotional tone, streaming latency, and cost for your specific use case.
 
@@ -35,9 +35,9 @@ As with STT, you can swap TTS providers dynamically to find the ideal balance of
 
 ## Usage example
 
-The example below demonstrates how to integrate an external text-based LLM using the [OpenAI Responses API client](). 
+The example below demonstrates how to integrate an external text-based LLM via the [OpenAI Responses API client](/reference/voxengine/openai#responsesapiclient).
 
-You can connect any OpenAI-compatible API endpoint—including self-hosted open-source models (such as vLLM or Ollama) or third-party inference providers—by setting the [baseUrl]() parameter in [OpenAI.ChatCompletionsAPIClientParameters](/reference/voxengine/openai#chatcompletionsapiclientparameters):
+You can connect any OpenAI-compatible API endpoint—including self-hosted open-source models (such as vLLM or Ollama) or third-party inference providers—by setting the [baseUrl](/reference/voxengine/openai#chatcompletionsapiclientparameters-baseurl) parameter in [OpenAI.ChatCompletionsAPIClientParameters](/reference/voxengine/openai#chatcompletionsapiclientparameters):
 
 ```javascript title="OpenAI Responses API example"
 require(Modules.OpenAI); // AI responses

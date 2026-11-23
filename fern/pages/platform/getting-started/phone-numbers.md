@@ -10,7 +10,7 @@ Phone numbers are required only when bridging calls between the public telecom n
 
 * **You need a phone number if**:
   * You want customers to dial in from regular mobile or landline phones to reach your scenarios, IVR menus, or Voice AI assistants.
-  * You make outbound calls to external phone numbers from a scenario and need a verified, compliant **Caller ID**.
+  * You make outgoing calls to external phone numbers from a scenario and need a verified, compliant **Caller ID**.
 * **You do not need a phone number if**:
   * Your application only supports in-app communications (such as WebRTC calling between Web, iOS, Android, React Native, or Flutter SDK clients). App-to-app and internal conference calling operate entirely over IP without phone numbers.
 
@@ -20,11 +20,11 @@ Phone numbers are required only when bridging calls between the public telecom n
 
 Voximplant offers two types of numbers:
 
-* **Real numbers**: Commercial virtual numbers (local geographic, mobile, or national toll-free) across 60+ countries. Real numbers accept direct incoming calls from any phone network and can be used as outbound Caller IDs.
+* **Real numbers**: Commercial virtual numbers (local geographic, mobile, or national toll-free) across 60+ countries. Real numbers accept direct incoming calls from any phone network and can be used as outgoing Caller IDs.
 * **Test numbers**: Free sandboxed numbers designed for development and testing. To reach a test number, callers dial a regional Voximplant access number and enter the test number as an extension.
 
 <Warning title="Test number restrictions">
-Test numbers cannot be used as outbound Caller IDs and are subject to platform limits: a maximum of **100 calls per day** and **3 calls per minute**. For live production deployments, always use real numbers.
+Test numbers cannot be used as outgoing Caller IDs and are subject to platform limits: a maximum of **100 calls per day** and **3 calls per minute**. For live production deployments, always use real numbers.
 </Warning>
 
 ---

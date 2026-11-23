@@ -16,7 +16,7 @@ Before deploying an IVR scenario:
 4. Rent a [phone number](/platform/getting-started/buy-a-phone-number) and bind it to your routing rule.
 
 <Info title="Phone numbers and caller ID">
-You need a phone number to receive incoming calls to your IVR. If your IVR forwards callers to external mobile or landline numbers, that same rented number acts as your verified outbound caller ID.
+You need a phone number to receive incoming calls to your IVR. If your IVR forwards callers to external mobile or landline numbers, that same rented number acts as your verified outgoing caller ID.
 </Info>
 
 ---

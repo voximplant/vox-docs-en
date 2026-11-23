@@ -34,7 +34,7 @@ Tool calls come back as events. The scenario runs the function and sends the res
 
 - A Qwen Cloud API key. The client sends it as `Authorization: Bearer`.
 - Store that key in Voximplant [Secrets](/platform/storage/secret-storage) under `QWEN_API_KEY`.
-- Optional: a Qwen Cloud workspace id, passed as `workspace` and sent as `X-DashScope-WorkSpace`.
+- Optional: pass a Qwen Cloud workspace id as `workspace`. The client sends it as `X-DashScope-WorkSpace`.
 
 ## Development notes
 
@@ -44,9 +44,9 @@ Tool calls come back as events. The scenario runs the function and sends the res
 - On `SessionUpdated`, call `VoxEngine.sendMediaBetween(call, client)`.
 - Greet the caller by inserting a short user text item with `conversationItemCreate`, then call `responseCreate`. The Qwen `response.create` event accepts `response.modalities` and `response.voice`, so the greeting text goes in the conversation item.
 - For barge-in, call `clearMediaBuffer` on `InputAudioBufferSpeechStarted`.
-- The examples use the English system voice `beth_v3.1`. The model default is `longanqian_v3.1`. Other 3.1 system voices include `betty_v3.1`, `cally_v3.1`, `longanhuan_v3.1`, `longanlingxin_v3.1`, `longanfengyue_v3.1`, and `xunanchuan_v3.1`. A cloned voice id can be passed in `voice`.
-- Set `input_audio_transcription.language` and `output_audio.language` for `qwen-audio-3.1-realtime-plus`. Output language steers speech. Also say the reply language in `instructions` if the spoken text must stay in that language.
-- `turn_detection.type` is `server_vad` by default. Set it to `smart_turn` for semantic turn detection, or set `turn_detection` to `null` for push-to-talk. Push-to-talk then needs `inputAudioBufferCommit` and `responseCreate`.
+- The examples use the English system voice `beth_v3.1`. The model default is `longanqian_v3.1`. Other 3.1 system voices include `betty_v3.1`, `cally_v3.1`, `longanhuan_v3.1`, `longanlingxin_v3.1`, `longanfengyue_v3.1`, and `xunanchuan_v3.1`. You can pass a cloned voice id in `voice`.
+- Set `input_audio_transcription.language` and `output_audio.language` for `qwen-audio-3.1-realtime-plus`. Output language steers speech. Also say the reply language in `instructions` if the spoken text should stay in that language.
+- By default, `turn_detection.type` is `server_vad`. Set it to `smart_turn` for semantic turn detection, or set `turn_detection` to `null` for push-to-talk. Push-to-talk then needs `inputAudioBufferCommit` and `responseCreate`.
 - `enable_search` and `tools` cannot be enabled together.
 - Function tools use a nested `function` object. See [Function calling](/voice-ai/qwen/function-calling).
 
@@ -57,7 +57,7 @@ Tool calls come back as events. The scenario runs the function and sends the res
 ## Examples
 
 - [Example: Answering an incoming call](/voice-ai/qwen/inbound)
-- [Example: Placing an outbound call](/voice-ai/qwen/outbound)
+- [Example: Placing an outgoing call](/voice-ai/qwen/outbound)
 - [Example: Function calling](/voice-ai/qwen/function-calling)
 
 ## Links

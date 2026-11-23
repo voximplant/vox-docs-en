@@ -1,13 +1,13 @@
 ---
-title: "Example: Placing an outbound call"
-description: "This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Cartesia Line Agents once the callee answers."
+title: "Example: Placing an outgoing call"
+description: "This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to Cartesia Line Agents once the callee answers."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
 </blockquote>
 
 
-This example starts a VoxEngine session, places an outbound PSTN call, and bridges audio to Cartesia Line Agents once the callee answers.
+This example starts a VoxEngine session, places an outgoing PSTN call, and bridges audio to Cartesia Line Agents once the callee answers.
 
 **Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -16,9 +16,9 @@ This example starts a VoxEngine session, places an outbound PSTN call, and bridg
 - Create a Cartesia Line Agent in the [Cartesia Voice Agents portal](https://play.cartesia.ai/agents)
 - Store your [Cartesia API key](https://play.cartesia.ai/keys) in Voximplant [Secrets](/platform/storage/secret-storage) under `CARTESIA_API_KEY`
 - Store your [Cartesia Agent ID](https://play.cartesia.ai/agents) in Voximplant `ApplicationStorage` under `CARTESIA_AGENT_ID` (the agent ID is not sensitive, so it can live in key-value storage)
-- Ensure outbound calling is enabled for your Voximplant application and your caller ID is verified
+- Ensure outgoing calling is enabled for your Voximplant application and your caller ID is verified
 
-## Outbound call parameters
+## Outgoing call parameters
 
 The example expects destination and caller ID in `customData` passed to the routing rule:
 
@@ -38,9 +38,9 @@ For quick testing from the Voximplant Control Panel:
 For production, start the routing rule via Management API `startScenarios` and pass the same JSON in `script_custom_data`:
 [StartScenarios API reference](/reference/management-api/reference/scenarios/start-scenarios)
 
-## Alternate outbound destinations
+## Alternate outgoing destinations
 
-This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outgoing calls to other destination types in VoxEngine:
 
 - **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
 - **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call (requires a WhatsApp Business account and enabled numbers).
@@ -54,7 +54,7 @@ Relevant guides:
 
 ## Session setup
 
-Outbound setup follows this order:
+Outgoing setup follows this order:
 
 1. Parse `destination` and `callerId` from `VoxEngine.customData()`.
 2. Place the PSTN call with `VoxEngine.callPSTN(...)`.
@@ -75,9 +75,9 @@ call.addEventListener(CallEvents.Connected, async () => {
 });
 ```
 
-Use outbound mode metadata for this scenario:
+Use outgoing mode metadata for this scenario:
 
-```js title="Start outbound session"
+```js title="Start outgoing session"
 voiceAIClient.start({
   metadata: {
     channel: "voice",

@@ -1,5 +1,5 @@
 ---
-title: "Responses API Example: Deepgram-Groq-Inworld"
+title: "Responses API example: Deepgram-Groq-Inworld"
 description: "Use the VoxEngine OpenAI Responses client with Groq in a full-cascade Deepgram-Groq-Inworld voice AI pipeline."
 ---
 <blockquote className="agent-directive">
@@ -11,11 +11,11 @@ description: "Use the VoxEngine OpenAI Responses client with Groq in a full-casc
 
 This full-cascade example demonstrates:
 1. A full cascade Voice AI pipeline with independent Speech-to-Text (STT), Large Language Model (LLM), and Text-to-Speech (TTS) components
-2. 3rd Party LLM use using OpenAI Compatibility mode in the VoxEngine OpenAI module
+2. Third-party LLM calls via OpenAI compatibility mode in the VoxEngine OpenAI module
 3. Turn taking with barge-in and end-of-turn detection to keep interactions natural and responsive
 
 This specific example uses Deepgram for STT with custom vocabulary,
-Groq's OpenAI-compatible Responses API using `llama-3.3-70b-versatile` for the LLM,
+Groq's OpenAI-compatible Responses API via `llama-3.3-70b-versatile` for the LLM,
 and Inworld for low-latency, streaming TTS.
 These can be changed out for any supported VoxEngine modules or external APIs as needed.
 
@@ -61,11 +61,11 @@ On call failure, disconnect, ASR/Responses/VoiceDSP/TTS error, or the three-minu
 
 ## More info
 
-- OpenAI module API: /api-reference/voxengine/openai
-- VoiceDSP API: /api-reference/voxengine/agentic/voice-dsp
-- VoiceDSP events: /api-reference/voxengine/agentic/voice-dsp-events
-- Inworld module API: /api-reference/voxengine/inworld
-- Deepgram ASR profile guide: /platform/voxengine/integrations
+- [OpenAI module](/reference/voxengine/openai)
+- [VoiceDSP](/reference/voxengine/agentic/voice-dsp)
+- [VoiceDSP events](/reference/voxengine/agentic/voice-dsp-events)
+- [Inworld module](/reference/voxengine/inworld)
+- [Deepgram ASR profiles](/reference/voxengine/asr-profile-list/deepgram)
 
 ## Full VoxEngine scenario
 

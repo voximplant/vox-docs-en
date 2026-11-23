@@ -1,6 +1,6 @@
 /**
  * Voximplant + Ultravox WebSocket API connector demo
- * Scenario: place an outbound call and bridge it to Ultravox after answer.
+ * Scenario: place an outgoing call and bridge it to Ultravox after answer.
  */
 
 require(Modules.Ultravox);
@@ -47,10 +47,10 @@ VoxEngine.addEventListener(AppEvents.Started, async () => {
         return;
     }
 
-    // Place the outbound call (primary path: PSTN)
+    // Place the outgoing call (primary path: PSTN)
     let call = VoxEngine.callPSTN(destination, callerId);
 
-    // Alternative outbound paths (uncomment to use):
+    // Alternative outgoing paths (uncomment to use):
     // call = VoxEngine.callUser({ username: "callee", callerid: callerId });
     // call = VoxEngine.callSIP(`sip:${destination}@your-sip-domain`, callerId);
     // call = VoxEngine.callWhatsappUser({ number: destination, callerid: callerId });

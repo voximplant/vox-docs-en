@@ -110,7 +110,7 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e) => {
 ```
 
 <Warning title="Caller ID requirement">
-To place outbound calls to phone numbers (PSTN), you must specify a verified Caller ID. You can [buy a phone number from Voximplant](/platform/getting-started/buy-a-phone-number) or verify your existing phone number in the Control Panel using an automated verification call.
+To place outgoing calls to phone numbers (PSTN), you must specify a verified Caller ID. You can [buy a phone number from Voximplant](/platform/getting-started/buy-a-phone-number) or verify your existing phone number in the Control Panel using an automated verification call.
 </Warning>
 
 ### 4. Configure routing rules

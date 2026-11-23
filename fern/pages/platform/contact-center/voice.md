@@ -207,7 +207,7 @@ function setLunch() {
 In a contact center, the primary role of the VoxEngine [scenario](/platform/getting-started/create-a-scenario) is to receive incoming or outgoing calls and place them into the appropriate SmartQueue.
 
 * For incoming calls, handle the [CallAlerting](/reference/voxengine/app-events#callalerting) event and enqueue the call.
-* For outbound campaigns, initiate the call in the [Started]() event and enqueue it after the customer [answers]().
+* For outgoing campaigns, initiate the call in the [Started]() event and enqueue it after the customer [answers]().
 
 Use the [enqueueTask](/reference/voxengine/voxengine#enqueuetask) method to place a call into a queue:
 

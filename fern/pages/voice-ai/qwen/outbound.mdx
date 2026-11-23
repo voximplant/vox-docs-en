@@ -1,6 +1,6 @@
 ---
-title: "Example: Placing an outbound call"
-description: "This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to Qwen Cloud after they answer."
+title: "Example: Placing an outgoing call"
+description: "This example starts a VoxEngine session, places an outgoing PSTN call, and connects the callee to Qwen Cloud after they answer."
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
@@ -8,7 +8,7 @@ description: "This example starts a VoxEngine session, places an outbound PSTN c
 
 ## Overview
 
-This example starts a VoxEngine session, places an outbound PSTN call, and connects the callee to Qwen Cloud after they answer.
+This example starts a VoxEngine session, places an outgoing PSTN call, and connects the callee to Qwen Cloud after they answer.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
@@ -16,7 +16,7 @@ This example starts a VoxEngine session, places an outbound PSTN call, and conne
 
 - A Qwen Cloud API key stored in Voximplant [Secrets](/platform/storage/secret-storage) under `QWEN_API_KEY`.
 - The example uses `qwen-audio-3.1-realtime-plus`. Change `QWEN_MODEL` if your account should use another realtime model.
-- A verified or rented caller ID that can place outbound PSTN calls.
+- A verified or rented caller ID that can place outgoing PSTN calls.
 - Start this scenario via a routing rule. For production, start the rule with the Management API.
 
 ## Custom data
@@ -27,9 +27,9 @@ Pass the destination and caller ID when starting the scenario:
 {"destination":"+15551234567","callerId":"+13322776633"}
 ```
 
-## Alternate outbound destinations
+## Alternate outgoing destinations
 
-This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outbound calls to other destination types in VoxEngine:
+This example uses `VoxEngine.callPSTN(...)` for PSTN dialing. You can also route outgoing calls to other destination types in VoxEngine:
 
 - **SIP** (`VoxEngine.callSIP`): dial a SIP URI to reach a PBX, carrier, SIP trunk, or other SIP endpoint.
 - **WhatsApp** (`VoxEngine.callWhatsappUser`): place a WhatsApp Business-initiated call.

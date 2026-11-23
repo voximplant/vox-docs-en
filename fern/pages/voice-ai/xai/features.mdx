@@ -1,6 +1,6 @@
 ---
 title: "Example: Using Grok features"
-subtitle: Connect an inbound call to a Grok voice agent
+subtitle: Connect an incoming call to a Grok voice agent
 ---
 <blockquote className="agent-directive">
   For the complete documentation index, see <a href="/llms.txt">llms.txt</a>.
@@ -9,13 +9,13 @@ subtitle: Connect an inbound call to a Grok voice agent
 
 ## Overview
 
-This inbound example showcases Grok tools (function calling, file_search, web_search, x_search) with barge-in for telephony use. The same tool configuration applies to outbound calls—reuse the tools and prompt in your outbound scenario and swap the call entrypoint.
+This incoming example showcases Grok tools (function calling, file_search, web_search, x_search) with barge-in for telephony use. The same tool configuration applies to outgoing calls—reuse the tools and prompt in your outgoing scenario and swap the call entrypoint.
 
 **⬇️ Jump to the [Full VoxEngine scenario](#full-voxengine-scenario).**
 
 ## Prerequisites
 
-- Set up an inbound entrypoint for the caller:
+- Set up an incoming entrypoint for the caller:
   - [Phone number](/platform/getting-started/buy-a-phone-number)
   - [WhatsApp](/voice-ai/network-options/whatsapp)
   - [SIP user / SIP registration](/voice-ai/network-options/sip)
@@ -36,7 +36,7 @@ This inbound example showcases Grok tools (function calling, file_search, web_se
 ### Feature summary
 
 - **Function calling**: Let Grok request server-side actions, then respond with structured outputs. See [Function calling](#function-calling). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#function-calling
-- **RAG with file_search**: Ground responses in your uploaded documents using vector search. See [RAG with file_search](#rag-with-file_search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#file-search
+- **RAG with file_search**: Ground responses in your uploaded documents via vector search. See [RAG with file_search](#rag-with-file_search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#file-search
 - **Web search**: Allow Grok to fetch current public information when needed. See [Web search](#web-search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#web-search
 - **X/Twitter search**: Constrain Grok to specific X handles for social lookups. See [X/Twitter search](#xtwitter-search). Also see Grok docs: https://docs.x.ai/docs/guides/tools/overview#x-search
 

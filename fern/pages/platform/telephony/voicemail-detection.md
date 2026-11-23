@@ -1,6 +1,6 @@
 # Voicemail detection
 
-Voximplant enables developers to detect voicemails and automated prompts on outbound calls using the [Answering Machine Detection (AMD) module](). Additionally, you can detect specific audio tones and voicemail beeps at designated frequencies.
+Voximplant enables developers to detect voicemails and automated prompts on outgoing calls using the [Answering Machine Detection (AMD) module](). Additionally, you can detect specific audio tones and voicemail beeps at designated frequencies.
 
 ## Contents
 
@@ -17,9 +17,9 @@ The AMD module uses machine learning to determine whether an outgoing call was a
 The machine learning voicemail detection model is currently optimized for Brazil, Colombia, Kazakhstan, Mexico, and Russia. If you require answering machine detection for another country, contact [support](/help/support) to request model activation.
 </Info>
 
-### Outbound PSTN calls
+### Outgoing PSTN calls
 
-To detect voicemails on calls placed to standard mobile or landline numbers, pass your AMD instance to the outbound call configuration:
+To detect voicemails on calls placed to standard mobile or landline numbers, pass your AMD instance to the outgoing call configuration:
 
 ```javascript title="Voicemail detection for PSTN calls"
 require(Modules.AI);
@@ -59,7 +59,7 @@ amd.addEventListener(AMD.Events.DetectionError, (error) => {
 });
 ```
 
-### Outbound SIP calls
+### Outgoing SIP calls
 
 Voicemail detection operates identically across external SIP trunks and PBX endpoints:
 

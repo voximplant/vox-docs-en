@@ -47,7 +47,7 @@ Inside an application workspace, you will find dedicated sections to manage all 
 
 ### Contact center & automation
 * **SmartQueue**: Configure skills-based routing queues to distribute calls and chat conversations to agents based on availability.
-* **Call lists**: Create contact lists for automated outbound campaigns powered by the Predictive Dialing System (PDS).
+* **Call lists**: Create contact lists for automated outgoing campaigns powered by the Predictive Dialing System (PDS).
 * **Dialogflow connector**: Upload Google Dialogflow ES or CX credentials to integrate virtual agents into your call flows.
 * **VoxEngine CI**: Integrate your external IDE and version control workflows to deploy scenarios and routing rules programmatically.
 

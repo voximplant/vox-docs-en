@@ -48,7 +48,7 @@ Video link: [OpenAI + Cartesia demo](https://www.youtube.com/watch?v=Rg97CLWatqo
 ## Developer notes
 
 - Do not set audio format parameters in half-cascade connector requests. VoxEngine's WebSocket gateway handles media format negotiation automatically.
-- If no Cartesia API key is provided, Voximplant's default account and billing are used.
+- If no Cartesia API key is provided, the scenario uses Voximplant's default account and billing.
 - Custom or cloned voices are only available when using your own API key.
 - Cartesia TTS requires real text when initializing the player; do not pass `""` or `" "`.
 - Subsequent turns use `generationRequest(...)` with the same `voice`, `model_id`, and `language`.
@@ -59,7 +59,7 @@ Video link: [OpenAI + Cartesia demo](https://www.youtube.com/watch?v=Rg97CLWatqo
 - The example uses the `sonic-2` model. Adjust the voice or output settings to match your telephony requirements.
 
 <Note>
-    This example runs `gpt-realtime-2.1` using the Realtime 2.x session shape, with input settings nested under `session.audio.input`.
+    This example runs `gpt-realtime-2.1` via the Realtime 2.x session shape, with input settings nested under `session.audio.input`.
 </Note>
 
 <Code
@@ -72,7 +72,7 @@ Video link: [OpenAI + Cartesia demo](https://www.youtube.com/watch?v=Rg97CLWatqo
 ## More information
 
 - [OpenAI connector overview](/voice-ai/openai/overview)
-- [OpenAI Realtime inbound example](/voice-ai/openai/inbound)
+- [OpenAI Realtime incoming example](/voice-ai/openai/inbound)
 - [VoxEngine OpenAI module API reference](/reference/voxengine/openai)
 - [VoxEngine Cartesia module API reference](/reference/voxengine/cartesia)
 - [Speech synthesis guide](/voice-ai/speech/openai-tts)
