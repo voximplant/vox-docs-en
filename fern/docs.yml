@@ -93,189 +93,147 @@ navigation:
         contents:
           - page: Client options
             path: ./pages/voice-ai/client-options.mdx
-            icon: fa-duotone fa-sliders
+            icon: fa-duotone fa-layer-group
           - section: Bring your own LLM
+            icon: fa-duotone fa-plug
             contents:
               - page: OpenAI API compatibility
                 path: ./pages/voice-ai/bring-your-own-llm/introduction.md
-                icon: fa-duotone fa-plug
               - page: OpenAI API compatibility
                 path: ./pages/voice-ai/bring-your-own-llm/open-ai-api-compatibility.mdx
-                icon: fa-duotone fa-brain-circuit
               - page: "Chat completions: Together AI"
                 path: ./pages/voice-ai/bring-your-own-llm/chat-completions-together.mdx
-                icon: fa-duotone fa-comments
               - page: "Responses: Deepgram-Groq-Inworld"
                 path: ./pages/voice-ai/bring-your-own-llm/full-cascade-groq.mdx
-                icon: fa-duotone fa-diagram-project
               - page: "Responses: Microsoft-Grok-Grok TTS"
                 path: ./pages/voice-ai/bring-your-own-llm/grok-full-cascade.mdx
-                icon: fa-duotone fa-waveform-lines
               - page: "Realtime: Azure OpenAI"
                 path: ./pages/voice-ai/bring-your-own-llm/azure-openai-realtime.mdx
-                icon: fa-duotone fa-cloud
           - section: OpenAI
+            icon: fa-brands fa-openai
             contents:
               - page: Overview
                 path: ./pages/voice-ai/openai/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: GPT Live
                 path: ./pages/voice-ai/openai/gpt-live.mdx
-                icon: fa-duotone fa-waveform
               - page: Migration guide from beta
                 path: ./pages/voice-ai/openai/migration-guide.mdx
                 hidden: true
-                icon: fa-duotone fa-route
               - page: Incoming call
                 path: ./pages/voice-ai/openai/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/openai/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/openai/function-calling.mdx
-                icon: fa-duotone fa-code
               - page: Manual audio commit
                 path: ./pages/voice-ai/openai/manual-audio-commit.mdx
-                icon: fa-duotone fa-microphone-lines
               - page: Half-cascade with ElevenLabs
                 path: ./pages/voice-ai/openai/half-cascade-elevenlabs.mdx
-                icon: fa-duotone fa-bolt
               - page: Half-cascade with Inworld
                 path: ./pages/voice-ai/openai/half-cascade-inworld.mdx
-                icon: fa-duotone fa-sparkles
               - page: Half-cascade with Cartesia
                 path: ./pages/voice-ai/openai/half-cascade-cartesia.mdx
-                icon: fa-duotone fa-wave-pulse
           - section: Gemini Live
+            icon: fa-brands fa-google
             contents:
               - page: Overview
                 path: ./pages/voice-ai/google/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/google/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Vertex AI
                 path: ./pages/voice-ai/google/vertex-ai.mdx
-                icon: fa-duotone fa-bolt
               - page: Outgoing call
                 path: ./pages/voice-ai/google/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/google/function-calling.mdx
-                icon: fa-duotone fa-code
               - page: Speech translation
                 path: ./pages/voice-ai/google/speech-translation.mdx
-                icon: fa-duotone fa-language
           - section: Ultravox Realtime
+            icon: fa-duotone fa-waveform-lines
             contents:
               - page: Overview
                 path: ./pages/voice-ai/ultravox/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/ultravox/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/ultravox/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/ultravox/function-calling.mdx
-                icon: fa-duotone fa-code
           - section: ElevenLabs Agents
+            icon: fa-duotone fa-microphone-lines
             contents:
               - page: Overview
                 path: ./pages/voice-ai/elevenlabs/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/elevenlabs/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/elevenlabs/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/elevenlabs/function-calling.mdx
-                icon: fa-duotone fa-code
           - section: Cartesia Line Agents
+            icon: fa-duotone fa-wave-sine
             contents:
               - page: Overview
                 path: ./pages/voice-ai/cartesia/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/cartesia/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/cartesia/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/cartesia/function-calling.mdx
-                icon: fa-duotone fa-code
           - section: Inworld Realtime
+            icon: fa-duotone fa-user-robot
             contents:
               - page: Overview
                 path: ./pages/voice-ai/inworld/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/inworld/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/inworld/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/inworld/function-calling.mdx
-                icon: fa-duotone fa-code
           - section: Deepgram Agents
+            icon: fa-duotone fa-ear-listen
             contents:
               - page: Overview
                 path: ./pages/voice-ai/deepgram/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/deepgram/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/deepgram/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/deepgram/function-calling.mdx
-                icon: fa-duotone fa-code
               - page: Context history
                 path: ./pages/voice-ai/deepgram/context-history.mdx
-                icon: fa-duotone fa-database
           - section: xAI Grok Voice Agent
+            icon: fa-duotone fa-atom-simple
             contents:
               - page: Overview
                 path: ./pages/voice-ai/xai/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/xai/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Features
                 path: ./pages/voice-ai/xai/features.mdx
-                icon: fa-duotone fa-stars
               - page: Outgoing call
                 path: ./pages/voice-ai/xai/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
           - section: Qwen Cloud
+            icon: fa-duotone fa-cloud-binary
             contents:
               - page: Overview
                 path: ./pages/voice-ai/qwen/overview.mdx
-                icon: fa-duotone fa-circle-info
               - page: Incoming call
                 path: ./pages/voice-ai/qwen/incoming.mdx
-                icon: fa-duotone fa-phone-arrow-down-left
               - page: Outgoing call
                 path: ./pages/voice-ai/qwen/outgoing.mdx
-                icon: fa-duotone fa-phone-arrow-up-right
               - page: Function calling
                 path: ./pages/voice-ai/qwen/function-calling.mdx
-                icon: fa-duotone fa-code
           - section: Dialogflow
+            icon: fa-duotone fa-comment-nodes
             contents:
               - page: Dialogflow ES
                 path: ./pages/voice-ai/dialogflow/es.mdx
-                icon: fa-duotone fa-comment-dots
               - page: Dialogflow CX
                 path: ./pages/voice-ai/dialogflow/cx.mdx
-                icon: fa-duotone fa-comments
       - section: MCP client
         contents:
           - page: Introduction
