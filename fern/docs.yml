@@ -91,13 +91,10 @@ navigation:
             icon: fa-brands fa-claude
       - section: Voice AI connectors
         contents:
-          - page: Client options
-            path: ./pages/voice-ai/client-options.mdx
-            icon: fa-duotone fa-layer-group
           - section: Bring your own LLM
             icon: fa-duotone fa-plug
             contents:
-              - page: OpenAI API compatibility
+              - page: Introduction
                 path: ./pages/voice-ai/bring-your-own-llm/introduction.md
               - page: OpenAI API compatibility
                 path: ./pages/voice-ai/bring-your-own-llm/open-ai-api-compatibility.mdx
