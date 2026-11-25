@@ -1160,7 +1160,7 @@ navigation:
 colors:
   accent-primary:
     light: "#4824a2"
-    dark: "#8564f4"
+    dark: "#a78bfa"
   background:
     light: "#ffffff"
     dark: "#0a0714"
