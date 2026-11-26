@@ -533,8 +533,7 @@ navigation:
           - page: Overview
             path: ./pages/reference/voxengine/overview.mdx
             icon: fa-brands fa-js
-          - section: Runtime and modules
-            slug: runtime-and-modules
+          - section: Reference
             icon: fa-duotone fa-cubes
             contents:
               - page: VoxEngine
